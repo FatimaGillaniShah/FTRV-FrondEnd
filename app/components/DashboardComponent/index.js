@@ -19,7 +19,6 @@ import clsx from 'clsx';
 import React, { memo, useEffect } from 'react';
 import Header from '../Header';
 import NestedMenuItem from './NestedItem1';
-import Banner from 'images/banner.jpg';
 import Home from './Home';
 const drawerWidth = 120;
 const MyMenuItem = withStyles((theme) => ({
@@ -189,6 +188,7 @@ const useStyles = makeStyles((theme) => ({
 function DashboardComponent({ Children }) {
   const classes = useStyles();
   const [menuPosition, setMenuPosition] = React.useState(null);
+
   const handleMenuClick = (x = 0, y = 0) => {
     if (menuPosition) {
       return;
@@ -362,7 +362,7 @@ function DashboardComponent({ Children }) {
             </Menu>
           </Grid>
           <Grid Container justify="flex-end" className={classes.contentGrid}>
-            <Children/>
+            <Children />
           </Grid>
         </Grid>
       </Grid>

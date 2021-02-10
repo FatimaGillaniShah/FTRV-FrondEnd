@@ -246,9 +246,9 @@ async function generateContainer({ name, memo }) {
       name: componentName,
       memo,
       wantHeaders: true,
-      wantActionsAndReducer: true,
-      wantSagas: true,
-      wantMessages: true,
+      wantActionsAndReducer: false,
+      wantSagas: false,
+      wantMessages: false,
       wantLoadable: true,
     })
     .then(handleResult)

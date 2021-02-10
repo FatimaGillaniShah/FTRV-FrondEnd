@@ -10,8 +10,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import FunTownApp from 'containers/Dashboard/Loadable';
 import Routing from './Routing';
-
-
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 export default function App() {
   return (
@@ -24,7 +23,10 @@ export default function App() {
         Intranet for FuntownRVs"
         />
       </Helmet>
-      <FunTownApp Children={Routing} />
+      <Router>
+        
+          <FunTownApp Children={Routing} />
+      </Router>
     </>
   );
 }

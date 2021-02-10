@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
-
+ 
   return (
     <>
       <AppBar position="absolute" className={clsx(classes.appBar)}>
@@ -62,7 +62,7 @@ export default function Header() {
             >
               <Hidden xsDown>
                 <Typography
-                  component="subtitle1"
+                  component="h1"
                   variant="subtitle1"
                   color="inherit"
                   noWrap
