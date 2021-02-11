@@ -9,11 +9,6 @@ const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'development',
-  devServer: {
-    historyApiFallback: {
-      index: '/'
-    }
-  },
   // Add hot reloading in development
   entry: [
     require.resolve('react-app-polyfill/ie11'),
