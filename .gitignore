@@ -3,6 +3,8 @@
 node_modules/
 build
 .DS_Store
+.pdf
+.docx
 *.tgz
 my-app*
 template/src/__tests__/__snapshots__/

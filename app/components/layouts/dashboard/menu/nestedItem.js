@@ -9,20 +9,22 @@ import { Box } from '@material-ui/core';
 const TRANSPARENT = 'rgba(0,0,0,0)';
 const useMenuItemStyles = makeStyles((theme) => ({
   root: (props) => ({
-    backgroundColor: props.open ? '#1A75BC' : TRANSPARENT,
+    backgroundColor: props.open
+      ? theme.palette.menuColor.secondary
+      : TRANSPARENT,
     '&:hover': {
-      backgroundColor: '#335e96 !important',
+      backgroundColor: `${theme.palette.menuColor.tertiary} !important`,
       color: 'white'
     }
   }),
   menuWidth: {
     '& > div': {
-      backgroundColor: '#1A75BC',
+      backgroundColor: theme.palette.menuColor.secondary,
       color: 'white',
       borderRadius: 0,
-      marginTop:20,
-      marginLeft:1
-    },
+      marginTop: 20,
+      marginLeft: 1
+    }
   }
 }));
 
@@ -134,7 +136,7 @@ const NestedMenuItem = React.forwardRef(function NestedMenuItem(props, ref) {
   }
 
   return (
-    <div
+    <Box
       {...ContainerProps}
       ref={containerRef}
       onFocus={handleFocus}
@@ -148,7 +150,7 @@ const NestedMenuItem = React.forwardRef(function NestedMenuItem(props, ref) {
         className={clsx(menuItemClasses.root, className)}
         ref={menuItemRef}
       >
-        <div
+        <Box
           style={
             shouldAppendLeftMargin
               ? { marginLeft: `${marginLeftValue && marginLeftValue}` }
@@ -159,7 +161,7 @@ const NestedMenuItem = React.forwardRef(function NestedMenuItem(props, ref) {
           <Box className={style_menuItemIcon}>{_icon}</Box>
           <Box className={style_menuItemText}>{label}</Box>
           {/* {rightIcon} */}
-        </div>
+        </Box>
       </MenuItem>
       <Menu
         // Set pointer events to 'none' to prevent the invisible Popover div
@@ -185,14 +187,11 @@ const NestedMenuItem = React.forwardRef(function NestedMenuItem(props, ref) {
           setIsSubMenuOpen(false);
         }}
       >
-        <div
-          ref={menuContainerRef}
-          style={{ pointerEvents: 'auto', }}
-        >
+        <Box ref={menuContainerRef} style={{ pointerEvents: 'auto' }}>
           {children}
-        </div>
+        </Box>
       </Menu>
-    </div>
+    </Box>
   );
 });
 

@@ -9,9 +9,8 @@ import { Link } from 'react-router-dom';
 
 import { Helmet } from 'react-helmet';
 
-import DashboardComponent from 'components/DashboardComponent/Loadable';
-function Dashboard({Children}) {
-
+import DashboardComponent from 'components/layouts/dashboard/Loadable';
+function Dashboard({ Children }) {
   // useEffect(() => {
 
   // }, [])

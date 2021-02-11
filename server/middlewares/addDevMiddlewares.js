@@ -8,7 +8,7 @@ function createWebpackMiddleware(compiler, publicPath) {
     // logLevel: 'warn',
     publicPath,
     // silent: true,
-    stats: 'errors-only',
+    stats: 'errors-only'
   });
 }
 
@@ -16,7 +16,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   const compiler = webpack(webpackConfig);
   const middleware = createWebpackMiddleware(
     compiler,
-    webpackConfig.output.publicPath,
+    webpackConfig.output.publicPath
   );
 
   app.use(middleware);
@@ -27,8 +27,10 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   const fs = middleware.fileSystem;
 
   app.get('*', (req, res) => {
+    console.log('path', compiler.outputPath, 'index.html');
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
       if (err) {
+        console.log(err, 'err');
         res.sendStatus(404);
       } else {
         res.send(file.toString());

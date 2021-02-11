@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 import { Helmet } from 'react-helmet';
 
-import Home from 'components/Home/Loadable'
+import Home from '../../components/pages/home/Loadable'
 function HomeContainer() {
 
   return (
