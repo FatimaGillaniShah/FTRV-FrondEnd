@@ -11,6 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import PropTypes from 'prop-types';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 export default function InputField(props) {
   const {
@@ -22,37 +23,65 @@ export default function InputField(props) {
     iconID,
     appendIcon,
     prependIcon,
-    fullWidth
+    fullWidth,
+    variant
   } = props;
-  console.log(Icon, 'icon');
   return (
     <FormControl fullWidth={fullWidth}>
       <InputLabel htmlFor={inputID}>{placeholderText}</InputLabel>
-      <Input
-        id={inputID}
-        type={inputType}
-        {...props}
-        endAdornment={
-          Icon &&
-          appendIcon && (
-            <InputAdornment position="end">
-              <IconButton id={iconID} onClick={onIconClick} {...props}>
-                <Icon />
-              </IconButton>
-            </InputAdornment>
-          )
-        }
-        startAdornment={
-          Icon &&
-          prependIcon && (
-            <InputAdornment position="start">
-              <IconButton id={iconID} onClick={onIconClick} {...props}>
-                <Icon />
-              </IconButton>
-            </InputAdornment>
-          )
-        }
-      />
+      {variant == 'outlined' ? (
+        <OutlinedInput
+          id={inputID}
+          type={inputType}
+          {...props}
+          endAdornment={
+            Icon &&
+            appendIcon && (
+              <InputAdornment position="end">
+                <IconButton id={iconID} onClick={onIconClick} {...props}>
+                  <Icon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }
+          startAdornment={
+            Icon &&
+            prependIcon && (
+              <InputAdornment position="start">
+                <IconButton id={iconID} onClick={onIconClick} {...props}>
+                  <Icon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }
+        />
+      ) : (
+        <Input
+          id={inputID}
+          type={inputType}
+          {...props}
+          endAdornment={
+            Icon &&
+            appendIcon && (
+              <InputAdornment position="end">
+                <IconButton id={iconID} onClick={onIconClick} {...props}>
+                  <Icon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }
+          startAdornment={
+            Icon &&
+            prependIcon && (
+              <InputAdornment position="start">
+                <IconButton id={iconID} onClick={onIconClick} {...props}>
+                  <Icon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }
+        />
+      )}
     </FormControl>
   );
 }
@@ -66,7 +95,8 @@ InputField.propTypes = {
   iconID: PropTypes.string,
   appendIcon: PropTypes.bool,
   prependIcon: PropTypes.bool,
-  fullWidth: PropTypes.bool
+  fullWidth: PropTypes.bool,
+  variant: PropTypes.string
 };
 InputField.defaultProps = {
   fullWidth: true
