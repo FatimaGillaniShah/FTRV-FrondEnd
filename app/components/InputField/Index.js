@@ -24,10 +24,12 @@ export default function InputField(props) {
     appendIcon,
     prependIcon,
     fullWidth,
-    variant
+    variant,
+    formControlProps
   } = props;
+
   return (
-    <FormControl fullWidth={fullWidth}>
+    <FormControl fullWidth={fullWidth} {...formControlProps}>
       <InputLabel htmlFor={inputID}>{placeholderText}</InputLabel>
       {variant == 'outlined' ? (
         <OutlinedInput
@@ -96,7 +98,8 @@ InputField.propTypes = {
   appendIcon: PropTypes.bool,
   prependIcon: PropTypes.bool,
   fullWidth: PropTypes.bool,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  formControlProps: PropTypes.object
 };
 InputField.defaultProps = {
   fullWidth: true
@@ -115,6 +118,7 @@ InputField.defaultProps = {
   Icon={EmailIcon}
   placeholderText="Email"
   appendIcon={true}
-  prependIcon={false}   
+  prependIcon={false}
+  formControlProps={{ fullWidth: true }}   
   ...otherProps
 />; */
