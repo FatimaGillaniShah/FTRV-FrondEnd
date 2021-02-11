@@ -67,10 +67,10 @@ const render = () => {
       textColor: {
         main: 'white',
         secondary: '#153D73',
-        black:'black'
+        black: 'black'
       },
-      iconColor:{
-        main:'white'
+      iconColor: {
+        main: 'white'
       }
     },
     typography: {
@@ -79,10 +79,10 @@ const render = () => {
   });
   theme = responsiveFontSizes(theme);
   ReactDOM.render(
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <App />
-        </ThemeProvider>,
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>,
     MOUNT_NODE
   );
 };

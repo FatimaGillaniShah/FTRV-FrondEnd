@@ -24,8 +24,7 @@ export default function App() {
         />
       </Helmet>
       <Router>
-        
-          <FunTownApp Children={Routing} />
+        <FunTownApp Children={Routing} />
       </Router>
     </>
   );

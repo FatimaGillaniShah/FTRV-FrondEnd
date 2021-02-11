@@ -4,17 +4,11 @@
  *
  */
 
-import React, { memo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-
 import DashboardComponent from 'components/DashboardComponent/Loadable';
-function Dashboard({Children}) {
 
-  // useEffect(() => {
-
-  // }, [])
+function Dashboard({ Children }) {
   return (
     <>
       <Helmet>

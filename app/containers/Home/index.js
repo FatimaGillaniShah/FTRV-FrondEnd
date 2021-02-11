@@ -18,7 +18,7 @@ function HomeContainer() {
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
-      <Home/>
+      <Home />
     </>
   );
 }
