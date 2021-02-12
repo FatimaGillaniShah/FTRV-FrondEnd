@@ -12,6 +12,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import PropTypes from 'prop-types';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 export default function InputField(props) {
   const {
@@ -24,13 +25,18 @@ export default function InputField(props) {
     appendIcon,
     prependIcon,
     fullWidth,
-    variant
+    variant,
+    formControlProps,
+    helperText,
+    errorMessage,
+    error,
+    outlinedPlaceholder
   } = props;
   return (
-    <FormControl fullWidth={fullWidth}>
-      <InputLabel htmlFor={inputID}>{placeholderText}</InputLabel>
+    <FormControl fullWidth={fullWidth} error={error} {...formControlProps}>
       {variant == 'outlined' ? (
         <OutlinedInput
+          placeholder={outlinedPlaceholder}
           id={inputID}
           type={inputType}
           {...props}
@@ -56,32 +62,39 @@ export default function InputField(props) {
           }
         />
       ) : (
-        <Input
-          id={inputID}
-          type={inputType}
-          {...props}
-          endAdornment={
-            Icon &&
-            appendIcon && (
-              <InputAdornment position="end">
-                <IconButton id={iconID} onClick={onIconClick} {...props}>
-                  <Icon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }
-          startAdornment={
-            Icon &&
-            prependIcon && (
-              <InputAdornment position="start">
-                <IconButton id={iconID} onClick={onIconClick} {...props}>
-                  <Icon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }
-        />
+        <>
+          <InputLabel htmlFor={inputID} error={error}>
+            {placeholderText}
+          </InputLabel>
+          <Input
+            id={inputID}
+            type={inputType}
+            {...props}
+            endAdornment={
+              Icon &&
+              appendIcon && (
+                <InputAdornment position="end">
+                  <IconButton id={iconID} onClick={onIconClick} {...props}>
+                    <Icon />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }
+            startAdornment={
+              Icon &&
+              prependIcon && (
+                <InputAdornment position="start">
+                  <IconButton id={iconID} onClick={onIconClick} {...props}>
+                    <Icon />
+                  </IconButton>
+                </InputAdornment>
+              )
+            }
+          />
+        </>
       )}
+      <FormHelperText>{helperText}</FormHelperText>
+      <FormHelperText error>{errorMessage}</FormHelperText>
     </FormControl>
   );
 }
@@ -96,7 +109,11 @@ InputField.propTypes = {
   appendIcon: PropTypes.bool,
   prependIcon: PropTypes.bool,
   fullWidth: PropTypes.bool,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  formControlProps: PropTypes.object,
+  helperText: PropTypes.string,
+  errorMessage: PropTypes.string,
+  outlinedPlaceholder: PropTypes.string
 };
 InputField.defaultProps = {
   fullWidth: true
