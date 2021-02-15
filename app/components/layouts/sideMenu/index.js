@@ -12,7 +12,6 @@ import clsx from 'clsx';
 import React, { useEffect } from 'react';
 import NestedMenuItem from './nestedItem';
 
-const drawerWidth = 120;
 const MyMenuItem = withStyles((theme) => ({
   root: {
     '&:hover': {
@@ -30,11 +29,7 @@ const MySubMenuItem = withStyles((theme) => ({
   }
 }))(MenuItem);
 const useStyles = makeStyles((theme) => ({
-  menuGrid: {
-    width: '8%',
-    height: '100%',
-    backgroundColor: theme.palette.menuColor.primary
-  },
+
   menuWidth: {
     '& >div': {
       width: '8% !important',
@@ -129,7 +124,6 @@ function index() {
   }, []);
   return (
     <>
-      <Grid item id="newmenu" className={classes.menuGrid}>
         <Menu
           className={clsx(classes.menuWidth)}
           open={true}
@@ -260,7 +254,6 @@ function index() {
             </div>
           </MyMenuItem>
         </Menu>
-      </Grid>
     </>
   );
 }

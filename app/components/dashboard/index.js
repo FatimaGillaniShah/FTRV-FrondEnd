@@ -7,8 +7,9 @@
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { memo } from 'react';
-import Header from '../header';
-import SideMenu from './menu';
+import Header from '../layouts/header';
+import SideMenu from '../layouts/sideMenu';
+import BodyContent from '../layouts/bodyContent';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     marginTop: '5rem',
     flex: 1
+  },
+  menuGrid: {
+    width: '8%',
+    height: '100%',
+    backgroundColor: theme.palette.menuColor.primary
   },
 
   contentGrid: {
@@ -105,9 +111,11 @@ function DashboardComponent({ Children }) {
           <Header />
         </Grid>
         <Grid item className={classes.bodyGrid}>
-          <SideMenu />
+          <Grid item id="newmenu" className={classes.menuGrid}>
+            <SideMenu />
+          </Grid>
           <Grid Container justify="flex-end" className={classes.contentGrid}>
-            <Children />
+            <BodyContent Children={Children} />
           </Grid>
         </Grid>
       </Grid>

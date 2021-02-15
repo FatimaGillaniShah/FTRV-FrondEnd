@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import FunTownApp from 'containers/Dashboard/Loadable';
+import FunTownApp from 'containers/Dashboard/loadable';
 import Routing from 'routes';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import History from 'utils/history';

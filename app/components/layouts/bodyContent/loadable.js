@@ -1,5 +1,7 @@
 /**
- * Asynchronously loads the component for NotFoundPage
+ *
+ * Asynchronously loads the component for BodyContent
+ *
  */
 
 import loadable from 'utils/loadable';

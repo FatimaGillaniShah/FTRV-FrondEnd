@@ -11,11 +11,11 @@ import clsx from 'clsx';
 import AvatarImg from 'images/avatar.jpeg';
 import Logo from 'images/logo.png';
 import React from 'react';
-import { styleConstants } from 'utils/constants';
+import { STYLE_CONSTANTS } from 'utils/constants';
 
 const headerWidth =
-  styleConstants && styleConstants.headerWidth
-    ? styleConstants.headerWidth
+  STYLE_CONSTANTS && STYLE_CONSTANTS.headerWidth
+    ? STYLE_CONSTANTS.headerWidth
     : '5 rem';
 const useStyles = makeStyles((theme) => ({
   appBar: {

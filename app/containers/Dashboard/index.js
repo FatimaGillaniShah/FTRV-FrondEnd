@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 import { Helmet } from 'react-helmet';
 
-import DashboardComponent from 'components/layouts/dashboard/Loadable';
+import DashboardComponent from 'components/dashboard/loadable';
 function Dashboard({ Children }) {
   // useEffect(() => {
 
