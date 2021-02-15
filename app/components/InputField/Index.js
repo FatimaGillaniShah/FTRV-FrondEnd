@@ -13,33 +13,34 @@ import FormControl from '@material-ui/core/FormControl';
 import PropTypes from 'prop-types';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { useField } from 'formik';
 
-export default function InputField(props) {
-  const {
-    placeholderText,
-    Icon,
-    inputType,
-    inputID,
-    onIconClick,
-    iconID,
-    appendIcon,
-    prependIcon,
-    fullWidth,
-    variant,
-    formControlProps,
-    helperText,
-    errorMessage,
-    error,
-    outlinedPlaceholder
-  } = props;
+export const InputField = ({
+  placeholderText,
+  Icon,
+  inputType,
+  inputID,
+  onIconClick,
+  iconID,
+  appendIcon,
+  prependIcon,
+  fullWidth,
+  variant,
+  formControlProps,
+  helperText,
+  errorMessage,
+  error,
+  outlinedPlaceholder,
+  ...props
+}) => {
+  const [field, meta, helpers] = useField(props);
   return (
-    <FormControl fullWidth={fullWidth} error={error} {...formControlProps}>
+    <FormControl fullWidth={fullWidth} error={meta.error} {...formControlProps}>
       {variant == 'outlined' ? (
         <OutlinedInput
           placeholder={outlinedPlaceholder}
           id={inputID}
           type={inputType}
-          {...props}
           endAdornment={
             Icon &&
             appendIcon && (
@@ -60,16 +61,17 @@ export default function InputField(props) {
               </InputAdornment>
             )
           }
+          {...field}
+          {...props}
         />
       ) : (
         <>
-          <InputLabel htmlFor={inputID} error={error}>
+          <InputLabel htmlFor={inputID} error={meta.error}>
             {placeholderText}
           </InputLabel>
           <Input
             id={inputID}
             type={inputType}
-            {...props}
             endAdornment={
               Icon &&
               appendIcon && (
@@ -90,14 +92,20 @@ export default function InputField(props) {
                 </InputAdornment>
               )
             }
+            {...field}
+            {...props}
           />
         </>
       )}
       <FormHelperText>{helperText}</FormHelperText>
-      <FormHelperText error>{errorMessage}</FormHelperText>
+      {meta.touched && meta.error ? (
+        <FormHelperText error={meta.error}>{meta.error}</FormHelperText>
+      ) : null}
     </FormControl>
   );
-}
+};
+export default InputField;
+
 InputField.propTypes = {
   fullWidth: PropTypes.bool,
   placeholderText: PropTypes.string,
@@ -122,6 +130,7 @@ InputField.defaultProps = {
 // Usage
 
 /* <InputField
+  name="email"
   placeholderText="Input Field"
   Icon={EmailIcon}
   inputType="text"
