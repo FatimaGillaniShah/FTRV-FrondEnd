@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { memo } from 'react';
 import Header from '../layouts/header';
 import SideMenu from '../layouts/sideMenu';
-import BodyContent from '../layouts/bodyContent';
+import BodyContent from '../layouts/bodyContent/loadable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
