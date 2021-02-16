@@ -14,8 +14,8 @@ import React from 'react';
 import { STYLE_CONSTANTS } from 'utils/constants';
 
 const headerWidth =
-  STYLE_CONSTANTS && STYLE_CONSTANTS.headerWidth
-    ? STYLE_CONSTANTS.headerWidth
+  STYLE_CONSTANTS && STYLE_CONSTANTS.HEADER_WIDTH
+    ? STYLE_CONSTANTS.HEADER_WIDTH
     : '5 rem';
 const useStyles = makeStyles((theme) => ({
   appBar: {

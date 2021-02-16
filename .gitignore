@@ -15,3 +15,5 @@ yarn-error.log*
 /.changelog
 .npm/
 yarn.lock
+*.iml
+*.env

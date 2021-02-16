@@ -6,9 +6,17 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const dotenv = require('dotenv');
+const env = dotenv.config().parsed;
 
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 module.exports = require('./webpack.base.babel')({
   mode: 'development',
+  envKeys,
   // Add hot reloading in development
   entry: [
     require.resolve('react-app-polyfill/ie11'),

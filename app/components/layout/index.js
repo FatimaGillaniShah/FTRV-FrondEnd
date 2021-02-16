@@ -1,15 +1,10 @@
-/**
- *
- * DashboardComponent
- *
- */
-
+import React from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { memo } from 'react';
-import Header from '../layouts/header';
-import SideMenu from '../layouts/sideMenu';
-import BodyContent from '../layouts/bodyContent';
+import { useLocation } from 'react-router-dom';
+import Box from '@material-ui/core/Box';
+import Header from './header';
+import SideMenu from './sideMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,27 +95,30 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.iconColor.main
   }
 }));
-
-function DashboardComponent({ Children }) {
+const Layout = ({ children }) => {
   const classes = useStyles();
+  const location = useLocation();
 
   return (
     <div className={classes.root}>
-      <Grid container xs={12} className={classes.rootGrid}>
-        <Grid item className={classes.headerGrid}>
-          <Header />
-        </Grid>
-        <Grid item className={classes.bodyGrid}>
-          <Grid item id="newmenu" className={classes.menuGrid}>
-            <SideMenu />
+      {location.pathname === '/login' && <>{children}</>}
+      {location.pathname !== '/login' && (
+        <Grid container xs={12} className={classes.rootGrid}>
+          <Grid item className={classes.headerGrid}>
+            <Header />
           </Grid>
-          <Grid Container justify="flex-end" className={classes.contentGrid}>
-            <BodyContent Children={Children} />
+          <Grid item className={classes.bodyGrid}>
+            <Grid item id="newmenu" className={classes.menuGrid}>
+              <SideMenu />
+            </Grid>
+            <Grid Container justify="flex-end" className={classes.contentGrid}>
+              {children}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
     </div>
   );
-}
+};
 
-export default memo(DashboardComponent);
+export default Layout;

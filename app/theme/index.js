@@ -1,6 +1,7 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 import { colors } from './colors';
-let theme = createMuiTheme({
+
+const theme = createMuiTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
@@ -28,5 +29,5 @@ let theme = createMuiTheme({
     fontFamily: ['Poppins', 'sans-serif'].join(',')
   }
 });
-theme = responsiveFontSizes(theme);
-export default theme;
+const updatedTheme = responsiveFontSizes(theme);
+export default updatedTheme;
