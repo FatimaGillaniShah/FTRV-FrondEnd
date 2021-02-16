@@ -22,9 +22,9 @@ function Login() {
         <title>Login</title>
         <meta name="description" content="Description of Login" />
       </Helmet>
-      <div className={classes.bgContainer}>
+      <Box className={classes.bgContainer}>
         <Container component="main" maxWidth="xs">
-          <div className={classes.loginContainer}>
+          <Box className={classes.loginContainer}>
             <Box className={classes.welcomBox}>
               <h1>Welcome!</h1>
             </Box>
@@ -47,22 +47,17 @@ function Login() {
                   IconClickable={false}
                 />
               </Box>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center'
-                }}
-              >
+              <Box className={classes.centerAlign}>
                 <CustomButton
                   btnText="login"
                   fullWidth={false}
                   className={classes.loginBtn}
                 />
-              </div>
+              </Box>
             </Paper>
-          </div>
+          </Box>
         </Container>
-      </div>
+      </Box>
     </>
   );
 }

@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   loginBtn: {
     paddingLeft: '40px',
     paddingRight: '40px'
+  },
+  centerAlign: {
+    display: 'flex',
+    justifyContent: 'center'
   }
 }));
 export default useStyles;
