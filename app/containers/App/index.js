@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Layout from '../../components/layout';
 import Routes from '../../routes';
 import ErrorBoundary from '../Error/errorBoundry';
+import { AuthProvider } from '../../context/authContext';
 
 export default function App() {
   return (
@@ -15,13 +16,15 @@ export default function App() {
         Intranet for FuntownRVs"
         />
       </Helmet>
-      <Router>
-        <Layout>
-          <ErrorBoundary>
-            <Routes />
-          </ErrorBoundary>
-        </Layout>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Layout>
+            <ErrorBoundary>
+              <Routes />
+            </ErrorBoundary>
+          </Layout>
+        </Router>
+      </AuthProvider>
     </>
   );
 }

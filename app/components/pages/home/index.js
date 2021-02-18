@@ -6,41 +6,41 @@ const useStyles = makeStyles((theme) => ({
   homeFirstColumnGrid: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
   },
 
   bannerGridSection: {
     backgroundColor: theme.palette.bgColor.secondary,
     flex: '0.3',
-    marginBlock: '0.2rem'
+    marginBlock: '0.2rem',
   },
   statsSection: {
     backgroundColor: theme.palette.bgColor.secondary,
     flex: '0.7',
-    marginBlock: '0.2rem'
+    marginBlock: '0.2rem',
   },
   homeSecondColumnGrid: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    paddingInline: '0.2rem'
+    paddingInline: '0.2rem',
   },
   infoPanel_1: {
     marginBlock: '0.2rem',
 
     backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.25'
+    flex: '0.25',
   },
   infoPanel_2: {
     marginBlock: '0.2rem',
     backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.45'
+    flex: '0.45',
   },
   infoPanel_3: {
     marginBlock: '0.2rem',
     backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.3'
-  }
+    flex: '0.3',
+  },
 }));
 function Home() {
   const classes = useStyles();
