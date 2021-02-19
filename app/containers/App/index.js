@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Layout from '../../components/layout';
 import Routes from '../../routes';
-import ErrorBoundary from '../Error/errorBoundry';
+import ErrorBoundary from '../error/errorBoundry';
 import { AuthProvider } from '../../context/authContext';
 
 export default function App() {

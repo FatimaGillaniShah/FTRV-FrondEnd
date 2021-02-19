@@ -7,7 +7,7 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 
-import Home from '../../components/pages/home/Loadable';
+import Home from '../../components/pages/home/loadable';
 
 function HomeContainer() {
   return (

@@ -40,7 +40,7 @@ module.exports = {
       default: true,
       message: 'Do you want to load resources asynchronously?',
     },
-       {
+    {
       type: 'confirm',
       name: 'wantMaterialUI',
       default: false,

@@ -5,41 +5,37 @@ import {
   Hidden,
   makeStyles,
   Toolbar,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import AvatarImg from 'images/avatar.jpeg';
-import Logo from 'images/logo.png';
 import React from 'react';
-import { STYLE_CONSTANTS } from 'utils/constants';
+import { Link } from 'react-router-dom';
+import AvatarImg from '../../../images/avatar.jpeg';
+import Logo from '../../../images/logo.png';
 
-const headerWidth =
-  STYLE_CONSTANTS && STYLE_CONSTANTS.HEADER_WIDTH
-    ? STYLE_CONSTANTS.HEADER_WIDTH
-    : '5 rem';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: 'white',
-    height: `${headerWidth} !important`,
+    height: theme.defaultHeights.header,
     color: theme.palette.primary.main,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   toolbar: { display: 'flex', justifyContent: 'space-between' },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   logoStyle: {
-    width: 150
+    width: 150,
   },
   profileBox: {
-    display: 'flex'
+    display: 'flex',
   },
   titleBox: { display: 'flex', marginInline: '1em', alignItems: 'flex-end' },
-  welcomeTextBox: { marginTop: '0.2rem' }
+  welcomeTextBox: { marginTop: '0.2rem' },
 }));
 
 export default function Header() {
@@ -49,8 +45,9 @@ export default function Header() {
     <>
       <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <img src={Logo} className={classes.logoStyle} />
-
+          <Link to="/">
+            <img src={Logo} alt="intranet logo" className={classes.logoStyle} />
+          </Link>
           <Box className={classes.profileBox}>
             <Hidden xsDown>
               <Box className={classes.titleBox}>

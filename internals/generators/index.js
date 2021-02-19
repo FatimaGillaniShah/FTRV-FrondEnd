@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 /**
  * generator/index.js
  *
@@ -40,6 +42,7 @@ module.exports = plop => {
       '**',
       '**.js',
     )}`;
+/* eslint-disable */
 
     try {
       execSync(`npm run prettify -- "${folderPath}"`);
@@ -47,8 +50,12 @@ module.exports = plop => {
     } catch (err) {
       throw err;
     }
+    /* eslint-enable */
+
   });
   plop.setActionType('backup', (answers, config) => {
+    /* eslint-disable */
+
     try {
       fs.copyFileSync(
         path.join(__dirname, config.path, config.file),
@@ -67,6 +74,8 @@ module.exports = plop => {
     } catch (err) {
       throw err;
     }
+    /* eslint-enable */
+
   });
 };
 

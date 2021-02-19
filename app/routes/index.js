@@ -1,9 +1,12 @@
 import React from 'react';
-import Home from 'containers/Home/Loadable';
-import NotFoundPage from 'containers/pageNotFound/Loadable';
 import { Route, Switch } from 'react-router-dom';
-import PrivateRoute from '../components/hoc/privateRoute';
-import { ROLES } from '../utils/constants';
+import Home from '../containers/home/loadable';
+import NotFoundPage from '../containers/pageNotFound/loadable';
+// import PrivateRoute from '../components/hoc/privateRoute';
+// import { ROLES } from '../utils/constants';
+
+// import PrivateRoute from '../components/hoc/privateRoute';
+// import { ROLES } from '../utils/constants';
 
 function Routes() {
   return (
@@ -11,12 +14,12 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route component={NotFoundPage} />
-        {/*<PrivateRoute*/}
-        {/*  path="/"*/}
-        {/*  exact*/}
-        {/*  roles={[ROLES.ADMIN, ROLES.USER]}*/}
-        {/*  component={Home}*/}
-        {/*/>*/}
+        {/* <PrivateRoute */}
+        {/*  path="/" */}
+        {/*  exact */}
+        {/*  roles={[ROLES.ADMIN, ROLES.USER]} */}
+        {/*  component={Home} */}
+        {/* /> */}
       </Switch>
     </>
   );
