@@ -9,3 +9,8 @@ export const ROLES = {
   ADMIN: 'admin',
   USER: 'user',
 };
+
+export const APIS = {
+  LOGIN: '/login',
+  USERS_LIST: '/users/list',
+};

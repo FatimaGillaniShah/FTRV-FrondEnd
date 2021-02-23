@@ -8,12 +8,12 @@ function index() {
     <>
       <Grid xs={12}>
         {menuItems &&
-          menuItems.length > 0 &&
-          menuItems.map((item) => (
-            <Grid>
-              <SideMenu item={item} />
-            </Grid>
-          ))}
+        menuItems.length > 0 &&
+        menuItems.map((item) => (
+          <Grid>
+            <SideMenu item={item} />
+          </Grid>
+        ))}
       </Grid>
     </>
   );
