@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const prettierOptions = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
+  fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8')
 );
 
 module.exports = {
@@ -13,21 +13,21 @@ module.exports = {
     // jest: true,
     browser: true,
     node: true,
-    es6: true,
+    es6: true
   },
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',
     ecmaFeatures: {
-      jsx: true,
-    },
+      jsx: true
+    }
   },
   rules: {
     'prettier/prettier': ['error', prettierOptions],
     'arrow-body-style': [2, 'as-needed'],
     'class-methods-use-this': 0,
     'import/imports-first': 0,
-    'import/newline-after-import': 0,
+    'import/newline-after-import': 2,
     'import/no-dynamic-require': 0,
     'import/no-extraneous-dependencies': 0,
     'import/no-named-as-default': 0,
@@ -38,8 +38,8 @@ module.exports = {
       2,
       2,
       {
-        SwitchCase: 1,
-      },
+        SwitchCase: 1
+      }
     ],
     'jsx-a11y/aria-props': 2,
     'jsx-a11y/heading-has-content': 0,
@@ -49,8 +49,8 @@ module.exports = {
         // NOTE: If this error triggers, either disable it or add
         // your custom components, labels and attributes via these options
         // See https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/label-has-associated-control.md
-        controlComponents: ['Input'],
-      },
+        controlComponents: ['Input']
+      }
     ],
     'jsx-a11y/label-has-for': 0,
     'jsx-a11y/mouse-events-have-key-events': 2,
@@ -71,12 +71,13 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/jsx-no-target-blank': 0,
     'react/jsx-uses-vars': 2,
+    'react/jsx-props-no-spreading': 0,
     'react/require-default-props': 0,
     'react/require-extension': 0,
     'react/self-closing-comp': 0,
     'react/sort-comp': 0,
-   
     'require-yield': 0,
+    'react/prop-types': 0,
   },
   settings: {
     'import/resolver': {

@@ -12,8 +12,10 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import PropTypes from 'prop-types';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import { FormHelperText } from '@material-ui/core';
+import { useField } from 'formik';
 
-export default function InputField({
+export function InputField({
   placeholderText,
   Icon,
   inputType,
@@ -27,16 +29,17 @@ export default function InputField({
   formControlProps,
   IconClickable,
   OutlinedInputPlaceholder,
+  helperText,
   ...props
 }) {
+  const [field, meta, helpers] = useField(props);
   return (
-    <FormControl fullWidth={fullWidth} {...formControlProps}>
+    <FormControl fullWidth={fullWidth} {...formControlProps} error={meta.error}>
       {variant == 'outlined' ? (
         <OutlinedInput
           id={inputID}
           type={inputType}
           placeholder={OutlinedInputPlaceholder}
-          {...props}
           endAdornment={
             Icon &&
             appendIcon && (
@@ -65,6 +68,8 @@ export default function InputField({
               </InputAdornment>
             )
           }
+          {...field}
+          {...props}
         />
       ) : (
         <>
@@ -72,7 +77,6 @@ export default function InputField({
           <Input
             id={inputID}
             type={inputType}
-            {...props}
             endAdornment={
               Icon &&
               appendIcon && (
@@ -101,13 +105,22 @@ export default function InputField({
                 </InputAdornment>
               )
             }
+            {...field}
+            {...props}
           />
         </>
       )}
+      {meta.touched && meta.error ? (
+        <FormHelperText error>{meta.error}</FormHelperText>
+      ) : null}
     </FormControl>
   );
 }
+
+export default InputField;
+
 InputField.propTypes = {
+  name: PropTypes.string.isRequired,
   fullWidth: PropTypes.bool,
   placeholderText: PropTypes.string,
   Icon: PropTypes.object,

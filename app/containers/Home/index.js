@@ -4,14 +4,13 @@
  *
  */
 
-import React, { memo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 
-import Home from 'components/Home/Loadable'
-function HomeContainer() {
+import Home from '../../components/pages/home/Loadable';
 
+function HomeContainer() {
+  //throw new Error('I crashed!');
   return (
     <>
       <Helmet>
