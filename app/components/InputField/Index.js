@@ -110,7 +110,6 @@ export function InputField({
           />
         </>
       )}
-      {/* <FormHelperText>{helperText}</FormHelperText> */}
       {meta.touched && meta.error ? (
         <FormHelperText error>{meta.error}</FormHelperText>
       ) : null}
