@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { useMutation, useQueries, useQuery } from 'react-query';
+import axios from 'axios';
 import Layout from '../../components/layout';
 import Routes from '../../routes';
-import ErrorBoundary from '../Error/errorBoundry';
+import ErrorBoundary from '../error/errorBoundry';
+import { AuthProvider } from '../../context/authContext';
 
 export default function App() {
   return (
@@ -15,13 +18,15 @@ export default function App() {
         Intranet for FuntownRVs"
         />
       </Helmet>
-      <Router>
-        <Layout>
-          <ErrorBoundary>
-            <Routes />
-          </ErrorBoundary>
-        </Layout>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Layout>
+            <ErrorBoundary>
+              <Routes />
+            </ErrorBoundary>
+          </Layout>
+        </Router>
+      </AuthProvider>
     </>
   );
 }

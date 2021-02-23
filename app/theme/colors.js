@@ -3,17 +3,17 @@ export const colors = {
   secondary: '#1875C0',
   bgColor: {
     main: '#EAEAEA',
-    secondary: 'white'
+    secondary: 'white',
   },
   textColor: {
     main: 'white',
     secondary: '#153D73',
-    black: 'black'
+    black: 'black',
   },
   iconColor: 'white',
   menuColor: {
     primary: '#153D73',
     secondary: '#1875C0',
-    tertiary: '#335e96'
-  }
+    tertiary: '#335e96',
+  },
 };

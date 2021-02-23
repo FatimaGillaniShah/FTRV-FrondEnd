@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import { useAuthContext } from '../../context/authContext';
 
 const PrivateRoute = ({ component: Component, roles, ...rest }) => {
-  // @TODO. Get user from context
-  const user = {};
+  const { user } = useAuthContext();
   return (
     <Route
       {...rest}
@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
           return <Redirect to="/" />;
         }
         // check if route is restricted by role
-        if (roles && roles.indexOf(user.role) === -1) {
+        if (roles && roles.indexOf(user.data.role) === -1) {
           // role not authorised so redirect to home page and logout
           return <Redirect to="/" />;
         }
@@ -26,7 +26,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
 
 PrivateRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
-  roles: PropTypes.array
+  roles: PropTypes.array,
 };
 
 export default PrivateRoute;

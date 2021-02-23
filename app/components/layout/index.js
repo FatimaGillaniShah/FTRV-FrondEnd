@@ -1,106 +1,134 @@
-import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import Box from '@material-ui/core/Box';
+import { twoColumnLayoutRouteNames } from './layoutTypes';
 import Header from './header';
 import SideMenu from './sideMenu';
+import RightInfoPanel from './rightInfoPanel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     height: '100vh',
     width: '100vw',
-    backgroundColor: theme.palette.bgColor.main
+    backgroundColor: theme.palette.bgColor.main,
   },
   rootGrid: {
     overflow: 'auto',
     display: 'flex',
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   headerGrid: {
     width: '100%',
     height: '5rem',
     display: 'flex',
-    position: 'fixed'
+    position: 'fixed',
   },
   bodyGrid: {
+    flex: 1,
     width: '100%',
-    display: 'flex',
     marginTop: '5rem',
-    flex: 1
+    display: 'grid',
+    height: 'auto',
+    // marginTop: '5rem'
   },
   menuGrid: {
-    width: '8%',
     height: '100%',
-    backgroundColor: theme.palette.menuColor.primary
+    top: '80px',
+    display: 'block',
+    position: 'fixed',
+    left: 0,
+    /* top: 0, */
+    width: '10%',
+    bottom: 0,
+    overflow: 'auto',
+    backgroundColor: theme.palette.primary.main,
+    [theme.breakpoints.down('xl')]: {
+      width: '10%',
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '13%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '28%',
+      fontSize: '0.5rem',
+    },
+    '&::-webkit-scrollbar': {
+      width: '0.6rem',
+    },
+    '&::-webkit-scrollbar-track': {
+      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      backgroundColor: theme.palette.primary.main,
+      opacity: '0.1',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: theme.palette.secondary.main,
+      // outline: '1px solid slategrey',
+      borderRadius: '10px',
+    },
   },
 
   contentGrid: {
-    width: '92%',
+    flexDirection: 'row',
+    flex: 1,
     display: 'flex',
-    flexGrow: 1,
-    padding: '0.2rem',
-    overflow: 'scroll',
-    height: '100%',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column'
+    marginLeft: '10%',
+    marginTop: '5rem',
+    [theme.breakpoints.down('lg')]: {
+      marginLeft: '10%',
     },
-    [theme.breakpoints.up('md')]: {
-      flexDirection: 'row'
-    }
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '13%',
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: '28%',
+    },
   },
-
-  homeFirstColumnGrid: {
+  menuSpacer: { flex: 0.11 },
+  dasboardGrid: { flex: 0.9 },
+  twoColumnLayoutMainGrid: {
     display: 'flex',
-    flexDirection: 'column',
-    flex: 1
+    padding: '0.2rem',
+    [theme.breakpoints.down('xl')]: {
+      flexDirection: 'row',
+    },
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+    },
   },
-
-  bannerGridSection: {
-    backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.3',
-    marginBlock: '0.2rem'
-  },
-  statsSection: {
-    backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.7',
-    marginBlock: '0.2rem'
-  },
-  homeSecondColumnGrid: {
+  sectionBg: { backgroundColor: theme.palette.bgColor.main },
+  rightInfoSection: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    paddingInline: '0.2rem'
+    paddingInline: '0.2rem',
   },
-  infoPanel_1: {
+  notificationsSection: {
     marginBlock: '0.2rem',
 
     backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.25'
+    flex: '0.25',
   },
-  infoPanel_2: {
+  birthdaySection: {
     marginBlock: '0.2rem',
     backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.45'
+    flex: '0.45',
   },
-  infoPanel_3: {
+  motivationSection: {
     marginBlock: '0.2rem',
     backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.3'
+    flex: '0.3',
   },
-
-  icon: {
-    color: theme.palette.iconColor.main
-  }
 }));
 const Layout = ({ children }) => {
   const classes = useStyles();
   const location = useLocation();
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       {location.pathname === '/login' && <>{children}</>}
       {location.pathname !== '/login' && (
         <Grid container xs={12} className={classes.rootGrid}>
@@ -111,13 +139,28 @@ const Layout = ({ children }) => {
             <Grid item id="newmenu" className={classes.menuGrid}>
               <SideMenu />
             </Grid>
-            <Grid Container justify="flex-end" className={classes.contentGrid}>
-              {children}
+            <Grid item id="newmenu" className={classes.contentGrid}>
+              {twoColumnLayoutRouteNames &&
+              (twoColumnLayoutRouteNames.includes(location.pathname.slice(1)) ||
+                location.pathname === '/') ? (
+                <>
+                  <Grid xs={12} className={classes.twoColumnLayoutMainGrid}>
+                    <Grid xs={12} lg={9}>
+                      {children}
+                    </Grid>
+                    <Grid xs={12} lg={3}>
+                      <RightInfoPanel />
+                    </Grid>
+                  </Grid>
+                </>
+              ) : (
+                <>{children}</>
+              )}
             </Grid>
           </Grid>
         </Grid>
       )}
-    </div>
+    </Box>
   );
 };
 
