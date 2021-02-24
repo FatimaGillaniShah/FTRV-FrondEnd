@@ -12,7 +12,6 @@ import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import useStyles from './style.js';
-import CustomButton from '../../CustomButton/Index';
 import { Input } from '../../index.js';
 
 export function Login() {
