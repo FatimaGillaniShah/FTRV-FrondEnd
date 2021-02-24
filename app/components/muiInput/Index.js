@@ -34,7 +34,11 @@ export function InputField({
 }) {
   const [field, meta] = useField(props);
   return (
-    <FormControl fullWidth={fullWidth} {...formControlProps} error={meta.error}>
+    <FormControl
+      fullWidth={fullWidth}
+      error={meta.error && true}
+      {...formControlProps}
+    >
       {variant === 'outlined' ? (
         <OutlinedInput
           id={inputID}
