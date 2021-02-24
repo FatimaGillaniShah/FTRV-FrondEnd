@@ -9,3 +9,5 @@ export const fetchUser = async (id) => {};
 export const submitUser = async (id) => {};
 
 export const uploadUsers = async () => {};
+
+export const login = async (payload) => http.post('users/login', payload);
