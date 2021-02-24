@@ -32,17 +32,14 @@ export function InputField({
   helperText,
   ...props
 }) {
-<<<<<<< HEAD
-  const [field, meta, helpers] = useField(props);
-  return (
-    <FormControl fullWidth={fullWidth} {...formControlProps} error={meta.error}>
-      {variant == 'outlined' ? (
-=======
   const [field, meta] = useField(props);
   return (
-    <FormControl fullWidth={fullWidth} {...formControlProps} error={meta.error}>
+    <FormControl
+      fullWidth={fullWidth}
+      error={meta.error && true}
+      {...formControlProps}
+    >
       {variant === 'outlined' ? (
->>>>>>> 865d0a316003f71e801df14c54a00998b7d35cb0
         <OutlinedInput
           id={inputID}
           type={inputType}
@@ -137,16 +134,6 @@ InputField.propTypes = {
   iconID: PropTypes.string,
   appendIcon: PropTypes.bool,
   prependIcon: PropTypes.bool,
-<<<<<<< HEAD
-  fullWidth: PropTypes.bool,
-  variant: PropTypes.string,
-  formControlProps: PropTypes.object,
-  OutlinedInputPlaceholder: PropTypes.string
-};
-InputField.defaultProps = {
-  fullWidth: true,
-  IconClickable: true
-=======
   variant: PropTypes.string,
   formControlProps: PropTypes.object,
   OutlinedInputPlaceholder: PropTypes.string,
@@ -155,7 +142,6 @@ InputField.defaultProps = {
 InputField.defaultProps = {
   fullWidth: true,
   IconClickable: true,
->>>>>>> 865d0a316003f71e801df14c54a00998b7d35cb0
 };
 
 // Usage

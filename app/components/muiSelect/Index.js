@@ -1,6 +1,6 @@
 /**
  *
- * SelectInput
+ * Select
  *
  */
 
@@ -26,10 +26,13 @@ export default function SelectInput({
   formControlProps,
   ...props
 }) {
-  const [field, meta, helpers] = useField(props);
-  console.log(meta);
+  const [field, meta] = useField(props);
   return (
-    <FormControl fullWidth={fullWidth} {...formControlProps}>
+    <FormControl
+      fullWidth={fullWidth}
+      {...formControlProps}
+      error={meta.error && true}
+    >
       <InputLabel id={labelId}>{label}</InputLabel>
       <Select
         labelId={labelId}
@@ -45,8 +48,8 @@ export default function SelectInput({
           <em>None</em>
         </MenuItem>
         {options &&
-          options.map((val, key) => {
-            return val.value !== undefined ? (
+          options.map((val, key) =>
+            val.value !== undefined ? (
               <MenuItem key={key} value={val.value}>
                 {val.label}
               </MenuItem>
@@ -54,13 +57,13 @@ export default function SelectInput({
               <MenuItem key={key} value={val}>
                 {val}
               </MenuItem>
-            );
-          })}
+            )
+          )}
       </Select>
 
       <FormHelperText>{helperText}</FormHelperText>
       {meta.touched && meta.error ? (
-        <FormHelperText error={true}>{meta.error}</FormHelperText>
+        <FormHelperText error>{meta.error}</FormHelperText>
       ) : null}
     </FormControl>
   );
@@ -76,16 +79,16 @@ SelectInput.propTypes = {
   onHandleChange: PropTypes.func,
   selectedValue: PropTypes.string,
   selectName: PropTypes.string,
-  formControlProps: PropTypes.object
+  formControlProps: PropTypes.object,
 };
 
 SelectInput.defaultProps = {
-  fullWidth: true
+  fullWidth: true,
 };
 
 // Usage
 
-/* <SelectInput
+/* <Select
 name="departments"
   labelId="label-id"
   selectId="select-id"
