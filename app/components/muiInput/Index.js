@@ -36,8 +36,8 @@ export function InputField({
   return (
     <FormControl
       fullWidth={fullWidth}
-      {...formControlProps}
       error={meta.error && true}
+      {...formControlProps}
     >
       {variant === 'outlined' ? (
         <OutlinedInput
@@ -146,19 +146,19 @@ InputField.defaultProps = {
 
 // Usage
 
-/* <InputField
- placeholderText="Input Field"
- OutlinedInputPlaceholder="Search"
- Icon={EmailIcon}
- inputType="text"
- onInputChange={handleChange}
- inputID="abc"
- onIconClick={handleChange}
- iconID="ad"
- Icon={EmailIcon}
- placeholderText="Email"
- appendIcon={true}
- prependIcon={false}
- formControlProps={{ fullWidth: true }}   
- ...otherProps
+/* <Input
+  placeholderText="Input Field"
+  OutlinedInputPlaceholder="Search"
+  Icon={EmailIcon}
+  inputType="text"
+  onInputChange={handleChange}
+  inputID="abc"
+  onIconClick={handleChange}
+  iconID="ad"
+  Icon={EmailIcon}
+  placeholderText="Email"
+  appendIcon={true}
+  prependIcon={false}
+  formControlProps={{ fullWidth: true }}   
+  ...otherProps
 />; */
