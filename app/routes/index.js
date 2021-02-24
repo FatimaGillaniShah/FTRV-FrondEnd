@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from '../containers/Home/loadable';
+import Home from '../containers/home/loadable';
 import NotFoundPage from '../containers/pageNotFound/loadable';
 import FileUploader from '../components/fileUploader';
 // import Directory from '../components/FileUploader/index copy';

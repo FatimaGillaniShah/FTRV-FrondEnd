@@ -29,11 +29,13 @@ const useStyles = makeStyles((theme) => ({
   bodyGrid: {
     flex: 1,
     width: '100%',
+    marginTop: '5rem',
     display: 'grid',
     height: 'auto',
     // marginTop: '5rem'
   },
   menuGrid: {
+    height: '100%',
     top: '80px',
     display: 'block',
     position: 'fixed',

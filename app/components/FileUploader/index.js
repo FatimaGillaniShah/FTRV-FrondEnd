@@ -12,7 +12,6 @@ import Add from '@material-ui/icons/Add';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { BodyText, H6 } from 'components/typography';
 import React, { useState } from 'react';
-import 'react-dropzone-uploader/dist/styles.css';
 
 export default function MyUploader() {
   const theme = useTheme();
