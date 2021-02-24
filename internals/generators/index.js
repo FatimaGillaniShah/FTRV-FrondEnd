@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 /**
  * generator/index.js
  *
@@ -9,7 +11,6 @@ const path = require('path');
 const { execSync } = require('child_process');
 const componentGenerator = require('./component/index.js');
 const containerGenerator = require('./container/index.js');
-const languageGenerator = require('./language/index.js');
 
 /**
  * Every generated backup file gets this extension
@@ -20,7 +21,6 @@ const BACKUPFILE_EXTENSION = 'rbgen';
 module.exports = plop => {
   plop.setGenerator('component', componentGenerator);
   plop.setGenerator('container', containerGenerator);
-  plop.setGenerator('language', languageGenerator);
   plop.addHelper('directory', comp => {
     try {
       fs.accessSync(
@@ -42,6 +42,7 @@ module.exports = plop => {
       '**',
       '**.js',
     )}`;
+/* eslint-disable */
 
     try {
       execSync(`npm run prettify -- "${folderPath}"`);
@@ -49,8 +50,12 @@ module.exports = plop => {
     } catch (err) {
       throw err;
     }
+    /* eslint-enable */
+
   });
   plop.setActionType('backup', (answers, config) => {
+    /* eslint-disable */
+
     try {
       fs.copyFileSync(
         path.join(__dirname, config.path, config.file),
@@ -69,6 +74,8 @@ module.exports = plop => {
     } catch (err) {
       throw err;
     }
+    /* eslint-enable */
+
   });
 };
 

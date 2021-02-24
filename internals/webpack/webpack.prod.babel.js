@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+
 // Important modules this config uses
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -6,9 +8,18 @@ const OfflinePlugin = require('offline-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const dotenv = require('dotenv');
 
+const env = dotenv.config({ path: '.env' }).parsed;
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
+  envKeys,
 
   // In production, we skip all hot-reloading stuff
   entry: [
@@ -56,7 +67,7 @@ module.exports = require('./webpack.base.babel')({
           test: /[\\/]node_modules[\\/]/,
           name(module) {
             const packageName = module.context.match(
-              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
             )[1];
             return `npm.${packageName.replace('@', '')}`;
           },
@@ -144,7 +155,7 @@ module.exports = require('./webpack.base.babel')({
   ],
 
   performance: {
-    assetFilter: assetFilename =>
+    assetFilter: (assetFilename) =>
       !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
   },
 });

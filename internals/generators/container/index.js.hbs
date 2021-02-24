@@ -14,36 +14,12 @@ import { Link } from 'react-router-dom';
 {{#if wantHeaders}}
 import { Helmet } from 'react-helmet';
 {{/if}}
-{{#if wantMessages}}
-import { FormattedMessage } from 'react-intl';
-{{/if}}
-{{#if wantActionsAndReducer}}
-import {useDispatch, useSelector} from 'react-redux';
+{{#if wantMaterialUI}}
+import { Box, Container,Grid } from '@material-ui/core';
 {{/if}}
 
-{{#if wantSaga}}
-import { useInjectSaga } from 'utils/injectSaga';
-{{/if}}
-{{#if wantActionsAndReducer}}
-import { useInjectReducer } from 'utils/injectReducer';
-import makeSelect{{properCase name}} from './selectors';
-import reducer from './reducer';
-{{/if}}
-{{#if wantSaga}}
-import saga from './saga';
-{{/if}}
-{{#if wantMessages}}
-import messages from './messages';
-{{/if}}
 
 function {{ properCase name }}() {
-{{#if wantActionsAndReducer}}
-useInjectReducer({ key: '{{ camelCase name }}', reducer });
-const dispatch = useDispatch();
-{{/if}}
-{{#if wantSaga}}
-useInjectSaga({ key: '{{ camelCase name }}', saga });
-{{/if}}
 
 // useEffect(() => {
 
@@ -56,9 +32,7 @@ return (
     <meta name="description" content="Description of {{properCase name}}" />
   </Helmet>
   {{/if}}
-  {{#if wantMessages}}
-  <FormattedMessage {...messages.header} />
-  {{/if}}
+ 
 </>
 );
 }
