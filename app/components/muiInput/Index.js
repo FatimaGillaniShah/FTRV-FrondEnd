@@ -146,7 +146,7 @@ InputField.defaultProps = {
 
 // Usage
 
-/* <InputField
+/* <Input
   placeholderText="Input Field"
   OutlinedInputPlaceholder="Search"
   Icon={EmailIcon}
