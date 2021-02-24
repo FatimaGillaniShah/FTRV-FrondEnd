@@ -4,11 +4,8 @@
  *
  */
 
-import React, { memo, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { Box, Container, Grid } from '@material-ui/core';
 
 function DirectoryUploader() {
   // useEffect(() => {

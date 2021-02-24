@@ -6,10 +6,16 @@ const useStyles = makeStyles((theme) => ({
   root: {
     fontWeight: (props) => `${props.fontWeight} !important`,
     fontSize: (props) =>
-      `${theme.typography.pxToRem(`${props.fontSize}`)} !important`,
+      `${
+        props.fontSize && theme.typography.pxToRem(props.fontSize)
+      } !important`,
     textTransform: (props) => `${props.textTransform} !important`,
     color: (props) =>
-      `${props.color && theme.palette.text[props.color]} !important`,
+      `${
+        props.color
+          ? theme.palette.textColor[props.color]
+          : theme.palette.textColor.secondary
+      } !important`,
   },
 }));
 
@@ -72,17 +78,7 @@ export const H6 = (props) => {
   );
 };
 
-export const Body = (props) => {
-  const { root } = useStyles(props);
-
-  return (
-    <Typography classes={{ root }} variant="body1">
-      {props.children}
-    </Typography>
-  );
-};
-
-export const Body2 = (props) => {
+export const BodyText = (props) => {
   const { root } = useStyles(props);
 
   return (

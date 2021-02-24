@@ -53,8 +53,9 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'capitalize',
     display: 'block',
     fontWeight: 300,
+    color: theme.palette.textColor.light,
   },
-  iconStyle: { color: theme.palette.iconColor.main },
+  iconStyle: { color: theme.palette.iconColor.default },
   linkStyle: { textDecoration: 'none', color: theme.palette.textColor.main },
 }));
 const SideMenu = ({ item }) => {
@@ -152,11 +153,12 @@ const submenuStyles = (theme) => ({
   },
   menuItemSelected: {},
   title: {
-    color: theme.palette.textColor.main,
+    color: theme.palette.textColor.light,
     textTransform: 'capitalize',
   },
   moreArrow: {
     marginRight: theme.spacing(-1),
+    color: theme.palette.iconColor.default,
   },
 });
 
