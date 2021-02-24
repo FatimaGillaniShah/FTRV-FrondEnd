@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Directory from '../containers/Directory';
 import Home from '../containers/home/loadable';
 import Login from '../containers/Login';
 import NotFoundPage from '../containers/pageNotFound/loadable';
@@ -14,6 +15,7 @@ function Routes() {
     <>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/directory" component={Directory} />
         <Route exact path="/login" component={Login} />
         <Route component={NotFoundPage} />
         {/* <PrivateRoute */}

@@ -11,21 +11,22 @@ import PropTypes from 'prop-types';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
+import { useField } from 'formik';
 
-export default function SelectInput(props) {
-  const {
-    labelId,
-    selectId,
-    fullWidth,
-    label,
-    helperText,
-    options,
-    onHandleChange,
-    selectedValue,
-    selectName,
-    formControlProps
-  } = props;
-
+export default function SelectInput({
+  labelId,
+  selectId,
+  fullWidth,
+  label,
+  helperText,
+  options,
+  onHandleChange,
+  selectedValue,
+  selectName,
+  formControlProps,
+  ...props
+}) {
+  const [field, meta, helpers] = useField(props);
   return (
     <FormControl fullWidth={fullWidth} {...formControlProps}>
       <InputLabel id={labelId}>{label}</InputLabel>
@@ -35,32 +36,43 @@ export default function SelectInput(props) {
         onChange={onHandleChange}
         value={selectedValue}
         name={selectName}
+        {...field}
         {...props}
+        error={meta.error}
       >
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
         {options &&
-          options.map((val) => {
+          options.map((val, key) => {
             return val.value !== undefined ? (
-              <MenuItem value={val.value}>{val.label}</MenuItem>
+              <MenuItem key={key} value={val.value}>
+                {val.label}
+              </MenuItem>
             ) : (
-              <MenuItem value={val}>{val}</MenuItem>
+              <MenuItem key={key} value={val}>
+                {val}
+              </MenuItem>
             );
           })}
       </Select>
+
       <FormHelperText>{helperText}</FormHelperText>
+      {meta.touched && meta.error ? (
+        <FormHelperText error={true}>{meta.error}</FormHelperText>
+      ) : null}
     </FormControl>
   );
 }
 
 SelectInput.propTypes = {
+  options: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
   labelId: PropTypes.string,
   selectId: PropTypes.string,
   fullWidth: PropTypes.bool,
   label: PropTypes.string,
   helperText: PropTypes.string,
-  options: PropTypes.array,
   onHandleChange: PropTypes.func,
   selectedValue: PropTypes.string,
   selectName: PropTypes.string,
@@ -74,6 +86,7 @@ SelectInput.defaultProps = {
 // Usage
 
 /* <SelectInput
+name="departments"
   labelId="label-id"
   selectId="select-id"
   fullWidth={true}

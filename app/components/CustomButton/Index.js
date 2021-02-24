@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 
 export default function CustomButton(props) {
-  const { btnText } = props;
-  return <Button {...props}>{btnText}</Button>;
+  const { children } = props;
+  return <Button {...props}>{children}</Button>;
 }
 
 Button.propTypes = {
