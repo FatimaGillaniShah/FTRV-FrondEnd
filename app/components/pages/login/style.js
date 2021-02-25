@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   error: {
-    color: 'red',
+    color: theme.palette.textColor.error,
     textAlign: theme.palette.textColor.error,
   },
 }));

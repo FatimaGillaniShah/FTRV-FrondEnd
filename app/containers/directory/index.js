@@ -1,12 +1,12 @@
 /**
  *
- * Directory
+ * directory
  *
  */
 
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { Directory } from '../../components/pages/Directory/Index';
+import { Directory } from '../../components/pages/directory';
 
 function DirectoryContainer() {
   return (

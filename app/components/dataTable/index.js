@@ -7,10 +7,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import EnhancedTableHead from './TableHead';
-import { useStyles } from './styles';
 import Box from '@material-ui/core/Box';
-import { CheckBox } from '../MuiCheckbox/Index';
+import EnhancedTableHead from './tableHead';
+import { useStyles } from './styles';
+import { CheckBox } from '../index';
 import { getComparator, stableSort } from '../../utils/helper';
 
 export function DataTable({ data, headCells, tableRowsPerPage }) {
@@ -73,34 +73,29 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  const mapRows = (row, isItemSelected, labelId) => {
-    return (
-      <>
-        <TableCell padding="checkbox">
-          <CheckBox
-            checked={isItemSelected}
-            inputProps={{ 'aria-labelledby': labelId }}
-            onClick={(event) => handleClick(event, row.id)}
-          />
-        </TableCell>
-        {headCells.map((header, index) => {
-          return header.type == 'action' ? (
-            <TableCell align={'right'} key={index}>
-              {header.buttons()}
-            </TableCell>
-          ) : (
-            <TableCell
-              padding={index == 0 ? 'none' : 'default'}
-              align={header.numeric ? 'right' : 'left'}
-              key={index}
-            >
-              {row[header.id]}
-            </TableCell>
-          );
-        })}
-      </>
-    );
-  };
+  const mapRows = (row, isItemSelected, labelId) => (
+    <>
+      <TableCell padding="checkbox">
+        <CheckBox
+          checked={isItemSelected}
+          inputProps={{ 'aria-labelledby': labelId }}
+          onClick={(event) => handleClick(event, row.id)}
+        />
+      </TableCell>
+      {headCells.map((header, index) =>
+        header.type === 'action' ? (
+          <TableCell align="right">{header.buttons()}</TableCell>
+        ) : (
+          <TableCell
+            padding={index === 0 ? 'none' : 'default'}
+            align={header.numeric ? 'right' : 'left'}
+          >
+            {row[header.id]}
+          </TableCell>
+        )
+      )}
+    </>
+  );
   return (
     <Box className={classes.root}>
       <Paper className={classes.paper}>
@@ -164,19 +159,17 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
 DataTable.propTypes = {
   headCells: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
-  tableRowsPerPage: PropTypes.number
+  tableRowsPerPage: PropTypes.number,
 };
 DataTable.defaultProps = {
-  headCells: [],
   tableRowsPerPage: 5,
-  data: []
 };
 
 export default DataTable;
 
 // USAGE
 
-/* <DataTable data={data} headCells={headCells} /> */
+/* <dataTable data={data} headCells={headCells} /> */
 
 // DUMMY DATA
 

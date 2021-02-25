@@ -2,7 +2,7 @@ import {
   createStyles,
   lighten,
   makeStyles,
-  withStyles
+  withStyles,
 } from '@material-ui/core/styles';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
@@ -10,14 +10,14 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%'
+    width: '100%',
   },
   paper: {
     width: '100%',
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 750
+    minWidth: 750,
   },
   visuallyHidden: {
     border: 0,
@@ -28,43 +28,43 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     position: 'absolute',
     top: 20,
-    width: 1
+    width: 1,
   },
   tableHead: {
     backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.textColor.main
+    color: theme.palette.textColor.main,
   },
   headCells: {
     color: theme.palette.textColor.main,
     '&:hover': {
-      color: theme.palette.textColor.main
-    }
+      color: theme.palette.textColor.main,
+    },
   },
   headLabel: {
     color: theme.palette.textColor.main,
     '&:hover': {
-      color: lighten(theme.palette.secondary.light, 0.85)
-    }
-  }
+      color: lighten(theme.palette.secondary.light, 0.85),
+    },
+  },
 }));
 
 // TableSortLabel CUSTOM STYLING
 
-const StyledTableSortLabel = withStyles((theme) =>
+const StyledTableSortLabel = withStyles(() =>
   createStyles({
     root: {
       color: 'white',
       '&:hover': {
-        color: 'white'
+        color: 'white',
       },
       '&$active': {
-        color: 'white'
-      }
+        color: 'white',
+      },
     },
     active: {},
     icon: {
-      color: 'inherit !important'
-    }
+      color: 'inherit !important',
+    },
   })
 )(TableSortLabel);
 

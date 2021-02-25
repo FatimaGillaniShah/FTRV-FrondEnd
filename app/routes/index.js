@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Directory from '../containers/Directory';
+import Directory from '../containers/directory';
 import Home from '../containers/home/loadable';
-import Login from '../containers/Login';
+import Login from '../containers/login';
 import NotFoundPage from '../containers/pageNotFound/loadable';
 import PrivateRoute from '../components/hoc/privateRoute';
 // import { ROLES } from '../utils/constants';
