@@ -10,6 +10,7 @@ export const colors = {
     secondary: '#1875C0',
     default: '#525252',
     light: 'white',
+    error: 'red',
   },
   iconColor: {
     primary: '#153D73',

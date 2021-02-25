@@ -1,4 +1,5 @@
-// import http from '../service/http';
+import { APIS } from 'utils/constants';
+import http from '../service/http';
 
 export const fetchUsers = async () => {
   // return http.get('users');
@@ -8,4 +9,5 @@ export const fetchUsers = async () => {
 
 // export const submitUser = async (id) => {};
 
-export const uploadUsers = async () => {};
+export const uploadEmployeeFile = async (file) =>
+  http.post(APIS.FILE_UPLOAD, file);

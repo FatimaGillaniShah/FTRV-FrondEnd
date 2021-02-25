@@ -10,6 +10,23 @@ class Http {
         },
       },
     });
+
+    service.interceptors.request.use(
+      async (config) => {
+        const { token } = JSON.parse(localStorage.getItem('user'));
+        // eslint-disable-next-line no-param-reassign
+        config.headers = {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-type': 'multipart/form-data',
+        };
+        return config;
+      },
+      (error) => {
+        Promise.reject(error);
+      }
+    );
+
     this.service = service;
   }
 

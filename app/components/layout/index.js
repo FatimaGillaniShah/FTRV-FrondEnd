@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     marginLeft: '10%',
-    marginTop: '5rem',
+    // marginTop: '5rem',
     [theme.breakpoints.down('lg')]: {
       marginLeft: '10%',
     },
