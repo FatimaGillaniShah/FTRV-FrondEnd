@@ -4,7 +4,7 @@ import Directory from '../containers/Directory';
 import Home from '../containers/home/loadable';
 import Login from '../containers/Login';
 import NotFoundPage from '../containers/pageNotFound/loadable';
-// import PrivateRoute from '../components/hoc/privateRoute';
+import PrivateRoute from '../components/hoc/privateRoute';
 // import { ROLES } from '../utils/constants';
 
 // import PrivateRoute from '../components/hoc/privateRoute';
@@ -14,9 +14,9 @@ function Routes() {
   return (
     <>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Login} />
+        <PrivateRoute exact path="/home" component={Home} />
         <Route exact path="/directory" component={Directory} />
-        <Route exact path="/login" component={Login} />
         <Route component={NotFoundPage} />
         {/* <PrivateRoute */}
         {/*  path="/" */}

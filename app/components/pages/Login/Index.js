@@ -13,10 +13,11 @@ import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { Form, Formik } from 'formik';
 import useStyles from './style';
-import { Input } from '../../index';
-import { loginSchema } from '../../../containers/login/constants';
+import { Input } from '../../Index';
+import { loginSchema } from '../../../containers/login/schema';
+import { Body2 } from '../../typography/Index';
 
-export function Login({ onHandleSubmit }) {
+export function Login({ onHandleSubmit, isError, errorMessage }) {
   const classes = useStyles();
   return (
     <Box className={classes.bgContainer} h="100%" width={1}>
@@ -67,6 +68,11 @@ export function Login({ onHandleSubmit }) {
                     Login
                   </Button>
                 </Box>
+                {isError && (
+                  <Box mt={6} textAlign="center" className={classes.error}>
+                    <Body2>{errorMessage}</Body2>
+                  </Box>
+                )}
               </Paper>
             </Form>
           </Formik>

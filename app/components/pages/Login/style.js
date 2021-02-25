@@ -44,5 +44,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  error: {
+    color: 'red',
+    textAlign: theme.palette.textColor.error,
+  },
 }));
 export default useStyles;

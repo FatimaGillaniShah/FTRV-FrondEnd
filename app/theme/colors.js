@@ -9,6 +9,7 @@ export const colors = {
     main: 'white',
     secondary: '#153D73',
     black: 'black',
+    error: 'red',
   },
   iconColor: 'white',
   menuColor: {

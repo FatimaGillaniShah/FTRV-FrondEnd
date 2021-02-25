@@ -11,6 +11,6 @@ export const ROLES = {
 };
 
 export const APIS = {
-  LOGIN: '/login',
+  LOGIN: 'users/login',
   USERS_LIST: '/users/list',
 };

@@ -129,8 +129,15 @@ const Layout = ({ children }) => {
 
   return (
     <Box className={classes.root}>
-      {location.pathname === '/login' && <>{children}</>}
-      {location.pathname !== '/login' && (
+      {location.pathname === '/' && (
+        <Grid container xs={12} className={classes.rootGrid}>
+          <Grid item className={classes.headerGrid}>
+            <Header />
+          </Grid>
+          {children}
+        </Grid>
+      )}
+      {location.pathname !== '/' && (
         <Grid container xs={12} className={classes.rootGrid}>
           <Grid item className={classes.headerGrid}>
             <Header />
