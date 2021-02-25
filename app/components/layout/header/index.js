@@ -4,12 +4,15 @@ import {
   Box,
   Hidden,
   makeStyles,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../../context/authContext';
 import AvatarImg from '../../../images/avatar.jpeg';
 import Logo from '../../../images/logo.png';
 
@@ -40,7 +43,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { user, setUser } = useContext(AuthContext);
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    setUser({
+      data: {},
+      isAuthenticated: false,
+      token: null,
+    });
+  };
   return (
     <>
       <AppBar position="absolute" className={clsx(classes.appBar)}>
@@ -48,26 +67,51 @@ export default function Header() {
           <Link to="/">
             <img src={Logo} alt="intranet logo" className={classes.logoStyle} />
           </Link>
-          <Box className={classes.profileBox}>
-            <Hidden xsDown>
-              <Box className={classes.titleBox}>
-                <Box className={classes.welcomeTextBox}>
+          {user.isAuthenticated && (
+            <Box className={classes.profileBox}>
+              <Hidden xsDown>
+                <Box className={classes.titleBox}>
+                  <Box className={classes.welcomeTextBox}>
+                    <Typography
+                      component="h1"
+                      variant="subtitle1"
+                      color="inherit"
+                      noWrap
+                    >
+                      Welcome Back
+                    </Typography>
+                  </Box>
                   <Typography
-                    component="h1"
-                    variant="subtitle1"
+                    component="h6"
+                    variant="h6"
                     color="inherit"
                     noWrap
                   >
-                    Welcome Back
+                    , {user.data.name}!
                   </Typography>
                 </Box>
-                <Typography component="h6" variant="h6" color="inherit" noWrap>
-                  , Douglas!
-                </Typography>
-              </Box>
-            </Hidden>
-            <Avatar alt="avatar" src={AvatarImg} />
-          </Box>
+              </Hidden>
+              <>
+                <Avatar alt="avatar" src={AvatarImg} onClick={handleClick} />
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  elevation={0}
+                  getContentAnchorEl={null}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
     </>

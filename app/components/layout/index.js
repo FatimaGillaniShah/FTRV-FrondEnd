@@ -76,7 +76,6 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
     marginLeft: '10%',
-    // marginTop: '5rem',
     [theme.breakpoints.down('lg')]: {
       marginLeft: '10%',
     },
@@ -129,9 +128,16 @@ const Layout = ({ children }) => {
 
   return (
     <Box className={classes.root}>
-      {location.pathname === '/login' && <>{children}</>}
-      {location.pathname !== '/login' && (
-        <Grid container xs={12} className={classes.rootGrid}>
+      {location.pathname === '/' && (
+        <Grid xs={12} className={classes.rootGrid}>
+          <Grid item className={classes.headerGrid}>
+            <Header />
+          </Grid>
+          {children}
+        </Grid>
+      )}
+      {location.pathname !== '/' && (
+        <Grid xs={12} className={classes.rootGrid}>
           <Grid item className={classes.headerGrid}>
             <Header />
           </Grid>

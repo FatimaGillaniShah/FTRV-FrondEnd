@@ -22,6 +22,10 @@ const theme = createMuiTheme({
     textColor: colors.textColor,
     iconColor: colors.iconColor,
     menuColor: colors.menuColor,
+    checkbox: {
+      main: 'grey',
+      secondary: 'white',
+    },
   },
   defaultHeights: {
     header: '5rem',

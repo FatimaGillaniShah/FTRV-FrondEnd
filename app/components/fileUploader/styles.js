@@ -34,6 +34,12 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: 0,
     display: 'flex',
     alignItems: 'flex-end',
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+    '&:hover': {
+      backgroundColor: 'transparent',
+      boxShadow: 'none',
+    },
   },
   templateBtnIcon: {
     color: theme.palette.iconColor.secondary,
