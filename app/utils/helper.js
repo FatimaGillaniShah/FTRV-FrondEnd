@@ -26,3 +26,21 @@ function stableSort(array, comparator) {
 }
 
 export { getComparator, stableSort };
+
+// insertParams
+
+export function insertParams(params) {
+  //  params is object
+  let paramUrl = '?';
+  const paramObj = { ...params };
+
+  Object.keys(paramObj).forEach((key) => {
+    const currentParam = paramObj[key];
+    if (currentParam === '') {
+      delete paramObj[key];
+      return;
+    }
+    paramUrl += `${key}=${currentParam}&`;
+  });
+  return paramUrl;
+}

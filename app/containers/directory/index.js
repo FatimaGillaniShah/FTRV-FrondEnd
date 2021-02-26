@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Directory } from '../../components/pages/directory/index';
@@ -13,8 +13,27 @@ import { keys } from '../../state/queryKeys';
 import { headCells } from './dummyData';
 
 function DirectoryContainer() {
-  const { status, data } = useQuery(keys.users, fetchUsers);
-  // console.log(data && data.data.data.rows);
+  const [query, setQuery] = useState();
+  const [filters, setFilters] = useState();
+  const { status, data } = useQuery(
+    [keys.users, { query, filters }],
+    fetchUsers
+  );
+  const [checked, setChecked] = useState(false);
+  const handleSwitchChange = ({ target }) => {
+    setChecked(target.checked);
+  };
+  const handleSearch = ({ target }) => {
+    setQuery(target.value);
+  };
+  useEffect(() => {
+    if (checked) {
+      setQuery('');
+    }
+  }, [checked]);
+  const handleFilterSearch = (values) => {
+    setFilters(values);
+  };
   return (
     <>
       <Helmet>
@@ -26,6 +45,12 @@ function DirectoryContainer() {
         data={data && data.data.data.rows}
         status={status}
         headCells={headCells}
+        onHandleSearch={handleSearch}
+        query={query}
+        setChecked={setChecked}
+        checked={checked}
+        onHandleSwitchChange={handleSwitchChange}
+        onHandleFilterSearch={handleFilterSearch}
       />
     </>
   );

@@ -12,7 +12,12 @@ import Switch from '@material-ui/core/Switch';
 import { Formik } from 'formik';
 import { Input } from '../../index';
 
-export function Search({ onHandleSwitchChange, checked }) {
+export function Search({
+  onHandleSwitchChange,
+  checked,
+  onHandleSearch,
+  query,
+}) {
   return (
     <>
       <Grid item xs={3} pl={0}>
@@ -21,21 +26,25 @@ export function Search({ onHandleSwitchChange, checked }) {
         </Typography>
       </Grid>
       <Grid item xs={6}>
-        <Formik>
+        <Formik initialValues={{ query: '' }}>
           <Input
+            name="query"
             variant="outlined"
             prependIcon
             Icon={SearchIcon}
             OutlinedInputPlaceholder="Type here to search"
             margin="dense"
             IconClickable={false}
-            name="search"
+            onChange={onHandleSearch}
+            disabled={checked && true}
+            value={query}
           />
         </Formik>
       </Grid>
       <Grid item xs={3}>
         <Box px={5}>
           <FormControlLabel
+            label="Filter"
             control={
               <Switch
                 checked={checked}

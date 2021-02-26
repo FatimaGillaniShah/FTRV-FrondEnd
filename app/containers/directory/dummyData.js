@@ -57,13 +57,13 @@ const headCells = [
     label: 'Department',
     type: 'label',
   },
-  // {
-  //   id: 'designation',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   label: 'Designation',
-  //   type: 'label',
-  // },
+  {
+    id: 'title',
+    numeric: false,
+    disablePadding: false,
+    label: 'Designation',
+    type: 'label',
+  },
   {
     id: 'email',
     numeric: false,
