@@ -11,6 +11,7 @@ import PrivateRoute from '../components/hoc/privateRoute';
 
 // import PrivateRoute from '../components/hoc/privateRoute';
 // import { ROLES } from '../utils/constants';
+import CreateUser from '../containers/CreateUser';
 
 function Routes() {
   return (
@@ -24,6 +25,7 @@ function Routes() {
           path="/directory/upload"
           component={DirectoryImporter}
         />
+        <PrivateRoute exact path="/create-user" component={CreateUser} />
         <PrivateRoute component={NotFoundPage} />
         {/* <PrivateRoute */}
         {/*  path="/" */}
