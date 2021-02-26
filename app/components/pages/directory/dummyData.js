@@ -13,7 +13,7 @@ const handleDeleteUser = (confirmBtnColor, cancelBtnColor) => {
     showCancelButton: true,
     confirmButtonColor: confirmBtnColor,
     cancelButtonColor: cancelBtnColor,
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Yes, delete it!',
   }).then((result) => {
     if (result.isConfirmed) {
       Swal.fire('Deleted!', 'User has been deleted.', 'success');
@@ -48,42 +48,42 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: 'Name',
-    type: 'label'
+    type: 'label',
   },
   {
     id: 'department',
     numeric: false,
     disablePadding: false,
     label: 'Department',
-    type: 'label'
+    type: 'label',
   },
   {
     id: 'designation',
     numeric: false,
     disablePadding: false,
     label: 'Designation',
-    type: 'label'
+    type: 'label',
   },
   {
     id: 'emailID',
     numeric: false,
     disablePadding: false,
     label: 'Email ID',
-    type: 'label'
+    type: 'label',
   },
   {
     id: 'ext',
     numeric: true,
     disablePadding: false,
     label: 'Ext',
-    type: 'label'
+    type: 'label',
   },
   {
     id: 'cellPhone',
     numeric: true,
     disablePadding: false,
     label: 'Cell Phone',
-    type: 'label'
+    type: 'label',
   },
   {
     id: 'actions',
@@ -91,8 +91,8 @@ const headCells = [
     disablePadding: false,
     label: '',
     buttons: ActionButtons,
-    type: 'action'
-  }
+    type: 'action',
+  },
 ];
 
 const data = [
@@ -103,7 +103,7 @@ const data = [
     designation: 'Software Engineer',
     emailID: 'abc@m.com',
     ext: 4.3,
-    cellPhone: 343223452
+    cellPhone: 343223452,
   },
   {
     id: 2,
@@ -112,7 +112,7 @@ const data = [
     designation: 'oftware Engineer',
     emailID: 'cbc@m.com',
     ext: 4.3,
-    cellPhone: 343223452
+    cellPhone: 343223452,
   },
   {
     id: 3,
@@ -121,7 +121,7 @@ const data = [
     designation: 'ftware Engineer',
     emailID: 'bbc@m.com',
     ext: 4.3,
-    cellPhone: 343223452
+    cellPhone: 343223452,
   },
   {
     id: 4,
@@ -130,7 +130,7 @@ const data = [
     designation: 'tware Engineer',
     emailID: 'dabc@m.com',
     ext: 4.3,
-    cellPhone: 343223452
+    cellPhone: 343223452,
   },
   {
     id: 5,
@@ -139,7 +139,7 @@ const data = [
     designation: 'ware Engineer',
     emailID: 'eaebc@m.com',
     ext: 4.3,
-    cellPhone: 343223452
+    cellPhone: 343223452,
   },
   {
     id: 6,
@@ -148,8 +148,8 @@ const data = [
     designation: 'are Engineer',
     emailID: 'uabc@m.com',
     ext: 4.3,
-    cellPhone: 343223452
-  }
+    cellPhone: 343223452,
+  },
 ];
 
 export { data, headCells };

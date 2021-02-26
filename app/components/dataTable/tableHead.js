@@ -5,7 +5,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Box } from '@material-ui/core';
 import { StyledTableSortLabel } from './styles';
-import { CheckBox } from '../MuiCheckbox/Index';
+import { CheckBox } from '../index';
 
 export default function EnhancedTableHead({
   classes,
@@ -15,7 +15,7 @@ export default function EnhancedTableHead({
   numSelected,
   rowCount,
   onRequestSort,
-  headCells
+  headCells,
 }) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -32,9 +32,8 @@ export default function EnhancedTableHead({
             className={classes.tableHead}
           />
         </TableCell>
-        {headCells.map((headCell, index) => (
+        {headCells.map((headCell) => (
           <TableCell
-            key={index}
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
@@ -73,8 +72,6 @@ EnhancedTableHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
-  headCells: PropTypes.array.isRequired
+  headCells: PropTypes.array.isRequired,
 };
-EnhancedTableHead.defaultProps = {
-  headCells: []
-};
+EnhancedTableHead.defaultProps = {};

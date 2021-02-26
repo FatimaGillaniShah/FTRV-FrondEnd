@@ -48,15 +48,11 @@ export default function SelectInput({
           <em>None</em>
         </MenuItem>
         {options &&
-          options.map((val, key) =>
+          options.map((val) =>
             val.value !== undefined ? (
-              <MenuItem key={key} value={val.value}>
-                {val.label}
-              </MenuItem>
+              <MenuItem value={val.value}>{val.label}</MenuItem>
             ) : (
-              <MenuItem key={key} value={val}>
-                {val}
-              </MenuItem>
+              <MenuItem value={val}>{val}</MenuItem>
             )
           )}
       </Select>

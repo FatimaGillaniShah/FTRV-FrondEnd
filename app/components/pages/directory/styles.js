@@ -2,10 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 // DIRECTORY PAGE STYLES
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   flex: {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 }));
 
 export { useStyles };

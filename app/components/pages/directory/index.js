@@ -1,6 +1,6 @@
 /**
  *
- * Directory
+ * directory
  *
  */
 
@@ -8,11 +8,11 @@ import React, { memo, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import { Container } from '@material-ui/core';
 import { useStyles } from './styles';
-import Filters from './Filters';
-import Search from './Search';
-import TableButtons from './TableButtons';
-import DataTable from '../../DataTable/Index';
-import { data, headCells } from './DummyData';
+import Filters from './filters';
+import Search from './search';
+import TableButtons from './tableButtons';
+import DataTable from '../../dataTable/index';
+import { data, headCells } from './dummyData';
 
 export function Directory() {
   const [checked, setChecked] = useState(false);

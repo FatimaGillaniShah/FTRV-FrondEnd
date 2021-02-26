@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the Directory Page
+ * Asynchronously loads the directory Page
  *
  */
 
