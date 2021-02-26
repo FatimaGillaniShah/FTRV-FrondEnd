@@ -7,7 +7,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
-import EmployeeFileUploader from '../../components/fileUploader';
+import EmployeeFileUploader from '../../components/directoryImporter';
 import { uploadEmployeeFile } from '../../state/queryFunctions';
 
 function DirectoryUploader() {
@@ -52,8 +52,11 @@ function DirectoryUploader() {
   return (
     <>
       <Helmet>
-        <title>DirectoryUploader</title>
-        <meta name="description" content="Description of DirectoryUploader" />
+        <title>Directory Uploader</title>
+        <meta
+          name="ftrv directory uploader"
+          content="ftrv - Upload directory file"
+        />
       </Helmet>
 
       <EmployeeFileUploader

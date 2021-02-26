@@ -25,6 +25,9 @@ export default function FileUploader({
   inputEl,
 }) {
   const classes = useStyles();
+
+  const {data:{data:{data:{message}={}} = {}} ={}} = mutation
+
   return (
     <>
       {error && <Toast variant="error"> {error} </Toast>}
@@ -37,17 +40,11 @@ export default function FileUploader({
 
       {mutation.isSuccess && (
         <Toast variant="success">
-          {mutation.data &&
-            mutation.data.data &&
-            mutation.data.data.data &&
-            mutation.data.data.data.message}
+          {message && message}
         </Toast>
       )}
-      <Grid Container xs={12} className={classes.root}>
-        <Grid
-          xs={12}
-          style={{ display: 'flex', flexDirection: 'column', flex: 0.4 }}
-        >
+      <Grid container xs={12} className={classes.root} direction="column">
+        <Grid xs={12} className={classes.childGrid} direction="column">
           <Paper>
             <Box m={4}>
               <Grid xs={12} className={classes.headingGrid}>
@@ -73,7 +70,11 @@ export default function FileUploader({
                   </Button>
                 </Box>
               </Grid>
-              <Grid xs={12} className={classes.uploadFileGrid}>
+              <Grid
+                xs={12}
+                className={classes.uploadFileGrid}
+                justify="space-between"
+              >
                 <Box className={classes.uploadBtnBox}>
                   <input
                     id="faceImage"
