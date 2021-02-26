@@ -8,12 +8,12 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
   },
 }));
-export default function WrapInCard() {
+export default function WrapInCard({ children }) {
   const classes = useStyles();
   return (
     <>
       <Grid container xs={12} direction="column" className={classes.root}>
-        <Card></Card>
+        <Card>{children}</Card>
       </Grid>
     </>
   );
