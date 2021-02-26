@@ -1,5 +1,5 @@
-import { APIS } from 'utils/constants';
 import http from '../service/http';
+import { APIS } from '../utils/constants';
 
 const { LOGIN, FILE_UPLOAD } = APIS;
 
@@ -7,9 +7,9 @@ export const fetchUsers = async () => {
   // return http.get('users');
 };
 
-// export const fetchUser = async (id) => {};
+export const fetchUser = async () => {};
 
-// export const submitUser = async (id) => {};
+export const submitUser = async () => {};
 
 export const uploadUsers = async () => {};
 

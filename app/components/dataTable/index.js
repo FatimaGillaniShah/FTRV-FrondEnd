@@ -8,9 +8,9 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import EnhancedTableHead from './TableHead';
+import EnhancedTableHead from './tableHead';
 import { useStyles } from './styles';
-import { CheckBox } from '../MuiCheckbox/Index';
+import { CheckBox } from '../index';
 import { getComparator, stableSort } from '../../utils/helper';
 
 export function DataTable({ data, headCells, tableRowsPerPage }) {
@@ -83,15 +83,12 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
         />
       </TableCell>
       {headCells.map((header, index) =>
-        header.type == 'action' ? (
-          <TableCell align="right" key={index}>
-            {header.buttons()}
-          </TableCell>
+        header.type === 'action' ? (
+          <TableCell align="right">{header.buttons()}</TableCell>
         ) : (
           <TableCell
-            padding={index == 0 ? 'none' : 'default'}
+            padding={index === 0 ? 'none' : 'default'}
             align={header.numeric ? 'right' : 'left'}
-            key={index}
           >
             {row[header.id]}
           </TableCell>
@@ -165,16 +162,14 @@ DataTable.propTypes = {
   tableRowsPerPage: PropTypes.number,
 };
 DataTable.defaultProps = {
-  headCells: [],
   tableRowsPerPage: 5,
-  data: [],
 };
 
 export default DataTable;
 
 // USAGE
 
-/* <DataTable data={data} headCells={headCells} /> */
+/* <dataTable data={data} headCells={headCells} /> */
 
 // DUMMY DATA
 

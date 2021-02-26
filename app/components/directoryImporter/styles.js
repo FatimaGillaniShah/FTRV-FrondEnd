@@ -2,13 +2,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    flexDirection: 'column',
     display: 'flex',
     flex: 1,
     backgroundColor: 'white',
     padding: '2rem',
   },
 
+  childGrid: { display: 'flex', flex: 0.4 },
   paper: {
     flex: 0.4,
   },
@@ -46,7 +46,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   uploadFileGrid: {
     display: 'flex',
-    justifyContent: 'space-between',
     [theme.breakpoints.down('xl')]: {
       flexDirection: 'row',
       alignItems: 'flex-end',

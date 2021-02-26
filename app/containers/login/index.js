@@ -4,30 +4,28 @@
  *
  */
 
-import React, { memo, useContext, useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { Login } from '../../components/pages/Login/Index';
-import { AuthContext } from '../../context/authContext';
+import { Login } from '../../components/pages/login';
 import { login } from '../../state/queryFunctions';
-// import { useAuthContext } from '../../context/authContext';
+import { useAuthContext } from '../../context/authContext';
 
 function LoginContainer() {
   const mutation = useMutation((values) => login(values));
   const { data, isError, isSuccess, error } = mutation;
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useAuthContext();
   const history = useHistory();
 
-  useEffect(() => {
-    if (isSuccess) {
-      setUser({
-        data: data.data.data,
-        isAuthenticated: true,
-        token: data.data.data.token,
-      });
-    }
-  }, [data]);
+  if (isSuccess) {
+    setUser({
+      data: data.data.data,
+      isAuthenticated: true,
+      token: data.data.data.token,
+    });
+  }
+
   useEffect(() => {
     if (user.isAuthenticated) {
       history.push('/home');

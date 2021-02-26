@@ -12,11 +12,11 @@ class Http {
     });
 
     service.interceptors.request.use(
-      async (config) => {
+      (config) => {
         const { token } = JSON.parse(localStorage.getItem('user'));
         // eslint-disable-next-line no-param-reassign
         config.headers.common.Authorization = `Bearer ${token}`;
-        if (config.url === 'users/uplaod') {
+        if (config.url === 'users/upload') {
           // eslint-disable-next-line no-param-reassign
           config.headers.post['Content-Type'] = 'multipart/form-data';
         }

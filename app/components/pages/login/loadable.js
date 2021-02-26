@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for Login Page
+ * Asynchronously loads the component for login Page
  *
  */
 
