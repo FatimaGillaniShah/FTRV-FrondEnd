@@ -1,8 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router } from 'react-router-dom';
-// import { useMutation, useQueries, useQuery } from 'react-query';
-// import axios from 'axios';
 import Layout from '../../components/layout';
 import Routes from '../../routes';
 import ErrorBoundary from '../error/errorBoundry';

@@ -1,6 +1,6 @@
 /**
  *
- * Login
+ * login
  *
  */
 
@@ -13,9 +13,9 @@ import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { Form, Formik } from 'formik';
 import useStyles from './style';
-import { Input } from '../../Index1';
+import { Input } from '../../index';
 import { loginSchema } from '../../../containers/login/schema';
-import { BodyText } from '../../typography/index';
+import { BodyText } from '../../typography';
 
 export function Login({ onHandleSubmit, isError, errorMessage }) {
   const classes = useStyles();

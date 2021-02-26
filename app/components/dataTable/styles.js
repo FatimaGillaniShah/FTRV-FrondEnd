@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 // TableSortLabel CUSTOM STYLING
 
-const StyledTableSortLabel = withStyles((theme) =>
+const StyledTableSortLabel = withStyles(() =>
   createStyles({
     root: {
       color: 'white',

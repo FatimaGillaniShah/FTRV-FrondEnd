@@ -10,7 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { FormControlLabel, Grid, Typography } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 import { Formik } from 'formik';
-import InputField from '../../InputField/Index';
+import { Input } from '../../index';
 
 export function Search({ onHandleSwitchChange, checked }) {
   return (
@@ -22,7 +22,7 @@ export function Search({ onHandleSwitchChange, checked }) {
       </Grid>
       <Grid item xs={6}>
         <Formik>
-          <InputField
+          <Input
             variant="outlined"
             prependIcon
             Icon={SearchIcon}
