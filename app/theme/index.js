@@ -20,9 +20,7 @@ const theme = createMuiTheme({
     },
     bgColor: colors.bgColor,
     textColor: colors.textColor,
-    iconColor: {
-      main: colors.iconColor,
-    },
+    iconColor: colors.iconColor,
     menuColor: colors.menuColor,
     checkbox: {
       main: colors.checkbox.main,

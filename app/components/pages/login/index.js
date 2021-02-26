@@ -15,7 +15,7 @@ import { Form, Formik } from 'formik';
 import useStyles from './style';
 import { Input } from '../../index';
 import { loginSchema } from '../../../containers/login/schema';
-import { Body2 } from '../../typography';
+import { BodyText } from '../../typography';
 
 export function Login({ onHandleSubmit, isError, errorMessage }) {
   const classes = useStyles();
@@ -70,7 +70,7 @@ export function Login({ onHandleSubmit, isError, errorMessage }) {
                 </Box>
                 {isError && (
                   <Box mt={6} textAlign="center" className={classes.error}>
-                    <Body2>{errorMessage}</Body2>
+                    <BodyText>{errorMessage}</BodyText>
                   </Box>
                 )}
               </Paper>
