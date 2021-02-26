@@ -13,7 +13,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { Form, Formik } from 'formik';
 import useStyles from './style';
-import { Input } from '../../index';
+import { Input } from '../../Index1';
 import { loginSchema } from '../../../containers/login/schema';
 import { BodyText } from '../../typography/index';
 
