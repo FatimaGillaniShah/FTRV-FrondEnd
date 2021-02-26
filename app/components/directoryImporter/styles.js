@@ -2,16 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
     flex: 1,
-    backgroundColor: 'white',
-    padding: '2rem',
+    display: 'flex',
   },
-
-  childGrid: { display: 'flex', flex: 0.4 },
-  paper: {
-    flex: 0.4,
-  },
+  contentGrid: { padding: '1.3rem', display: 'flex', flex: 0.3 },
   headingGrid: {
     display: 'flex',
     [theme.breakpoints.down('xl')]: {

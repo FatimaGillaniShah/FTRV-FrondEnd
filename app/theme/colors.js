@@ -2,7 +2,7 @@ export const colors = {
   primary: '#153D73',
   secondary: '#1875C0',
   bgColor: {
-    main: '#EAEAEA',
+    main: '#F0F2F5',
     secondary: 'white',
   },
   textColor: {
