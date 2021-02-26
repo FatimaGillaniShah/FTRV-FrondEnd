@@ -16,7 +16,7 @@ function Routes() {
       <Switch>
         <Route exact path="/" component={Login} />
         <PrivateRoute exact path="/home" component={Home} />
-        <Route exact path="/directory1" component={Directory} />
+        <PrivateRoute exact path="/directory" component={Directory} />
         <Route component={NotFoundPage} />
         {/* <PrivateRoute */}
         {/*  path="/" */}

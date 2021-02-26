@@ -17,4 +17,12 @@ export const colors = {
     secondary: '#1875C0',
     tertiary: '#335e96',
   },
+  checkbox: {
+    main: 'grey',
+    secondary: 'white',
+  },
+  modalColors: {
+    confirm: '#d33',
+    cancel: '#3085d6',
+  },
 };

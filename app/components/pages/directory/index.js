@@ -1,6 +1,6 @@
 /**
  *
- * directory
+ * Directory
  *
  */
 
@@ -12,18 +12,17 @@ import Filters from './filters';
 import Search from './search';
 import TableButtons from './tableButtons';
 import DataTable from '../../dataTable/index';
-import { data, headCells } from './dummyData';
 
-export function Directory() {
+export function Directory({ data, headCells }) {
+  const classes = useStyles();
   const [checked, setChecked] = useState(false);
   const handleSwitchChange = ({ target }) => {
     setChecked(target.checked);
   };
-  const classes = useStyles();
   return (
-    <>
-      <Container>
-        <Box className={classes.flex} mt={5}>
+    <Container>
+      <Box mt={10}>
+        <Box className={classes.flex}>
           <Search onHandleSwitchChange={handleSwitchChange} checked={checked} />
         </Box>
         <Box mt={2}>{checked && <Filters />}</Box>
@@ -31,8 +30,8 @@ export function Directory() {
           <TableButtons />
         </Box>
         <DataTable data={data} headCells={headCells} />
-      </Container>
-    </>
+      </Box>
+    </Container>
   );
 }
 

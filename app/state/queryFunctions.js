@@ -1,11 +1,9 @@
 import http from '../service/http';
 import { APIS } from '../utils/constants';
 
-const { LOGIN } = APIS;
+const { LOGIN, USERS_LIST } = APIS;
 
-export const fetchUsers = async () => {
-  // return http.get('users');
-};
+export const fetchUsers = async () => http.get(USERS_LIST);
 
 export const fetchUser = async () => {};
 

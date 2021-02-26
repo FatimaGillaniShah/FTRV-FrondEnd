@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
       {...rest}
       render={(props) => {
         // If not logged in redirect to login page
-        if (!user) {
+        if (!user.isAuthenticated) {
           return <Redirect to="/" />;
         }
         // check if route is restricted by role

@@ -44,7 +44,7 @@ const ActionButtons = () => {
 // @TODO REMOVE DATA
 const headCells = [
   {
-    id: 'name',
+    id: 'fullName',
     numeric: false,
     disablePadding: true,
     label: 'Name',
@@ -57,29 +57,29 @@ const headCells = [
     label: 'Department',
     type: 'label',
   },
+  // {
+  //   id: 'designation',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: 'Designation',
+  //   type: 'label',
+  // },
   {
-    id: 'designation',
-    numeric: false,
-    disablePadding: false,
-    label: 'Designation',
-    type: 'label',
-  },
-  {
-    id: 'emailID',
+    id: 'email',
     numeric: false,
     disablePadding: false,
     label: 'Email ID',
     type: 'label',
   },
   {
-    id: 'ext',
+    id: 'extension',
     numeric: true,
     disablePadding: false,
     label: 'Ext',
     type: 'label',
   },
   {
-    id: 'cellPhone',
+    id: 'contactNo',
     numeric: true,
     disablePadding: false,
     label: 'Cell Phone',

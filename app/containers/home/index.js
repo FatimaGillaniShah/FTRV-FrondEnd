@@ -4,15 +4,15 @@
  *
  */
 
-import React, { memo, useContext, useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 import Home from '../../components/pages/home/loadable';
-import AuthContext from '../../context/authContext';
+import { useAuthContext } from '../../context/authContext';
 
 function HomeContainer() {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthContext();
   const history = useHistory();
 
   useEffect(() => {

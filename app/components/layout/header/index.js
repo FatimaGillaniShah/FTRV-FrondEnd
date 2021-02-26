@@ -10,9 +10,9 @@ import {
   Typography,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AuthContext from '../../../context/authContext';
+import { useAuthContext } from '../../../context/authContext';
 import AvatarImg from '../../../images/avatar.jpeg';
 import Logo from '../../../images/logo.png';
 
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const { user, setUser } = useContext(AuthContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { user, setUser } = useAuthContext();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

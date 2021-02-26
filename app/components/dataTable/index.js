@@ -16,14 +16,16 @@ import { getComparator, stableSort } from '../../utils/helper';
 export function DataTable({ data, headCells, tableRowsPerPage }) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('fullName');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
   const [rows, setRows] = useState([]);
   useEffect(() => {
-    setRows(data);
-  }, []);
+    if (data) {
+      setRows(data);
+    }
+  }, [data]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
