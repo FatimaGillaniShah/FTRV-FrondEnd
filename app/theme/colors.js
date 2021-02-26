@@ -6,12 +6,17 @@ export const colors = {
     secondary: 'white',
   },
   textColor: {
-    main: 'white',
-    secondary: '#153D73',
-    black: 'black',
+    primary: '#153D73',
+    secondary: '#1875C0',
+    default: '#525252',
+    light: 'white',
     error: 'red',
   },
-  iconColor: 'white',
+  iconColor: {
+    primary: '#153D73',
+    secondary: '#1875C0',
+    default: 'white',
+  },
   menuColor: {
     primary: '#153D73',
     secondary: '#1875C0',

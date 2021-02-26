@@ -16,7 +16,7 @@ function HomeContainer() {
   const history = useHistory();
 
   useEffect(() => {
-    if (!user.isAuthenticated) {
+    if (!user || !user.isAuthenticated) {
       history.push('/');
     }
   }, [user]);
