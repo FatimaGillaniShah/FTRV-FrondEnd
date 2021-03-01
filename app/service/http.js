@@ -8,8 +8,6 @@ class Http {
         common: {
           Accept: 'application/json',
         },
-        // @ TODO add authorization after checked isauthenticated
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBmdHJ2LmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYxNDI0MTYwNH0.SPYYXrrOvxKpmzl0HBA1T99e7ryKsVQzCeIb8N2JTvM`,
       },
     });
 
