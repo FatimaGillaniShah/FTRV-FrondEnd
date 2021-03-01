@@ -72,9 +72,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   contentGrid: {
-    flexDirection: 'row',
+    // flexDirection: 'column',
     flex: 1,
     display: 'flex',
+    padding: '0.6rem',
     marginLeft: '10%',
     [theme.breakpoints.down('lg')]: {
       marginLeft: '10%',
@@ -85,9 +86,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       marginLeft: '28%',
     },
+    marginTop: '3rem',
   },
   menuSpacer: { flex: 0.11 },
   dasboardGrid: { flex: 0.9 },
+
   twoColumnLayoutMainGrid: {
     display: 'flex',
     padding: '0.2rem',
@@ -160,7 +163,7 @@ const Layout = ({ children }) => {
                   </Grid>
                 </>
               ) : (
-                <>{children}</>
+                <> {children}</>
               )}
             </Grid>
           </Grid>
