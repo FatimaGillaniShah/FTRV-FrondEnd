@@ -87,3 +87,8 @@ export const BodyText = (props) => {
     </Typography>
   );
 };
+export const ButtonText = (props) => {
+  const { root } = useStyles(props);
+
+  return <Typography classes={{ root }}>{props.children}</Typography>;
+};

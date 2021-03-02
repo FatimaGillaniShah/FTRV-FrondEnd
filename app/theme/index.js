@@ -38,7 +38,10 @@ const theme = createMuiTheme({
     // h1: {},
     // h2: {},
     // h3: {},
-    // h4: {},
+    h4: {
+      color: colors.secondary,
+      fontWeight: 500,
+    },
     // h5: {},
     // h6: {},
     // subtitle1: 'h2',
@@ -48,6 +51,10 @@ const theme = createMuiTheme({
     body2: {
       fontWeight: 300,
       fontSize: '12px',
+    },
+    button: {
+      textTransform: 'capitalize',
+      fontWeight: 300,
     },
   },
 });

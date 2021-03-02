@@ -4,14 +4,15 @@ import Directory from '../containers/directory';
 import Home from '../containers/home/loadable';
 import Login from '../containers/login';
 import NotFoundPage from '../containers/pageNotFound/loadable';
-import DirectoryImporter from '../containers/directoryImporter';
+import DirectoryImporter from '../containers/directoryImporter/loadable';
 
 import PrivateRoute from '../components/hoc/privateRoute';
 // import { ROLES } from '../utils/constants';
 
 // import PrivateRoute from '../components/hoc/privateRoute';
 // import { ROLES } from '../utils/constants';
-import CreateUser from '../containers/CreateUser';
+import CreateUser from '../containers/createUser/loadable';
+import EditUser from '../containers/editUser/loadable';
 
 function Routes() {
   return (
@@ -25,7 +26,8 @@ function Routes() {
           path="/directory/upload"
           component={DirectoryImporter}
         />
-        <PrivateRoute exact path="/create-user" component={CreateUser} />
+        <PrivateRoute exact path="/directory/add" component={CreateUser} />
+        <PrivateRoute exact path="/directory/edit/:id" component={EditUser} />
         <PrivateRoute component={NotFoundPage} />
         {/* <PrivateRoute */}
         {/*  path="/" */}

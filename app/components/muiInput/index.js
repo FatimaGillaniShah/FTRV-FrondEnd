@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { memo } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -15,13 +15,14 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { FormHelperText } from '@material-ui/core';
 import { useField } from 'formik';
 
-export function InputField({
+function InputField({
   placeholderText,
   Icon,
   inputType,
   inputID,
   onIconClick,
   iconID,
+  isDisabled,
   appendIcon,
   prependIcon,
   fullWidth,
@@ -33,16 +34,19 @@ export function InputField({
   ...props
 }) {
   const [field, meta] = useField(props);
+  // console.log(inputType);
+  // console.log('input mui', field, props);
   return (
     <FormControl
       fullWidth={fullWidth}
-      error={meta.error && true}
+      error={meta.touched && meta.error}
       {...formControlProps}
     >
       {variant === 'outlined' ? (
         <OutlinedInput
           id={inputID}
           type={inputType}
+          disabled={isDisabled}
           placeholder={OutlinedInputPlaceholder}
           endAdornment={
             Icon &&
@@ -81,6 +85,7 @@ export function InputField({
           <Input
             id={inputID}
             type={inputType}
+            disabled={isDisabled}
             endAdornment={
               Icon &&
               appendIcon && (
@@ -121,11 +126,12 @@ export function InputField({
   );
 }
 
-export default InputField;
+export default memo(InputField);
 
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
   fullWidth: PropTypes.bool,
+  isDisabled: PropTypes.bool,
   placeholderText: PropTypes.string,
   Icon: PropTypes.object,
   inputType: PropTypes.string,

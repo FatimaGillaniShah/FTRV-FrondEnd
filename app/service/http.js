@@ -38,6 +38,10 @@ class Http {
   post(path, payload) {
     return this.service.post(path, payload);
   }
+
+  put(path, payload) {
+    return this.service.put(path, payload);
+  }
 }
 
 export default new Http();
