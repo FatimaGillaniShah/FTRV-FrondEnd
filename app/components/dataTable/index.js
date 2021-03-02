@@ -72,8 +72,8 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  // const emptyRows =
+  //   rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const mapRows = (row, isItemSelected, labelId) => (
     <>
@@ -84,9 +84,12 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
           onClick={(event) => handleClick(event, row.id)}
         />
       </TableCell>
-      {headCells.map((header, index) =>
-        header.type === 'action' ? (
-          <TableCell align="right">{header.buttons(row)}</TableCell>
+      {headCells.map((header, index) => {
+        const Buttons = header.buttons || null;
+        return header.type === 'action' ? (
+          <TableCell align="right">
+            <Buttons data={row} />
+          </TableCell>
         ) : (
           <TableCell
             padding={index === 0 ? 'none' : 'default'}
@@ -94,8 +97,8 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
           >
             {row[header.id]}
           </TableCell>
-        )
-      )}
+        );
+      })}
     </>
   );
   return (

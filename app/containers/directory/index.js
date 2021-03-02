@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
 import { fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { headCells } from './dummyData';
+import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
 import Search from '../../components/pages/directory/search';
 import Filters from '../../components/pages/directory/filters';
@@ -24,7 +24,8 @@ function DirectoryContainer() {
   }, [checked]);
   const { data, isLoading } = useQuery(
     keys.getUsers({ query, filters }),
-    fetchUsers
+    fetchUsers,
+    { refetchOnWindowFocus: false }
   );
 
   const [checked, setChecked] = useState(false);
@@ -64,7 +65,12 @@ function DirectoryContainer() {
           <Box mt={4}>
             <TableButtons />
           </Box>
-          <DataTable data={data && data.data.data.rows} headCells={headCells} />
+          {!isLoading && (
+            <DataTable
+              data={data && data.data.data.rows}
+              headCells={headCells}
+            />
+          )}
         </WrapInCard>
       </Box>
     </>

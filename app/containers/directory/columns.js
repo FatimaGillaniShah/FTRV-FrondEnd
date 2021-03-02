@@ -5,28 +5,47 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Swal from 'sweetalert2';
 import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { useMutation } from 'react-query';
-import {deleteUser, uploadEmployeeFile} from '../../state/queryFunctions';
+import { useMutation, useQueryClient } from 'react-query';
+import { deleteUser } from '../../state/queryFunctions';
+import { keys } from '../../state/queryKeys';
 
-const handleDeleteUser = (confirmBtnColor, cancelBtnColor, mutation) => {
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: confirmBtnColor,
-    cancelButtonColor: cancelBtnColor,
-    confirmButtonText: 'Yes, delete it!',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      //mutation.mutate([1])
-      //Swal.fire('Deleted!', 'User has been deleted.', 'success');
-    }
-  });
-};
 const ActionButtons = (data) => {
   const history = useHistory();
   const theme = useTheme();
+  const queryClient = useQueryClient();
+  const mutation = useMutation(deleteUser, {
+    onSuccess: ({
+      data: {
+        data: { count },
+      },
+    }) => {
+      Swal.fire('Deleted!', `${count} user deleted.`, 'success');
+      queryClient.invalidateQueries(keys.getUsers({}));
+    },
+  });
+
+  if (mutation.isError) {
+    Swal.fire(
+      '',
+      'Some error occured in deleting the user. Please  try again',
+      'error'
+    );
+  }
+  const handleDeleteUser = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: theme.palette.modalColors.confirm,
+      cancelButtonColor: theme.palette.modalColors.cancel,
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate([null]);
+      }
+    });
+  };
 
   return (
     <>
@@ -36,21 +55,14 @@ const ActionButtons = (data) => {
           onClick={() => history.push(`directory/edit/${data.id}`)}
         />
       </IconButton>
-      <IconButton
-        onClick={() =>
-          handleDeleteUser(
-            theme.palette.modalColors.confirm,
-            theme.palette.modalColors.cancel
-          )
-        }
-      >
+      <IconButton onClick={() => handleDeleteUser()}>
         <DeleteIcon color="error" />
       </IconButton>
     </>
   );
 };
 
-const headCells = [
+export const headCells = [
   {
     id: 'fullName',
     numeric: false,
@@ -102,5 +114,3 @@ const headCells = [
     type: 'action',
   },
 ];
-
-export { headCells };

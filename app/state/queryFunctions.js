@@ -7,7 +7,7 @@ const { LOGIN, FILE_UPLOAD, USERS_LIST, USERS_DELETE } = APIS;
 export const fetchUsers = ({ queryKey }) => {
   let url;
   if (queryKey[1].query) {
-    url = `${`${USERS_LIST}?pageSize=2&${insertParams(queryKey[1].query)}`}`;
+    url = `${`${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].query)}`}`;
   } else if (queryKey[1].filters) {
     url = `${USERS_LIST}?pageSize=1&${insertParams(queryKey[1].filters)}`;
   } else {
@@ -18,7 +18,8 @@ export const fetchUsers = ({ queryKey }) => {
 
 export const fetchUser = async () => {};
 
-export const deleteUser = (payload) => http.delete(USERS_DELETE, payload);
+export const deleteUser = (payload) =>
+  http.delete(USERS_DELETE, { data: { ids: payload } });
 
 export const submitUser = async () => {};
 
