@@ -4,8 +4,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Swal from 'sweetalert2';
 import { useTheme } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { useMutation } from 'react-query';
+import {deleteUser, uploadEmployeeFile} from '../../state/queryFunctions';
 
-const handleDeleteUser = (confirmBtnColor, cancelBtnColor) => {
+const handleDeleteUser = (confirmBtnColor, cancelBtnColor, mutation) => {
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -16,16 +19,22 @@ const handleDeleteUser = (confirmBtnColor, cancelBtnColor) => {
     confirmButtonText: 'Yes, delete it!',
   }).then((result) => {
     if (result.isConfirmed) {
-      Swal.fire('Deleted!', 'User has been deleted.', 'success');
+      //mutation.mutate([1])
+      //Swal.fire('Deleted!', 'User has been deleted.', 'success');
     }
   });
 };
-const ActionButtons = () => {
+const ActionButtons = (data) => {
+  const history = useHistory();
   const theme = useTheme();
+
   return (
     <>
       <IconButton>
-        <EditIcon color="primary" />
+        <EditIcon
+          color="secondary"
+          onClick={() => history.push(`directory/edit/${data.id}`)}
+        />
       </IconButton>
       <IconButton
         onClick={() =>
@@ -41,7 +50,6 @@ const ActionButtons = () => {
   );
 };
 
-// @TODO REMOVE DATA
 const headCells = [
   {
     id: 'fullName',
@@ -95,61 +103,4 @@ const headCells = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    name: 'aCupcake1',
-    department: 'Information Technology',
-    designation: 'Software Engineer',
-    emailID: 'abc@m.com',
-    ext: 4.3,
-    cellPhone: 343223452,
-  },
-  {
-    id: 2,
-    name: 'fCupcake2',
-    department: 'nformation Technology',
-    designation: 'oftware Engineer',
-    emailID: 'cbc@m.com',
-    ext: 4.3,
-    cellPhone: 343223452,
-  },
-  {
-    id: 3,
-    name: 'eCupcake3',
-    department: 'formation Technology',
-    designation: 'ftware Engineer',
-    emailID: 'bbc@m.com',
-    ext: 4.3,
-    cellPhone: 343223452,
-  },
-  {
-    id: 4,
-    name: 'Ctupcake4',
-    department: 'ormation Technology',
-    designation: 'tware Engineer',
-    emailID: 'dabc@m.com',
-    ext: 4.3,
-    cellPhone: 343223452,
-  },
-  {
-    id: 5,
-    name: 'hCupcake5',
-    department: 'rmation Technology',
-    designation: 'ware Engineer',
-    emailID: 'eaebc@m.com',
-    ext: 4.3,
-    cellPhone: 343223452,
-  },
-  {
-    id: 6,
-    name: 'wCupcake6',
-    department: 'mation Technology',
-    designation: 'are Engineer',
-    emailID: 'uabc@m.com',
-    ext: 4.3,
-    cellPhone: 343223452,
-  },
-];
-
-export { data, headCells };
+export { headCells };

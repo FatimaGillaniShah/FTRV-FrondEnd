@@ -1,20 +1,15 @@
-import { Grid, Card } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
-const useStyles = makeStyles(() => ({
-  root: {
-    flex: 1,
-    display: 'flex',
-  },
-}));
-export default function WrapInCard({ children }) {
-  const classes = useStyles();
+export default function WrapInCard({ children, ...props }) {
   return (
     <>
-      <Grid container xs={12} direction="column" className={classes.root}>
-        <Card>{children}</Card>
-      </Grid>
+      <Box width={1} {...props}>
+        <Card>
+          <Box p={4}>{children}</Box>
+        </Card>
+      </Box>
     </>
   );
 }

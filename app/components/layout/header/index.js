@@ -14,11 +14,12 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
-import Button from '@material-ui/core/Button';
 import { useAuthContext } from '../../../context/authContext';
 import AvatarImg from '../../../images/avatar.jpeg';
 import Logo from '../../../images/logo.png';
+import  { PowerSettingsNew, AccountCircle} from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
+import {H1} from "../../typography";
 
 const StyledMenuItem = styled(MenuItem)`
   &&& {
@@ -37,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     height: theme.defaultHeights.header,
     color: theme.palette.primary.main,
-    zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

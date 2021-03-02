@@ -2,17 +2,14 @@ import http from '../service/http';
 import { APIS } from '../utils/constants';
 import { insertParams } from '../utils/helper';
 
-const { LOGIN, FILE_UPLOAD, USERS_LIST } = APIS;
+const { LOGIN, FILE_UPLOAD, USERS_LIST, USERS_DELETE } = APIS;
 
-export const fetchUsers = async ({ queryKey }) => {
-  const params = {
-    q: queryKey[1].query,
-  };
+export const fetchUsers = ({ queryKey }) => {
   let url;
   if (queryKey[1].query) {
-    url = `${`${USERS_LIST}/${insertParams(params)}`}`;
+    url = `${`${USERS_LIST}?pageSize=2&${insertParams(queryKey[1].query)}`}`;
   } else if (queryKey[1].filters) {
-    url = USERS_LIST + insertParams(queryKey[1].filters);
+    url = `${USERS_LIST}?pageSize=1&${insertParams(queryKey[1].filters)}`;
   } else {
     url = USERS_LIST;
   }
@@ -21,9 +18,9 @@ export const fetchUsers = async ({ queryKey }) => {
 
 export const fetchUser = async () => {};
 
-export const submitUser = async () => {};
+export const deleteUser = (payload) => http.delete(USERS_DELETE, payload);
 
-export const uploadUsers = async () => {};
+export const submitUser = async () => {};
 
 export const uploadEmployeeFile = async (file) => http.post(FILE_UPLOAD, file);
 

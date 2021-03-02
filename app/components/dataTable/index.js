@@ -6,8 +6,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
+import Alert from '@material-ui/lab/Alert';
 import EnhancedTableHead from './tableHead';
 import { useStyles } from './styles';
 import { CheckBox } from '../index';
@@ -86,7 +86,7 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
       </TableCell>
       {headCells.map((header, index) =>
         header.type === 'action' ? (
-          <TableCell align="right">{header.buttons()}</TableCell>
+          <TableCell align="right">{header.buttons(row)}</TableCell>
         ) : (
           <TableCell
             padding={index === 0 ? 'none' : 'default'}
@@ -100,61 +100,62 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
   );
   return (
     <Box className={classes.root}>
-      <Paper className={classes.paper}>
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-              headCells={headCells}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+      <TableContainer>
+        <Table
+          className={classes.table}
+          aria-labelledby="tableTitle"
+          aria-label="enhanced table"
+        >
+          <EnhancedTableHead
+            classes={classes}
+            numSelected={selected.length}
+            order={order}
+            orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={rows.length}
+            headCells={headCells}
+          />
+          <TableBody>
+            {stableSort(rows, getComparator(order, orderBy))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => {
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-                      {mapRows(row, isItemSelected, labelId)}
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.name}
+                    selected={isItemSelected}
+                  >
+                    {mapRows(row, isItemSelected, labelId)}
+                  </TableRow>
+                );
+              })}
+
+            {!rows.length && (
+              <TableRow>
+                <TableCell colSpan={7}>
+                  <Alert severity="error">No data found</Alert>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </Box>
   );
 }
@@ -168,130 +169,3 @@ DataTable.defaultProps = {
 };
 
 export default DataTable;
-
-// USAGE
-
-/* <dataTable data={data} headCells={headCells} /> */
-
-// DUMMY DATA
-
-// HEAD CELLS PROPS
-// const headCells = [
-//   {
-//     id: 'name',
-//     numeric: false,
-//     disablePadding: true,
-//     label: 'Name',
-//     type: 'label'
-//   },
-//   {
-//     id: 'department',
-//     numeric: false,
-//     disablePadding: false,
-//     label: 'Department',
-//     type: 'label'
-//   },
-//   {
-//     id: 'designation',
-//     numeric: false,
-//     disablePadding: false,
-//     label: 'Designation',
-//     type: 'label'
-//   },
-//   {
-//     id: 'emailID',
-//     numeric: false,
-//     disablePadding: false,
-//     label: 'Email ID',
-//     type: 'label'
-//   },
-//   {
-//     id: 'ext',
-//     numeric: true,
-//     disablePadding: false,
-//     label: 'Ext',
-//     type: 'label'
-//   },
-//   {
-//     id: 'cellPhone',
-//     numeric: true,
-//     disablePadding: false,
-//     label: 'Cell Phone',
-//     type: 'label'
-//   },
-//   {
-//     id: 'actions',
-//     numeric: true,
-//     disablePadding: false,
-//     label: '',
-//     buttons: () => (
-//       <>
-//         <IconButton>
-//           <EditIcon color="primary" />
-//         </IconButton>
-//         <IconButton>
-//           <DeleteIcon color="error" />
-//         </IconButton>
-//       </>
-//     ),
-//     type: 'action'
-//   }
-// ];
-
-// DATA PROPS
-// const data = [
-//   {
-//     id: 1,
-//     name: 'aCupcake1',
-//     department: 'Information Technology',
-//     designation: 'Software Engineer',
-//     emailID: 'abc@m.com',
-//     ext: 4.3,
-//     cellPhone: 343223452
-//   },
-//   {
-//     id: 2,
-//     name: 'fCupcake2',
-//     department: 'nformation Technology',
-//     designation: 'oftware Engineer',
-//     emailID: 'cbc@m.com',
-//     ext: 4.3,
-//     cellPhone: 343223452
-//   },
-//   {
-//     id: 3,
-//     name: 'eCupcake3',
-//     department: 'formation Technology',
-//     designation: 'ftware Engineer',
-//     emailID: 'bbc@m.com',
-//     ext: 4.3,
-//     cellPhone: 343223452
-//   },
-//   {
-//     id: 4,
-//     name: 'Ctupcake4',
-//     department: 'ormation Technology',
-//     designation: 'tware Engineer',
-//     emailID: 'dabc@m.com',
-//     ext: 4.3,
-//     cellPhone: 343223452
-//   },
-//   {
-//     id: 5,
-//     name: 'hCupcake5',
-//     department: 'rmation Technology',
-//     designation: 'ware Engineer',
-//     emailID: 'eaebc@m.com',
-//     ext: 4.3,
-//     cellPhone: 343223452
-//   },
-//   {
-//     id: 6,
-//     name: 'wCupcake6',
-//     department: 'mation Technology',
-//     designation: 'are Engineer',
-//     emailID: 'uabc@m.com',
-//     ext: 4.3,
-//     cellPhone: 343223452
-//   }
-// ];

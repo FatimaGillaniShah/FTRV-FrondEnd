@@ -30,17 +30,26 @@ export { getComparator, stableSort };
 // insertParams
 
 export function insertParams(params) {
+  // const str = [];
+  // // eslint-disable-next-line no-prototype-builtins
+  // for (const p in params)
+  //   if (params.hasOwnProperty(p)) {
+  //     str.push(`${encodeURIComponent(p)}=${encodeURIComponent(params[p])}`);
+  //   }
+  // return str.join('&');
+
   //  params is object
-  let paramUrl = '?';
+  const str = [];
   const paramObj = { ...params };
 
   Object.keys(paramObj).forEach((key) => {
     const currentParam = paramObj[key];
-    if (currentParam === '') {
-      delete paramObj[key];
-      return;
-    }
-    paramUrl += `${key}=${currentParam}&`;
+    // if (currentParam === '') {
+    //   delete paramObj[key];
+    //   return;
+    // }
+    str.push(`${encodeURIComponent(key)}=${encodeURIComponent(currentParam)}`);
+    //paramUrl += `${key}=${currentParam}&`;
   });
-  return paramUrl;
+  return str.join('&');
 }

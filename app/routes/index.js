@@ -7,10 +7,6 @@ import NotFoundPage from '../containers/pageNotFound/loadable';
 import DirectoryImporter from '../containers/directoryImporter';
 
 import PrivateRoute from '../components/hoc/privateRoute';
-// import { ROLES } from '../utils/constants';
-
-// import PrivateRoute from '../components/hoc/privateRoute';
-// import { ROLES } from '../utils/constants';
 
 function Routes() {
   return (

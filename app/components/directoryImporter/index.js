@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import { BodyText, H6 } from 'components/typography';
 import React from 'react';
+import { BodyText, H6 } from '../typography';
 import Toast from '../alert';
 import { useStyles } from './styles';
 

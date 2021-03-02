@@ -1,9 +1,3 @@
-/**
- *
- * Search
- *
- */
-
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import SearchIcon from '@material-ui/icons/Search';
@@ -16,16 +10,16 @@ export function Search({
   onHandleSwitchChange,
   checked,
   onHandleSearch,
-  query,
+  query: { value },
 }) {
   return (
     <>
-      <Grid item xs={3} pl={0}>
-        <Typography align="left" color="primary" variant="h5" fontWeight={800}>
+      <Grid item xs={2} pl={0}>
+        <Typography color="secondary" variant="h5" fontSize={30}>
           Directory
         </Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={4}>
         <Formik initialValues={{ query: '' }}>
           <Input
             name="query"
@@ -37,11 +31,11 @@ export function Search({
             IconClickable={false}
             onChange={onHandleSearch}
             disabled={checked && true}
-            value={query}
+            value={value}
           />
         </Formik>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <Box px={5}>
           <FormControlLabel
             label="Filter"
