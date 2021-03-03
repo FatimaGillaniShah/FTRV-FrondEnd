@@ -8,11 +8,17 @@ import { useHistory } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteUser } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { useAuthContext } from '../../context/authContext';
+import { ROLES } from '../../utils/constants';
 
 const ActionButtons = (data) => {
   const history = useHistory();
   const theme = useTheme();
   const queryClient = useQueryClient();
+  const {
+    user: { data: role },
+  } = useAuthContext();
+
   const mutation = useMutation(deleteUser, {
     onSuccess: ({
       data: {
@@ -49,15 +55,19 @@ const ActionButtons = (data) => {
 
   return (
     <>
-      <IconButton>
-        <EditIcon
-          color="secondary"
-          onClick={() => history.push(`directory/edit/${data.id}`)}
-        />
-      </IconButton>
-      <IconButton onClick={() => handleDeleteUser()}>
-        <DeleteIcon color="error" />
-      </IconButton>
+      {role === ROLES.ADMIN && (
+        <>
+          <IconButton>
+            <EditIcon
+              color="secondary"
+              onClick={() => history.push(`directory/edit/${data.id}`)}
+            />
+          </IconButton>
+          <IconButton onClick={() => handleDeleteUser()}>
+            <DeleteIcon color="error" />
+          </IconButton>
+        </>
+      )}
     </>
   );
 };
