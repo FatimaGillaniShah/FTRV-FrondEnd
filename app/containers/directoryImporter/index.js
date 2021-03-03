@@ -9,8 +9,9 @@ import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { uploadEmployeeFile } from 'state/queryFunctions';
-import { Toast } from 'components';
+import { Toast, WrapInCard } from 'components';
 import EmployeeFileUploader from '../../components/pages/directoryImporter';
+import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 
 function DirectoryUploader() {
   const history = useHistory();
@@ -77,17 +78,20 @@ function DirectoryUploader() {
           {mutation.error && mutation.error.message}
         </Toast>
       )}
-
-      <EmployeeFileUploader
-        handleCapture={handleCapture}
-        handleClick={handleClick}
-        handleSubmit={handleSubmit}
-        handleTemplateDownload={handleTemplateDownload}
-        mutation={mutation}
-        error={error}
-        selectedFile={selectedFile}
-        inputEl={inputEl}
-      />
+      <WrapInBreadcrumbs>
+        <WrapInCard>
+          <EmployeeFileUploader
+            handleCapture={handleCapture}
+            handleClick={handleClick}
+            handleSubmit={handleSubmit}
+            handleTemplateDownload={handleTemplateDownload}
+            mutation={mutation}
+            error={error}
+            selectedFile={selectedFile}
+            inputEl={inputEl}
+          />
+        </WrapInCard>
+      </WrapInBreadcrumbs>
     </>
   );
 }

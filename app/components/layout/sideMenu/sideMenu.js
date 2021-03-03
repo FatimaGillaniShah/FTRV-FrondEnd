@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 0,
     border: 0,
     color: theme.palette.textColor.main,
-    height: theme.defaultHeights.sideMenuItem,
+    height: '6rem',
     boxShadow: 'none',
     width: '100%',
     '&:hover': {
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.8rem !important',
     minWidth: '7rem',
     display: 'flex',
+    minHeight: '2rem',
     justifyContent: 'center',
   },
   label: {
@@ -85,8 +86,8 @@ const SideMenu = ({ item }) => {
         <ParentPopupState.Provider value={popupState}>
           <Menu
             {...bindMenu(popupState)}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'top' }}
+            anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'center', horizontal: 'top' }}
             getContentAnchorEl={null}
             classes={{ paper: classes.menuPaper }}
           >
@@ -138,8 +139,8 @@ const submenuStyles = (theme) => ({
   menu: {
     marginTop: theme.spacing(-1),
     color: theme.palette.textColor.main,
-    backgroundColor: theme.palette.secondary.main,
-    borderRadius: 0,
+    backgroundColor: `${theme.palette.secondary.main} !important`,
+    borderRadius: '50 !important',
   },
   menuItemRoot: {
     fontSize: '0.8rem !important',
@@ -147,6 +148,7 @@ const submenuStyles = (theme) => ({
       backgroundColor: theme.palette.primary.main,
     },
     minWidth: '7rem',
+    minHeight: '1rem !important',
     display: 'flex',
     justifyContent: 'center',
   },

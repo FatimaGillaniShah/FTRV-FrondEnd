@@ -4,7 +4,7 @@
  *
  */
 
-import { Toast } from 'components';
+import { Toast, WrapInCard } from 'components';
 import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { getUserById, updateUser } from 'state/queryFunctions';
 import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
+import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 
 function EditUser() {
@@ -82,17 +83,23 @@ function EditUser() {
       {mutation.isError && (
         <Toast variant="error">{errorMessage || 'Error while Updating'}</Toast>
       )}
-
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <EditUserInfo
-          mutation={mutation}
-          initialFiles={initialData || initialFiles}
-          onUpdateUser={handleSubmit}
-          formType="edit"
-        />
-      )}
+      <WrapInBreadcrumbs>
+        {/* <Box display="flex" flexDirection="column"> */}
+        {/* <Breadcrumbs /> */}
+        <WrapInCard>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <EditUserInfo
+              mutation={mutation}
+              initialFiles={initialData || initialFiles}
+              onUpdateUser={handleSubmit}
+              formType="edit"
+            />
+          )}
+        </WrapInCard>
+        {/* </Box> */}
+      </WrapInBreadcrumbs>
     </>
   );
 }

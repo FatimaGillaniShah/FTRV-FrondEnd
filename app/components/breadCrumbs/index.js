@@ -1,6 +1,6 @@
 import React from 'react';
-import { useLocation, Link as RouterLink } from 'react-router-dom';
-import { Breadcrumbs, Typography, Link } from '@material-ui/core';
+import { useLocation, Link } from 'react-router-dom';
+import { Breadcrumbs, Typography, useTheme } from '@material-ui/core';
 
 function toTitleCase(str) {
   return str.replace(
@@ -11,25 +11,58 @@ function toTitleCase(str) {
 
 export default function App() {
   const location = useLocation();
+  const theme = useTheme();
   const pathnames = location.pathname.split('/').filter((x) => x);
+  let lastIndex = pathnames.length - 1;
+  if (pathnames[pathnames.length - 2]) {
+    lastIndex = ['edit'].includes(pathnames[pathnames.length - 2])
+      ? pathnames.length - 2
+      : lastIndex;
+  }
+
   return (
     <Breadcrumbs aria-label="Breadcrumb">
-      <Link color="inherit" component={RouterLink} to="/">
+      <Link
+        style={{
+          textDecoration: 'none',
+          color: `${theme.palette.secondary.main}`,
+        }}
+        to="/"
+      >
         Home
       </Link>
       {pathnames.map((value, index) => {
-        const last = index === pathnames.length - 1;
+        if (index > lastIndex) return <> </>;
+        const last = index === lastIndex;
         const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+        let result = <> </>;
+        if (last) {
+          result = (
+            <Typography
+              component="span"
+              color="primary"
+              style={{ textTransform: 'capitalize' }}
+            >
+              {value}
+            </Typography>
+          );
+        } else {
+          result = (
+            <Link
+              color="inherit"
+              to={to}
+              key={to}
+              style={{
+                textDecoration: 'none',
+                color: `${theme.palette.secondary.main}`,
+              }}
+            >
+              {toTitleCase(value)}
+            </Link>
+          );
+        }
 
-        return last ? (
-          <Typography color="textPrimary" key={to}>
-            {toTitleCase(value)}
-          </Typography>
-        ) : (
-          <Link color="inherit" component={RouterLink} to="/" key={to}>
-            {toTitleCase(value)}
-          </Link>
-        );
+        return result;
       })}
     </Breadcrumbs>
   );

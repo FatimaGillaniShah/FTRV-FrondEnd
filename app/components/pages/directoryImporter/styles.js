@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     flex: 1,
     display: 'flex',
   },
-  contentGrid: { padding: '1.3rem', display: 'flex', flex: 0.3 },
+  contentGrid: { display: 'flex', flex: 0.3 },
   headingGrid: {
     display: 'flex',
     [theme.breakpoints.down('xl')]: {

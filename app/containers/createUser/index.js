@@ -4,13 +4,14 @@
  *
  */
 
-import { Toast } from 'components';
+import { Toast, WrapInCard } from 'components';
 import CreateNewUser from 'components/pages/createUser';
 import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { createUser } from 'state/queryFunctions';
+import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 
 function CreateUser() {
   const history = useHistory();
@@ -60,12 +61,16 @@ function CreateUser() {
         <Toast variant="error">{errorMessage || 'Error while Updating'}</Toast>
       )}
 
-      <CreateNewUser
-        initialFiles={initialFiles}
-        mutation={mutation}
-        onUpdateUser={handleSubmit}
-        formType="add"
-      />
+      <WrapInBreadcrumbs>
+        <WrapInCard>
+          <CreateNewUser
+            initialFiles={initialFiles}
+            mutation={mutation}
+            onUpdateUser={handleSubmit}
+            formType="add"
+          />
+        </WrapInCard>
+      </WrapInBreadcrumbs>
     </>
   );
 }

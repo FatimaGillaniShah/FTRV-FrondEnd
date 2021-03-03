@@ -16,6 +16,7 @@ import TableButtons from './tableButtons';
 import { Loading } from '../../components/loading';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
+import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
@@ -72,36 +73,37 @@ function DirectoryContainer() {
       <Helmet>
         <title>Directory Listing</title>
       </Helmet>
-
-      {isLoading && <Loading />}
-      <Box width={1}>
-        <WrapInCard mb={8}>
-          <Box display="flex">
-            <Search
-              onHandleSwitchChange={handleSwitchChange}
-              checked={checked}
-              onHandleSearch={handleSearch}
-              query={query}
-            />
-          </Box>
-          <Box mt={8}>
-            {checked && <Filters onHandleFilterSearch={handleFilterSearch} />}
-          </Box>
-        </WrapInCard>
-        <WrapInCard>
-          {role === ROLES.ADMIN && (
-            <Box mt={4}>
-              <TableButtons />
+      <WrapInBreadcrumbs>
+        {isLoading && <Loading />}
+        <Box width={1}>
+          <WrapInCard mb={8}>
+            <Box display="flex">
+              <Search
+                onHandleSwitchChange={handleSwitchChange}
+                checked={checked}
+                onHandleSearch={handleSearch}
+                query={query}
+              />
             </Box>
-          )}
-          {!isLoading && (
-            <DataTable
-              data={data && data.data.data.rows}
-              headCells={headCells}
-            />
-          )}
-        </WrapInCard>
-      </Box>
+            <Box mt={8}>
+              {checked && <Filters onHandleFilterSearch={handleFilterSearch} />}
+            </Box>
+          </WrapInCard>
+          <WrapInCard>
+            {role === ROLES.ADMIN && (
+              <Box mt={4}>
+                <TableButtons />
+              </Box>
+            )}
+            {!isLoading && (
+              <DataTable
+                data={data && data.data.data.rows}
+                headCells={headCells}
+              />
+            )}
+          </WrapInCard>
+        </Box>
+      </WrapInBreadcrumbs>
     </>
   );
 }
