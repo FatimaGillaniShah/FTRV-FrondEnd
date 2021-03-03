@@ -62,7 +62,7 @@ const ActionButtons = (data) => {
           <IconButton>
             <EditIcon
               color="secondary"
-              onClick={() => history.push(`directory/edit/${data.id}`)}
+              onClick={() => history.push(`directory/edit/${data.data.id}`)}
             />
           </IconButton>
           <IconButton onClick={() => handleDeleteUser()}>
