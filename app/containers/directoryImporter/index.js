@@ -14,25 +14,22 @@ import EmployeeFileUploader from '../../components/pages/directoryImporter';
 
 function DirectoryUploader() {
   const history = useHistory();
-  const mutation = useMutation(
-    (fileUpload) => uploadEmployeeFile(fileUpload),
+  const mutation = useMutation(uploadEmployeeFile);
 
-    {
-      onSuccess: () => {
-        history.push({
-          pathname: '/directory',
-          state: {
-            showToast: true,
-            toastType: 'success',
-            message: message || 'File Uploaded Successfully',
-          },
-        });
-      },
-      onError: () => {},
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setSelectedFile(null);
+      history.push({
+        pathname: '/directory',
+        state: {
+          showToast: true,
+          toastType: 'success',
+          message: message || 'File Uploaded Successfully',
+        },
+      });
     }
-  );
+  }, [mutation.isSuccess]);
   const { data: { data: { data: { message } = {} } = {} } = {} } = mutation;
-
   const [error, setError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const inputEl = React.useRef(null);
@@ -64,11 +61,6 @@ function DirectoryUploader() {
     };
     window.open(response.file, '_self');
   };
-  useEffect(() => {
-    if (mutation.isSuccess) {
-      setSelectedFile(null);
-    }
-  }, [mutation.isSuccess]);
 
   return (
     <>

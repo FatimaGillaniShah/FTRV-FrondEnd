@@ -16,7 +16,6 @@ import Alert from '@material-ui/lab/Alert';
 import useStyles from './style';
 import { Input } from '../../index';
 import { loginSchema } from '../../../containers/login/schema';
-import { BodyText } from '../../typography';
 
 export function Login({ onHandleSubmit, isError, errorMessage }) {
   const classes = useStyles();
