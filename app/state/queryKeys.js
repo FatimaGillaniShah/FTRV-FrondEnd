@@ -1,5 +1,5 @@
 export const keys = {
-  users: 'users',
+  getUsers: (payload) => ['users', payload],
   getUser: (id) => ['user', id],
   login: 'login',
 };

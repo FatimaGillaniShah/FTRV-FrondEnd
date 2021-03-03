@@ -13,7 +13,7 @@ export const menuItems = [
     icon: PeopleIcon,
     children: [
       { name: 'Ceo', link: '/ceo' },
-      { name: 'admin', link: '/admin' },
+      { name: 'Company Directory', link: '/directory' },
     ],
   },
   {

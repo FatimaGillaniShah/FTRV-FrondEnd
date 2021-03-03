@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableHead: {
     backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.textColor.main,
+    color: theme.palette.textColor.light,
   },
   headCells: {
     color: theme.palette.textColor.main,
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   headLabel: {
-    color: theme.palette.textColor.main,
+    color: theme.palette.textColor.light,
     '&:hover': {
       color: lighten(theme.palette.secondary.light, 0.85),
     },

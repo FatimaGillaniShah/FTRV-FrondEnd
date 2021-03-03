@@ -23,9 +23,7 @@ class Http {
 
         return config;
       },
-      (error) => {
-        Promise.reject(error);
-      }
+      (error) => Promise.reject(error)
     );
 
     this.service = service;
@@ -38,6 +36,9 @@ class Http {
   post(path, payload) {
     return this.service.post(path, payload);
   }
-}
 
+  delete(path, payload) {
+    return this.service.delete(path, payload);
+  }
+}
 export default new Http();

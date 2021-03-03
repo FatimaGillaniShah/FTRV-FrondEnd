@@ -23,8 +23,12 @@ const theme = createMuiTheme({
     iconColor: colors.iconColor,
     menuColor: colors.menuColor,
     checkbox: {
-      main: 'grey',
-      secondary: 'white',
+      main: colors.checkbox.main,
+      secondary: colors.checkbox.secondary,
+    },
+    modalColors: {
+      confirm: colors.modalColors.confirm,
+      cancel: colors.modalColors.cancel,
     },
   },
   defaultHeights: {
