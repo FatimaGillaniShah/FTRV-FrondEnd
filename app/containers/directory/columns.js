@@ -16,7 +16,9 @@ const ActionButtons = (data) => {
   const theme = useTheme();
   const queryClient = useQueryClient();
   const {
-    user: { data: role },
+    user: {
+      data: { role },
+    },
   } = useAuthContext();
 
   const mutation = useMutation(deleteUser, {

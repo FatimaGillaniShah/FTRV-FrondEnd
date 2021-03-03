@@ -4,9 +4,12 @@ import Directory from '../containers/directory';
 import Home from '../containers/home/loadable';
 import Login from '../containers/login';
 import NotFoundPage from '../containers/pageNotFound/loadable';
+
 import DirectoryImporter from '../containers/directoryImporter';
 
 import PrivateRoute from '../components/hoc/privateRoute';
+
+import { ROLES } from '../utils/constants';
 
 function Routes() {
   return (
@@ -18,6 +21,7 @@ function Routes() {
         <PrivateRoute
           exact
           path="/directory/upload"
+          roles={[ROLES.ADMIN]}
           component={DirectoryImporter}
         />
         <PrivateRoute component={NotFoundPage} />
