@@ -5,14 +5,9 @@ import Home from '../containers/home/loadable';
 import Login from '../containers/login';
 import NotFoundPage from '../containers/pageNotFound/loadable';
 import DirectoryImporter from '../containers/directoryImporter/loadable';
-
-import PrivateRoute from '../components/hoc/privateRoute';
-// import { ROLES } from '../utils/constants';
-
-// import PrivateRoute from '../components/hoc/privateRoute';
-// import { ROLES } from '../utils/constants';
 import CreateUser from '../containers/createUser/loadable';
 import EditUser from '../containers/editUser/loadable';
+import PrivateRoute from '../components/hoc/privateRoute';
 
 function Routes() {
   return (

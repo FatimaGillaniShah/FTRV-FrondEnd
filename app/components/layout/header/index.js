@@ -8,20 +8,35 @@ import {
   MenuItem,
   Toolbar,
   Typography,
+  Link,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import AuthContext from '../../../context/authContext';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
+import Button from '@material-ui/core/Button';
+import { useAuthContext } from '../../../context/authContext';
 import AvatarImg from '../../../images/avatar.jpeg';
 import Logo from '../../../images/logo.png';
 
+const StyledMenuItem = styled(MenuItem)`
+  &&& {
+    padding: 5spx 20px;
+  }
+`;
+const StyledListItemIcon = styled(ListItemIcon)`
+  &&& {
+    min-width: 24px;
+    margin-right: 18px;
+    font-size: 24px;
+  }
+`;
 const useStyles = makeStyles((theme) => ({
   appBar: {
     backgroundColor: 'white',
     height: theme.defaultHeights.header,
     color: theme.palette.primary.main,
-    zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -43,10 +58,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const { user, setUser } = useContext(AuthContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { user, setUser } = useAuthContext();
 
   const handleClick = (event) => {
+    event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
 
@@ -92,7 +108,9 @@ export default function Header() {
                 </Box>
               </Hidden>
               <>
-                <Avatar alt="avatar" src={AvatarImg} onClick={handleClick} />
+                <Button onClick={handleClick}>
+                  <Avatar alt="avatar" src={AvatarImg} />
+                </Button>
                 <Menu
                   id="simple-menu"
                   anchorEl={anchorEl}
@@ -106,8 +124,18 @@ export default function Header() {
                     horizontal: 'center',
                   }}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  <StyledMenuItem onClick={handleClose}>
+                    <StyledListItemIcon>
+                      <AccountCircle />
+                    </StyledListItemIcon>
+                    Profile
+                  </StyledMenuItem>
+                  <StyledMenuItem onClick={handleLogout}>
+                    <StyledListItemIcon>
+                      <PowerSettingsNew />
+                    </StyledListItemIcon>
+                    Logout
+                  </StyledMenuItem>
                 </Menu>
               </>
             </Box>

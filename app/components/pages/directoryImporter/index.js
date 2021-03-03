@@ -9,9 +9,9 @@ import {
 } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import { BodyText, H6 } from 'components/typography';
 import React from 'react';
-import Toast from '../alert';
+import { BodyText, H6 } from '../../typography';
+import Toast from '../../alert';
 import { useStyles } from './styles';
 
 export default function FileUploader({
@@ -26,21 +26,9 @@ export default function FileUploader({
 }) {
   const classes = useStyles();
 
-  const { data: { data: { data: { message } = {} } = {} } = {} } = mutation;
-
   return (
     <>
       {error && <Toast variant="error"> {error} </Toast>}
-
-      {mutation.isError && (
-        <Toast variant="error">
-          {mutation.error && mutation.error.message}{' '}
-        </Toast>
-      )}
-
-      {mutation.isSuccess && (
-        <Toast variant="success">{message && message}</Toast>
-      )}
 
       <Grid container xs={12} direction="column" className={classes.root}>
         <Card>
@@ -105,7 +93,7 @@ export default function FileUploader({
                 )}
               </Box>
 
-              <Box marginX={8} className={classes.submitBtn}>
+              <Box mx={8} className={classes.submitBtn}>
                 <Button
                   onClick={() => handleSubmit()}
                   color="secondary"

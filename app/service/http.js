@@ -16,16 +16,15 @@ class Http {
         const { token } = JSON.parse(localStorage.getItem('user'));
         // eslint-disable-next-line no-param-reassign
         config.headers.common.Authorization = `Bearer ${token}`;
-        if (config.url === 'users/upload') {
+
+        if (['/users/upload', '/users'].includes(config.url)) {
           // eslint-disable-next-line no-param-reassign
           config.headers.post['Content-Type'] = 'multipart/form-data';
         }
 
         return config;
       },
-      (error) => {
-        Promise.reject(error);
-      }
+      (error) => Promise.reject(error)
     );
 
     this.service = service;
@@ -42,6 +41,9 @@ class Http {
   put(path, payload) {
     return this.service.put(path, payload);
   }
-}
 
+  delete(path, payload) {
+    return this.service.delete(path, payload);
+  }
+}
 export default new Http();

@@ -19,7 +19,7 @@ export function MuiFileInput({
     if (target.files[0]) {
       if (target.files[0].size / 1024 / 1024 <= 0) {
         setError('Error: File is empty');
-      } else if (target.files[0].size / 1024 / 1024 >= 1) {
+      } else if (target.files[0].size / 1024 / 1024 >= 10) {
         setError('Error: File size too large');
       } else {
         const reader = new FileReader();

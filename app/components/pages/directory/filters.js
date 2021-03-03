@@ -1,61 +1,66 @@
-/**
- *
- * directory
- *
- */
-
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import { Divider } from '@material-ui/core';
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import Button from '@material-ui/core/Button';
-import { useStyles } from './styles';
-import { Input, Select } from '../../index';
+import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
+import { Input } from '../../index';
 
-function Filters() {
-  const classes = useStyles();
+function Filters({ onHandleFilterSearch }) {
   return (
     <>
-      <Formik>
-        <>
-          <Box className={classes.flex}>
-            <Box pr={4} width={1}>
-              <Input name="name" placeholderText="Name" />
+      <Formik
+        initialValues={{
+          name: '',
+          departments: '',
+          designation: '',
+          extension: '',
+        }}
+        onSubmit={(values) => {
+          onHandleFilterSearch(values);
+        }}
+      >
+        {({ resetForm }) => (
+          <Form>
+            <Box display="flex" justifyContent="space-between">
+              <Box width={1 / 6}>
+                <Input name="name" placeholderText="Name" />
+              </Box>
+              <Box width={1 / 6}>
+                <Input name="departments" placeholderText="Departments" />
+              </Box>
+              <Box width={1 / 6}>
+                <Input name="designation" placeholderText="Designation" />
+              </Box>
+              <Box width={1 / 6}>
+                <Input name="extension" placeholderText="Extension" />
+              </Box>
             </Box>
-            <Box px={4} width={1}>
-              <Select
-                name="departments"
-                label="Departments"
-                options={['abc1', 'abfdsadfsafsdc']}
-              />
+            <Box display="flex" my={12}>
+              <Box mr={2}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  fullWidth={false}
+                  startIcon={<SearchIcon />}
+                  type="submit"
+                >
+                  Search
+                </Button>
+              </Box>
+              <Box mr={2}>
+                <Button
+                  variant="text"
+                  fullWidth={false}
+                  onClick={resetForm}
+                  startIcon={<ClearIcon />}
+                >
+                  Clear Filter
+                </Button>
+              </Box>
             </Box>
-            <Box px={4} width={1}>
-              <Select
-                name="designation"
-                label="Designation"
-                options={['abc1', 'abfdsadfsafsdc']}
-              />
-            </Box>
-            <Box pl={4} width={1}>
-              <Input name="extension" placeholderText="Extension" />
-            </Box>
-          </Box>
-          <Box className={classes.flex} my={5}>
-            <Box mr={2}>
-              <Button variant="contained" color="secondary" fullWidth={false}>
-                Clear Filter
-              </Button>
-            </Box>
-            <Box mr={2}>
-              <Button variant="contained" color="secondary" fullWidth={false}>
-                Search
-              </Button>
-            </Box>
-          </Box>
-          <Box mt={5} width={1} p={0} mx={0}>
-            <Divider variant="middle" />
-          </Box>
-        </>
+          </Form>
+        )}
       </Formik>
     </>
   );

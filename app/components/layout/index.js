@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   headerGrid: {
     width: '100%',
-    height: '5rem',
     display: 'flex',
     position: 'fixed',
     zIndex: 1,
@@ -75,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
   contentGrid: {
     // flexDirection: 'column',
     flex: 1,
+    padding: '1rem',
     display: 'flex',
-    padding: '0.6rem',
     marginLeft: '10%',
     [theme.breakpoints.down('lg')]: {
       marginLeft: '10%',
@@ -87,7 +86,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       marginLeft: '28%',
     },
-    marginTop: '3rem',
   },
   menuSpacer: { flex: 0.11 },
   dasboardGrid: { flex: 0.9 },

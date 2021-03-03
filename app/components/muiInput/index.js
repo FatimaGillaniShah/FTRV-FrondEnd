@@ -34,8 +34,6 @@ function InputField({
   ...props
 }) {
   const [field, meta] = useField(props);
-  // console.log(inputType);
-  // console.log('input mui', field, props);
   return (
     <FormControl
       fullWidth={fullWidth}

@@ -59,7 +59,13 @@ export const yupUserFormValidaton = object().shape({
     )
     .required('*Designation Required'),
   email: string().max(320, 'Invalid').email().required('*Email Required'),
-
+  password: string()
+    .min(4, 'Too Short')
+    .max(15, 'Exceeded Maximum Characters Limit')
+    .when('passwordRequired', {
+      is: true,
+      then: string().required('*Password Required'),
+    }),
   contactNo: string()
     .test(
       'contactNoTest',
@@ -71,5 +77,5 @@ export const yupUserFormValidaton = object().shape({
     .max(5, 'Too Long!')
     .matches(/^[0-9]*$/, 'Extension can only contains numerics')
     .required('*Phone Extension Required'),
-  joiningDate: date().required('* Date of Joining Required'),
+  joiningDate: date().notRequired().default(null).nullable(),
 });

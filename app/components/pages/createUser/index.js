@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useRef, memo } from 'react';
 import {
   Box,
   Button,
@@ -11,14 +10,15 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import { Input, Toast } from 'components';
+import { Input } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
-import { FILE_ACCEPT_TYPES } from 'utils/constants';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { FILE_ACCEPT_TYPES } from 'utils/constants';
+import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { yupUserFormValidaton } from './yupUserFormValidation';
-import { H4 } from '../../typography';
 
 const useStyles = makeStyles(() => ({
   imageStyle: {
@@ -40,29 +40,18 @@ function CreateUser({
   );
   const theme = useTheme();
   const history = useHistory();
-  const errorMessage = mutation?.error?.response?.data?.message;
   const isResSmallerThanSm = useMediaQuery(theme.breakpoints.down('sm'));
   const formikRef = useRef();
   useEffect(() => {
-    if (mutation.isSuccess) {
-      setTimeout(() => {
-        history.push('/directory');
-      }, 700);
-
+    if (mutation.isSuccess && formType === 'add') {
       if (formikRef.current) {
-        formikRef.current.resetForm();
+        // formikRef.current.resetForm();
       }
     }
   }, [mutation.isSuccess]);
+
   return (
     <>
-      {mutation.isError && <Toast variant="error">{errorMessage}</Toast>}
-
-      {mutation.isSuccess && (
-        <Toast variant="success">
-          {`User ${formType === 'add' ? 'Created' : 'Updated'} Successfully`}
-        </Toast>
-      )}
       <Card style={{ display: 'flex', flex: 1 }}>
         <Formik
           initialValues={initialFiles}
@@ -70,26 +59,44 @@ function CreateUser({
           onSubmit={async (values) => {
             try {
               const data = values;
-              if (values.file && values.file.size) {
-                const dataFile = new FormData();
-                dataFile.append('file', values.file);
+              // if (values.file && values.file.size) {
+              //   const dataFile = new FormData();
+              //   dataFile.append('file', values.file);
 
-                data.file = dataFile;
-              }
-              data.password = 'Qwerty123';
+              //   data.file = dataFile;
+              // }
               data.contactNo = data.contactNo.replace(/[{()}]| |-|_/g, '');
 
-              await onUpdateUser(data);
+              const dataFile = new FormData();
+              dataFile.append('firstName', data.firstName);
+              dataFile.append('lastName', data.lastName);
+              dataFile.append('contactNo', data.contactNo);
+              dataFile.append('extension', data.extension);
+              dataFile.append('title', data.title);
+              dataFile.append('location', data.location);
+              dataFile.append('department', data.department);
+              if (data.file && data.file.size) {
+                dataFile.append('file', data.file);
+              }
+              dataFile.append('email', data.email);
+              if (data.password) {
+                dataFile.append('password', data.password);
+              }
+              if (data.joiningDate) {
+                dataFile.append('joiningDate', data.joiningDate);
+              }
+
+              await onUpdateUser(dataFile);
             } catch (err) {
               // eslint-disable-next-line no-console
               console.log(err, 'error in submitting data');
             }
             // resetForm();
-            setImgFile(null);
+            // setImgFile(null);
           }}
           validationSchema={yupUserFormValidaton}
         >
-          {({ values, setFieldValue, handleSubmit }) => (
+          {({ setFieldValue }) => (
             <Form>
               <Box
                 flexWrap="wrap"
@@ -181,7 +188,24 @@ function CreateUser({
                         name="email"
                         variant="outlined"
                         OutlinedInputPlaceholder="*Email"
-                        isDisabled={mutation.isLoading}
+                        isDisabled={mutation.isLoading || formType === 'edit'}
+                      />
+                    </Box>
+                    <Box width={[1, 1 / 2]} mt={10} px={3}>
+                      <Input
+                        inputProps={{
+                          autocomplete: 'off',
+                          placeHolder: `${
+                            formType === 'add' ? '*Password' : 'Password'
+                          }`,
+                          form: {
+                            autocomplete: 'off',
+                          },
+                        }}
+                        variant="outlined"
+                        type="password"
+                        id="password"
+                        name="password"
                       />
                     </Box>
                     <Box width={[1, 1 / 2]} mt={10} px={3}>
@@ -248,12 +272,12 @@ function CreateUser({
                           variant="contained"
                           color="secondary"
                           type="submit"
-                          onClick={() => {
-                            if (values.file && values.file.size) {
-                              setFieldValue('isProfilePicAttached', true);
-                            }
-                            handleSubmit();
-                          }}
+                          // onClick={() => {
+                          //   if (values.file && values.file.size) {
+                          //     setFieldValue('isProfilePicAttached', true);
+                          //   }
+                          //   handleSubmit();
+                          // }}
                           startIcon={
                             !mutation.isLoading && (
                               <GroupAddIcon fontSize="small" />
@@ -275,8 +299,7 @@ function CreateUser({
                       <Box mx={1}>
                         <Button
                           onClick={() => {
-                            // resetForm();
-                            setImgFile(null);
+                            history.push('/directory');
                           }}
                           startIcon={<ClearIcon fontSize="small" />}
                         >
