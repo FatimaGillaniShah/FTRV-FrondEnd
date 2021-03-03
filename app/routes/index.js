@@ -9,6 +9,8 @@ import CreateUser from '../containers/createUser/loadable';
 import EditUser from '../containers/editUser/loadable';
 import PrivateRoute from '../components/hoc/privateRoute';
 
+import { ROLES } from '../utils/constants';
+
 function Routes() {
   return (
     <>
@@ -19,6 +21,7 @@ function Routes() {
         <PrivateRoute
           exact
           path="/directory/upload"
+          roles={[ROLES.ADMIN]}
           component={DirectoryImporter}
         />
         <PrivateRoute exact path="/directory/add" component={CreateUser} />

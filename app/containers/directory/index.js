@@ -14,11 +14,21 @@ import Filters from '../../components/pages/directory/filters';
 import DataTable from '../../components/dataTable';
 import TableButtons from './tableButtons';
 import { Loading } from '../../components/loading';
+import { useAuthContext } from '../../context/authContext';
+import { ROLES } from '../../utils/constants';
 
 function DirectoryContainer() {
-  const [query, setQuery] = useState({ searchString: '' });
+  const [query, setQuery] = useState({});
   const [filters, setFilters] = useState();
-  const { state } = useLocation();
+const { state } = useLocation();
+  const [checked, setChecked] = useState(false);
+
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
+
   useEffect(() => {
     if (checked) {
       setQuery('');
@@ -30,7 +40,6 @@ function DirectoryContainer() {
     { refetchOnWindowFocus: false }
   );
 
-  const [checked, setChecked] = useState(false);
   const handleSwitchChange = ({ target }) => {
     setChecked(target.checked);
   };
@@ -80,9 +89,11 @@ function DirectoryContainer() {
           </Box>
         </WrapInCard>
         <WrapInCard>
-          <Box mt={4}>
-            <TableButtons />
-          </Box>
+          {role === ROLES.ADMIN && (
+            <Box mt={4}>
+              <TableButtons />
+            </Box>
+          )}
           {!isLoading && (
             <DataTable
               data={data && data.data.data.rows}

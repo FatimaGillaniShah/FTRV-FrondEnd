@@ -12,6 +12,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { Form, Formik } from 'formik';
+import Alert from '@material-ui/lab/Alert';
 import useStyles from './style';
 import { Input } from '../../index';
 import { loginSchema } from '../../../containers/login/schema';
@@ -69,8 +70,8 @@ export function Login({ onHandleSubmit, isError, errorMessage }) {
                   </Button>
                 </Box>
                 {isError && (
-                  <Box mt={6} textAlign="center" className={classes.error}>
-                    <BodyText>{errorMessage}</BodyText>
+                  <Box mt={6} textAlign="center">
+                    <Alert severity="error">{errorMessage}</Alert>
                   </Box>
                 )}
               </Paper>
