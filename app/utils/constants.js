@@ -16,7 +16,6 @@ export const ROLES = {
 export const APIS = {
   LOGIN: 'users/login',
   USERS_LIST: 'users/list',
-  CREATE_USER: '/users',
-  UPDATE_USER: '/users',
+  USERS: '/users',
   FILE_UPLOAD: 'users/upload',
 };

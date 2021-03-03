@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useRef, memo } from 'react';
 import {
   Box,
   Button,
@@ -13,8 +14,8 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import { Input, Toast } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
-import React, { useState } from 'react';
 import { FILE_ACCEPT_TYPES } from 'utils/constants';
+import { useHistory } from 'react-router-dom';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { yupUserFormValidaton } from './yupUserFormValidation';
 import { H4 } from '../../typography';
@@ -27,7 +28,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function CreateUser({
+function CreateUser({
   initialFiles,
   mutation,
   onUpdateUser,
@@ -38,9 +39,21 @@ export default function CreateUser({
     (initialFiles && initialFiles.avatar) || null
   );
   const theme = useTheme();
-
+  const history = useHistory();
   const errorMessage = mutation?.error?.response?.data?.message;
   const isResSmallerThanSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const formikRef = useRef();
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setTimeout(() => {
+        history.push('/directory');
+      }, 700);
+
+      if (formikRef.current) {
+        formikRef.current.resetForm();
+      }
+    }
+  }, [mutation.isSuccess]);
   return (
     <>
       {mutation.isError && <Toast variant="error">{errorMessage}</Toast>}
@@ -53,7 +66,8 @@ export default function CreateUser({
       <Card style={{ display: 'flex', flex: 1 }}>
         <Formik
           initialValues={initialFiles}
-          onSubmit={async (values, { resetForm }) => {
+          innerRef={formikRef}
+          onSubmit={async (values) => {
             try {
               const data = values;
               if (values.file && values.file.size) {
@@ -70,12 +84,12 @@ export default function CreateUser({
               // eslint-disable-next-line no-console
               console.log(err, 'error in submitting data');
             }
-            resetForm();
+            // resetForm();
             setImgFile(null);
           }}
           validationSchema={yupUserFormValidaton}
         >
-          {({ errors, values, setFieldValue, resetForm, handleSubmit }) => (
+          {({ values, setFieldValue, handleSubmit }) => (
             <Form>
               <Box
                 flexWrap="wrap"
@@ -245,9 +259,9 @@ export default function CreateUser({
                               <GroupAddIcon fontSize="small" />
                             )
                           }
-                          disabled={
-                            mutation.isLoading || Object.keys(errors).length > 0
-                          }
+                          // disabled={
+                          //   mutation.isLoading || Object.keys(errors).length > 0
+                          // }
                         >
                           {mutation.isLoading && (
                             <CircularProgress
@@ -261,7 +275,7 @@ export default function CreateUser({
                       <Box mx={1}>
                         <Button
                           onClick={() => {
-                            resetForm();
+                            // resetForm();
                             setImgFile(null);
                           }}
                           startIcon={<ClearIcon fontSize="small" />}
@@ -280,3 +294,5 @@ export default function CreateUser({
     </>
   );
 }
+
+export default memo(CreateUser);

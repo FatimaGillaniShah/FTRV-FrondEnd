@@ -6,7 +6,7 @@ import SideMenu from './sideMenu';
 function index() {
   return (
     <>
-      <Grid xs={12}>
+      <Grid xs={12} style={{ paddingTop: '80px' }}>
         {menuItems &&
           menuItems.length > 0 &&
           menuItems.map((item) => (

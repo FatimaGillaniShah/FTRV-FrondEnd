@@ -6,18 +6,38 @@
 
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
-import { updateUser } from 'state/queryFunctions';
+import { getUserById, updateUser } from 'state/queryFunctions';
+import { keys } from 'state/queryKeys';
+import Loading from '../../components/layout/loading';
 import EditUserInfo from '../../components/pages/createUser';
 
 function EditUser() {
-  const mutation = useMutation((payload) => {
-    updateUser(payload);
-  });
   const { id } = useParams();
-  const handleSubmit = (data) => {
-    const userData = data;
+  const queryClient = useQueryClient();
+
+  const { data, isLoading } = useQuery(
+    keys.getUser(id),
+    () => getUserById(id),
+    {
+      staleTime: 5000,
+    }
+  );
+
+  const mutation = useMutation(
+    (payload) => {
+      updateUser(payload);
+    },
+    {
+      onSuccess: () => {
+        queryClient.removeQueries(keys.getUser(id));
+      },
+    }
+  );
+  const initialData = data?.data?.data || null;
+  const handleSubmit = (updatedData) => {
+    const userData = updatedData;
     if (userData.createdAt) delete userData.createdAt;
     if (userData.updatedAt) delete userData.updatedAt;
     const payload = { id, userData };
@@ -25,19 +45,18 @@ function EditUser() {
   };
 
   const initialFiles = {
-    firstName: 'test',
-    lastName: 'user',
-    contactNo: '1231231222',
-    department: 'Sales',
-    location: 'Washington District of Colombia',
-    role: 'user',
-    title: 'AVP',
-    email: 'test@ftrv.com',
-    extension: '123',
-    status: 'active',
-    joiningDate: '2021-03-02',
-    avatar: '1614680613840-employee-Maserati_logotype_logo_on_the_car.jpg',
-    deletedAt: null,
+    firstName: '',
+    lastName: '',
+    contactNo: '',
+    department: '',
+    location: '',
+    role: '',
+    title: '',
+    email: '',
+    extension: '',
+    status: '',
+    joiningDate: '',
+    avatar: '',
   };
 
   initialFiles.isProfilePicAttached = false;
@@ -50,12 +69,16 @@ function EditUser() {
         <meta name="updateUser" content="ftrv - update user data" />
       </Helmet>
 
-      <EditUserInfo
-        mutation={mutation}
-        initialFiles={initialFiles}
-        onUpdateUser={handleSubmit}
-        formType="edit"
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <EditUserInfo
+          mutation={mutation}
+          initialFiles={initialData || initialFiles}
+          onUpdateUser={handleSubmit}
+          formType="edit"
+        />
+      )}
     </>
   );
 }

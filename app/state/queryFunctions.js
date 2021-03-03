@@ -1,7 +1,7 @@
 import http from '../service/http';
 import { APIS } from '../utils/constants';
 
-const { LOGIN, FILE_UPLOAD, CREATE_USER } = APIS;
+const { LOGIN, FILE_UPLOAD, USERS } = APIS;
 
 export const fetchUsers = async () => {
   // return http.get('users');
@@ -13,11 +13,20 @@ export const submitUser = async () => {};
 
 export const uploadUsers = async () => {};
 
-export const createUser = async (payload) => http.post(CREATE_USER, payload);
+export const createUser = async (payload) => http.post(USERS, payload);
 export const updateUser = async (payload) => {
-  const { id, data } = payload;
-  http.put(`${CREATE_USER}/${id}`, data);
+  const { id, userData } = payload;
+  delete userData.id;
+  delete userData.fullName;
+  delete userData.avatar;
+  delete userData.email;
+  delete userData.role;
+  delete userData.status;
+  delete userData.joiningDate;
+  http.put(`${USERS}/${id}`, userData);
 };
+
+export const getUserById = async (id) => http.get(`${USERS}/${id}`);
 
 export const uploadEmployeeFile = async (file) => http.post(FILE_UPLOAD, file);
 
