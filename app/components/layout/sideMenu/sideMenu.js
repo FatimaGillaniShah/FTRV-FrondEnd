@@ -72,7 +72,7 @@ const SideMenu = ({ item }) => {
         variant="contained"
         {...bindHover(popupState)}
         onClick={() => {
-          history.push(item.link);
+          if (item.link) history.push(item.link);
         }}
       >
         <IconButton aria-label="delete" className={classes.iconStyle}>

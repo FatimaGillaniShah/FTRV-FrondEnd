@@ -13,12 +13,16 @@ export default function App() {
   const location = useLocation();
   const theme = useTheme();
   const pathnames = location.pathname.split('/').filter((x) => x);
-  let lastIndex = pathnames.length - 1;
-  if (pathnames[pathnames.length - 2]) {
-    lastIndex = ['edit'].includes(pathnames[pathnames.length - 2])
-      ? pathnames.length - 2
-      : lastIndex;
+  console.log('pathnames', pathnames);
+  if (['edit'].includes(pathnames[pathnames.length - 2])) {
+    pathnames.pop();
   }
+  const lastIndex = pathnames.length - 1;
+  // if (pathnames[pathnames.length - 2]) {
+  //   lastIndex = ['edit'].includes(pathnames[pathnames.length - 2])
+  //     ? pathnames.length - 2
+  //     : lastIndex;
+  // }
 
   return (
     <Breadcrumbs aria-label="Breadcrumb">
@@ -31,11 +35,12 @@ export default function App() {
       >
         Home
       </Link>
+
       {pathnames.map((value, index) => {
-        if (index > lastIndex) return <> </>;
         const last = index === lastIndex;
-        const to = `/${pathnames.slice(0, index + 1).join('/')}`;
+        const to = `/${pathnames.slice(0, index + 1)}`;
         let result = <> </>;
+        console.log(last, value, to);
         if (last) {
           result = (
             <Typography
