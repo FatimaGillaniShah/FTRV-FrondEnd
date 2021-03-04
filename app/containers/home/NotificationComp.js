@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import NotificationsActiveTwoToneIcon from '@material-ui/icons/NotificationsActiveTwoTone';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+
 const LINES_TO_SHOW = 2;
 const useStyles = makeStyles((theme) => ({
   spacing: 1,

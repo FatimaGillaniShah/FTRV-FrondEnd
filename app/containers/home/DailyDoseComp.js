@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   papercustom: {
-    backgroundColor: '#006699',
+    backgroundColor: theme.palette.secondary.main,
     textAlign: 'center',
     flexDirections: 'row',
     borderRadius: '5px',

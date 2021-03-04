@@ -1,15 +1,12 @@
 // import "./styles.css";
-import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import React from 'react';
+import BirthdayComp from './BirthdayComp';
+import CalenderComp from './CalendarComp';
+import DailyDose from './DailyDoseComp';
 import NotificationComp from './NotificationComp';
 import PollComp from './PollComp';
-import BirthdayComp from './BirthdayComp';
-import DailyDose from './DailyDoseComp';
-import CalenderComp from './CalendarComp';
 
 const useStyles = makeStyles((theme) => ({
   outerContainer: {

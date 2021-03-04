@@ -24,12 +24,12 @@ export default function EnhancedTableHead({
     <TableHead className={classes.tableHead}>
       <TableRow>
         <TableCell padding="checkbox">
-          {/*<CheckBox*/}
-          {/*  indeterminate={numSelected > 0 && numSelected < rowCount}*/}
-          {/*  checked={rowCount > 0 && numSelected === rowCount}*/}
-          {/*  onChange={onSelectAllClick}*/}
-          {/*  className={classes.tableHead}*/}
-          {/*/>*/}
+          {/* <CheckBox */}
+          {/*  indeterminate={numSelected > 0 && numSelected < rowCount} */}
+          {/*  checked={rowCount > 0 && numSelected === rowCount} */}
+          {/*  onChange={onSelectAllClick} */}
+          {/*  className={classes.tableHead} */}
+          {/* /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell

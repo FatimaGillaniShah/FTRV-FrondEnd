@@ -13,7 +13,12 @@ import { useStyles } from './styles';
 import { CheckBox } from '../index';
 import { getComparator, stableSort } from '../../utils/helper';
 
-export function DataTable({ data, headCells, tableRowsPerPage, handleSelected }) {
+export function DataTable({
+  data,
+  headCells,
+  tableRowsPerPage,
+  handleSelected,
+}) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('fullName');
@@ -60,9 +65,7 @@ export function DataTable({ data, headCells, tableRowsPerPage, handleSelected })
     }
     setSelected(newSelected);
     // TODO move  state to parent
-    handleSelected(newSelected)
-
-
+    handleSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {

@@ -16,7 +16,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import { useAuthContext } from '../../../context/authContext';
-import AvatarImg from '../../../images/avatar.jpeg';
 import Logo from '../../../images/logo.png';
 
 const StyledMenuItem = styled(MenuItem)`
