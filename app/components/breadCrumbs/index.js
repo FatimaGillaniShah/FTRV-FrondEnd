@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { Breadcrumbs, Typography, useTheme } from '@material-ui/core';
+import { Breadcrumbs, makeStyles, Typography } from '@material-ui/core';
 
 function toTitleCase(str) {
   return str.replace(
@@ -9,30 +9,25 @@ function toTitleCase(str) {
   );
 }
 
+const useStyles = makeStyles((theme) => ({
+  linkStyle: {
+    textDecoration: 'none',
+    color: theme.palette.secondary.main,
+  },
+}));
+
 export default function App() {
   const location = useLocation();
-  const theme = useTheme();
+  const classes = useStyles();
   const pathnames = location.pathname.split('/').filter((x) => x);
-  console.log('pathnames', pathnames);
   if (['edit'].includes(pathnames[pathnames.length - 2])) {
     pathnames.pop();
   }
   const lastIndex = pathnames.length - 1;
-  // if (pathnames[pathnames.length - 2]) {
-  //   lastIndex = ['edit'].includes(pathnames[pathnames.length - 2])
-  //     ? pathnames.length - 2
-  //     : lastIndex;
-  // }
 
   return (
     <Breadcrumbs aria-label="Breadcrumb">
-      <Link
-        style={{
-          textDecoration: 'none',
-          color: `${theme.palette.secondary.main}`,
-        }}
-        to="/"
-      >
+      <Link className={classes.linkStyle} to="/">
         Home
       </Link>
 
@@ -40,15 +35,10 @@ export default function App() {
         const last = index === lastIndex;
         const to = `/${pathnames.slice(0, index + 1)}`;
         let result = <> </>;
-        console.log(last, value, to);
         if (last) {
           result = (
-            <Typography
-              component="span"
-              color="primary"
-              style={{ textTransform: 'capitalize' }}
-            >
-              {value}
+            <Typography component="span" color="primary">
+              {toTitleCase(value)}
             </Typography>
           );
         } else {
@@ -57,10 +47,7 @@ export default function App() {
               color="inherit"
               to={to}
               key={to}
-              style={{
-                textDecoration: 'none',
-                color: `${theme.palette.secondary.main}`,
-              }}
+              className={classes.linkStyle}
             >
               {toTitleCase(value)}
             </Link>

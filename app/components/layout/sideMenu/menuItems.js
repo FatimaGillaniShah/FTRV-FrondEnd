@@ -5,11 +5,11 @@ import LinkIcon from '@material-ui/icons/Link';
 import PeopleIcon from '@material-ui/icons/People';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import StorageIcon from '@material-ui/icons/Storage';
+import { ROLES } from 'utils/constants';
 
 export const menuItems = [
   {
     name: 'members',
-    link: '/directory',
     icon: PeopleIcon,
     children: [{ name: 'Directory', link: '/directory' }],
   },
@@ -22,14 +22,14 @@ export const menuItems = [
     name: 'education',
     link: '/',
     icon: QuestionAnswerIcon,
-    // children: [
-    //   { name: 'Ceo', link: '/ceo' },
-    //   {
-    //     name: 'new',
-    //     link: '/new',
-    //     children: [{ name: 'Ceo', link: '/ceo' }],
-    //   },
-    // ],
+    children: [
+      { name: 'Ceo', link: '/ceo' },
+      {
+        name: 'new',
+        link: '/new',
+        children: [{ name: 'Ceo', link: '/ceo' }],
+      },
+    ],
   },
   {
     name: 'career',
@@ -55,5 +55,6 @@ export const menuItems = [
     name: 'settings',
     link: '/',
     icon: BorderColorIcon,
+    role: [ROLES.ADMIN],
   },
 ];

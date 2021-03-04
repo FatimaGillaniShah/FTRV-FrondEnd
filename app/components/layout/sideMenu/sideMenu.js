@@ -139,8 +139,8 @@ const submenuStyles = (theme) => ({
   menu: {
     marginTop: theme.spacing(-1),
     color: theme.palette.textColor.main,
-    backgroundColor: `${theme.palette.secondary.main} !important`,
-    borderRadius: '50 !important',
+    backgroundColor: `${theme.palette.secondary.main} `,
+    borderRadius: '0 ',
   },
   menuItemRoot: {
     fontSize: '0.8rem !important',

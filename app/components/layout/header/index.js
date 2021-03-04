@@ -8,7 +8,6 @@ import {
   MenuItem,
   Toolbar,
   Typography,
-  Link,
 } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { useState } from 'react';
@@ -80,9 +79,9 @@ export default function Header() {
     <>
       <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <Link to="/">
+          <a href="/">
             <img src={Logo} alt="intranet logo" className={classes.logoStyle} />
-          </Link>
+          </a>
           {user.isAuthenticated && (
             <Box className={classes.profileBox}>
               <Hidden xsDown>

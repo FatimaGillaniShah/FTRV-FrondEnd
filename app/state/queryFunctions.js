@@ -25,16 +25,15 @@ export const submitUser = async () => {};
 
 export const uploadUsers = async () => {};
 
-export const updateUser = async (payload) => {
+export const updateUser = (payload) => {
   const { id, updatedData } = payload;
-  http.put(`${USERS}/${id}`, updatedData);
+  return http.put(`${USERS}/${id}`, updatedData);
 };
 
-export const getUserById = async (id) => http.get(`${USERS}/${id}`);
+export const getUserById = (id) => http.get(`${USERS}/${id}`);
 
-export const uploadEmployeeFile = async (payload) =>
-  http.post(FILE_UPLOAD, payload);
+export const uploadEmployeeFile = (payload) => http.post(FILE_UPLOAD, payload);
 
-export const createUser = async (payload) => http.post(USERS, payload);
+export const createUser = (payload) => http.post(USERS, payload);
 
-export const login = async (payload) => http.post(LOGIN, payload);
+export const login = (payload) => http.post(LOGIN, payload);

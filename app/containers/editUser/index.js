@@ -5,7 +5,7 @@
  */
 
 import { Toast, WrapInCard } from 'components';
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
@@ -27,9 +27,8 @@ function EditUser() {
     { refetchOnWindowFocus: false }
   );
 
-  const mutation = useMutation(updateUser);
-  useEffect(() => {
-    if (mutation.isSuccess) {
+  const mutation = useMutation(updateUser, {
+    onSuccess: () => {
       history.push({
         pathname: '/directory',
         state: {
@@ -41,8 +40,9 @@ function EditUser() {
 
       queryClient.removeQueries(keys.getUser(id));
       queryClient.invalidateQueries(keys.getUser(id));
-    }
-  }, [mutation.isSuccess]);
+    },
+  });
+
   const errorMessage = mutation?.error?.response?.data?.message;
 
   const initialData = data?.data?.data || null;
@@ -68,10 +68,10 @@ function EditUser() {
   };
 
   initialFiles.isProfilePicAttached = false;
-  initialFiles.avatar = process.env.API_ASSETS_URL + initialFiles.avatar;
   if (initialData) {
     initialData.password = '';
-    initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
+    if (initialData.avatar)
+      initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
   }
   return (
     <>

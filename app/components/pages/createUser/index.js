@@ -4,6 +4,7 @@ import {
   CircularProgress,
   Hidden,
   useMediaQuery,
+  Tooltip,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
@@ -190,71 +191,87 @@ function CreateUser({
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      inputProps={{
-                        autocomplete: 'off',
-                        placeHolder: `${
-                          formType === 'add' ? '*Password' : 'Password'
-                        }`,
-                        form: {
+                    <Tooltip title="Choose strong password">
+                      <Input
+                        inputProps={{
                           autocomplete: 'off',
-                        },
-                      }}
-                      variant="outlined"
-                      type="password"
-                      id="password"
-                      name="password"
-                    />
+                          placeHolder: `${
+                            formType === 'add' ? '*Password' : 'Password'
+                          }`,
+                          form: {
+                            autocomplete: 'off',
+                          },
+                        }}
+                        variant="outlined"
+                        type="password"
+                        id="password"
+                        name="password"
+                      />
+                    </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      name="contactNo"
-                      variant="outlined"
-                      OutlinedInputPlaceholder="*Enter Phone Number"
-                      inputComponent={TextMaskForContactNo}
-                      isDisabled={mutation.isLoading}
-                    />
+                    <Tooltip title="Input your Department">
+                      <Input
+                        name="contactNo"
+                        variant="outlined"
+                        OutlinedInputPlaceholder="*Enter Phone Number"
+                        inputComponent={TextMaskForContactNo}
+                        isDisabled={mutation.isLoading}
+                      />
+                    </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      name="extension"
-                      variant="outlined"
-                      OutlinedInputPlaceholder="*Phone Extension"
-                      isDisabled={mutation.isLoading}
-                    />
+                    <Tooltip title="Input your phone extenstion">
+                      <Input
+                        name="extension"
+                        variant="outlined"
+                        OutlinedInputPlaceholder="*Phone Extension"
+                        isDisabled={mutation.isLoading}
+                      />
+                    </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      name="location"
-                      variant="outlined"
-                      OutlinedInputPlaceholder="*Location"
-                      isDisabled={mutation.isLoading}
-                    />
+                    <Tooltip title="Input your Location">
+                      <Input
+                        name="location"
+                        variant="outlined"
+                        OutlinedInputPlaceholder="*Location"
+                        isDisabled={mutation.isLoading}
+                      />
+                    </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      name="department"
-                      variant="outlined"
-                      OutlinedInputPlaceholder="*Department"
-                      isDisabled={mutation.isLoading}
-                    />
+                    <Tooltip title="Input your Department">
+                      <Input
+                        name="department"
+                        variant="outlined"
+                        OutlinedInputPlaceholder="*Department"
+                        isDisabled={mutation.isLoading}
+                      />
+                    </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      name="title"
-                      variant="outlined"
-                      OutlinedInputPlaceholder="*Designation"
-                      isDisabled={mutation.isLoading}
-                    />
+                    <Tooltip title="Input your Designation">
+                      <Input
+                        name="title"
+                        variant="outlined"
+                        OutlinedInputPlaceholder="*Designation"
+                        isDisabled={mutation.isLoading}
+                      />
+                    </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      name="joiningDate"
-                      variant="outlined"
-                      inputType="date"
-                      isDisabled={mutation.isLoading}
-                    />
-                  </Box>{' '}
+                    <Tooltip title="Choose Joining Date">
+                      <Input
+                        name="joiningDate"
+                        variant="outlined"
+                        inputType="date"
+                        placeholderText="Date"
+                        hintText="Choose Date"
+                        isDisabled={mutation.isLoading}
+                      />
+                    </Tooltip>
+                  </Box>
                   <Hidden smDown>
                     <Box width={[1, 1 / 2]} mt={10} px={3}></Box>
                   </Hidden>

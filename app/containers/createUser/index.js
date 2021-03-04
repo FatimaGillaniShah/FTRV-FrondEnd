@@ -6,7 +6,7 @@
 
 import { Toast, WrapInCard } from 'components';
 import CreateNewUser from 'components/pages/createUser';
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
@@ -15,10 +15,8 @@ import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 
 function CreateUser() {
   const history = useHistory();
-  const mutation = useMutation(createUser);
-
-  useEffect(() => {
-    if (mutation.isSuccess) {
+  const mutation = useMutation(createUser, {
+    onSuccess: () => {
       history.push({
         pathname: '/directory',
         state: {
@@ -27,8 +25,20 @@ function CreateUser() {
           message: `User Created Successfully`,
         },
       });
-    }
-  }, [mutation.isSuccess]);
+    },
+  });
+  // useEffect(() => {
+  //   if (mutation.isSuccess) {
+  //     history.push({
+  //       pathname: '/directory',
+  //       state: {
+  //         showToast: true,
+  //         toastType: 'success',
+  //         message: `User Created Successfully`,
+  //       },
+  //     });
+  //   }
+  // }, [mutation.isSuccess]);
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
