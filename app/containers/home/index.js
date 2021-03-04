@@ -8,7 +8,8 @@ import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-import Home from '../../components/pages/home/loadable';
+import Home from './home';
+// import Home from '../../components/pages/home/loadable';
 import { useAuthContext } from '../../context/authContext';
 
 function HomeContainer() {

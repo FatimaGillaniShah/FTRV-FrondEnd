@@ -59,7 +59,10 @@ export default function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
-
+  const userAvatar =
+    user.data && user.data.avatar
+      ? process.env.API_ASSETS_URL + user.data.avatar
+      : 'http://www.gravatar.com/avatar/?d=mp';
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
@@ -79,7 +82,7 @@ export default function Header() {
     <>
       <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <a href="/">
+          <a href="/home">
             <img src={Logo} alt="intranet logo" className={classes.logoStyle} />
           </a>
           {user.isAuthenticated && (
@@ -108,7 +111,7 @@ export default function Header() {
               </Hidden>
               <>
                 <Button onClick={handleClick}>
-                  <Avatar alt="avatar" src={AvatarImg} />
+                  <Avatar alt="avatar" src={userAvatar} />
                 </Button>
                 <Menu
                   id="simple-menu"
