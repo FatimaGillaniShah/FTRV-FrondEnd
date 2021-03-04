@@ -7,11 +7,29 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
-import EmployeeFileUploader from '../../components/directoryImporter';
-import { uploadEmployeeFile } from '../../state/queryFunctions';
+import { useHistory } from 'react-router-dom';
+import { uploadEmployeeFile } from 'state/queryFunctions';
+import { Toast } from 'components';
+import EmployeeFileUploader from '../../components/pages/directoryImporter';
 
 function DirectoryUploader() {
-  const mutation = useMutation((fileUpload) => uploadEmployeeFile(fileUpload));
+  const history = useHistory();
+  const mutation = useMutation(uploadEmployeeFile);
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setSelectedFile(null);
+      history.push({
+        pathname: '/directory',
+        state: {
+          showToast: true,
+          toastType: 'success',
+          message: message || 'File Uploaded Successfully',
+        },
+      });
+    }
+  }, [mutation.isSuccess]);
+  const { data: { data: { data: { message } = {} } = {} } = {} } = mutation;
   const [error, setError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const inputEl = React.useRef(null);
@@ -39,15 +57,10 @@ function DirectoryUploader() {
 
   const handleTemplateDownload = () => {
     const response = {
-      file: 'https://srv-store5.gofile.io/download/Nd4GV2/TemplateFile.xlsx',
+      file: 'http://35.175.221.135/assets/employee-list-template.xlsx',
     };
     window.open(response.file, '_self');
   };
-  useEffect(() => {
-    if (mutation.isSuccess) {
-      setSelectedFile(null);
-    }
-  }, [mutation.isSuccess]);
 
   return (
     <>
@@ -58,6 +71,12 @@ function DirectoryUploader() {
           content="ftrv - Upload directory file"
         />
       </Helmet>
+
+      {mutation.isError && (
+        <Toast variant="error">
+          {mutation.error && mutation.error.message}
+        </Toast>
+      )}
 
       <EmployeeFileUploader
         handleCapture={handleCapture}

@@ -50,7 +50,7 @@ const ActionButtons = (data) => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        mutation.mutate([null]);
+        mutation.mutate([data.data.id]);
       }
     });
   };
@@ -62,7 +62,7 @@ const ActionButtons = (data) => {
           <IconButton>
             <EditIcon
               color="secondary"
-              onClick={() => history.push(`directory/edit/${data.id}`)}
+              onClick={() => history.push(`directory/edit/${data.data.id}`)}
             />
           </IconButton>
           <IconButton onClick={() => handleDeleteUser()}>

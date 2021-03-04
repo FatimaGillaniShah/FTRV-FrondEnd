@@ -49,7 +49,7 @@ export function insertParams(params) {
     //   return;
     // }
     str.push(`${encodeURIComponent(key)}=${encodeURIComponent(currentParam)}`);
-    //paramUrl += `${key}=${currentParam}&`;
+    // paramUrl += `${key}=${currentParam}&`;
   });
   return str.join('&');
 }

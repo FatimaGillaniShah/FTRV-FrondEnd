@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
+import { useLocation, history } from 'react-router-dom';
+import { Toast } from 'components';
 import { fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
@@ -18,6 +20,7 @@ import { ROLES } from '../../utils/constants';
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
   const [filters, setFilters] = useState();
+  const { state } = useLocation();
   const [checked, setChecked] = useState(false);
 
   const {
@@ -48,8 +51,24 @@ function DirectoryContainer() {
   const handleFilterSearch = (values) => {
     setFilters(values);
   };
+  useEffect(() => {
+    window.addEventListener('beforeunload', () => {
+      history.replaceState({}, '');
+    });
+
+    return () => {
+      window.removeEventListener('beforeunload', () => {});
+    };
+  }, []);
+
   return (
     <>
+      {state && state.showToast && (
+        <>
+          <Toast variant={state.toastType}>{state.message}</Toast>
+        </>
+      )}
+
       <Helmet>
         <title>Directory Listing</title>
       </Helmet>

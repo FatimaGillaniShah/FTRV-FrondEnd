@@ -92,7 +92,7 @@ export default function Toast({ children, variant }) {
           horizontal: 'right',
         }}
         open={open}
-        autoHideDuration={4000}
+        autoHideDuration={3000}
         onClose={handleClose}
       >
         <SnackbarContentWrapper

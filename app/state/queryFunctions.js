@@ -2,7 +2,7 @@ import http from '../service/http';
 import { APIS } from '../utils/constants';
 import { insertParams } from '../utils/helper';
 
-const { LOGIN, FILE_UPLOAD, USERS_LIST, USERS_DELETE } = APIS;
+const { LOGIN, FILE_UPLOAD, USERS, USERS_LIST, USERS_DELETE } = APIS;
 
 export const fetchUsers = ({ queryKey }) => {
   let url;
@@ -23,6 +23,18 @@ export const deleteUser = (payload) =>
 
 export const submitUser = async () => {};
 
-export const uploadEmployeeFile = async (file) => http.post(FILE_UPLOAD, file);
+export const uploadUsers = async () => {};
+
+export const updateUser = async (payload) => {
+  const { id, updatedData } = payload;
+  http.put(`${USERS}/${id}`, updatedData);
+};
+
+export const getUserById = async (id) => http.get(`${USERS}/${id}`);
+
+export const uploadEmployeeFile = async (payload) =>
+  http.post(FILE_UPLOAD, payload);
+
+export const createUser = async (payload) => http.post(USERS, payload);
 
 export const login = async (payload) => http.post(LOGIN, payload);

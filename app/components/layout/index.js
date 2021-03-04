@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
   headerGrid: {
     width: '100%',
     display: 'flex',
+    position: 'fixed',
+    zIndex: 1,
   },
   bodyGrid: {
     flex: 1,
@@ -30,11 +32,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5rem',
     display: 'grid',
     height: 'auto',
-    // marginTop: '5rem'
   },
   menuGrid: {
     height: '100%',
-    top: '80px',
     display: 'block',
     position: 'fixed',
     left: 0,
@@ -64,16 +64,14 @@ const useStyles = makeStyles((theme) => ({
     },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: theme.palette.secondary.main,
-      // outline: '1px solid slategrey',
       borderRadius: '10px',
     },
   },
 
   contentGrid: {
-    // flexDirection: 'column',
     flex: 1,
-    display: 'flex',
     padding: '1rem',
+    display: 'flex',
     marginLeft: '10%',
     [theme.breakpoints.down('lg')]: {
       marginLeft: '10%',
@@ -84,7 +82,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       marginLeft: '28%',
     },
-    marginTop: '1rem',
   },
   menuSpacer: { flex: 0.11 },
   dasboardGrid: { flex: 0.9 },
