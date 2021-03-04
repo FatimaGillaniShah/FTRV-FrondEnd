@@ -20,7 +20,7 @@ import { ROLES } from '../../utils/constants';
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
   const [filters, setFilters] = useState();
-const { state } = useLocation();
+  const { state } = useLocation();
   const [checked, setChecked] = useState(false);
 
   const {

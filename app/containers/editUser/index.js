@@ -5,7 +5,7 @@
  */
 
 import { Toast } from 'components';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
@@ -26,27 +26,22 @@ function EditUser() {
     { refetchOnWindowFocus: false }
   );
 
-  const mutation = useMutation(
-    (payload) => updateUser(payload),
+  const mutation = useMutation(updateUser);
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      history.push({
+        pathname: '/directory',
+        state: {
+          showToast: true,
+          toastType: 'success',
+          message: `User Updated Successfully`,
+        },
+      });
 
-    {
-      onSuccess: () => {
-        queryClient.removeQueries(keys.getUser(id));
-        queryClient.invalidateQueries(keys.getUser(id));
-
-        history.push({
-          pathname: '/directory',
-          state: {
-            showToast: true,
-            toastType: 'success',
-            message: `User Updated Successfully`,
-          },
-        });
-      },
-      onError: () => {},
+      queryClient.removeQueries(keys.getUser(id));
+      queryClient.invalidateQueries(keys.getUser(id));
     }
-  );
-
+  }, [mutation.isSuccess]);
   const errorMessage = mutation?.error?.response?.data?.message;
 
   const initialData = data?.data?.data || null;

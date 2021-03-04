@@ -6,7 +6,7 @@
 
 import { Toast } from 'components';
 import CreateNewUser from 'components/pages/createUser';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
@@ -14,52 +14,37 @@ import { createUser } from 'state/queryFunctions';
 
 function CreateUser() {
   const history = useHistory();
-  const mutation = useMutation(
-    (payload) => createUser(payload),
+  const mutation = useMutation(createUser);
 
-    {
-      onSuccess: () => {
-        history.push({
-          pathname: '/directory',
-          state: {
-            showToast: true,
-            toastType: 'success',
-            message: `User Created Successfully`,
-          },
-        });
-      },
-      onError: () => {},
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      history.push({
+        pathname: '/directory',
+        state: {
+          showToast: true,
+          toastType: 'success',
+          message: `User Created Successfully`,
+        },
+      });
     }
-  );
+  }, [mutation.isSuccess]);
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
-  // const initialFiles = {
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   password: '',
-  //   contactNo: '',
-  //   extension: '',
-  //   title: '',
-  //   location: '',
-  //   department: '',
-  //   joiningDate: '',
-  //   file: undefined,
-  // };
   const initialFiles = {
-    firstName: 'temp',
-    lastName: 'asdfa',
-    email: 'abc@gmail.com',
-    password: '123123',
-    contactNo: '1231231234',
-    extension: '111',
-    title: 'sd',
-    location: 'sd',
-    department: 'sd',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    contactNo: '',
+    extension: '',
+    title: '',
+    location: '',
+    department: '',
     joiningDate: '',
     file: undefined,
   };
+
   initialFiles.isProfilePicAttached = false;
   initialFiles.passwordRequired = true;
 

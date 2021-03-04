@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     border: 0,
     color: theme.palette.textColor.main,
     height: theme.defaultHeights.sideMenuItem,
-    // padding: '0 30px',
     boxShadow: 'none',
     width: '100%',
     '&:hover': {

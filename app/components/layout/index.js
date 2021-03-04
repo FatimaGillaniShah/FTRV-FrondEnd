@@ -32,11 +32,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '5rem',
     display: 'grid',
     height: 'auto',
-    // marginTop: '5rem'
   },
   menuGrid: {
     height: '100%',
-    // top: '80px',
     display: 'block',
     position: 'fixed',
     left: 0,
@@ -66,13 +64,11 @@ const useStyles = makeStyles((theme) => ({
     },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: theme.palette.secondary.main,
-      // outline: '1px solid slategrey',
       borderRadius: '10px',
     },
   },
 
   contentGrid: {
-    // flexDirection: 'column',
     flex: 1,
     padding: '1rem',
     display: 'flex',

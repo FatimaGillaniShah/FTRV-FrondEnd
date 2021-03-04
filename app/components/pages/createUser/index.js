@@ -45,7 +45,7 @@ function CreateUser({
   useEffect(() => {
     if (mutation.isSuccess && formType === 'add') {
       if (formikRef.current) {
-        // formikRef.current.resetForm();
+        formikRef.current.resetForm();
       }
     }
   }, [mutation.isSuccess]);
@@ -78,7 +78,7 @@ function CreateUser({
               if (data.file && data.file.size) {
                 dataFile.append('file', data.file);
               }
-              dataFile.append('email', data.email);
+              if (formType === 'add') dataFile.append('email', data.email);
               if (data.password) {
                 dataFile.append('password', data.password);
               }
