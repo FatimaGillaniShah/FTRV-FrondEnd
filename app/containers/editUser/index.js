@@ -72,6 +72,17 @@ function EditUser() {
     initialData.password = '';
     if (initialData.avatar)
       initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
+
+    if (initialData.joiningDate) {
+      const parsedDate = new Date(initialData.joiningDate);
+
+      let parseMonth = parsedDate.getMonth();
+      parseMonth += 1;
+      if (parseMonth < 10) {
+        parseMonth = `0${parseMonth}`;
+      }
+      initialData.joiningDate = `${parsedDate.getFullYear()}-${parseMonth}-${parsedDate.getDate()}`;
+    }
   }
   return (
     <>

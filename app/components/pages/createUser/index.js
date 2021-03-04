@@ -266,8 +266,6 @@ function CreateUser({
                         name="joiningDate"
                         variant="outlined"
                         inputType="date"
-                        placeholderText="Date"
-                        hintText="Choose Date"
                         isDisabled={mutation.isLoading}
                       />
                     </Tooltip>
