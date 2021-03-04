@@ -27,18 +27,7 @@ function CreateUser() {
       });
     },
   });
-  // useEffect(() => {
-  //   if (mutation.isSuccess) {
-  //     history.push({
-  //       pathname: '/directory',
-  //       state: {
-  //         showToast: true,
-  //         toastType: 'success',
-  //         message: `User Created Successfully`,
-  //       },
-  //     });
-  //   }
-  // }, [mutation.isSuccess]);
+
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };

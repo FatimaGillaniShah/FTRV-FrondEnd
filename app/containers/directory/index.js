@@ -1,11 +1,13 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
 import { useLocation, history } from 'react-router-dom';
 import { Toast } from 'components';
-import { fetchUsers } from '../../state/queryFunctions';
+import Swal from 'sweetalert2';
+import { useTheme } from '@material-ui/core/styles';
+import { deleteUser, fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
@@ -23,7 +25,20 @@ function DirectoryContainer() {
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const queryClient = useQueryClient();
+  const theme = useTheme();
 
+  const mutation = useMutation(deleteUser, {
+    onSuccess: ({
+      data: {
+        data: { count },
+      },
+    }) => {
+      Swal.fire('Deleted!', `${count} user deleted.`, 'success');
+      queryClient.invalidateQueries(keys.getUsers({}));
+    },
+  });
   const {
     user: {
       data: { role },
@@ -62,6 +77,41 @@ function DirectoryContainer() {
     };
   }, []);
 
+  if (mutation.isError) {
+    Swal.fire(
+      '',
+      'Some error occured in deleting the user. Please  try again',
+      'error'
+    );
+  }
+  useEffect(() => {
+    window.addEventListener('beforeunload', () => {
+      history.replaceState({}, '');
+    });
+
+    return () => {
+      window.removeEventListener('beforeunload', () => {});
+    };
+  }, []);
+
+  const handleDelete = () => {
+    if (!selectedRows.length) {
+      return;
+    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: theme.palette.modalColors.confirm,
+      cancelButtonColor: theme.palette.modalColors.cancel,
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate(selectedRows);
+      }
+    });
+  };
   return (
     <>
       {state && state.showToast && (
@@ -74,7 +124,7 @@ function DirectoryContainer() {
         <title>Directory Listing</title>
       </Helmet>
       <WrapInBreadcrumbs>
-        {isLoading && <Loading />}
+        {(isLoading || mutation.isLoading) && <Loading />}
         <Box width={1}>
           <WrapInCard mb={8}>
             <Box display="flex">
@@ -92,13 +142,14 @@ function DirectoryContainer() {
           <WrapInCard>
             {role === ROLES.ADMIN && (
               <Box mt={4}>
-                <TableButtons />
+                <TableButtons onDelete={handleDelete} />
               </Box>
             )}
             {!isLoading && (
               <DataTable
                 data={data && data.data.data.rows}
                 headCells={headCells}
+                handleSelected={setSelectedRows}
               />
             )}
           </WrapInCard>

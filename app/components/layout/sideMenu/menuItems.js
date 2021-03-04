@@ -22,14 +22,14 @@ export const menuItems = [
     name: 'education',
     link: '/',
     icon: QuestionAnswerIcon,
-    children: [
-      { name: 'Ceo', link: '/ceo' },
-      {
-        name: 'new',
-        link: '/new',
-        children: [{ name: 'Ceo', link: '/ceo' }],
-      },
-    ],
+    // children: [
+    //   { name: 'Ceo', link: '/ceo' },
+    //   {
+    //     name: 'new',
+    //     link: '/new',
+    //     children: [{ name: 'Ceo', link: '/ceo' }],
+    //   },
+    // ],
   },
   {
     name: 'career',
