@@ -13,7 +13,7 @@ import { useStyles } from './styles';
 import { CheckBox } from '../index';
 import { getComparator, stableSort } from '../../utils/helper';
 
-export function DataTable({ data, headCells, tableRowsPerPage }) {
+export function DataTable({ data, headCells, tableRowsPerPage, handleSelected }) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('fullName');
@@ -59,6 +59,10 @@ export function DataTable({ data, headCells, tableRowsPerPage }) {
       );
     }
     setSelected(newSelected);
+    // TODO move  state to parent
+    handleSelected(newSelected)
+
+
   };
 
   const handleChangePage = (event, newPage) => {
@@ -168,7 +172,7 @@ DataTable.propTypes = {
   tableRowsPerPage: PropTypes.number,
 };
 DataTable.defaultProps = {
-  tableRowsPerPage: 5,
+  tableRowsPerPage: 20,
 };
 
 export default DataTable;

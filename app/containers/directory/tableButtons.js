@@ -6,7 +6,7 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
-export function TableButtons() {
+export function TableButtons({ onDelete }) {
   const history = useHistory();
   const navigateTo = (url) => {
     history.push(url);
@@ -41,6 +41,7 @@ export function TableButtons() {
           variant="contained"
           fullWidth={false}
           startIcon={<DeleteIcon />}
+          onClick={onDelete}
         >
           Delete
         </Button>
