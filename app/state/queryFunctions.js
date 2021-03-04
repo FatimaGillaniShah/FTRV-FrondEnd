@@ -9,7 +9,7 @@ export const fetchUsers = ({ queryKey }) => {
   if (queryKey[1].query) {
     url = `${`${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].query)}`}`;
   } else if (queryKey[1].filters) {
-    url = `${USERS_LIST}?pageSize=1&${insertParams(queryKey[1].filters)}`;
+    url = `${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].filters)}`;
   } else {
     url = USERS_LIST;
   }

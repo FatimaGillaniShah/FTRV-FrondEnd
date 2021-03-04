@@ -38,6 +38,11 @@ export function Login({ onHandleSubmit, isError, errorMessage }) {
           >
             <Form>
               <Paper className={classes.loginBox}>
+                {isError && (
+                  <Box mt={6} textAlign="center">
+                    <Alert severity="error">{errorMessage}</Alert>
+                  </Box>
+                )}
                 <Box mt={7}>
                   <Input
                     name="email"
@@ -68,11 +73,6 @@ export function Login({ onHandleSubmit, isError, errorMessage }) {
                     Login
                   </Button>
                 </Box>
-                {isError && (
-                  <Box mt={6} textAlign="center">
-                    <Alert severity="error">{errorMessage}</Alert>
-                  </Box>
-                )}
               </Paper>
             </Form>
           </Formik>

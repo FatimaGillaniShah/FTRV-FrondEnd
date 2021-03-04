@@ -12,8 +12,8 @@ function Filters({ onHandleFilterSearch }) {
       <Formik
         initialValues={{
           name: '',
-          departments: '',
-          designation: '',
+          department: '',
+          title: '',
           extension: '',
         }}
         onSubmit={(values) => {
@@ -27,10 +27,10 @@ function Filters({ onHandleFilterSearch }) {
                 <Input name="name" placeholderText="Name" />
               </Box>
               <Box width={1 / 6}>
-                <Input name="departments" placeholderText="Departments" />
+                <Input name="department" placeholderText="Department" />
               </Box>
               <Box width={1 / 6}>
-                <Input name="designation" placeholderText="Designation" />
+                <Input name="title" placeholderText="Designation" />
               </Box>
               <Box width={1 / 6}>
                 <Input name="extension" placeholderText="Extension" />
