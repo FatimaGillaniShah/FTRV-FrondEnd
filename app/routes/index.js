@@ -24,8 +24,18 @@ function Routes() {
           roles={[ROLES.ADMIN]}
           component={DirectoryImporter}
         />
-        <PrivateRoute exact path="/directory/add" component={CreateUser} />
-        <PrivateRoute exact path="/directory/edit/:id" component={EditUser} />
+        <PrivateRoute
+          exact
+          path="/directory/add"
+          roles={[ROLES.ADMIN]}
+          component={CreateUser}
+        />
+        <PrivateRoute
+          exact
+          path="/directory/edit/:id"
+          roles={[ROLES.ADMIN]}
+          component={EditUser}
+        />
         <PrivateRoute component={NotFoundPage} />
         {/* <PrivateRoute */}
         {/*  path="/" */}

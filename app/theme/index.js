@@ -33,7 +33,7 @@ const theme = createMuiTheme({
   },
   defaultHeights: {
     header: '5rem',
-    sideMenuItem: '6rem',
+    sideMenuItem: '4rem',
   },
   defaultWidths: {},
   spacing: (factor) => `${0.25 * factor}rem`,

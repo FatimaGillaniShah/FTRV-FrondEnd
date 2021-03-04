@@ -85,7 +85,7 @@ SelectInput.defaultProps = {
 // Usage
 
 /* <Select
-name="departments"
+name="department"
   labelId="label-id"
   selectId="select-id"
   fullWidth={true}

@@ -4,20 +4,19 @@
  *
  */
 
-import { Toast } from 'components';
+import { Toast, WrapInCard } from 'components';
 import CreateNewUser from 'components/pages/createUser';
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { createUser } from 'state/queryFunctions';
+import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 
 function CreateUser() {
   const history = useHistory();
-  const mutation = useMutation(createUser);
-
-  useEffect(() => {
-    if (mutation.isSuccess) {
+  const mutation = useMutation(createUser, {
+    onSuccess: () => {
       history.push({
         pathname: '/directory',
         state: {
@@ -26,8 +25,9 @@ function CreateUser() {
           message: `User Created Successfully`,
         },
       });
-    }
-  }, [mutation.isSuccess]);
+    },
+  });
+
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
@@ -60,12 +60,16 @@ function CreateUser() {
         <Toast variant="error">{errorMessage || 'Error while Updating'}</Toast>
       )}
 
-      <CreateNewUser
-        initialFiles={initialFiles}
-        mutation={mutation}
-        onUpdateUser={handleSubmit}
-        formType="add"
-      />
+      <WrapInBreadcrumbs>
+        <WrapInCard>
+          <CreateNewUser
+            initialFiles={initialFiles}
+            mutation={mutation}
+            onUpdateUser={handleSubmit}
+            formType="add"
+          />
+        </WrapInCard>
+      </WrapInBreadcrumbs>
     </>
   );
 }

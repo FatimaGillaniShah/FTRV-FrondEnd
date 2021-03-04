@@ -4,8 +4,8 @@
  *
  */
 
-import { Toast } from 'components';
-import React, { memo, useEffect } from 'react';
+import { Toast, WrapInCard } from 'components';
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
@@ -13,6 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { getUserById, updateUser } from 'state/queryFunctions';
 import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
+import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 
 function EditUser() {
@@ -26,9 +27,8 @@ function EditUser() {
     { refetchOnWindowFocus: false }
   );
 
-  const mutation = useMutation(updateUser);
-  useEffect(() => {
-    if (mutation.isSuccess) {
+  const mutation = useMutation(updateUser, {
+    onSuccess: () => {
       history.push({
         pathname: '/directory',
         state: {
@@ -40,8 +40,9 @@ function EditUser() {
 
       queryClient.removeQueries(keys.getUser(id));
       queryClient.invalidateQueries(keys.getUser(id));
-    }
-  }, [mutation.isSuccess]);
+    },
+  });
+
   const errorMessage = mutation?.error?.response?.data?.message;
 
   const initialData = data?.data?.data || null;
@@ -67,10 +68,21 @@ function EditUser() {
   };
 
   initialFiles.isProfilePicAttached = false;
-  initialFiles.avatar = process.env.API_ASSETS_URL + initialFiles.avatar;
   if (initialData) {
     initialData.password = '';
-    initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
+    if (initialData.avatar)
+      initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
+
+    if (initialData.joiningDate) {
+      const parsedDate = new Date(initialData.joiningDate);
+
+      let parseMonth = parsedDate.getMonth();
+      parseMonth += 1;
+      if (parseMonth < 10) {
+        parseMonth = `0${parseMonth}`;
+      }
+      initialData.joiningDate = `${parsedDate.getFullYear()}-${parseMonth}-${parsedDate.getDate()}`;
+    }
   }
   return (
     <>
@@ -82,17 +94,23 @@ function EditUser() {
       {mutation.isError && (
         <Toast variant="error">{errorMessage || 'Error while Updating'}</Toast>
       )}
-
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <EditUserInfo
-          mutation={mutation}
-          initialFiles={initialData || initialFiles}
-          onUpdateUser={handleSubmit}
-          formType="edit"
-        />
-      )}
+      <WrapInBreadcrumbs>
+        {/* <Box display="flex" flexDirection="column"> */}
+        {/* <Breadcrumbs /> */}
+        <WrapInCard>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <EditUserInfo
+              mutation={mutation}
+              initialFiles={initialData || initialFiles}
+              onUpdateUser={handleSubmit}
+              formType="edit"
+            />
+          )}
+        </WrapInCard>
+        {/* </Box> */}
+      </WrapInBreadcrumbs>
     </>
   );
 }

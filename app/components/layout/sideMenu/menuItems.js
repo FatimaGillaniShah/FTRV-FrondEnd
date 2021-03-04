@@ -5,18 +5,13 @@ import LinkIcon from '@material-ui/icons/Link';
 import PeopleIcon from '@material-ui/icons/People';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import StorageIcon from '@material-ui/icons/Storage';
+import { ROLES } from 'utils/constants';
 
 export const menuItems = [
   {
-    name: 'directory',
-    link: '/directory',
-    icon: PeopleIcon,
-    children: [{ name: 'Add User', link: '/directory/add' }],
-  },
-  {
     name: 'members',
-    link: '/members',
     icon: PeopleIcon,
+    children: [{ name: 'Directory', link: '/directory' }],
   },
   {
     name: 'blog',
@@ -60,10 +55,6 @@ export const menuItems = [
     name: 'settings',
     link: '/',
     icon: BorderColorIcon,
-  },
-  {
-    name: 'logout',
-    link: '/',
-    icon: BorderColorIcon,
+    role: [ROLES.ADMIN],
   },
 ];
