@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     backgroundColor: '	#FF9200',
     borderRadius: '10px',
-    margin: '5px',
-    paddingBottom: '15px',
+    margin: '1px',
+    paddingBottom: '1px',
   },
 
   Griditem3: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: '10px',
-    margin: '5px',
+    margin: '1px',
     flex: '1',
   },
   bstyle: {
@@ -72,29 +72,31 @@ const useStyles = makeStyles((theme) => ({
   block1Typo: {
     marginLeft: 'min(50px, 20%)',
     color: 'white',
-    fontSize: ' 17px/26px',
+    fontSize: ' 7px/12px',
   },
   block2Typo: {
     color: 'white',
     paddingTop: '30px',
     textAlign: 'center',
     paddingLeft: '10px',
-    fontSize: '20px/30px',
+    fontSize: '7px/12px',
     overflowWrap: 'break-word',
   },
   item3Typo: {
-    // paddingTop:"10px",
-    paddingBottom: '30px',
+    paddingTop:"20px",
+    // paddingBottom: '30px',
     textAlign: 'center',
     // paddingRight:"30px",
     paddingLeft: '10px',
     fontSize: '20px/30px',
     overflowWrap: 'break-word',
+    marginBottom: '1rem',
   },
   paddTop: {
-    paddingTop: '20px',
+    // paddingTop: '20px',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginBottom: '1rem',
     // paddingRight:"5px",
     // [theme.breakpoints.down('290')]: {
     //   flexDirection:"column",
@@ -124,7 +126,7 @@ export default function App() {
     <Box className={classes.bstyle}>
       <Grid container className={classes.outerContainer}>
         <Grid item xs={12} className={classes.Griditem1}>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <Typography variant="h6" component="h2" gutterBottom>
             <b>Birthdays</b>
           </Typography>
         </Grid>
@@ -141,8 +143,8 @@ export default function App() {
                 </Box>
                 <Typography
                   className={classes.block1Typo}
-                  variant="h6"
-                  component="h2"
+                  // variant="h6"
+                  // component="h2"
                   gutterBottom
                 >
                   Common
@@ -150,7 +152,7 @@ export default function App() {
               </Box>
             </Grid>
             <Grid item sm={6} className={classes.block2Typo}>
-              <Typography variant="h5" gutterBottom>
+              <Typography gutterBottom>
                 Today is <Box className={classes.fontBold}>Common's </Box>{' '}
                 Birthdays!
               </Typography>
@@ -158,7 +160,7 @@ export default function App() {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} className={classes.Griditem3}>
+        {/* <Grid item xs={12} className={classes.Griditem3}>
           <Grid container className={classes.paddTop}>
             <Grid item xs={6}>
               <img
@@ -168,7 +170,7 @@ export default function App() {
               ></img>
             </Grid>
             <Grid item xs={6} className={classes.item3Typo}>
-              <Typography variant="h5" component="h2" gutterBottom>
+              <Typography component="h2" gutterBottom>
                 Edward
               </Typography>
               <Button variant="contained" color="primary">
@@ -176,7 +178,7 @@ export default function App() {
               </Button>
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   );

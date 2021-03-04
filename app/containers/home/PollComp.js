@@ -122,8 +122,7 @@ export default function PollComp() {
               Poll
             </Typography>
             <Typography
-              variant="body1"
-              component="h2"
+              variant="subtitle1"
               className={classes.fontBold}
               gutterBottom
             >
@@ -139,18 +138,18 @@ export default function PollComp() {
                 <FormControlLabel
                   value="option1"
                   control={<Radio />}
-                  label="Option 1: Zulafiqar "
+                  label="Option 1: Ed "
                 />
                 <FormControlLabel
                   value="option2"
                   control={<Radio />}
                   label="Option 2: Ali"
                 />
-                <FormControlLabel
+                {/* <FormControlLabel
                   value="option3"
                   control={<Radio />}
                   label="Option 3: Hamza"
-                />
+                /> */}
               </RadioGroup>
             </Grid>
 

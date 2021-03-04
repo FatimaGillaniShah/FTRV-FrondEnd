@@ -37,10 +37,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
   },
   gridPadding: {
-    paddingTop: '20%',
+    paddingTop: '5%',
     paddingBottom: '4%',
     [theme.breakpoints.down('290')]: {
-      paddingTop: '40%',
+      paddingTop: '10%',
     },
   },
   typoStyle: {
@@ -65,7 +65,7 @@ export default function NotificationComp() {
                 <NotificationsActiveTwoToneIcon className={classes.iconStyle} />
               </Grid>
               <Grid item xs={8} className={classes.gridPadding}>
-                <Typography variant="h5" component="h2" gutterBottom>
+                <Typography component="h2" gutterBottom>
                   <b>Notification</b>
                 </Typography>
                 <Typography

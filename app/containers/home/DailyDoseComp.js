@@ -30,7 +30,7 @@ export default function DailyDose() {
     <Grid container>
       <Grid item xs={12}>
         <Typography
-          variant="h4"
+          variant="h6"
           component="h2"
           className={classes.TypographyHeading}
         >

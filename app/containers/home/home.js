@@ -107,7 +107,7 @@ export default function App() {
         <Grid item xs={12} className={classes.gridItem1Item1}>
           <img
             className={classes.imageStyle}
-            src="https://media.istockphoto.com/photos/pakistan-monument-islamabad-picture-id535695503?k=6&m=535695503&s=612x612&w=0&h=uP8aDK4xlfjk3kEiyr9wwUiuh80UwAiICweFpiBDosk="
+            src="https://www.funtownrv.com/blog/wp-content/uploads/sites/8/2017/04/Forest-River-Wildwood-X-Lite-Travel-Trailer.jpg"
             alt="person"
           ></img>
         </Grid>
