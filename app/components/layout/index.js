@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     position: 'fixed',
-    zIndex: 1,
+    zIndex: 10,
   },
   bodyGrid: {
     flex: 1,

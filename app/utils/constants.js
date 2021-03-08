@@ -7,7 +7,7 @@ export const FILE_ACCEPT_TYPES = {
   imageFiles: 'image/x-png,image/jpeg,image/jpg',
 };
 export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25, 100];
-
+export const localStorageEntries = { user: 'user' };
 export const ROLES = {
   ADMIN: 'admin',
   USER: 'user',

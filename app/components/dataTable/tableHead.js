@@ -5,14 +5,18 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Box } from '@material-ui/core';
 import { StyledTableSortLabel } from './styles';
+// eslint-disable-next-line no-unused-vars
 import { CheckBox } from '../index';
 
 export default function EnhancedTableHead({
   classes,
+  // eslint-disable-next-line no-unused-vars
   onSelectAllClick,
   order,
   orderBy,
+  // eslint-disable-next-line no-unused-vars
   numSelected,
+  // eslint-disable-next-line no-unused-vars
   rowCount,
   onRequestSort,
   headCells,

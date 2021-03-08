@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
   const userAvatar =
@@ -69,6 +71,7 @@ export default function Header() {
 
   const handleClose = () => {
     setAnchorEl(null);
+    history.push('/profile');
   };
   const handleLogout = () => {
     setUser({

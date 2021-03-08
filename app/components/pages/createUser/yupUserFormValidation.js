@@ -1,4 +1,4 @@
-import { object, mixed, string, date } from 'yup';
+import { object, mixed, string, date, ref } from 'yup';
 
 const FILE_SIZE = 10;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -67,6 +67,13 @@ export const yupUserFormValidaton = object().shape({
       is: true,
       then: string().required('*Password Required'),
     }),
+  confirmPassword: string().when('password', {
+    is: (password) => password && password.length > 0,
+    then: string()
+      .required('Required')
+      .max(15, 'Exceeded Maximum Characters Limit')
+      .oneOf([ref('password'), null], 'Passwords must match'),
+  }),
   contactNo: string()
     .test(
       'contactNoTest',

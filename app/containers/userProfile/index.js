@@ -8,27 +8,43 @@ import { Toast, WrapInCard } from 'components';
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { getUserById, updateUser } from 'state/queryFunctions';
 import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
+import { useAuthContext } from '../../context/authContext';
+import { localStorageEntries, ROLES } from '../../utils/constants';
 
 function EditUser() {
-  const { id } = useParams();
+  // const { id } = useParams();
   const queryClient = useQueryClient();
   const history = useHistory();
-
+  const {
+    user: { data: { role, id } = null } = null,
+    setUser,
+  } = useAuthContext();
   const { data, isLoading } = useQuery(
     keys.getUser(id),
     () => getUserById(id),
     { refetchOnWindowFocus: false }
   );
-
   const mutation = useMutation(updateUser, {
-    onSuccess: () => {
+    onSuccess: ({
+      data: {
+        data: { avatar },
+      },
+    }) => {
+      if (avatar) {
+        const userData = localStorage.getItem(localStorageEntries.user);
+        const parsedUserData = JSON.parse(userData);
+        if (parsedUserData.data) {
+          parsedUserData.data.avatar = avatar;
+          setUser(parsedUserData);
+        }
+      }
+
       history.push({
         pathname: '/directory',
         state: {
@@ -71,8 +87,7 @@ function EditUser() {
   if (initialData) {
     initialData.password = '';
     initialData.confirmPassword = '';
-
-    if (initialData.avatar)
+    if (initialData.avatar && !initialData.avatar.includes('http'))
       initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
     if (initialData.joiningDate) {
@@ -83,9 +98,10 @@ function EditUser() {
       if (parseMonth < 10) {
         parseMonth = `0${parseMonth}`;
       }
-      initialData.joiningDate = `${parsedDate.getFullYear()}-${parseMonth}-${parsedDate.getDate()}`;
+      initialData.joiningDate = `${parsedDate.getDate()}-${parseMonth}-${parsedDate.getFullYear()}`;
     }
   }
+
   return (
     <>
       <Helmet>
@@ -105,9 +121,14 @@ function EditUser() {
           ) : (
             <EditUserInfo
               mutation={mutation}
-              initialFiles={initialData || initialFiles}
+              initialFiles={
+                initialData ||
+                (role === ROLES.ADMIN ? initialFiles : { password: '' })
+              }
               onUpdateUser={handleSubmit}
               formType="edit"
+              editRole={role}
+              isThisMyProfile
             />
           )}
         </WrapInCard>

@@ -36,12 +36,13 @@ function CreateUser() {
     lastName: '',
     email: '',
     password: '',
+    confirmPassword: '',
     contactNo: '',
     extension: '',
     title: '',
     location: '',
     department: '',
-    joiningDate: '',
+    joiningDate: null,
     file: undefined,
   };
 

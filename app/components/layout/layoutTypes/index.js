@@ -1,1 +1,1 @@
-export const twoColumnLayoutRouteNames = [];
+export const twoColumnLayoutRouteNames = ['home'];
