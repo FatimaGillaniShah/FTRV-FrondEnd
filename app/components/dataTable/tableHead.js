@@ -6,6 +6,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { Box } from '@material-ui/core';
 import { StyledTableSortLabel } from './styles';
 import { CheckBox } from '../index';
+import { ROLES } from '../../utils/constants';
 
 export default function EnhancedTableHead({
   classes,
@@ -16,6 +17,7 @@ export default function EnhancedTableHead({
   rowCount,
   onRequestSort,
   headCells,
+  role,
 }) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -23,18 +25,28 @@ export default function EnhancedTableHead({
   return (
     <TableHead className={classes.tableHead}>
       <TableRow>
-        <TableCell padding="checkbox">
-          {/*<CheckBox*/}
-          {/*  indeterminate={numSelected > 0 && numSelected < rowCount}*/}
-          {/*  checked={rowCount > 0 && numSelected === rowCount}*/}
-          {/*  onChange={onSelectAllClick}*/}
-          {/*  className={classes.tableHead}*/}
-          {/*/>*/}
-        </TableCell>
+        {role === ROLES.ADMIN && (
+          <TableCell padding="checkbox">
+            <CheckBox
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+              checked={rowCount > 0 && numSelected === rowCount - 1}
+              onChange={onSelectAllClick}
+              className={classes.tableHead}
+            />
+          </TableCell>
+        )}
+
         {headCells.map((headCell) => (
           <TableCell
             align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={
+              // eslint-disable-next-line no-nested-ternary
+              role === ROLES.USER
+                ? 'default'
+                : headCell.disablePadding
+                ? 'none'
+                : 'default'
+            }
             sortDirection={orderBy === headCell.id ? order : false}
             className={classes.headCells}
           >

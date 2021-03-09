@@ -11,7 +11,7 @@ import { keys } from '../../state/queryKeys';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 
-const ActionButtons = (data) => {
+const ActionButtons = ({ data, disabled, setSelected }) => {
   const history = useHistory();
   const theme = useTheme();
   const queryClient = useQueryClient();
@@ -27,6 +27,7 @@ const ActionButtons = (data) => {
         data: { count },
       },
     }) => {
+      setSelected([]);
       Swal.fire('Deleted!', `${count} user deleted.`, 'success');
       queryClient.invalidateQueries(keys.getUsers({}));
     },
@@ -50,7 +51,7 @@ const ActionButtons = (data) => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        mutation.mutate([data.data.id]);
+        mutation.mutate([data.id]);
       }
     });
   };
@@ -59,13 +60,13 @@ const ActionButtons = (data) => {
     <>
       {role === ROLES.ADMIN && (
         <>
-          <IconButton>
+          <IconButton disabled={disabled}>
             <EditIcon
               color="secondary"
-              onClick={() => history.push(`directory/edit/${data.data.id}`)}
+              onClick={() => history.push(`directory/edit/${data.id}`)}
             />
           </IconButton>
-          <IconButton onClick={() => handleDeleteUser()}>
+          <IconButton onClick={() => handleDeleteUser()} disabled={disabled}>
             <DeleteIcon color="error" />
           </IconButton>
         </>
