@@ -98,6 +98,13 @@ export const headCells = [
     type: 'label',
   },
   {
+    id: 'location',
+    numeric: false,
+    disablePadding: false,
+    label: 'Location',
+    type: 'label',
+  },
+  {
     id: 'email',
     numeric: false,
     disablePadding: false,

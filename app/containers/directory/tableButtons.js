@@ -5,7 +5,6 @@ import AddIcon from '@material-ui/icons/Add';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import { H6 } from '../../components/typography';
 
 export function TableButtons({ onDelete, numSelected }) {
   const history = useHistory();
@@ -50,11 +49,6 @@ export function TableButtons({ onDelete, numSelected }) {
           </Button>
         </Box>
       </Box>
-      {numSelected > 0 && (
-        <Box>
-          <H6>{numSelected}</H6>
-        </Box>
-      )}
     </Box>
   );
 }

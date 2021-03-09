@@ -7,6 +7,7 @@ import { useLocation, history } from 'react-router-dom';
 import { Toast } from 'components';
 import Swal from 'sweetalert2';
 import { useTheme } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import { deleteUser, fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
@@ -149,6 +150,14 @@ function DirectoryContainer() {
                 />
               </Box>
             )}
+            {selected.length > 0 && (
+              <Box my={4}>
+                <Alert severity="info">
+                  <strong>{selected.length}</strong> Rows Selected
+                </Alert>
+              </Box>
+            )}
+
             {!isLoading && (
               <DataTable
                 role={role}
