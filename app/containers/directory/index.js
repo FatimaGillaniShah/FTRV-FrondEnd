@@ -20,6 +20,7 @@ import { Loading } from '../../components/loading';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
+import { useStyles } from './styles';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
@@ -29,6 +30,7 @@ function DirectoryContainer() {
   const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
   const theme = useTheme();
+  const classes = useStyles();
 
   const mutation = useMutation(deleteUser, {
     onSuccess: ({
@@ -152,8 +154,8 @@ function DirectoryContainer() {
             )}
             {selected.length > 0 && (
               <Box my={4}>
-                <Alert severity="info">
-                  <strong>{selected.length}</strong> Rows Selected
+                <Alert severity="info" className={classes.alertPadding}>
+                  <strong>{selected.length}</strong> User(s) Selected
                 </Alert>
               </Box>
             )}
