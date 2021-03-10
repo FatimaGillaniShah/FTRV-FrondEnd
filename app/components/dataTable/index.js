@@ -99,7 +99,7 @@ export function DataTable({
       )}
 
       {headCells.map((header) => {
-        const Buttons = header.buttons;
+        const Buttons = header.buttons || null;
         return header.type === 'action' ? (
           <TableCell align="right">
             <Buttons
