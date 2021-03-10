@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
@@ -18,18 +18,24 @@ export default function EnhancedTableHead({
   onRequestSort,
   headCells,
   role,
+  rows,
+  currentUserID,
 }) {
+  const [usersCount, setUsersCount] = useState(false);
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
+  useEffect(() => {
+    setUsersCount(rows.filter((row) => row.id !== currentUserID).length);
+  }, [rows]);
   return (
     <TableHead className={classes.tableHead}>
       <TableRow>
         {role === ROLES.ADMIN && (
           <TableCell padding="checkbox">
             <CheckBox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount - 1}
+              indeterminate={numSelected > 0 && numSelected < usersCount}
+              checked={rowCount > 0 && numSelected === usersCount}
               onChange={onSelectAllClick}
               className={classes.tableHead}
             />

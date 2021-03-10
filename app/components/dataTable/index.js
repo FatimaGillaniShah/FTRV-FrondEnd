@@ -141,6 +141,8 @@ export function DataTable({
             rowCount={rows.length}
             headCells={headCells}
             role={role}
+            currentUserID={currentUserID}
+            rows={rows}
           />
           <TableBody>
             {stableSort(rows, getComparator(order, orderBy))
@@ -171,7 +173,7 @@ export function DataTable({
 
             {!rows.length && (
               <TableRow>
-                <TableCell colSpan={7}>
+                <TableCell colSpan={9}>
                   <Alert severity="error">No data found</Alert>
                 </TableCell>
               </TableRow>
