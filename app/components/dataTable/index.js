@@ -26,7 +26,6 @@ export function DataTable({
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('fullName');
-  // const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
   const [rows, setRows] = useState([]);
@@ -99,8 +98,8 @@ export function DataTable({
         </TableCell>
       )}
 
-      {headCells.map((header, index) => {
-        const Buttons = header.buttons || null;
+      {headCells.map((header) => {
+        const Buttons = header.buttons;
         return header.type === 'action' ? (
           <TableCell align="right">
             <Buttons
@@ -111,10 +110,7 @@ export function DataTable({
           </TableCell>
         ) : (
           <TableCell
-            padding={
-              // eslint-disable-next-line no-nested-ternary
-              role === ROLES.USER ? 'default' : index === 0 ? 'none' : 'default'
-            }
+            padding="default"
             align={header.numeric ? 'right' : 'left'}
           >
             {row[header.id]}
@@ -173,7 +169,7 @@ export function DataTable({
 
             {!rows.length && (
               <TableRow>
-                <TableCell colSpan={9}>
+                <TableCell colSpan={headCells.length}>
                   <Alert severity="error">No data found</Alert>
                 </TableCell>
               </TableRow>

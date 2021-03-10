@@ -43,7 +43,7 @@ export function TableButtons({ onDelete, numSelected }) {
             fullWidth={false}
             startIcon={<DeleteIcon />}
             onClick={onDelete}
-            disabled={numSelected <= 0 && true}
+            disabled={numSelected <= 0}
           >
             Delete
           </Button>
