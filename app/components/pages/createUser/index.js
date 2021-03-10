@@ -216,7 +216,7 @@ function CreateUser({
                       <Input
                         name="contactNo"
                         variant="outlined"
-                        OutlinedInputPlaceholder="*Enter Phone Number"
+                        OutlinedInputPlaceholder="Enter Phone Number"
                         inputComponent={TextMaskForContactNo}
                         isDisabled={mutation.isLoading}
                       />
@@ -227,7 +227,7 @@ function CreateUser({
                       <Input
                         name="extension"
                         variant="outlined"
-                        OutlinedInputPlaceholder="*Phone Extension"
+                        OutlinedInputPlaceholder="Phone Extension"
                         isDisabled={mutation.isLoading}
                       />
                     </Tooltip>
