@@ -103,7 +103,6 @@ function CreateUser({
             if (data.joiningDate) {
               dataFile.append('joiningDate', data.joiningDate);
             }
-
             await onUpdateUser(dataFile);
           } catch (err) {
             // ...
@@ -128,7 +127,6 @@ function CreateUser({
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
-                // flex="30%"
               >
                 <Box width={1} display="flex" justifyContent="center">
                   <Box
@@ -234,7 +232,6 @@ function CreateUser({
                           formType === 'add' ? '*Password' : 'Password'
                         }`}
                         variant="outlined"
-                        // type="password"
                         inputType={`${showPassword ? 'text' : 'password'}`}
                         id="password"
                         name="password"
@@ -267,7 +264,6 @@ function CreateUser({
                           },
                         }}
                         variant="outlined"
-                        // type="password"
                         inputType={`${showPassword ? 'text' : 'password'}`}
                         id="confirmPassword"
                         name="confirmPassword"
@@ -412,20 +408,11 @@ function CreateUser({
                         variant="contained"
                         color="secondary"
                         type="submit"
-                        // onClick={() => {
-                        //   if (values.file && values.file.size) {
-                        //     setFieldValue('isProfilePicAttached', true);
-                        //   }
-                        //   handleSubmit();
-                        // }}
                         startIcon={
                           !mutation.isLoading && (
                             <GroupAddIcon fontSize="small" />
                           )
                         }
-                        // disabled={
-                        //   mutation.isLoading || Object.keys(errors).length > 0
-                        // }
                       >
                         {mutation.isLoading && (
                           <CircularProgress
