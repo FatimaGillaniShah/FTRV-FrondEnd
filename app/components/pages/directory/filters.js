@@ -15,6 +15,7 @@ function Filters({ onHandleFilterSearch }) {
           department: '',
           title: '',
           extension: '',
+          location: '',
         }}
         onSubmit={(values) => {
           onHandleFilterSearch(values);
@@ -31,6 +32,9 @@ function Filters({ onHandleFilterSearch }) {
               </Box>
               <Box width={1 / 6}>
                 <Input name="title" placeholderText="Designation" />
+              </Box>
+              <Box width={1 / 6}>
+                <Input name="location" placeholderText="Location" />
               </Box>
               <Box width={1 / 6}>
                 <Input name="extension" placeholderText="Extension" />

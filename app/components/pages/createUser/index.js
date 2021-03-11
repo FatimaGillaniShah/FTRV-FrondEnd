@@ -289,11 +289,11 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Tooltip title="Input your Department">
+                    <Tooltip title="Input your Contact Number">
                       <Input
                         name="contactNo"
                         variant="outlined"
-                        OutlinedInputPlaceholder="*Phone Number"
+                        OutlinedInputPlaceholder="Enter Phone Number"
                         inputComponent={TextMaskForContactNo}
                         Icon={PhoneIcon}
                         appendIcon
