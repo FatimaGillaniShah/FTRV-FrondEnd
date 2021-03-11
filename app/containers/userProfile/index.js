@@ -16,6 +16,7 @@ import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
+import { parseDate } from '../../utils/functions';
 
 function EditUser() {
   const queryClient = useQueryClient();
@@ -71,14 +72,7 @@ function EditUser() {
       initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
     if (initialData.joiningDate) {
-      const parsedDate = new Date(initialData.joiningDate);
-
-      let parseMonth = parsedDate.getMonth();
-      parseMonth += 1;
-      if (parseMonth < 10) {
-        parseMonth = `0${parseMonth}`;
-      }
-      initialData.joiningDate = `${parsedDate.getDate()}-${parseMonth}-${parsedDate.getFullYear()}`;
+      initialData.joiningDate = parseDate(initialData.joiningDate);
     }
   } else if (role === ROLES.USER) {
     formDefaultData = { password: '' }; // User can only edit his password and avatar in profile

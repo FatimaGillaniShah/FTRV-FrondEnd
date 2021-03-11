@@ -15,6 +15,7 @@ import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
+import { parseDate } from '../../utils/functions';
 
 function EditUser() {
   const { id } = useParams();
@@ -76,14 +77,7 @@ function EditUser() {
       initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
     if (initialData.joiningDate) {
-      const parsedDate = new Date(initialData.joiningDate);
-
-      let parseMonth = parsedDate.getMonth();
-      parseMonth += 1;
-      if (parseMonth < 10) {
-        parseMonth = `0${parseMonth}`;
-      }
-      initialData.joiningDate = `${parsedDate.getFullYear()}-${parseMonth}-${parsedDate.getDate()}`;
+      initialData.joiningDate = parseDate(initialData.joiningDate);
     }
   }
   return (
