@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     display: 'flex',
     position: 'fixed',
-    zIndex: 1,
+    zIndex: 10,
   },
   bodyGrid: {
     flex: 1,
@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuGrid: {
     height: '100%',
+    zIndex: 5,
     display: 'block',
     position: 'fixed',
     left: 0,
@@ -44,13 +45,13 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     backgroundColor: theme.palette.primary.main,
     [theme.breakpoints.down('xl')]: {
-      width: '10%',
+      width: '10vw',
     },
     [theme.breakpoints.down('md')]: {
-      width: '13%',
+      width: '13vw',
     },
     [theme.breakpoints.down('xs')]: {
-      width: '28%',
+      width: '28vw',
       fontSize: '0.5rem',
     },
     '&::-webkit-scrollbar': {
@@ -71,16 +72,17 @@ const useStyles = makeStyles((theme) => ({
   contentGrid: {
     flex: 1,
     padding: '1rem',
+    overflow: 'auto',
     display: 'flex',
     marginLeft: '10%',
     [theme.breakpoints.down('lg')]: {
-      marginLeft: '10%',
+      marginLeft: '10vw',
     },
     [theme.breakpoints.down('md')]: {
-      marginLeft: '13%',
+      marginLeft: '13vw',
     },
     [theme.breakpoints.down('xs')]: {
-      marginLeft: '28%',
+      marginLeft: '28vw',
     },
   },
   menuSpacer: { flex: 0.11 },

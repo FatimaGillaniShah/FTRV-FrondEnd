@@ -15,8 +15,8 @@ import styled from 'styled-components';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../../context/authContext';
-import AvatarImg from '../../../images/avatar.jpeg';
 import Logo from '../../../images/logo.png';
 
 const StyledMenuItem = styled(MenuItem)`
@@ -57,9 +57,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
   const classes = useStyles();
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
-
+  const userAvatar =
+    user.data && user.data.avatar
+      ? process.env.API_ASSETS_URL + user.data.avatar
+      : 'http://www.gravatar.com/avatar/?d=mp';
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
@@ -67,6 +71,7 @@ export default function Header() {
 
   const handleClose = () => {
     setAnchorEl(null);
+    history.push('/profile');
   };
   const handleLogout = () => {
     setUser({
@@ -79,7 +84,7 @@ export default function Header() {
     <>
       <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <a href="/">
+          <a href="/home">
             <img src={Logo} alt="intranet logo" className={classes.logoStyle} />
           </a>
           {user.isAuthenticated && (
@@ -108,7 +113,7 @@ export default function Header() {
               </Hidden>
               <>
                 <Button onClick={handleClick}>
-                  <Avatar alt="avatar" src={AvatarImg} />
+                  <Avatar alt="avatar" src={userAvatar} />
                 </Button>
                 <Menu
                   id="simple-menu"

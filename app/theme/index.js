@@ -60,6 +60,9 @@ const theme = createMuiTheme({
       textTransform: 'capitalize',
       fontWeight: 300,
     },
+    subtitle2: {
+      fontWeight: 300,
+    },
   },
 });
 const updatedTheme = responsiveFontSizes(theme);

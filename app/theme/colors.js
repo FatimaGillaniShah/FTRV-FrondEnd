@@ -5,12 +5,15 @@ export const colors = {
   bgColor: {
     main: '#F0F2F5',
     secondary: 'white',
+    orange: '#FF9200',
   },
   textColor: {
     primary: '#153D73',
     secondary: '#1875C0',
     default: '#525252',
     light: 'white',
+    dark: 'black',
+    darkShade: '#3B3B3B',
     error: 'red',
   },
   iconColor: {

@@ -4,16 +4,20 @@
  *
  */
 
-import React, { memo } from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import PropTypes from 'prop-types';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { FormHelperText } from '@material-ui/core';
+import {
+  FormHelperText,
+  FormControl,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Typography,
+} from '@material-ui/core';
+
 import { useField } from 'formik';
+import PropTypes from 'prop-types';
+import React, { memo } from 'react';
 
 function InputField({
   placeholderText,
@@ -31,6 +35,7 @@ function InputField({
   IconClickable,
   OutlinedInputPlaceholder,
   helperText,
+  showInputLabel,
   ...props
 }) {
   const [field, meta] = useField(props);
@@ -39,44 +44,55 @@ function InputField({
       fullWidth={fullWidth}
       error={meta.touched && meta.error}
       {...formControlProps}
+      variant={variant}
     >
       {variant === 'outlined' ? (
-        <OutlinedInput
-          id={inputID}
-          type={inputType}
-          disabled={isDisabled}
-          placeholder={OutlinedInputPlaceholder}
-          endAdornment={
-            Icon &&
-            appendIcon && (
-              <InputAdornment position="end">
-                {IconClickable ? (
-                  <IconButton id={iconID} onClick={onIconClick} {...props}>
+        <>
+          {showInputLabel && (
+            <InputLabel htmlFor={inputID}>
+              <Typography variant="subtitle2">
+                {OutlinedInputPlaceholder}
+              </Typography>
+            </InputLabel>
+          )}
+          <OutlinedInput
+            label={showInputLabel ? OutlinedInputPlaceholder : undefined}
+            id={inputID}
+            type={inputType}
+            disabled={isDisabled}
+            placeholder={!showInputLabel && OutlinedInputPlaceholder}
+            endAdornment={
+              Icon &&
+              appendIcon && (
+                <InputAdornment position="end">
+                  {IconClickable ? (
+                    <IconButton id={iconID} onClick={onIconClick} {...props}>
+                      <Icon />
+                    </IconButton>
+                  ) : (
                     <Icon />
-                  </IconButton>
-                ) : (
-                  <Icon />
-                )}
-              </InputAdornment>
-            )
-          }
-          startAdornment={
-            Icon &&
-            prependIcon && (
-              <InputAdornment position="start">
-                {IconClickable ? (
-                  <IconButton id={iconID} onClick={onIconClick} {...props}>
+                  )}
+                </InputAdornment>
+              )
+            }
+            startAdornment={
+              Icon &&
+              prependIcon && (
+                <InputAdornment position="start">
+                  {IconClickable ? (
+                    <IconButton id={iconID} onClick={onIconClick} {...props}>
+                      <Icon />
+                    </IconButton>
+                  ) : (
                     <Icon />
-                  </IconButton>
-                ) : (
-                  <Icon />
-                )}
-              </InputAdornment>
-            )
-          }
-          {...field}
-          {...props}
-        />
+                  )}
+                </InputAdornment>
+              )
+            }
+            {...field}
+            {...props}
+          />
+        </>
       ) : (
         <>
           <InputLabel htmlFor={inputID}>{placeholderText}</InputLabel>
@@ -142,10 +158,12 @@ InputField.propTypes = {
   formControlProps: PropTypes.object,
   OutlinedInputPlaceholder: PropTypes.string,
   IconClickable: PropTypes.bool,
+  showInputLabel: PropTypes.bool,
 };
 InputField.defaultProps = {
   fullWidth: true,
   IconClickable: true,
+  showInputLabel: true,
 };
 
 // Usage

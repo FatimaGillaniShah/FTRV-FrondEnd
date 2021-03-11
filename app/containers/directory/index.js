@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
-import { useLocation, history } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { Toast } from 'components';
 import Swal from 'sweetalert2';
 import { useTheme } from '@material-ui/core/styles';
@@ -27,11 +27,12 @@ function DirectoryContainer() {
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
+  const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
   const theme = useTheme();
+  const history = useHistory();
   const classes = useStyles();
-
   const mutation = useMutation(deleteUser, {
     onSuccess: ({
       data: {
@@ -71,14 +72,11 @@ function DirectoryContainer() {
   const handleFilterSearch = (values) => {
     setFilters(values);
   };
-  useEffect(() => {
-    window.addEventListener('beforeunload', () => {
-      history.replaceState({}, '');
-    });
 
-    return () => {
-      window.removeEventListener('beforeunload', () => {});
-    };
+  useEffect(() => {
+    const temp = { ...state };
+    settoastValue(temp);
+    history.replace({}, '');
   }, []);
 
   if (mutation.isError) {
@@ -90,7 +88,7 @@ function DirectoryContainer() {
   }
   useEffect(() => {
     window.addEventListener('beforeunload', () => {
-      history.replaceState({}, '');
+      history.replace({}, '');
     });
 
     return () => {
@@ -118,9 +116,9 @@ function DirectoryContainer() {
   };
   return (
     <>
-      {state && state.showToast && (
+      {toastValue && toastValue.toastType && (
         <>
-          <Toast variant={state.toastType}>{state.message}</Toast>
+          <Toast variant={toastValue.toastType}>{toastValue.message}</Toast>
         </>
       )}
 

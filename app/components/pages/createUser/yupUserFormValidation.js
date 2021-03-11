@@ -1,6 +1,6 @@
-import { object, mixed, string, date } from 'yup';
+import { object, mixed, string, date, ref } from 'yup';
+import { MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS } from '../../../utils/constants';
 
-const FILE_SIZE = 10;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 export const yupUserFormValidaton = object().shape({
@@ -11,7 +11,10 @@ export const yupUserFormValidaton = object().shape({
       .test(
         'fileSize',
         'File too large',
-        (value) => value && value.size && value.size / 1024 / 1024 <= FILE_SIZE
+        (value) =>
+          value &&
+          value.size &&
+          value.size / 1024 / 1024 <= MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS
       )
       .test(
         'fileFormat',
@@ -67,8 +70,14 @@ export const yupUserFormValidaton = object().shape({
       is: true,
       then: string().required('*Password Required'),
     }),
+  confirmPassword: string().when('password', {
+    is: (password) => password && password.length > 0,
+    then: string()
+      .required('Required')
+      .max(15, 'Exceeded Maximum Characters Limit')
+      .oneOf([ref('password'), null], 'Passwords must match'),
+  }),
   contactNo: string().max(15, 'Too Long!').nullable(),
-
   extension: string().max(5, 'Too Long!').nullable(),
   joiningDate: date().notRequired().default(null).nullable(),
 });

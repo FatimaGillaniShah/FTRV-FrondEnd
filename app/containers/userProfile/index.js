@@ -8,28 +8,41 @@ import { Toast, WrapInCard } from 'components';
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import { getUserById, updateUser } from 'state/queryFunctions';
 import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
+import { useAuthContext } from '../../context/authContext';
+import { ROLES } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
 
 function EditUser() {
-  const { id } = useParams();
   const queryClient = useQueryClient();
   const history = useHistory();
-
+  const { user, setUser } = useAuthContext();
+  const id = user && user.data && user.data.id;
+  const role = user && user.data && user.data.role;
   const { data, isLoading } = useQuery(
     keys.getUser(id),
     () => getUserById(id),
     { refetchOnWindowFocus: false }
   );
-
   const mutation = useMutation(updateUser, {
-    onSuccess: () => {
+    onSuccess: ({
+      data: {
+        data: { avatar },
+      },
+    }) => {
+      if (avatar) {
+        const parsedUserData = { ...user };
+        if (parsedUserData.data) {
+          parsedUserData.data.avatar = avatar;
+          setUser(parsedUserData);
+        }
+      }
+
       history.push({
         pathname: '/directory',
         state: {
@@ -40,7 +53,6 @@ function EditUser() {
       });
 
       queryClient.removeQueries(keys.getUser(id));
-      queryClient.invalidateQueries(keys.getUser(id));
     },
   });
 
@@ -51,34 +63,37 @@ function EditUser() {
     const payload = { id, updatedData };
     mutation.mutate(payload);
   };
+  let formDefaultData = {};
 
-  const defaultData = {
-    firstName: '',
-    lastName: '',
-    password: '',
-    contactNo: '',
-    department: '',
-    location: '',
-    role: '',
-    title: '',
-    email: '',
-    extension: '',
-    status: '',
-    joiningDate: '',
-    avatar: '',
-  };
-
-  defaultData.isProfilePicAttached = false;
   if (initialData) {
     initialData.password = '';
     initialData.confirmPassword = '';
-
-    if (initialData.avatar)
+    if (initialData.avatar && !initialData.avatar.includes('http'))
       initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
     }
+  } else if (role === ROLES.USER) {
+    formDefaultData = { password: '' }; // User can only edit his password and avatar in profile
+  } else if (role === ROLES.ADMIN) {
+    formDefaultData = {
+      firstName: '',
+      lastName: '',
+      password: '',
+      contactNo: '',
+      department: '',
+      location: '',
+      role: '',
+      title: '',
+      email: '',
+      extension: '',
+      status: '',
+      joiningDate: '',
+      avatar: '',
+    };
+
+    formDefaultData.isProfilePicAttached = false;
   }
   return (
     <>
@@ -97,9 +112,11 @@ function EditUser() {
           ) : (
             <EditUserInfo
               mutation={mutation}
-              initialData={initialData || defaultData}
+              initialData={initialData || formDefaultData}
               onUpdateUser={handleSubmit}
               formType="edit"
+              editRole={role}
+              isThisMyProfile
             />
           )}
         </WrapInCard>

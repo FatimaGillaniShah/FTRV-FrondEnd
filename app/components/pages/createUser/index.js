@@ -1,25 +1,39 @@
+import DateFnsUtils from '@date-io/date-fns';
 import {
   Box,
   Button,
   CircularProgress,
   Hidden,
-  useMediaQuery,
   Tooltip,
+  Typography,
   Avatar,
 } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import BusinessIcon from '@material-ui/icons/Business';
 import ClearIcon from '@material-ui/icons/Clear';
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import PhoneIcon from '@material-ui/icons/Phone';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import WorkIcon from '@material-ui/icons/Work';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 import { Input } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { FILE_ACCEPT_TYPES } from 'utils/constants';
-
+import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
+import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
 
 const useStyles = makeStyles(() => ({
@@ -30,19 +44,26 @@ const useStyles = makeStyles(() => ({
 }));
 
 function CreateUser({
-  initialFiles,
+  initialData,
   mutation,
   onUpdateUser,
   formType = 'add',
+  editRole = 'user',
+  isThisMyProfile = false,
 }) {
   const classes = useStyles();
+  const [showPassword, setshowPassword] = useState(false);
   const [imgFile, setImgFile] = useState(
-    (initialFiles && initialFiles.avatar) || null
+    (initialData && initialData.avatar) || null
   );
-  const theme = useTheme();
   const history = useHistory();
-  const isResSmallerThanSm = useMediaQuery(theme.breakpoints.down('sm'));
   const formikRef = useRef();
+  const editProfileHeading = 'Edit Profile';
+  const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
+  const isUserEditingHisProfile = isThisMyProfile && editRole === ROLES.USER;
+  const yupValidation = isUserEditingHisProfile
+    ? userProfileValidation
+    : yupUserFormValidaton;
   useEffect(() => {
     if (mutation.isSuccess && formType === 'add') {
       if (formikRef.current) {
@@ -54,29 +75,24 @@ function CreateUser({
   return (
     <>
       <Formik
-        initialValues={initialFiles}
+        initialValues={initialData}
         innerRef={formikRef}
         onSubmit={async (values) => {
           try {
             const data = values;
-            // if (values.file && values.file.size) {
-            //   const dataFile = new FormData();
-            //   dataFile.append('file', values.file);
 
-            //   data.file = dataFile;
-            // }
-            if (data.contactNo) {
+            if (data.contactNo)
               data.contactNo = data.contactNo.replace(/[{()}]| |-|_/g, '');
-            }
 
             const dataFile = new FormData();
-            dataFile.append('firstName', data.firstName);
-            dataFile.append('lastName', data.lastName);
+
+            if (data.firstName) dataFile.append('firstName', data.firstName);
+            if (data.lastName) dataFile.append('lastName', data.lastName);
             if (data.contactNo) dataFile.append('contactNo', data.contactNo);
             if (data.extension) dataFile.append('extension', data.extension);
-            dataFile.append('title', data.title);
-            dataFile.append('location', data.location);
-            dataFile.append('department', data.department);
+            if (data.title) dataFile.append('title', data.title);
+            if (data.location) dataFile.append('location', data.location);
+            if (data.department) dataFile.append('department', data.department);
             if (data.file && data.file.size) {
               dataFile.append('file', data.file);
             }
@@ -87,24 +103,20 @@ function CreateUser({
             if (data.joiningDate) {
               dataFile.append('joiningDate', data.joiningDate);
             }
-
             await onUpdateUser(dataFile);
           } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log(err, 'error in submitting data');
+            // ...
           }
-          // resetForm();
-          // setImgFile(null);
         }}
-        validationSchema={yupUserFormValidaton}
+        validationSchema={yupValidation}
       >
-        {({ setFieldValue }) => (
+        {({ setFieldValue, values }) => (
           <Form>
             <Box
               flexWrap="wrap"
               flexDirection="row"
               p={4}
-              pr={isResSmallerThanSm ? 0 : 36}
+              pr={[0, 36]}
               display="flex"
               justifyContent="center"
               alignItems="center"
@@ -115,7 +127,6 @@ function CreateUser({
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
-                // flex="30%"
               >
                 <Box width={1} display="flex" justifyContent="center">
                   <Box
@@ -160,9 +171,9 @@ function CreateUser({
                 <Box width={1} pt={10} flexWrap="wrap" display="flex" px={2}>
                   <Box width={1} textAlign="center">
                     <H4>{`${
-                      formType === 'add'
-                        ? 'Create New User'
-                        : 'Update User Data'
+                      isThisMyProfile
+                        ? editProfileHeading
+                        : formHeadings[formType]
                     }`}</H4>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
@@ -170,15 +181,25 @@ function CreateUser({
                       name="firstName"
                       variant="outlined"
                       OutlinedInputPlaceholder="*First Name"
-                      isDisabled={mutation.isLoading}
+                      Icon={PersonOutlineIcon}
+                      appendIcon
+                      IconClickable={
+                        !(mutation.isLoading || isUserEditingHisProfile)
+                      }
+                      isDisabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Input
                       name="lastName"
                       variant="outlined"
+                      Icon={PersonOutlineIcon}
+                      appendIcon
+                      IconClickable={
+                        !(mutation.isLoading || isUserEditingHisProfile)
+                      }
                       OutlinedInputPlaceholder="*Last Name"
-                      isDisabled={mutation.isLoading}
+                      isDisabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
@@ -186,7 +207,16 @@ function CreateUser({
                       name="email"
                       variant="outlined"
                       OutlinedInputPlaceholder="*Email"
-                      isDisabled={mutation.isLoading || formType === 'edit'}
+                      isDisabled={
+                        mutation.isLoading ||
+                        formType === 'edit' ||
+                        isThisMyProfile
+                      }
+                      Icon={AlternateEmailIcon}
+                      appendIcon
+                      IconClickable={
+                        !(mutation.isLoading || isUserEditingHisProfile)
+                      }
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
@@ -194,17 +224,55 @@ function CreateUser({
                       <Input
                         inputProps={{
                           autocomplete: 'off',
+                          form: {
+                            autocomplete: 'off',
+                          },
+                        }}
+                        OutlinedInputPlaceholder={`${
+                          formType === 'add' ? '*Password' : 'Password'
+                        }`}
+                        variant="outlined"
+                        inputType={`${showPassword ? 'text' : 'password'}`}
+                        id="password"
+                        name="password"
+                        onIconClick={() => {
+                          setshowPassword(!showPassword);
+                        }}
+                        Icon={showPassword ? VisibilityOffIcon : VisibilityIcon}
+                        appendIcon
+                        IconClickable
+                      />
+                    </Tooltip>
+                  </Box>
+                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                    <Tooltip title="Choose strong password">
+                      <Input
+                        OutlinedInputPlaceholder={`${
+                          formType === 'add'
+                            ? '*Confirm Password'
+                            : 'Confirm Password'
+                        }`}
+                        inputProps={{
+                          autocomplete: 'off',
                           placeHolder: `${
-                            formType === 'add' ? '*Password' : 'Password'
+                            formType === 'add'
+                              ? '*Confirm Password'
+                              : 'Confirm Password'
                           }`,
                           form: {
                             autocomplete: 'off',
                           },
                         }}
                         variant="outlined"
-                        type="password"
-                        id="password"
-                        name="password"
+                        inputType={`${showPassword ? 'text' : 'password'}`}
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        onIconClick={() => {
+                          setshowPassword(!showPassword);
+                        }}
+                        Icon={showPassword ? VisibilityOffIcon : VisibilityIcon}
+                        appendIcon
+                        IconClickable
                       />
                     </Tooltip>
                   </Box>
@@ -215,7 +283,14 @@ function CreateUser({
                         variant="outlined"
                         OutlinedInputPlaceholder="Enter Phone Number"
                         inputComponent={TextMaskForContactNo}
-                        isDisabled={mutation.isLoading}
+                        Icon={PhoneIcon}
+                        appendIcon
+                        IconClickable={
+                          !(mutation.isLoading || isUserEditingHisProfile)
+                        }
+                        isDisabled={
+                          mutation.isLoading || isUserEditingHisProfile
+                        }
                       />
                     </Tooltip>
                   </Box>
@@ -225,7 +300,14 @@ function CreateUser({
                         name="extension"
                         variant="outlined"
                         OutlinedInputPlaceholder="Phone Extension"
-                        isDisabled={mutation.isLoading}
+                        Icon={ContactPhoneIcon}
+                        appendIcon
+                        IconClickable={
+                          !(mutation.isLoading || isUserEditingHisProfile)
+                        }
+                        isDisabled={
+                          mutation.isLoading || isUserEditingHisProfile
+                        }
                       />
                     </Tooltip>
                   </Box>
@@ -235,7 +317,14 @@ function CreateUser({
                         name="location"
                         variant="outlined"
                         OutlinedInputPlaceholder="*Location"
-                        isDisabled={mutation.isLoading}
+                        Icon={LocationOnIcon}
+                        appendIcon
+                        IconClickable={
+                          !(mutation.isLoading || isUserEditingHisProfile)
+                        }
+                        isDisabled={
+                          mutation.isLoading || isUserEditingHisProfile
+                        }
                       />
                     </Tooltip>
                   </Box>
@@ -245,7 +334,15 @@ function CreateUser({
                         name="department"
                         variant="outlined"
                         OutlinedInputPlaceholder="*Department"
-                        isDisabled={mutation.isLoading}
+                        Icon={BusinessIcon}
+                        appendIcon
+                        IconClickable={
+                          !(mutation.isLoading || isUserEditingHisProfile)
+                        }
+                        InputLabelProps={{ shrink: true }}
+                        isDisabled={
+                          mutation.isLoading || isUserEditingHisProfile
+                        }
                       />
                     </Tooltip>
                   </Box>
@@ -255,18 +352,45 @@ function CreateUser({
                         name="title"
                         variant="outlined"
                         OutlinedInputPlaceholder="*Designation"
-                        isDisabled={mutation.isLoading}
+                        Icon={WorkIcon}
+                        appendIcon
+                        IconClickable={
+                          !(mutation.isLoading || isUserEditingHisProfile)
+                        }
+                        isDisabled={
+                          mutation.isLoading || isUserEditingHisProfile
+                        }
                       />
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Choose Joining Date">
-                      <Input
-                        name="joiningDate"
-                        variant="outlined"
-                        inputType="date"
-                        isDisabled={mutation.isLoading}
-                      />
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          margin="normal"
+                          id="joiningDate"
+                          name="joiningDate"
+                          label={
+                            <Typography variant="subtitle2">
+                              Joining Date
+                            </Typography>
+                          }
+                          disableFuture
+                          inputVariant="outlined"
+                          format="dd-MM-yyyy"
+                          style={{ width: '100%' }}
+                          value={values.joiningDate}
+                          onChange={(value) => {
+                            setFieldValue('joiningDate', value);
+                          }}
+                          disabled={
+                            mutation.isLoading || isUserEditingHisProfile
+                          }
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </MuiPickersUtilsProvider>
                     </Tooltip>
                   </Box>
                   <Hidden smDown>
@@ -284,20 +408,11 @@ function CreateUser({
                         variant="contained"
                         color="secondary"
                         type="submit"
-                        // onClick={() => {
-                        //   if (values.file && values.file.size) {
-                        //     setFieldValue('isProfilePicAttached', true);
-                        //   }
-                        //   handleSubmit();
-                        // }}
                         startIcon={
                           !mutation.isLoading && (
                             <GroupAddIcon fontSize="small" />
                           )
                         }
-                        // disabled={
-                        //   mutation.isLoading || Object.keys(errors).length > 0
-                        // }
                       >
                         {mutation.isLoading && (
                           <CircularProgress

@@ -32,6 +32,7 @@ export function Search({
             onChange={onHandleSearch}
             disabled={checked && true}
             value={value}
+            showInputLabel={false}
           />
         </Formik>
       </Grid>
