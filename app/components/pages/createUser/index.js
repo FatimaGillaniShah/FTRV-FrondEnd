@@ -64,13 +64,15 @@ function CreateUser({
 
             //   data.file = dataFile;
             // }
-            data.contactNo = data.contactNo.replace(/[{()}]| |-|_/g, '');
+            if (data.contactNo) {
+              data.contactNo = data.contactNo.replace(/[{()}]| |-|_/g, '');
+            }
 
             const dataFile = new FormData();
             dataFile.append('firstName', data.firstName);
             dataFile.append('lastName', data.lastName);
-            dataFile.append('contactNo', data.contactNo);
-            dataFile.append('extension', data.extension);
+            if (data.contactNo) dataFile.append('contactNo', data.contactNo);
+            if (data.extension) dataFile.append('extension', data.extension);
             dataFile.append('title', data.title);
             dataFile.append('location', data.location);
             dataFile.append('department', data.department);
@@ -210,11 +212,11 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Tooltip title="Input your Department">
+                    <Tooltip title="Input your Contact Number">
                       <Input
                         name="contactNo"
                         variant="outlined"
-                        OutlinedInputPlaceholder="*Enter Phone Number"
+                        OutlinedInputPlaceholder="Enter Phone Number"
                         inputComponent={TextMaskForContactNo}
                         isDisabled={mutation.isLoading}
                       />
@@ -225,7 +227,7 @@ function CreateUser({
                       <Input
                         name="extension"
                         variant="outlined"
-                        OutlinedInputPlaceholder="*Phone Extension"
+                        OutlinedInputPlaceholder="Phone Extension"
                         isDisabled={mutation.isLoading}
                       />
                     </Tooltip>

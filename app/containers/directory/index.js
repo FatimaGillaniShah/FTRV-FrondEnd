@@ -7,6 +7,7 @@ import { useLocation, history } from 'react-router-dom';
 import { Toast } from 'components';
 import Swal from 'sweetalert2';
 import { useTheme } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import { deleteUser, fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
@@ -19,15 +20,17 @@ import { Loading } from '../../components/loading';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
+import { useStyles } from './styles';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
   const theme = useTheme();
+  const classes = useStyles();
 
   const mutation = useMutation(deleteUser, {
     onSuccess: ({
@@ -35,13 +38,14 @@ function DirectoryContainer() {
         data: { count },
       },
     }) => {
+      setSelected([]);
       Swal.fire('Deleted!', `${count} user deleted.`, 'success');
       queryClient.invalidateQueries(keys.getUsers({}));
     },
   });
   const {
     user: {
-      data: { role },
+      data: { role, id },
     },
   } = useAuthContext();
 
@@ -95,7 +99,7 @@ function DirectoryContainer() {
   }, []);
 
   const handleDelete = () => {
-    if (!selectedRows.length) {
+    if (!selected.length) {
       return;
     }
     Swal.fire({
@@ -108,7 +112,7 @@ function DirectoryContainer() {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        mutation.mutate(selectedRows);
+        mutation.mutate(selected);
       }
     });
   };
@@ -142,14 +146,28 @@ function DirectoryContainer() {
           <WrapInCard>
             {role === ROLES.ADMIN && (
               <Box mt={4}>
-                <TableButtons onDelete={handleDelete} />
+                <TableButtons
+                  onDelete={handleDelete}
+                  numSelected={selected.length}
+                />
               </Box>
             )}
+            {selected.length > 0 && (
+              <Box my={4}>
+                <Alert severity="info" className={classes.alertPadding}>
+                  <strong>{selected.length}</strong> User(s) Selected
+                </Alert>
+              </Box>
+            )}
+
             {!isLoading && (
               <DataTable
+                role={role}
                 data={data && data.data.data.rows}
                 headCells={headCells}
-                handleSelected={setSelectedRows}
+                setSelected={setSelected}
+                selected={selected}
+                currentUserID={id}
               />
             )}
           </WrapInCard>

@@ -67,16 +67,8 @@ export const yupUserFormValidaton = object().shape({
       is: true,
       then: string().required('*Password Required'),
     }),
-  contactNo: string()
-    .test(
-      'contactNoTest',
-      'Should have 10 numerics in phone ',
-      (value) => value && value.replace(/[{()}]| |-|_/g, '').length === 10
-    )
-    .required('*Contact No Required'),
-  extension: string()
-    .max(5, 'Too Long!')
-    .matches(/^[0-9]*$/, 'Extension can only contains numerics')
-    .required('*Phone Extension Required'),
+  contactNo: string().max(15, 'Too Long!').nullable(),
+
+  extension: string().max(5, 'Too Long!').nullable(),
   joiningDate: date().notRequired().default(null).nullable(),
 });

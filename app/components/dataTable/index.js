@@ -12,12 +12,20 @@ import EnhancedTableHead from './tableHead';
 import { useStyles } from './styles';
 import { CheckBox } from '../index';
 import { getComparator, stableSort } from '../../utils/helper';
+import { ROLES } from '../../utils/constants';
 
-export function DataTable({ data, headCells, tableRowsPerPage, handleSelected }) {
+export function DataTable({
+  data,
+  headCells,
+  tableRowsPerPage,
+  role,
+  selected,
+  setSelected,
+  currentUserID,
+}) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('fullName');
-  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
   const [rows, setRows] = useState([]);
@@ -35,7 +43,9 @@ export function DataTable({ data, headCells, tableRowsPerPage, handleSelected })
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id);
+      const newSelecteds = rows
+        .filter((row) => row.id !== currentUserID)
+        .map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
@@ -59,10 +69,6 @@ export function DataTable({ data, headCells, tableRowsPerPage, handleSelected })
       );
     }
     setSelected(newSelected);
-    // TODO move  state to parent
-    handleSelected(newSelected)
-
-
   };
 
   const handleChangePage = (event, newPage) => {
@@ -79,24 +85,32 @@ export function DataTable({ data, headCells, tableRowsPerPage, handleSelected })
   // const emptyRows =
   //   rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  const mapRows = (row, isItemSelected, labelId) => (
+  const mapRows = (row, isItemSelected, labelId, currentUser) => (
     <>
-      <TableCell padding="checkbox">
-        <CheckBox
-          checked={isItemSelected}
-          inputProps={{ 'aria-labelledby': labelId }}
-          onClick={(event) => handleClick(event, row.id)}
-        />
-      </TableCell>
-      {headCells.map((header, index) => {
+      {role === ROLES.ADMIN && (
+        <TableCell padding="checkbox">
+          <CheckBox
+            checked={isItemSelected}
+            inputProps={{ 'aria-labelledby': labelId }}
+            onClick={(event) => handleClick(event, row.id, currentUser)}
+            disabled={currentUser}
+          />
+        </TableCell>
+      )}
+
+      {headCells.map((header) => {
         const Buttons = header.buttons || null;
         return header.type === 'action' ? (
           <TableCell align="right">
-            <Buttons data={row} />
+            <Buttons
+              data={row}
+              disabled={currentUser}
+              setSelected={setSelected}
+            />
           </TableCell>
         ) : (
           <TableCell
-            padding={index === 0 ? 'none' : 'default'}
+            padding="default"
             align={header.numeric ? 'right' : 'left'}
           >
             {row[header.id]}
@@ -122,6 +136,9 @@ export function DataTable({ data, headCells, tableRowsPerPage, handleSelected })
             onRequestSort={handleRequestSort}
             rowCount={rows.length}
             headCells={headCells}
+            role={role}
+            currentUserID={currentUserID}
+            rows={rows}
           />
           <TableBody>
             {stableSort(rows, getComparator(order, orderBy))
@@ -138,15 +155,21 @@ export function DataTable({ data, headCells, tableRowsPerPage, handleSelected })
                     tabIndex={-1}
                     key={row.name}
                     selected={isItemSelected}
+                    disabled={row.id === currentUserID}
                   >
-                    {mapRows(row, isItemSelected, labelId)}
+                    {mapRows(
+                      row,
+                      isItemSelected,
+                      labelId,
+                      row.id === currentUserID
+                    )}
                   </TableRow>
                 );
               })}
 
             {!rows.length && (
               <TableRow>
-                <TableCell colSpan={7}>
+                <TableCell colSpan={headCells.length}>
                   <Alert severity="error">No data found</Alert>
                 </TableCell>
               </TableRow>
@@ -155,7 +178,7 @@ export function DataTable({ data, headCells, tableRowsPerPage, handleSelected })
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[5, 10, 20]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}

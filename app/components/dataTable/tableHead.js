@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
@@ -6,6 +6,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { Box } from '@material-ui/core';
 import { StyledTableSortLabel } from './styles';
 import { CheckBox } from '../index';
+import { ROLES } from '../../utils/constants';
 
 export default function EnhancedTableHead({
   classes,
@@ -16,25 +17,42 @@ export default function EnhancedTableHead({
   rowCount,
   onRequestSort,
   headCells,
+  role,
+  rows,
+  currentUserID,
 }) {
+  const [usersCount, setUsersCount] = useState(false);
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
+  useEffect(() => {
+    setUsersCount(rows.filter((row) => row.id !== currentUserID).length);
+  }, [rows]);
   return (
     <TableHead className={classes.tableHead}>
       <TableRow>
-        <TableCell padding="checkbox">
-          {/*<CheckBox*/}
-          {/*  indeterminate={numSelected > 0 && numSelected < rowCount}*/}
-          {/*  checked={rowCount > 0 && numSelected === rowCount}*/}
-          {/*  onChange={onSelectAllClick}*/}
-          {/*  className={classes.tableHead}*/}
-          {/*/>*/}
-        </TableCell>
+        {role === ROLES.ADMIN && (
+          <TableCell padding="checkbox">
+            <CheckBox
+              indeterminate={numSelected > 0 && numSelected < usersCount}
+              checked={rowCount > 0 && numSelected === usersCount}
+              onChange={onSelectAllClick}
+              className={classes.tableHead}
+            />
+          </TableCell>
+        )}
+
         {headCells.map((headCell) => (
           <TableCell
             align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={
+              // eslint-disable-next-line no-nested-ternary
+              role === ROLES.USER
+                ? 'default'
+                : headCell.disablePadding
+                ? 'none'
+                : 'default'
+            }
             sortDirection={orderBy === headCell.id ? order : false}
             className={classes.headCells}
           >
