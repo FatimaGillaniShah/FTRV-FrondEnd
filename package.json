@@ -88,7 +88,6 @@
     "jest-styled-components": "7.0.3",
     "loadsh": "0.0.4",
     "lodash": "4.17.20",
-    "material-ui-image": "3.3.1",
     "material-ui-popup-state": "1.7.1",
     "minimist": "1.2.5",
     "nprogress": "^0.2.0",

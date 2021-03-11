@@ -15,7 +15,7 @@ import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 import { useAuthContext } from '../../context/authContext';
-import { localStorageEntries, ROLES } from '../../utils/constants';
+import { LOCAL_STORAGE_ENTRIES, ROLES } from '../../utils/constants';
 
 function EditUser() {
   const queryClient = useQueryClient();
@@ -36,7 +36,7 @@ function EditUser() {
       },
     }) => {
       if (avatar) {
-        const userData = localStorage.getItem(localStorageEntries.user);
+        const userData = localStorage.getItem(LOCAL_STORAGE_ENTRIES.user);
         const parsedUserData = JSON.parse(userData);
         if (parsedUserData.data) {
           parsedUserData.data.avatar = avatar;
@@ -72,7 +72,6 @@ function EditUser() {
     if (initialData.avatar && !initialData.avatar.includes('http'))
       initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
-    console.log(initialData.avatar, 'avatar');
     if (initialData.joiningDate) {
       const parsedDate = new Date(initialData.joiningDate);
 
