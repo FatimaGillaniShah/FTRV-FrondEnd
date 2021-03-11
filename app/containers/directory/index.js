@@ -7,6 +7,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { Toast } from 'components';
 import Swal from 'sweetalert2';
 import { useTheme } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 import { deleteUser, fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
