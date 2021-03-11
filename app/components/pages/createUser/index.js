@@ -5,7 +5,8 @@ import {
   CircularProgress,
   Hidden,
   Tooltip,
-  Typography
+  Typography,
+  Avatar,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
