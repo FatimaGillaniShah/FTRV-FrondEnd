@@ -46,8 +46,6 @@ function InputField({
       {...formControlProps}
       variant={variant}
     >
-      {/* <FormLabel name="helo" /> */}
-
       {variant === 'outlined' ? (
         <>
           {showInputLabel && (
@@ -62,7 +60,7 @@ function InputField({
             id={inputID}
             type={inputType}
             disabled={isDisabled}
-            placeholder={OutlinedInputPlaceholder}
+            placeholder={!showInputLabel && OutlinedInputPlaceholder}
             endAdornment={
               Icon &&
               appendIcon && (

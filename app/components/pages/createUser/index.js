@@ -6,9 +6,8 @@ import {
   Hidden,
   Tooltip,
   Typography,
-  useMediaQuery,
 } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import BusinessIcon from '@material-ui/icons/Business';
@@ -45,7 +44,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function CreateUser({
-  initialFiles,
+  initialData,
   mutation,
   onUpdateUser,
   formType = 'add',
@@ -55,11 +54,9 @@ function CreateUser({
   const classes = useStyles();
   const [showPassword, setshowPassword] = useState(false);
   const [imgFile, setImgFile] = useState(
-    (initialFiles && initialFiles.avatar) || null
+    (initialData && initialData.avatar) || null
   );
-  const theme = useTheme();
   const history = useHistory();
-  const isResSmallerThanSm = useMediaQuery(theme.breakpoints.down('sm'));
   const formikRef = useRef();
   const editProfileHeading = 'Edit Profile';
   const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
@@ -78,7 +75,7 @@ function CreateUser({
   return (
     <>
       <Formik
-        initialValues={initialFiles}
+        initialValues={initialData}
         innerRef={formikRef}
         onSubmit={async (values) => {
           try {
@@ -109,8 +106,7 @@ function CreateUser({
 
             await onUpdateUser(dataFile);
           } catch (err) {
-            // eslint-disable-next-line no-console
-            console.log(err, 'error in submitting data');
+            // ...
           }
         }}
         validationSchema={yupValidation}
@@ -121,7 +117,7 @@ function CreateUser({
               flexWrap="wrap"
               flexDirection="row"
               p={4}
-              pr={isResSmallerThanSm ? 0 : 36}
+              pr={[0, 36]}
               display="flex"
               justifyContent="center"
               alignItems="center"
@@ -293,7 +289,7 @@ function CreateUser({
                       <Input
                         name="contactNo"
                         variant="outlined"
-                        OutlinedInputPlaceholder="*Phone Number"
+                        OutlinedInputPlaceholder="Phone Number"
                         inputComponent={TextMaskForContactNo}
                         Icon={PhoneIcon}
                         appendIcon
@@ -311,7 +307,7 @@ function CreateUser({
                       <Input
                         name="extension"
                         variant="outlined"
-                        OutlinedInputPlaceholder="*Phone Extension"
+                        OutlinedInputPlaceholder="Phone Extension"
                         Icon={ContactPhoneIcon}
                         appendIcon
                         IconClickable={

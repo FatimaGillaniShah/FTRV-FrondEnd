@@ -18,7 +18,6 @@ import { useAuthContext } from '../../context/authContext';
 import { localStorageEntries, ROLES } from '../../utils/constants';
 
 function EditUser() {
-  // const { id } = useParams();
   const queryClient = useQueryClient();
   const history = useHistory();
   const {
@@ -55,7 +54,6 @@ function EditUser() {
       });
 
       queryClient.removeQueries(keys.getUser(id));
-      queryClient.invalidateQueries(keys.getUser(id));
     },
   });
 
@@ -66,24 +64,8 @@ function EditUser() {
     const payload = { id, updatedData };
     mutation.mutate(payload);
   };
+  let formDefaultData = {};
 
-  const initialFiles = {
-    firstName: '',
-    lastName: '',
-    password: '',
-    contactNo: '',
-    department: '',
-    location: '',
-    role: '',
-    title: '',
-    email: '',
-    extension: '',
-    status: '',
-    joiningDate: '',
-    avatar: '',
-  };
-
-  initialFiles.isProfilePicAttached = false;
   if (initialData) {
     initialData.password = '';
     initialData.confirmPassword = '';
@@ -100,6 +82,26 @@ function EditUser() {
       }
       initialData.joiningDate = `${parsedDate.getDate()}-${parseMonth}-${parsedDate.getFullYear()}`;
     }
+  } else if (role === ROLES.USER) {
+    formDefaultData = { password: '' }; // User can only edit his password and avatar in profile
+  } else if (role === ROLES.ADMIN) {
+    formDefaultData = {
+      firstName: '',
+      lastName: '',
+      password: '',
+      contactNo: '',
+      department: '',
+      location: '',
+      role: '',
+      title: '',
+      email: '',
+      extension: '',
+      status: '',
+      joiningDate: '',
+      avatar: '',
+    };
+
+    formDefaultData.isProfilePicAttached = false;
   }
 
   return (
@@ -113,18 +115,13 @@ function EditUser() {
         <Toast variant="error">{errorMessage || 'Error while Updating'}</Toast>
       )}
       <WrapInBreadcrumbs>
-        {/* <Box display="flex" flexDirection="column"> */}
-        {/* <Breadcrumbs /> */}
         <WrapInCard>
           {isLoading ? (
             <Loading />
           ) : (
             <EditUserInfo
               mutation={mutation}
-              initialFiles={
-                initialData ||
-                (role === ROLES.ADMIN ? initialFiles : { password: '' })
-              }
+              initialData={initialData || formDefaultData}
               onUpdateUser={handleSubmit}
               formType="edit"
               editRole={role}
@@ -132,7 +129,6 @@ function EditUser() {
             />
           )}
         </WrapInCard>
-        {/* </Box> */}
       </WrapInBreadcrumbs>
     </>
   );

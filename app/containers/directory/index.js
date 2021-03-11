@@ -25,7 +25,7 @@ function DirectoryContainer() {
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
-  const [toastValue, settoastValue] = useState(undefined);
+  const [toastValue, settoastValue] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const queryClient = useQueryClient();
   const theme = useTheme();

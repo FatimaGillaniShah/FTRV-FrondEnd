@@ -31,7 +31,7 @@ function CreateUser() {
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
-  const initialFiles = {
+  const defaultData = {
     firstName: '',
     lastName: '',
     email: '',
@@ -46,8 +46,8 @@ function CreateUser() {
     file: undefined,
   };
 
-  initialFiles.isProfilePicAttached = false;
-  initialFiles.passwordRequired = true;
+  defaultData.isProfilePicAttached = false;
+  defaultData.passwordRequired = true;
 
   const errorMessage = mutation?.error?.response?.data?.message;
   return (
@@ -64,7 +64,7 @@ function CreateUser() {
       <WrapInBreadcrumbs>
         <WrapInCard>
           <CreateNewUser
-            initialFiles={initialFiles}
+            initialData={defaultData}
             mutation={mutation}
             onUpdateUser={handleSubmit}
             formType="add"
