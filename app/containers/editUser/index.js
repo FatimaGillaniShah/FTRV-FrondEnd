@@ -51,7 +51,7 @@ function EditUser() {
     mutation.mutate(payload);
   };
 
-  const initialFiles = {
+  const defaultData = {
     firstName: '',
     lastName: '',
     password: '',
@@ -67,7 +67,7 @@ function EditUser() {
     avatar: '',
   };
 
-  initialFiles.isProfilePicAttached = false;
+  defaultData.isProfilePicAttached = false;
   if (initialData) {
     initialData.password = '';
     initialData.confirmPassword = '';
@@ -97,21 +97,18 @@ function EditUser() {
         <Toast variant="error">{errorMessage || 'Error while Updating'}</Toast>
       )}
       <WrapInBreadcrumbs>
-        {/* <Box display="flex" flexDirection="column"> */}
-        {/* <Breadcrumbs /> */}
         <WrapInCard>
           {isLoading ? (
             <Loading />
           ) : (
             <EditUserInfo
               mutation={mutation}
-              initialFiles={initialData || initialFiles}
+              initialData={initialData || defaultData}
               onUpdateUser={handleSubmit}
               formType="edit"
             />
           )}
         </WrapInCard>
-        {/* </Box> */}
       </WrapInBreadcrumbs>
     </>
   );

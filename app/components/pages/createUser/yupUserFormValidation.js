@@ -1,6 +1,6 @@
 import { object, mixed, string, date, ref } from 'yup';
+import { MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS } from '../../../utils/constants';
 
-const FILE_SIZE = 10;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 export const yupUserFormValidaton = object().shape({
@@ -11,7 +11,10 @@ export const yupUserFormValidaton = object().shape({
       .test(
         'fileSize',
         'File too large',
-        (value) => value && value.size && value.size / 1024 / 1024 <= FILE_SIZE
+        (value) =>
+          value &&
+          value.size &&
+          value.size / 1024 / 1024 <= MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS
       )
       .test(
         'fileFormat',

@@ -8,6 +8,9 @@ export const FILE_ACCEPT_TYPES = {
 };
 export const ROWS_PER_PAGE_OPTIONS = [5, 10, 25, 100];
 export const localStorageEntries = { user: 'user' };
+export const MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS = 10; // Mb
+export const MIN_UPLOADABLE_FILE_SIZE_IN_MBS = 0; // Mb
+export const MAX_UPLOADABLE_FILE_SIZE_IN_MBS = 10; // Mb
 export const ROLES = {
   ADMIN: 'admin',
   USER: 'user',

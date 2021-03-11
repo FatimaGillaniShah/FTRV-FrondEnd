@@ -1,6 +1,10 @@
 import { Box, Button, Tooltip } from '@material-ui/core';
 import { Toast } from 'components';
 import React, { useRef, useState } from 'react';
+import {
+  MIN_UPLOADABLE_FILE_SIZE_IN_MBS,
+  MAX_UPLOADABLE_FILE_SIZE_IN_MBS,
+} from '../../utils/constants';
 
 export function MuiFileInput({
   setImgFile,
@@ -17,9 +21,15 @@ export function MuiFileInput({
 
   const handleCapture = ({ target }) => {
     if (target.files[0]) {
-      if (target.files[0].size / 1024 / 1024 <= 0) {
+      if (
+        target.files[0].size / 1024 / 1024 <=
+        MIN_UPLOADABLE_FILE_SIZE_IN_MBS
+      ) {
         setError('Error: File is empty');
-      } else if (target.files[0].size / 1024 / 1024 >= 10) {
+      } else if (
+        target.files[0].size / 1024 / 1024 >=
+        MAX_UPLOADABLE_FILE_SIZE_IN_MBS
+      ) {
         setError('Error: File size too large');
       } else {
         const reader = new FileReader();

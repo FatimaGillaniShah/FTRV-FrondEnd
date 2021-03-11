@@ -1,6 +1,6 @@
 import { object, mixed, string, date, ref } from 'yup';
+import { MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS } from '../../../utils/constants';
 
-const FILE_SIZE = 10;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 export const userProfileValidation = object().shape({
@@ -11,7 +11,10 @@ export const userProfileValidation = object().shape({
       .test(
         'fileSize',
         'File too large',
-        (value) => value && value.size && value.size / 1024 / 1024 <= FILE_SIZE
+        (value) =>
+          value &&
+          value.size &&
+          value.size / 1024 / 1024 <= MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS
       )
       .test(
         'fileFormat',
@@ -44,7 +47,10 @@ export const userProfileValidation = object().shape({
       .max(15, 'Exceeded Maximum Characters Limit')
       .oneOf([ref('password'), null], 'Passwords must match'),
   }),
-  contactNo: string(),
-  extension: string().max(5, 'Too Long!'),
+  contactNo: string().max(16, 'Too Long!').nullable(),
+  extension: string()
+    .max(5, 'Too Long!')
+    .matches(/^[0-9]*$/, 'Extension can only contains numerics')
+    .nullable(),
   joiningDate: date().notRequired().default(null).nullable(),
 });

@@ -7,7 +7,6 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { Toast } from 'components';
 import Swal from 'sweetalert2';
 import { useTheme } from '@material-ui/core/styles';
-
 import { deleteUser, fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
@@ -27,12 +26,12 @@ function DirectoryContainer() {
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
-const [toastValue, settoastValue] = useState(undefined);
-   const [selected, setSelected] = useState([]);
+  const [toastValue, settoastValue] = useState(null);
+  const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
   const theme = useTheme();
   const history = useHistory();
-const classes = useStyles();
+  const classes = useStyles();
   const mutation = useMutation(deleteUser, {
     onSuccess: ({
       data: {
