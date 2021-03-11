@@ -15,15 +15,14 @@ import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 import { useAuthContext } from '../../context/authContext';
-import { LOCAL_STORAGE_ENTRIES, ROLES } from '../../utils/constants';
+import { ROLES } from '../../utils/constants';
 
 function EditUser() {
   const queryClient = useQueryClient();
   const history = useHistory();
-  const {
-    user: { data: { role, id } = null } = null,
-    setUser,
-  } = useAuthContext();
+  const { user, setUser } = useAuthContext();
+  const id = user && user.data && user.data.id;
+  const role = user && user.data && user.data.role;
   const { data, isLoading } = useQuery(
     keys.getUser(id),
     () => getUserById(id),
@@ -36,8 +35,7 @@ function EditUser() {
       },
     }) => {
       if (avatar) {
-        const userData = localStorage.getItem(LOCAL_STORAGE_ENTRIES.user);
-        const parsedUserData = JSON.parse(userData);
+        const parsedUserData = { ...user };
         if (parsedUserData.data) {
           parsedUserData.data.avatar = avatar;
           setUser(parsedUserData);
@@ -103,7 +101,6 @@ function EditUser() {
 
     formDefaultData.isProfilePicAttached = false;
   }
-
   return (
     <>
       <Helmet>
