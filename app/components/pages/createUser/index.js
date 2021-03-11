@@ -5,6 +5,7 @@ import {
   Hidden,
   useMediaQuery,
   Tooltip,
+  Avatar,
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
@@ -16,13 +17,13 @@ import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES } from 'utils/constants';
+
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { yupUserFormValidaton } from './yupUserFormValidation';
 
 const useStyles = makeStyles(() => ({
   imageStyle: {
-    borderRadius: '50%',
     width: '150px',
     height: '150px',
   },
@@ -122,11 +123,7 @@ function CreateUser({
                     display="flex"
                     justifyContent="center"
                   >
-                    <img
-                      className={classes.imageStyle}
-                      src={imgFile || 'http://www.gravatar.com/avatar/?d=mp'}
-                      alt="person"
-                    ></img>
+                    <Avatar src={imgFile} className={classes.imageStyle} />
                   </Box>
                 </Box>
                 <Box
