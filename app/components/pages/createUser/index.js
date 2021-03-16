@@ -365,34 +365,34 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
-                    <Tooltip title="Choose Joining Date">
-                      {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                          margin="normal"
-                          id="joiningDate"
-                          name="joiningDate"
-                          label={
-                            <BodyTextLarge className={classes.label}>
-                              Joining Date
-                            </BodyTextLarge>
-                          }
-                          disableFuture
-                          inputVariant="outlined"
-                          format="dd-MM-yyyy"
-                          style={{ width: '100%' }}
-                          value={values.joiningDate}
-                          onChange={(value) => {
-                            setFieldValue('joiningDate', value);
-                          }}
-                          disabled={
-                            mutation.isLoading || isUserEditingHisProfile
-                          }
-                          KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                          }}
-                        />
-                      </MuiPickersUtilsProvider> */}
-                    </Tooltip>
+                    {/* <Tooltip title="Choose Joining Date"> */}
+                    {/*  /!* <MuiPickersUtilsProvider utils={DateFnsUtils}> */}
+                    {/*    <KeyboardDatePicker */}
+                    {/*      margin="normal" */}
+                    {/*      id="joiningDate" */}
+                    {/*      name="joiningDate" */}
+                    {/*      label={ */}
+                    {/*        <BodyTextLarge className={classes.label}> */}
+                    {/*          Joining Date */}
+                    {/*        </BodyTextLarge> */}
+                    {/*      } */}
+                    {/*      disableFuture */}
+                    {/*      inputVariant="outlined" */}
+                    {/*      format="dd-MM-yyyy" */}
+                    {/*      style={{ width: '100%' }} */}
+                    {/*      value={values.joiningDate} */}
+                    {/*      onChange={(value) => { */}
+                    {/*        setFieldValue('joiningDate', value); */}
+                    {/*      }} */}
+                    {/*      disabled={ */}
+                    {/*        mutation.isLoading || isUserEditingHisProfile */}
+                    {/*      } */}
+                    {/*      KeyboardButtonProps={{ */}
+                    {/*        'aria-label': 'change date', */}
+                    {/*      }} */}
+                    {/*    /> */}
+                    {/*  </MuiPickersUtilsProvider> *!/ */}
+                    {/* </Tooltip> */}
                   </Box>
                   <Hidden smDown>
                     <Box width={[1, 1, 1 / 2]} mt={10} px={3}></Box>
