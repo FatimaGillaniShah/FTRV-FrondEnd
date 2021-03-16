@@ -6,7 +6,6 @@ import { debounce } from 'lodash';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Toast } from 'components';
 import Swal from 'sweetalert2';
-import { useTheme } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import { deleteUser, fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
@@ -21,6 +20,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
+import { Modal } from '../../utils/helper'; 
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
@@ -100,15 +100,7 @@ function DirectoryContainer() {
     if (!selected.length) {
       return;
     }
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: theme.palette.modalColors.confirm,
-      cancelButtonColor: theme.palette.modalColors.cancel,
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
+    Modal.fire().then((result) => {
       if (result.isConfirmed) {
         mutation.mutate(selected);
       }

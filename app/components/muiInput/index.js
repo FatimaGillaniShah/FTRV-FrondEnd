@@ -170,7 +170,7 @@ InputField.propTypes = {
 };
 InputField.defaultProps = {
   fullWidth: true,
-  IconClickable: true,
+  IconClickable: false,
   showInputLabel: true,
 };
 

@@ -48,7 +48,7 @@ export const menuItems = [
   },
   {
     name: 'links',
-    link: '/',
+    link: '/useful-links',
     icon: LinkIcon,
   },
   {

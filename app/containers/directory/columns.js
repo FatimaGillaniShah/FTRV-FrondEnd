@@ -3,17 +3,16 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Swal from 'sweetalert2';
-import { useTheme } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useMutation, useQueryClient } from 'react-query';
 import { deleteUser } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
+import { Modal } from '../../utils/helper';
 
 const ActionButtons = ({ data, disabled, setSelected }) => {
   const history = useHistory();
-  const theme = useTheme();
   const queryClient = useQueryClient();
   const {
     user: {
@@ -41,15 +40,7 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
     );
   }
   const handleDeleteUser = () => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: theme.palette.modalColors.confirm,
-      cancelButtonColor: theme.palette.modalColors.cancel,
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
+    Modal.fire().then((result) => {
       if (result.isConfirmed) {
         mutation.mutate([data.id]);
       }
