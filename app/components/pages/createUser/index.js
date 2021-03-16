@@ -21,10 +21,10 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+// import {
+//   KeyboardDatePicker,
+//   MuiPickersUtilsProvider,
+// } from '@material-ui/pickers';
 import { Input } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
@@ -364,7 +364,7 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Tooltip title="Choose Joining Date">
+                    {/* <Tooltip title="Choose Joining Date">
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           margin="normal"
@@ -391,7 +391,7 @@ function CreateUser({
                           }}
                         />
                       </MuiPickersUtilsProvider>
-                    </Tooltip>
+                    </Tooltip> */}
                   </Box>
                   <Hidden smDown>
                     <Box width={[1, 1 / 2]} mt={10} px={3}></Box>

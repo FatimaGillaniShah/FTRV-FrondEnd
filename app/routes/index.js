@@ -3,6 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import Directory from '../containers/directory';
 import Home from '../containers/home/loadable';
 import Login from '../containers/login';
+import Announcement from '../containers/announcement';
+import CreateAnnouncement from '../containers/createAnnouncement';
+import EditAnnouncement from '../containers/editAnnouncement';
 import NotFoundPage from '../containers/pageNotFound/loadable';
 import DirectoryImporter from '../containers/directoryImporter/loadable';
 import CreateUser from '../containers/createUser/loadable';
@@ -38,6 +41,24 @@ function Routes() {
           component={EditUser}
         />
         <PrivateRoute exact path="/profile" component={UserProfile} />
+        <PrivateRoute
+          exact
+          path="/announcement"
+          roles={[ROLES.ADMIN]}
+          component={Announcement}
+        />
+        <PrivateRoute
+          exact
+          path="/announcement/add"
+          roles={[ROLES.ADMIN]}
+          component={CreateAnnouncement}
+        />
+        <PrivateRoute
+          exact
+          path="/announcement/edit/:id"
+          roles={[ROLES.ADMIN]}
+          component={EditAnnouncement}
+        />
         <PrivateRoute component={NotFoundPage} />
         {/* <PrivateRoute */}
         {/*  path="/" */}

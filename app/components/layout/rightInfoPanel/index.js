@@ -31,7 +31,9 @@ function Index() {
   return (
     <>
       <Grid xs={12} className={classes.root}>
-        <Grid xs={12} className={classes.notificationsSection} />
+        <Grid xs={12} className={classes.notificationsSection}>
+        sdsdsddsdsd
+        </Grid>
 
         <Grid xs={12} className={classes.birthdaySection} />
 
