@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ClearIcon from '@material-ui/icons/Clear';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import TitleIcon from '@material-ui/icons/Title';
+import NotificationIcon from '@material-ui/icons/NotificationImportant';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { Input } from 'components';
 import MuiRadioButtons from 'components/muiRadioButtons';
@@ -177,7 +178,7 @@ function CreateAnnouncement({
                         type="submit"
                         startIcon={
                           !mutation.isLoading && (
-                            <GroupAddIcon fontSize="small" />
+                            <NotificationIcon fontSize="small" />
                           )
                         }
                       >
