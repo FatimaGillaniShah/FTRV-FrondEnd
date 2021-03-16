@@ -3,11 +3,11 @@ import {
   Avatar,
   Box,
   Hidden,
-  makeStyles,
   Menu,
   MenuItem,
   Toolbar,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -15,7 +15,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import { H4,H5 } from 'components';
+import { H4, H5 } from 'components';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 

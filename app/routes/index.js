@@ -39,12 +39,12 @@ function Routes() {
           roles={[ROLES.ADMIN]}
           component={EditUser}
         />
-        <PrivateRoute 
-          exact 
-          path="/quote" 
+        <PrivateRoute
+          exact
+          path="/quote"
           roles={[ROLES.ADMIN]}
           component={Quote}
-         />
+        />
         <PrivateRoute exact path="/profile" component={UserProfile} />
 
         <PrivateRoute
@@ -60,7 +60,7 @@ function Routes() {
           component={addUsefulLink}
         />
         <PrivateRoute component={NotFoundPage} />
-      
+
         {/* <PrivateRoute */}
         {/*  path="/" */}
         {/*  exact */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { Breadcrumbs, makeStyles } from '@material-ui/core';
+import { Breadcrumbs } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { BodyTextLarge } from '../typography';
 
 function toTitleCase(str) {
