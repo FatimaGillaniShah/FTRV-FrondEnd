@@ -11,6 +11,9 @@ import UserProfile from '../containers/userProfile/loadable';
 import PrivateRoute from '../components/hoc/privateRoute';
 
 import { ROLES } from '../utils/constants';
+// import usefulLinks from '../containers/usefulLinks/loadable';
+// import addUsefulLink from '../containers/addUsefulLink/loadable';
+// import Events from '../containers/events';
 
 function Routes() {
   return (
@@ -38,6 +41,31 @@ function Routes() {
           component={EditUser}
         />
         <PrivateRoute exact path="/profile" component={UserProfile} />
+
+        {/* <PrivateRoute
+          exact
+          path="/useful-links"
+          roles={[ROLES.ADMIN, ROLES.USER]}
+          component={usefulLinks}
+        />
+        <PrivateRoute
+          exact
+          path="/useful-links/add"
+          roles={[ROLES.ADMIN]}
+          component={addUsefulLink}
+        />
+        <PrivateRoute
+          exact
+          path="/useful-links/edit/:id"
+          roles={[ROLES.ADMIN]}
+          component={addUsefulLink}
+        />
+        <PrivateRoute
+          exact
+          path="/events"
+          roles={[ROLES.ADMIN]}
+          component={Events}
+        /> */}
         <PrivateRoute component={NotFoundPage} />
         {/* <PrivateRoute */}
         {/*  path="/" */}
