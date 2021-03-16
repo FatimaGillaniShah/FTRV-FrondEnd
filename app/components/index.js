@@ -4,6 +4,8 @@ export { default as CheckBox } from './muiCheckbox';
 export { default as Toast } from './alert';
 export { default as WrapInCard } from './layout/wrapInCard';
 export { default as Breadcrumbs } from './breadCrumbs';
+export { default as TextField } from './muiTextAreaInput';
+
 export {
   H1,
   H2,

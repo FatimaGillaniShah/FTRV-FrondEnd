@@ -20,7 +20,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
-import { Modal } from '../../utils/helper'; 
+import { Modal } from '../../utils/helper';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
@@ -30,7 +30,6 @@ function DirectoryContainer() {
   const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
-  const theme = useTheme();
   const history = useHistory();
   const classes = useStyles();
   const mutation = useMutation(deleteUser, {

@@ -1,4 +1,3 @@
-import DateFnsUtils from '@date-io/date-fns';
 import {
   Avatar,
   Box,
@@ -20,10 +19,10 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+// import {
+//   KeyboardDatePicker,
+//   MuiPickersUtilsProvider,
+// } from '@material-ui/pickers';
 import { Input } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
@@ -367,7 +366,7 @@ function CreateUser({
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
                     <Tooltip title="Choose Joining Date">
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
                           margin="normal"
                           id="joiningDate"
@@ -392,7 +391,7 @@ function CreateUser({
                             'aria-label': 'change date',
                           }}
                         />
-                      </MuiPickersUtilsProvider>
+                      </MuiPickersUtilsProvider> */}
                     </Tooltip>
                   </Box>
                   <Hidden smDown>

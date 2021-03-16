@@ -3,13 +3,13 @@ import { Route, Switch } from 'react-router-dom';
 import Directory from '../containers/directory';
 import Home from '../containers/home/loadable';
 import Login from '../containers/login';
+import Quote from '../containers/qoute';
 import NotFoundPage from '../containers/pageNotFound/loadable';
 import DirectoryImporter from '../containers/directoryImporter/loadable';
 import CreateUser from '../containers/createUser/loadable';
 import EditUser from '../containers/editUser/loadable';
 import UserProfile from '../containers/userProfile/loadable';
 import PrivateRoute from '../components/hoc/privateRoute';
-
 import { ROLES } from '../utils/constants';
 import usefulLinks from '../containers/usefulLinks/loadable';
 import addUsefulLink from '../containers/addUsefulLink/loadable';
@@ -39,6 +39,12 @@ function Routes() {
           roles={[ROLES.ADMIN]}
           component={EditUser}
         />
+        <PrivateRoute 
+          exact 
+          path="/quote" 
+          roles={[ROLES.ADMIN]}
+          component={Quote}
+         />
         <PrivateRoute exact path="/profile" component={UserProfile} />
 
         <PrivateRoute
@@ -54,6 +60,7 @@ function Routes() {
           component={addUsefulLink}
         />
         <PrivateRoute component={NotFoundPage} />
+      
         {/* <PrivateRoute */}
         {/*  path="/" */}
         {/*  exact */}
