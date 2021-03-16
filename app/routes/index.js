@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Directory from '../containers/directory';
 import Home from '../containers/home/loadable';
 import Login from '../containers/login';
-import Quote from '../containers/qoute';
+import Quote from '../containers/qoute/loadable';
 import NotFoundPage from '../containers/pageNotFound/loadable';
 import DirectoryImporter from '../containers/directoryImporter/loadable';
 import CreateUser from '../containers/createUser/loadable';
