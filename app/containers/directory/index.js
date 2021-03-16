@@ -45,7 +45,7 @@ function DirectoryContainer() {
   });
   const {
     user: {
-      data: { role, id },
+      data: { role },
     },
   } = useAuthContext();
 
@@ -151,12 +151,10 @@ function DirectoryContainer() {
 
             {!isLoading && (
               <DataTable
-                role={role}
                 data={data && data.data.data.rows}
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
-                currentUserID={id}
               />
             )}
           </WrapInCard>

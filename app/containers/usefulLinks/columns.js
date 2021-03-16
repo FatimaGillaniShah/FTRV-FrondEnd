@@ -26,7 +26,7 @@ const ActionButtons = ({ data }) => {
           <IconButton>
             <EditIcon
               color="secondary"
-              onClick={() => history.push(`directory/edit/${data.id}`)}
+              onClick={() => history.push(`/useful-links/edit/${data.id}`)}
             />
           </IconButton>
           <IconButton onClick={() => handleDeleteLinks()}>

@@ -59,6 +59,12 @@ function Routes() {
           roles={[ROLES.ADMIN]}
           component={addUsefulLink}
         />
+        <PrivateRoute
+          exact
+          path="/useful-links/edit/:id"
+          roles={[ROLES.ADMIN]}
+          component={addUsefulLink}
+        />
         <PrivateRoute component={NotFoundPage} />
 
         {/* <PrivateRoute */}

@@ -5,12 +5,16 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { TableButtons } from './tableButtons';
 
-function UsefulLinksPage({ onDelete }) {
+function UsefulLinksPage({ selected, setSelected, onDelete }) {
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
-        <TableButtons onDelete={onDelete} />
-        <DataTable headCells={headCells} selected={[]} />
+        <TableButtons numSelected={selected.length} onDelete={onDelete} />
+        <DataTable
+          headCells={headCells}
+          selected={selected}
+          setSelected={setSelected}
+        />
       </WrapInCard>
     </WrapInBreadcrumbs>
   );

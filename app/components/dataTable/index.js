@@ -14,15 +14,14 @@ import { CheckBox } from '../index';
 import { BodyTextLarge } from '../typography';
 import { useStyles } from './styles';
 import EnhancedTableHead from './tableHead';
+import { useAuthContext } from '../../context/authContext';
 
 export function DataTable({
   data,
   headCells,
   tableRowsPerPage,
-  role,
   selected,
   setSelected,
-  currentUserID,
 }) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
@@ -30,6 +29,13 @@ export function DataTable({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
   const [rows, setRows] = useState([]);
+
+  const {
+    user: {
+      data: { role, id: currentUserID },
+    },
+  } = useAuthContext();
+
   useEffect(() => {
     if (data) {
       setRows(data);
@@ -194,9 +200,11 @@ DataTable.propTypes = {
   headCells: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   tableRowsPerPage: PropTypes.number,
+  selected: PropTypes.array,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: 20,
+  selected: [],
 };
 
 export default DataTable;
