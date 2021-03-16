@@ -21,15 +21,10 @@ function muiRadioButtons() {
   return (
     <FormControl>
       <FormLabel component="legend">Priority</FormLabel>
-      <RadioGroup
-        row={true}
-        value={value}
-        onChange={handleChange}
-      >
-          <FormControlLabel value="high" control={<Radio />} label="High" />
-          <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-          <FormControlLabel value="low" control={<Radio />} label="Low" />
-   
+      <RadioGroup row value={value} onChange={handleChange}>
+        <FormControlLabel value="high" control={<Radio />} label="High" />
+        <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+        <FormControlLabel value="low" control={<Radio />} label="Low" />
       </RadioGroup>
     </FormControl>
   );

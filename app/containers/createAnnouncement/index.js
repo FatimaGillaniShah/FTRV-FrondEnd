@@ -54,7 +54,10 @@ function CreateAnnouncement() {
     <>
       <Helmet>
         <title>Create Announcement</title>
-        <meta name="ftrv create announcement" content="ftrv Announcement creation screen" />
+        <meta
+          name="ftrv create announcement"
+          content="ftrv Announcement creation screen"
+        />
       </Helmet>
 
       {mutation.isError && (

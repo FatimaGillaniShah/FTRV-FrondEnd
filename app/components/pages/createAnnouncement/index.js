@@ -1,9 +1,4 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Hidden
-} from '@material-ui/core';
+import { Box, Button, CircularProgress, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ClearIcon from '@material-ui/icons/Clear';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
@@ -137,24 +132,21 @@ function CreateAnnouncement({
                       name="startDate"
                       variant="outlined"
                       label="Start Date"
-                     
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                  <MuiDatePickerInput
+                    <MuiDatePickerInput
                       name="endDate"
                       variant="outlined"
                       label="End Date"
-                
                     />
                   </Box>
 
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                  <MuiDatePickerInput
+                    <MuiDatePickerInput
                       name="expiryDate"
                       variant="outlined"
                       label="Expiry Date"
-                
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>

@@ -2,6 +2,7 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import AnnouncementNotification from '../../pages/announcementNotification';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.palette.bgColor.secondary,
+    backgroundColor: '#eaeaea',
     flex: '0.25',
   },
   birthdaySection: {
@@ -34,7 +35,7 @@ function Index() {
     <>
       <Grid xs={12} className={classes.root}>
         <Grid xs={12} className={classes.notificationsSection}>
-          <AnnouncementNotification/>
+          <AnnouncementNotification />
         </Grid>
 
         <Grid xs={12} className={classes.birthdaySection} />

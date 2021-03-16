@@ -44,7 +44,6 @@ function AnnouncementContainer() {
     ],
   };
 
- 
   const [query, setQuery] = useState({});
   const [filters, setFilters] = useState();
   const { state } = useLocation();
@@ -155,7 +154,7 @@ function AnnouncementContainer() {
             {role === ROLES.ADMIN && (
               <Box mt={4}>
                 <TableButtons
-                  //onDelete={handleDelete}
+                  // onDelete={handleDelete}
                   numSelected={selected.length}
                 />
               </Box>

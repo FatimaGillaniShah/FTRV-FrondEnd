@@ -145,7 +145,7 @@ export function DataTable({
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 const isItemSelected = isSelected(row.id);
-                console.log(row)
+                console.log(row);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
@@ -166,15 +166,14 @@ export function DataTable({
                     )}
                   </TableRow>
                 );
-              }
-              )}
+              })}
 
             {!rows.length && (
               <TableRow>
-              <TableCell colSpan={headCells.length}>
-                <Alert severity="error">No data found</Alert>
-              </TableCell>
-            </TableRow>
+                <TableCell colSpan={headCells.length}>
+                  <Alert severity="error">No data found</Alert>
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>
