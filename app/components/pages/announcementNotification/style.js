@@ -2,11 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   mainBox: {
-    backgroundColor: 'white',
+    backgroundColor: '#fbf7f5',
     justifyContent: 'center',
     display: 'flex',
-    width: '80%',
-    height: '80%',
+    width: '75%',
+    height: '75%',
     borderRadius: '6px',
   },
   notificationBox: {

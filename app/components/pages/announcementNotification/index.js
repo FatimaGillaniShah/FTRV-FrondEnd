@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
-import NotificationIcon from '@material-ui/icons/NotificationImportant';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import { Typography } from '@material-ui/core';
 import useStyles from './style';
 
@@ -11,7 +11,7 @@ export function AnnouncementNotification() {
       <Box width={1 / 4} className={classes.notificationBox}>
         <Box width={1 / 2}></Box>
         <Box width={1 / 2} className={classes.iconBox}>
-          <NotificationIcon className={classes.icon} />
+          <NotificationsActiveIcon className={classes.icon} />
         </Box>
       </Box>
 
