@@ -7,7 +7,6 @@ import {
   Menu,
   MenuItem,
   Toolbar,
-  Typography,
 } from '@material-ui/core';
 import clsx from 'clsx';
 import React, { useState } from 'react';
@@ -16,6 +15,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
+import { H4,H5 } from 'components';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 
@@ -91,24 +91,14 @@ export default function Header() {
             <Box className={classes.profileBox}>
               <Hidden xsDown>
                 <Box className={classes.titleBox}>
-                  <Box className={classes.welcomeTextBox}>
-                    <Typography
-                      component="h1"
-                      variant="subtitle1"
-                      color="inherit"
-                      noWrap
-                    >
-                      Welcome Back
-                    </Typography>
+                  <Box className={classes.welcomeTextBox} mr={2}>
+                    <H5 light color="primary">
+                      Welcome back
+                    </H5>
                   </Box>
-                  <Typography
-                    component="h6"
-                    variant="h6"
-                    color="inherit"
-                    noWrap
-                  >
-                    , {user.data.name}!
-                  </Typography>
+                  <H4 medium color="primary">
+                    {user.data.name}!
+                  </H4>
                 </Box>
               </Hidden>
               <>

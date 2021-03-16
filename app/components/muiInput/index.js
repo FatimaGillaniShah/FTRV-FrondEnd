@@ -5,19 +5,24 @@
  */
 
 import {
-  FormHelperText,
   FormControl,
+  FormHelperText,
   IconButton,
   Input,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Typography,
 } from '@material-ui/core';
-
+import { makeStyles } from '@material-ui/core/styles';
 import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import React, { memo } from 'react';
+
+const useStyles = makeStyles((theme) => ({
+  label: {
+    color: theme.palette.text.info,
+  },
+}));
 
 function InputField({
   placeholderText,
@@ -39,6 +44,7 @@ function InputField({
   ...props
 }) {
   const [field, meta] = useField(props);
+  const classes = useStyles();
   return (
     <FormControl
       fullWidth={fullWidth}
@@ -49,10 +55,8 @@ function InputField({
       {variant === 'outlined' ? (
         <>
           {showInputLabel && (
-            <InputLabel htmlFor={inputID}>
-              <Typography variant="subtitle2">
-                {OutlinedInputPlaceholder}
-              </Typography>
+            <InputLabel htmlFor={inputID} className={classes.label}>
+              {OutlinedInputPlaceholder}
             </InputLabel>
           )}
           <OutlinedInput
@@ -60,7 +64,11 @@ function InputField({
             id={inputID}
             type={inputType}
             disabled={isDisabled}
-            placeholder={!showInputLabel && OutlinedInputPlaceholder}
+            placeholder={
+              !showInputLabel &&
+              OutlinedInputPlaceholder &&
+              OutlinedInputPlaceholder
+            }
             endAdornment={
               Icon &&
               appendIcon && (

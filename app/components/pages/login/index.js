@@ -16,6 +16,7 @@ import Alert from '@material-ui/lab/Alert';
 import useStyles from './style';
 import { Input } from '../../index';
 import { loginSchema } from '../../../containers/login/schema';
+import { H3 } from '../../typography';
 
 export function Login({ onHandleSubmit, isError, errorMessage }) {
   const classes = useStyles();
@@ -24,7 +25,7 @@ export function Login({ onHandleSubmit, isError, errorMessage }) {
       <Container component="main" maxWidth="xs">
         <Box className={classes.loginContainer}>
           <Box className={classes.welcomBox}>
-            <h1>Welcome!</h1>
+            <H3 color="light">Welcome!</H3>
           </Box>
           <Formik
             initialValues={{

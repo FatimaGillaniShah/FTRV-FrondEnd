@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Box from '@material-ui/core/Box';
 import Alert from '@material-ui/lab/Alert';
-import EnhancedTableHead from './tableHead';
-import { useStyles } from './styles';
-import { CheckBox } from '../index';
-import { getComparator, stableSort } from '../../utils/helper';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { ROLES } from '../../utils/constants';
+import { getComparator, stableSort } from '../../utils/helper';
+import { CheckBox } from '../index';
+import { BodyTextLarge } from '../typography';
+import { useStyles } from './styles';
+import EnhancedTableHead from './tableHead';
 
 export function DataTable({
   data,
@@ -113,7 +114,7 @@ export function DataTable({
             padding="default"
             align={header.numeric ? 'right' : 'left'}
           >
-            {row[header.id]}
+            <BodyTextLarge color="dark">{row[header.id]}</BodyTextLarge>
           </TableCell>
         );
       })}

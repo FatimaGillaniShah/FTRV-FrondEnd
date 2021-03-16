@@ -10,10 +10,9 @@ export const colors = {
   textColor: {
     primary: '#153D73',
     secondary: '#1875C0',
-    default: '#525252',
-    light: 'white',
-    dark: 'black',
-    darkShade: '#3B3B3B',
+    dark: '#424242',
+    light: '#FFF',
+    info: '#757575',
     error: 'red',
   },
   iconColor: {

@@ -1,19 +1,14 @@
-import React from 'react';
-import {
-  Box,
-  Button,
-  IconButton,
-  MenuItem,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, IconButton, MenuItem } from '@material-ui/core';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import ChevronRight from '@material-ui/icons/ChevronRight';
+import { BodyTextSmall } from 'components';
 import {
   bindHover,
   bindMenu,
   usePopupState,
 } from 'material-ui-popup-state/hooks';
 import Menu from 'material-ui-popup-state/HoverMenu';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 const ParentPopupState = React.createContext(null);
@@ -23,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.primary.main,
     borderRadius: 0,
     border: 0,
-    color: theme.palette.textColor.main,
+    color: theme.palette.text.main,
     height: '6rem',
     boxShadow: 'none',
     width: '100%',
@@ -33,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuPaper: {
     backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.textColor.main,
+    color: theme.palette.text.main,
     borderRadius: 0,
     minHeight: theme.defaultHeights.sideMenuItem,
     display: 'flex',
@@ -52,11 +47,10 @@ const useStyles = makeStyles((theme) => ({
   label: {
     textTransform: 'capitalize',
     display: 'block',
-    fontWeight: 300,
-    color: theme.palette.textColor.light,
+    color: theme.palette.text.light,
   },
   iconStyle: { color: theme.palette.iconColor.default },
-  linkStyle: { textDecoration: 'none', color: theme.palette.textColor.main },
+  linkStyle: { textDecoration: 'none', color: theme.palette.text.main },
 }));
 const SideMenu = ({ item }) => {
   const classes = useStyles();
@@ -78,9 +72,9 @@ const SideMenu = ({ item }) => {
         <IconButton aria-label="delete" className={classes.iconStyle}>
           <item.icon />
         </IconButton>
-        <Typography variant="body2" classes={{ root: classes.label }}>
+        <BodyTextSmall classes={{ root: classes.label }}>
           {item.name}
-        </Typography>
+        </BodyTextSmall>
       </Button>
       {item.children && item.children.length > 0 && (
         <ParentPopupState.Provider value={popupState}>
@@ -99,9 +93,9 @@ const SideMenu = ({ item }) => {
                       onClick={popupState.close}
                       classes={{ root: classes.menuItem }}
                     >
-                      <Typography variant="body2" className={classes.label}>
+                      <BodyTextSmall classes={{ root: classes.label }}>
                         {childItem.name}
-                      </Typography>
+                      </BodyTextSmall>
                     </MenuItem>
                   </Link>
                 )}
@@ -116,9 +110,9 @@ const SideMenu = ({ item }) => {
                             root: classes.menuItem,
                           }}
                         >
-                          <Typography variant="body2" className={classes.label}>
+                          <BodyTextSmall className={classes.label}>
                             {nestedChild.name}
-                          </Typography>
+                          </BodyTextSmall>
                         </MenuItem>
                       </Link>
                     ))}
@@ -138,7 +132,7 @@ export default SideMenu;
 const submenuStyles = (theme) => ({
   menu: {
     marginTop: theme.spacing(-1),
-    color: theme.palette.textColor.main,
+    color: theme.palette.text.main,
     backgroundColor: `${theme.palette.secondary.main} `,
     borderRadius: '0 ',
   },
@@ -154,7 +148,7 @@ const submenuStyles = (theme) => ({
   },
   menuItemSelected: {},
   title: {
-    color: theme.palette.textColor.light,
+    color: theme.palette.text.light,
     textTransform: 'capitalize',
   },
   moreArrow: {

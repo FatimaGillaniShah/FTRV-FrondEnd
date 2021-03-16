@@ -4,13 +4,12 @@ import {
   CircularProgress,
   Grid,
   Tooltip,
-  Typography,
 } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { Toast } from 'components';
 import React from 'react';
-import { BodyText, H6 } from '../../typography';
+import { BodyTextSmall, ButtonText, H5 } from '../../typography';
 import { useStyles } from './styles';
 
 export default function FileUploader({
@@ -32,7 +31,7 @@ export default function FileUploader({
       <Grid container xs={12} direction="column" className={classes.root}>
         <Grid xs={12} className={classes.contentGrid} direction="column">
           <Grid xs={12} className={classes.headingGrid}>
-            <H6>Import Directory</H6>
+            <H5>Import Directory</H5>
           </Grid>
           <Grid xs={12} className={classes.templateDownloadGrid}>
             <Box mt={3} mb={3}>
@@ -47,9 +46,9 @@ export default function FileUploader({
                   />
                 </Box>
                 <Box>
-                  <BodyText textTransform="initial" color="default">
+                  <BodyTextSmall color="default">
                     Download Template File
-                  </BodyText>
+                  </BodyTextSmall>
                 </Box>
               </Button>
             </Box>
@@ -77,7 +76,7 @@ export default function FileUploader({
                     startIcon={<Add fontSize="small" />}
                     disabled={mutation.isLoading}
                   >
-                    <Typography variant="button">Upload</Typography>
+                    <ButtonText>Upload</ButtonText>
                   </Button>
                 </label>
               </Tooltip>

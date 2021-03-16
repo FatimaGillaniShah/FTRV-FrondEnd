@@ -1,12 +1,11 @@
 import DateFnsUtils from '@date-io/date-fns';
 import {
+  Avatar,
   Box,
   Button,
   CircularProgress,
   Hidden,
   Tooltip,
-  Typography,
-  Avatar,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
@@ -31,15 +30,18 @@ import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
-import { H4 } from '../../typography';
+import { BodyTextLarge, H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   imageStyle: {
     width: '150px',
     height: '150px',
+  },
+  label: {
+    color: theme.palette.text.info,
   },
 }));
 
@@ -122,7 +124,7 @@ function CreateUser({
               alignItems="center"
             >
               <Box
-                width={[1, '30%']}
+                width={[1, 1, 1, '30%']}
                 display="flex"
                 flexDirection="column"
                 justifyContent="center"
@@ -167,7 +169,7 @@ function CreateUser({
                   />
                 </Box>
               </Box>
-              <Box width={[1, '70%']}>
+              <Box width={[1, 1, 1, '70%']}>
                 <Box width={1} pt={10} flexWrap="wrap" display="flex" px={2}>
                   <Box width={1} textAlign="center">
                     <H4>{`${
@@ -176,7 +178,7 @@ function CreateUser({
                         : formHeadings[formType]
                     }`}</H4>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Input
                       name="firstName"
                       variant="outlined"
@@ -189,7 +191,7 @@ function CreateUser({
                       isDisabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Input
                       name="lastName"
                       variant="outlined"
@@ -202,7 +204,7 @@ function CreateUser({
                       isDisabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Input
                       name="email"
                       variant="outlined"
@@ -219,7 +221,7 @@ function CreateUser({
                       }
                     />
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Choose strong password">
                       <Input
                         inputProps={{
@@ -244,7 +246,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Choose strong password">
                       <Input
                         OutlinedInputPlaceholder={`${
@@ -254,7 +256,7 @@ function CreateUser({
                         }`}
                         inputProps={{
                           autocomplete: 'off',
-                          placeHolder: `${
+                          placeholder: `${
                             formType === 'add'
                               ? '*Confirm Password'
                               : 'Confirm Password'
@@ -276,7 +278,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Contact Number">
                       <Input
                         name="contactNo"
@@ -294,7 +296,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your phone extenstion">
                       <Input
                         name="extension"
@@ -311,7 +313,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Location">
                       <Input
                         name="location"
@@ -328,7 +330,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Department">
                       <Input
                         name="department"
@@ -346,7 +348,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Designation">
                       <Input
                         name="title"
@@ -363,7 +365,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
                     <Tooltip title="Choose Joining Date">
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
@@ -371,9 +373,9 @@ function CreateUser({
                           id="joiningDate"
                           name="joiningDate"
                           label={
-                            <Typography variant="subtitle2">
+                            <BodyTextLarge className={classes.label}>
                               Joining Date
-                            </Typography>
+                            </BodyTextLarge>
                           }
                           disableFuture
                           inputVariant="outlined"
@@ -394,7 +396,7 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Hidden smDown>
-                    <Box width={[1, 1 / 2]} mt={10} px={3}></Box>
+                    <Box width={[1, 1, 1 / 2]} mt={10} px={3}></Box>
                   </Hidden>
                   <Box
                     display="flex"

@@ -4,3 +4,14 @@ export { default as CheckBox } from './muiCheckbox';
 export { default as Toast } from './alert';
 export { default as WrapInCard } from './layout/wrapInCard';
 export { default as Breadcrumbs } from './breadCrumbs';
+export {
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6,
+  BodyTextSmall,
+  BodyTextLarge,
+  ButtonText,
+} from './typography';
