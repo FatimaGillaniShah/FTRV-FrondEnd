@@ -38,6 +38,6 @@ const useStyles = makeStyles(() => ({
     fontWeight: 'bold',
     fontSize: '16px',
   },
-  description: { fontSize: '13px' },
+  description: { fontSize: '13px', maxWidth: '150px', textAlign: 'center' },
 }));
 export default useStyles;

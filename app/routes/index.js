@@ -12,7 +12,6 @@ import CreateUser from '../containers/createUser/loadable';
 import EditUser from '../containers/editUser/loadable';
 import UserProfile from '../containers/userProfile/loadable';
 import PrivateRoute from '../components/hoc/privateRoute';
-
 import { ROLES } from '../utils/constants';
 
 function Routes() {
