@@ -20,8 +20,12 @@ const useStyles = makeStyles((theme) => ({
   label: {
     color: theme.palette.text.info,
   },
-  inputColor: {
+  select: {
     color: theme.palette.text.dark,
+    textTransform: 'capitalize',
+  },
+  textStyle: {
+    textTransform: 'capitalize',
   },
 }));
 export default function SelectInput({
@@ -55,7 +59,7 @@ export default function SelectInput({
           id={selectId}
           onChange={onHandleChange}
           value={selectedValue}
-          className={classes.inputColor}
+          className={classes.select}
           name={selectName}
           error={meta.error}
           label={label}
@@ -68,9 +72,13 @@ export default function SelectInput({
           {options &&
             options.map((val) =>
               val.value !== undefined ? (
-                <MenuItem value={val.value}>{val.label}</MenuItem>
+                <MenuItem className={classes.textStyle} value={val.value}>
+                  {val.label}
+                </MenuItem>
               ) : (
-                <MenuItem value={val}>{val}</MenuItem>
+                <MenuItem className={classes.textStyle} value={val}>
+                  {val}
+                </MenuItem>
               )
             )}
         </Select>

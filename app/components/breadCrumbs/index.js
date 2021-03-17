@@ -17,13 +17,52 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const ROUTES_WHERE_YOU_NEED_TO_EXCLUDE_LAST_ENTRY = ['edit']; // edit/543
+
+// input [edit,543] - output [edit]
+// eslint-disable-next-line no-unused-vars
+const removeLastEntryFromRouteArray = (routeArray) => {
+  if (
+    ROUTES_WHERE_YOU_NEED_TO_EXCLUDE_LAST_ENTRY.includes(
+      routeArray[routeArray.length - 2]
+    )
+  ) {
+    return routeArray.pop();
+  }
+  return routeArray;
+};
+
+const breadCrumbsCustomNames = {
+  quote: 'myquote',
+};
+
+// eslint-disable-next-line no-unused-vars
+const chooseBreadCrumbsCustomNames = (routeArray) => {
+  const result = {};
+  routeArray.map((value, index) => {
+    if (breadCrumbsCustomNames[value]) {
+      result[index] = breadCrumbsCustomNames[value];
+    } else {
+      result[index] = value;
+    }
+    return result;
+  });
+
+  return result;
+};
 export default function App() {
   const location = useLocation();
   const classes = useStyles();
   const pathnames = location.pathname.split('/').filter((x) => x);
-  if (['edit'].includes(pathnames[pathnames.length - 2])) {
+  if (
+    ROUTES_WHERE_YOU_NEED_TO_EXCLUDE_LAST_ENTRY.includes(
+      pathnames[pathnames.length - 2]
+    )
+  ) {
     pathnames.pop();
   }
+  // const data = chooseBreadCrumbsCustomNames(pathnames);
+  // console.log('data', data);
   const lastIndex = pathnames.length - 1;
 
   return (

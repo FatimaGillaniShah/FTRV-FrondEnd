@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { ROLES } from '../../utils/constants';
 import { getComparator, stableSort } from '../../utils/helper';
 import { CheckBox } from '../index';
-import { BodyTextLarge } from '../typography';
+import { BodyTextSmall } from '../typography';
 import { useStyles } from './styles';
 import EnhancedTableHead from './tableHead';
 import { useAuthContext } from '../../context/authContext';
@@ -120,7 +120,7 @@ export function DataTable({
             padding="default"
             align={header.numeric ? 'right' : 'left'}
           >
-            <BodyTextLarge color="dark">{row[header.id]}</BodyTextLarge>
+            <BodyTextSmall color="dark">{row[header.id]}</BodyTextSmall>
           </TableCell>
         );
       })}
