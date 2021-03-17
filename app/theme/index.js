@@ -75,7 +75,7 @@ const theme = createMuiTheme({
     },
     body2: {
       fontWeight: 300,
-      fontSize: '0.7rem',
+      fontSize: '0.75rem',
       color: colors.textColor.dark,
     },
     button: {
