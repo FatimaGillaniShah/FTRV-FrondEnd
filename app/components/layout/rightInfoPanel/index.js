@@ -14,16 +14,13 @@ const useStyles = makeStyles((theme) => ({
     marginBlock: '0.2rem',
 
     backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.25',
   },
   birthdaySection: {
     marginBlock: '0.2rem',
-    flex: '0.35',
   },
   motivationSection: {
     marginBlock: '0.2rem',
     backgroundColor: theme.palette.bgColor.secondary,
-    flex: '0.4',
   },
 }));
 function Index() {

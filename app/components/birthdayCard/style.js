@@ -5,10 +5,6 @@ export const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: '154px 160px',
   },
-  customSize: {
-    width: '154px',
-    height: 'auto',
-  },
   textBox: {
     overflowWrap: 'break-word',
   },

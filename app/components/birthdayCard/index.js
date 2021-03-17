@@ -3,25 +3,26 @@ import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import BoxWithBg from '../boxWithBg';
 import BirdthdayCard from './birthdayCard';
-import { items } from './carouselItems';
 
-export function BirthdayCarousel() {
+export function BirthdayCarousel({ items }) {
   return (
     <>
-      <Box>
-        <BoxWithBg title="Birthdays" bgColor="bgColor.orange">
-          <Carousel
-            autoPlay
-            animation="fade"
-            navButtonsAlwaysInvisible
-            indicators={items.length !== 1}
-          >
-            {items.map((item) => (
-              <BirdthdayCard item={item} />
-            ))}
-          </Carousel>
-        </BoxWithBg>
-      </Box>
+      {items?.length >= 1 && (
+        <Box>
+          <BoxWithBg title="Birthdays" bgColor="bgColor.orange">
+            <Carousel
+              autoPlay
+              animation="fade"
+              navButtonsAlwaysInvisible
+              indicators={items?.length !== 1}
+            >
+              {items?.map((item) => (
+                <BirdthdayCard item={item} />
+              ))}
+            </Carousel>
+          </BoxWithBg>
+        </Box>
+      )}
     </>
   );
 }
