@@ -16,9 +16,7 @@ export function AnnouncementNotification() {
 
       <Box className={classes.typographyBox}>
         <Box className={classes.titleBox}>
-          <H6 color="dark" className={classes.title}>
-            Notification
-          </H6>
+          <H6 color="dark">Notification</H6>
         </Box>
         <Box>
           <BodyText color="dark" className={classes.description}>

@@ -34,10 +34,6 @@ const useStyles = makeStyles(() => ({
   titleBox: {
     marginBottom: '7px',
   },
-  title: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-  },
-  description: { fontSize: '13px', maxWidth: '150px', textAlign: 'center' },
+  description: { maxWidth: '150px', textAlign: 'center' },
 }));
 export default useStyles;
