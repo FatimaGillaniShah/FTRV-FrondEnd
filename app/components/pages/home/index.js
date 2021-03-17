@@ -27,7 +27,7 @@ function Home() {
     <>
       <Grid xs={12} className={classes.root}>
         <Grid xs={12} className={classes.bannerGridSection} />
-        <Grid xs={12} className={classes.statsSection} />
+        <Grid xs={12} className={classes.statsSection}></Grid>
       </Grid>
     </>
   );
