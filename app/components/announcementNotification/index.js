@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import { Typography } from '@material-ui/core';
 import useStyles from './style';
+import { H6, BodyText } from '../typography';
 
 export function AnnouncementNotification() {
   const classes = useStyles();
@@ -16,12 +16,14 @@ export function AnnouncementNotification() {
 
       <Box className={classes.typographyBox}>
         <Box className={classes.titleBox}>
-          <Typography className={classes.title}>Notification</Typography>
+          <H6 color="dark" className={classes.title}>
+            Notification
+          </H6>
         </Box>
         <Box>
-          <Typography className={classes.description}>
+          <BodyText color="dark" className={classes.description}>
             The office will be closed.
-          </Typography>
+          </BodyText>
         </Box>
       </Box>
     </Box>
