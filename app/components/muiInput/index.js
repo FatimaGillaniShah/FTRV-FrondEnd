@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   label: {
     color: theme.palette.text.info,
   },
+  inputColor: {
+    color: theme.palette.text.dark,
+  },
 }));
 
 function InputField({
@@ -64,6 +67,7 @@ function InputField({
             id={inputID}
             type={inputType}
             disabled={isDisabled}
+            classes={{ input: classes.inputColor }}
             placeholder={
               !showInputLabel &&
               OutlinedInputPlaceholder &&
@@ -103,11 +107,14 @@ function InputField({
         </>
       ) : (
         <>
-          <InputLabel htmlFor={inputID}>{placeholderText}</InputLabel>
+          <InputLabel className={classes.label} htmlFor={inputID}>
+            {placeholderText}
+          </InputLabel>
           <Input
             id={inputID}
             type={inputType}
             disabled={isDisabled}
+            classes={{ input: classes.inputColor }}
             endAdornment={
               Icon &&
               appendIcon && (

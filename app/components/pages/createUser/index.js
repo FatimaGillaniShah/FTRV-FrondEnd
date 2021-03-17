@@ -1,3 +1,4 @@
+import DateFnsUtils from '@date-io/date-fns';
 import {
   Avatar,
   Box,
@@ -19,20 +20,21 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
-// import {
-//   KeyboardDatePicker,
-//   MuiPickersUtilsProvider,
-// } from '@material-ui/pickers';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
 import { Input } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
-import { H4 } from '../../typography';
+import { BodyTextLarge, H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
+import Select from '../../muiSelect';
 
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
@@ -41,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     color: theme.palette.text.info,
+  },
+  dateColor: {
+    color: theme.palette.text.dark,
   },
 }));
 
@@ -104,6 +109,12 @@ function CreateUser({
             if (data.joiningDate) {
               dataFile.append('joiningDate', data.joiningDate);
             }
+            if (data.dob) {
+              dataFile.append('dob', data.dob);
+            }
+            if (data.role) {
+              dataFile.append('role', data.role);
+            }
             await onUpdateUser(dataFile);
           } catch (err) {
             // ...
@@ -111,7 +122,7 @@ function CreateUser({
         }}
         validationSchema={yupValidation}
       >
-        {({ setFieldValue }) => (
+        {({ setFieldValue, values, handleChange }) => (
           <Form>
             <Box
               flexWrap="wrap"
@@ -365,34 +376,78 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
-                    {/* <Tooltip title="Choose Joining Date"> */}
-                    {/*  /!* <MuiPickersUtilsProvider utils={DateFnsUtils}> */}
-                    {/*    <KeyboardDatePicker */}
-                    {/*      margin="normal" */}
-                    {/*      id="joiningDate" */}
-                    {/*      name="joiningDate" */}
-                    {/*      label={ */}
-                    {/*        <BodyTextLarge className={classes.label}> */}
-                    {/*          Joining Date */}
-                    {/*        </BodyTextLarge> */}
-                    {/*      } */}
-                    {/*      disableFuture */}
-                    {/*      inputVariant="outlined" */}
-                    {/*      format="dd-MM-yyyy" */}
-                    {/*      style={{ width: '100%' }} */}
-                    {/*      value={values.joiningDate} */}
-                    {/*      onChange={(value) => { */}
-                    {/*        setFieldValue('joiningDate', value); */}
-                    {/*      }} */}
-                    {/*      disabled={ */}
-                    {/*        mutation.isLoading || isUserEditingHisProfile */}
-                    {/*      } */}
-                    {/*      KeyboardButtonProps={{ */}
-                    {/*        'aria-label': 'change date', */}
-                    {/*      }} */}
-                    {/*    /> */}
-                    {/*  </MuiPickersUtilsProvider> *!/ */}
-                    {/* </Tooltip> */}
+                    <Tooltip title="Choose Joining Date">
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          margin="normal"
+                          id="joiningDate"
+                          name="joiningDate"
+                          label={
+                            <BodyTextLarge className={classes.label}>
+                              Joining Date
+                            </BodyTextLarge>
+                          }
+                          disableFuture
+                          inputVariant="outlined"
+                          format="dd-MM-yyyy"
+                          style={{ width: '100%' }}
+                          value={values.joiningDate}
+                          InputProps={{ className: classes.dateColor }}
+                          onChange={(value) => {
+                            setFieldValue('joiningDate', value);
+                          }}
+                          disabled={
+                            mutation.isLoading || isUserEditingHisProfile
+                          }
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </Tooltip>
+                  </Box>
+                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
+                    <Tooltip title="Choose Birthday">
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          margin="normal"
+                          id="dob"
+                          name="dob"
+                          label={
+                            <BodyTextLarge className={classes.label}>
+                              Birth Date
+                            </BodyTextLarge>
+                          }
+                          InputProps={{ className: classes.dateColor }}
+                          disableFuture
+                          inputVariant="outlined"
+                          format="dd-MM-yyyy"
+                          style={{ width: '100%' }}
+                          value={values.dob}
+                          onChange={(value) => {
+                            setFieldValue('dob', value);
+                          }}
+                          disabled={mutation.isLoading}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </Tooltip>
+                  </Box>
+                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
+                    <Select
+                      disabled={mutation.isLoading || isThisMyProfile}
+                      name="role"
+                      selectId="role"
+                      labelId="role"
+                      selectName="role"
+                      formControlProps={{ variant: 'outlined' }}
+                      label="Select User Type"
+                      selectedValue={values.role}
+                      options={Object.keys(ROLES).map((val) => ROLES[val])}
+                      onHandleChange={handleChange('role')}
+                    />
                   </Box>
                   <Hidden smDown>
                     <Box width={[1, 1, 1 / 2]} mt={10} px={3}></Box>

@@ -5,14 +5,25 @@
  */
 
 import React from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+import {
+  InputLabel,
+  FormControl,
+  MenuItem,
+  Select,
+  FormHelperText,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
 import { useField } from 'formik';
 
+const useStyles = makeStyles((theme) => ({
+  label: {
+    color: theme.palette.text.info,
+  },
+  inputColor: {
+    color: theme.palette.text.dark,
+  },
+}));
 export default function SelectInput({
   labelId,
   selectId,
@@ -27,41 +38,49 @@ export default function SelectInput({
   ...props
 }) {
   const [field, meta] = useField(props);
+  const classes = useStyles();
   return (
-    <FormControl
-      fullWidth={fullWidth}
-      {...formControlProps}
-      error={meta.error && true}
-    >
-      <InputLabel id={labelId}>{label}</InputLabel>
-      <Select
-        labelId={labelId}
-        id={selectId}
-        onChange={onHandleChange}
-        value={selectedValue}
-        name={selectName}
-        {...field}
-        {...props}
-        error={meta.error}
+    <>
+      <FormControl
+        fullWidth={fullWidth}
+        variant="outlined"
+        {...formControlProps}
+        error={meta.error && true}
       >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {options &&
-          options.map((val) =>
-            val.value !== undefined ? (
-              <MenuItem value={val.value}>{val.label}</MenuItem>
-            ) : (
-              <MenuItem value={val}>{val}</MenuItem>
-            )
-          )}
-      </Select>
+        <InputLabel className={classes.label} id={selectId}>
+          {label}
+        </InputLabel>
+        <Select
+          labelId={labelId}
+          id={selectId}
+          onChange={onHandleChange}
+          value={selectedValue}
+          className={classes.inputColor}
+          name={selectName}
+          error={meta.error}
+          label={label}
+          {...field}
+          {...props}
+        >
+          {/* <MenuItem value="">
+            <em>None</em>
+          </MenuItem> */}
+          {options &&
+            options.map((val) =>
+              val.value !== undefined ? (
+                <MenuItem value={val.value}>{val.label}</MenuItem>
+              ) : (
+                <MenuItem value={val}>{val}</MenuItem>
+              )
+            )}
+        </Select>
 
-      <FormHelperText>{helperText}</FormHelperText>
-      {meta.touched && meta.error ? (
-        <FormHelperText error>{meta.error}</FormHelperText>
-      ) : null}
-    </FormControl>
+        <FormHelperText>{helperText}</FormHelperText>
+        {meta.touched && meta.error ? (
+          <FormHelperText error>{meta.error}</FormHelperText>
+        ) : null}
+      </FormControl>
+    </>
   );
 }
 

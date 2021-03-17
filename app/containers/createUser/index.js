@@ -12,6 +12,7 @@ import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { createUser } from 'state/queryFunctions';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
+import { ROLES } from '../../utils/constants';
 
 function CreateUser() {
   const history = useHistory();
@@ -43,7 +44,9 @@ function CreateUser() {
     location: '',
     department: '',
     joiningDate: null,
+    dob: null,
     file: undefined,
+    role: ROLES.USER,
   };
 
   defaultData.isProfilePicAttached = false;

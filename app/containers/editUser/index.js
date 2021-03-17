@@ -16,6 +16,7 @@ import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 import { parseDate } from '../../utils/functions';
+import { ROLES } from '../../utils/constants';
 
 function EditUser() {
   const { id } = useParams();
@@ -59,13 +60,14 @@ function EditUser() {
     contactNo: '',
     department: '',
     location: '',
-    role: '',
     title: '',
     email: '',
     extension: '',
     status: '',
-    joiningDate: '',
+    joiningDate: null,
+    dob: null,
     avatar: '',
+    role: ROLES.USER,
   };
 
   defaultData.isProfilePicAttached = false;
@@ -78,6 +80,13 @@ function EditUser() {
 
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
+    }
+    if (initialData.dob) {
+      initialData.dob = parseDate(initialData.dob);
+    }
+
+    if (!initialData.role) {
+      initialData.role = ROLES.USER;
     }
   }
   return (

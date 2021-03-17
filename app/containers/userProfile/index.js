@@ -23,7 +23,7 @@ function EditUser() {
   const history = useHistory();
   const { user, setUser } = useAuthContext();
   const id = user && user.data && user.data.id;
-  const role = user && user.data && user.data.role;
+  const userRole = user && user.data && user.data.role;
   const { data, isLoading } = useQuery(
     keys.getUser(id),
     () => getUserById(id),
@@ -74,9 +74,16 @@ function EditUser() {
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
     }
-  } else if (role === ROLES.USER) {
+    if (initialData.dob) {
+      initialData.dob = parseDate(initialData.dob);
+    }
+
+    if (!initialData.role) {
+      initialData.role = userRole;
+    }
+  } else if (userRole === ROLES.USER) {
     formDefaultData = { password: '' }; // User can only edit his password and avatar in profile
-  } else if (role === ROLES.ADMIN) {
+  } else if (userRole === ROLES.ADMIN) {
     formDefaultData = {
       firstName: '',
       lastName: '',
@@ -84,13 +91,14 @@ function EditUser() {
       contactNo: '',
       department: '',
       location: '',
-      role: '',
       title: '',
       email: '',
       extension: '',
       status: '',
-      joiningDate: '',
+      joiningDate: null,
+      dob: null,
       avatar: '',
+      role: userRole,
     };
 
     formDefaultData.isProfilePicAttached = false;
@@ -115,7 +123,7 @@ function EditUser() {
               initialData={initialData || formDefaultData}
               onUpdateUser={handleSubmit}
               formType="edit"
-              editRole={role}
+              editRole={userRole}
               isThisMyProfile
             />
           )}
