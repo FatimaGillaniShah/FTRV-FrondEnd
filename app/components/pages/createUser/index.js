@@ -77,7 +77,6 @@ function CreateUser({
       }
     }
   }, [mutation.isSuccess]);
-
   return (
     <>
       <Formik
