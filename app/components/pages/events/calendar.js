@@ -1,10 +1,10 @@
 import { Box } from '@material-ui/core';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
 import dummyData from './dummyEvents';
-// import 'react-big-calendar/lib/sass/styles.scss';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
@@ -14,9 +14,6 @@ export function EventCalendar() {
   // const [displayDragItemInCell, setDisplayDragItemInCell] = useState(true);
   const localizer = momentLocalizer(moment); // or globalizeLocalizer
   const displayDragItemInCell = true;
-  useEffect(() => {
-    setEvents(dummyData);
-  }, [dummyData]);
 
   const handleDragStart = (event) => {
     setDraggedEvent(event);
@@ -84,15 +81,16 @@ export function EventCalendar() {
     // })
   };
   return (
-    <Box h="100%">
+    <Box height="100vh">
       <DragAndDropCalendar
         selectable
         localizer={localizer}
-        events={events}
+        events={dummyData}
         onEventDrop={moveEvent}
         resizable
         onEventResize={resizeEvent}
         onSelectSlot={newEvent}
+        views={{ month: true }}
         // onDragStart={console.log}
         defaultView={Views.MONTH}
         defaultDate={new Date()}

@@ -13,7 +13,7 @@ import PrivateRoute from '../components/hoc/privateRoute';
 import { ROLES } from '../utils/constants';
 import usefulLinks from '../containers/usefulLinks/loadable';
 import addUsefulLink from '../containers/addUsefulLink/loadable';
-import Events from '../containers/events';
+import Events from '../containers/events/loadable';
 
 function Routes() {
   return (
