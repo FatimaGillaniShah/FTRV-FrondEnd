@@ -4,7 +4,7 @@
  *
  */
 
-import { Toast, WrapInCard } from 'components';
+import { WrapInCard } from 'components';
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -17,6 +17,7 @@ import EditUserInfo from '../../components/pages/createUser';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
+import { Toast } from '../../utils/helper';
 
 function EditUser() {
   const queryClient = useQueryClient();
@@ -54,9 +55,17 @@ function EditUser() {
 
       queryClient.removeQueries(keys.getUser(id));
     },
+    onError: ({
+      response: {
+        data: { message },
+      },
+    }) => {
+      Toast({
+        icon: 'error',
+        title: message || 'Error while Updating',
+      });
+    },
   });
-
-  const errorMessage = mutation?.error?.response?.data?.message;
 
   const initialData = data?.data?.data || null;
   const handleSubmit = (updatedData) => {
@@ -109,10 +118,6 @@ function EditUser() {
         <title>Edit User</title>
         <meta name="updateUser" content="ftrv - update user data" />
       </Helmet>
-
-      {mutation.isError && (
-        <Toast variant="error">{errorMessage || 'Error while Updating'}</Toast>
-      )}
       <WrapInBreadcrumbs>
         <WrapInCard>
           {isLoading ? (

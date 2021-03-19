@@ -77,7 +77,7 @@ function CreateUser({
       }
     }
   }, [mutation.isSuccess]);
-
+  console.log(editRole, 'editRole');
   return (
     <>
       <Formik
@@ -389,7 +389,7 @@ function CreateUser({
                           }
                           disableFuture
                           inputVariant="outlined"
-                          format="dd-MM-yyyy"
+                          format="MM-dd-yyyy"
                           style={{ width: '100%' }}
                           value={values.joiningDate}
                           InputProps={{ className: classes.dateColor }}
@@ -421,13 +421,15 @@ function CreateUser({
                           InputProps={{ className: classes.dateColor }}
                           disableFuture
                           inputVariant="outlined"
-                          format="dd-MM-yyyy"
+                          format="MM-dd-yyyy"
                           style={{ width: '100%' }}
                           value={values.dob}
                           onChange={(value) => {
                             setFieldValue('dob', value);
                           }}
-                          disabled={mutation.isLoading}
+                          disabled={
+                            mutation.isLoading || editRole === ROLES.USER
+                          }
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
                           }}

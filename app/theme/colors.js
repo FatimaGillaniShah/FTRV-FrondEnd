@@ -33,4 +33,8 @@ export const colors = {
     confirm: '#d33',
     cancel: '#3085d6',
   },
+  toastColors: {
+    success: '#4BB543',
+    error: '#ff3333',
+  },
 };

@@ -7,8 +7,8 @@ import {
 } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import { Toast } from 'components';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Toast } from '../../../utils/helper';
 import { BodyTextSmall, ButtonText, H5 } from '../../typography';
 import { useStyles } from './styles';
 
@@ -23,18 +23,24 @@ export default function FileUploader({
   inputEl,
 }) {
   const classes = useStyles();
+  useEffect(() => {
+    if (error) {
+      Toast({
+        icon: 'error',
+        title: error || 'Some error occured',
+      });
+    }
+  }, [error]);
 
   return (
     <>
-      {error && <Toast variant="error"> {error} </Toast>}
-
       <Grid container xs={12} direction="column" className={classes.root}>
         <Grid xs={12} className={classes.contentGrid} direction="column">
           <Grid xs={12} className={classes.headingGrid}>
             <H5>Import Directory</H5>
           </Grid>
           <Grid xs={12} className={classes.templateDownloadGrid}>
-            <Box mt={3} mb={3}>
+            <Box mt={3} mb={3} py={1}>
               <Button
                 onClick={handleTemplateDownload}
                 className={classes.templateDownloadBtn}
@@ -85,7 +91,7 @@ export default function FileUploader({
                   <label>
                     {selectedFile ? selectedFile.name : 'Select File'}
                   </label>
-                  . . .{' '}
+                  . . .
                 </Box>
               )}
             </Box>

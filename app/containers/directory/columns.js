@@ -51,11 +51,11 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
     <>
       {role === ROLES.ADMIN && (
         <>
-          <IconButton disabled={disabled}>
-            <EditIcon
-              color="secondary"
-              onClick={() => history.push(`directory/edit/${data.id}`)}
-            />
+          <IconButton
+            disabled={disabled}
+            onClick={() => history.push(`directory/edit/${data.id}`)}
+          >
+            <EditIcon color="secondary" />
           </IconButton>
           <IconButton onClick={() => handleDeleteUser()} disabled={disabled}>
             <DeleteIcon color="error" />

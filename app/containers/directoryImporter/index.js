@@ -9,13 +9,26 @@ import { Helmet } from 'react-helmet';
 import { useMutation } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { uploadEmployeeFile } from 'state/queryFunctions';
-import { Toast, WrapInCard } from 'components';
+import { WrapInCard } from 'components';
+import { Box } from '@material-ui/core';
 import EmployeeFileUploader from '../../components/pages/directoryImporter';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
+import { Toast } from '../../utils/helper';
 
 function DirectoryUploader() {
   const history = useHistory();
-  const mutation = useMutation(uploadEmployeeFile);
+  const mutation = useMutation(uploadEmployeeFile, {
+    onError: ({
+      response: {
+        data: { message },
+      },
+    }) => {
+      Toast({
+        icon: 'error',
+        title: message || 'Some error occured',
+      });
+    },
+  });
 
   useEffect(() => {
     if (mutation.isSuccess) {
@@ -73,23 +86,20 @@ function DirectoryUploader() {
         />
       </Helmet>
 
-      {mutation.isError && (
-        <Toast variant="error">
-          {mutation.error && mutation.error.message}
-        </Toast>
-      )}
       <WrapInBreadcrumbs>
         <WrapInCard>
-          <EmployeeFileUploader
-            handleCapture={handleCapture}
-            handleClick={handleClick}
-            handleSubmit={handleSubmit}
-            handleTemplateDownload={handleTemplateDownload}
-            mutation={mutation}
-            error={error}
-            selectedFile={selectedFile}
-            inputEl={inputEl}
-          />
+          <Box m={3}>
+            <EmployeeFileUploader
+              handleCapture={handleCapture}
+              handleClick={handleClick}
+              handleSubmit={handleSubmit}
+              handleTemplateDownload={handleTemplateDownload}
+              mutation={mutation}
+              error={error}
+              selectedFile={selectedFile}
+              inputEl={inputEl}
+            />
+          </Box>
         </WrapInCard>
       </WrapInBreadcrumbs>
     </>

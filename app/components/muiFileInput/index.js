@@ -1,10 +1,10 @@
 import { Box, Button, Tooltip } from '@material-ui/core';
-import { Toast } from 'components';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   MIN_UPLOADABLE_FILE_SIZE_IN_MBS,
   MAX_UPLOADABLE_FILE_SIZE_IN_MBS,
 } from '../../utils/constants';
+import { Toast } from '../../utils/helper';
 
 export function MuiFileInput({
   setImgFile,
@@ -18,6 +18,15 @@ export function MuiFileInput({
 }) {
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);
+
+  useEffect(() => {
+    if (error) {
+      Toast({
+        icon: 'error',
+        title: error,
+      });
+    }
+  }, [error]);
 
   const handleCapture = ({ target }) => {
     if (target.files[0]) {
@@ -48,7 +57,6 @@ export function MuiFileInput({
 
   return (
     <>
-      {error && <Toast variant="error">{error}</Toast>}
       <Box mb={2}>
         <input
           id={name}

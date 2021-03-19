@@ -6,31 +6,41 @@ import { string, object } from 'yup';
 import LinkIcon from '@material-ui/icons/Link';
 import PersonIcon from '@material-ui/icons/Person';
 import ClearIcon from '@material-ui/icons/Clear';
+import PropTypes from 'prop-types';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input } from '../../index';
+import { H5 } from '../../typography';
 
-export function AddUsefulLinkPage({ onHandleSubmit, id, initialValues }) {
+export function AddUsefulLinkPage({
+  onHandleSubmit,
+  id,
+  initialValues,
+  history,
+}) {
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
-        <Formik
-          key="addusefullink"
-          enableReinitialize
-          initialValues={initialValues}
-          validationSchema={object().shape({
-            name: string().required('*Name Required'),
-            url: string().url().required('*URL Required'),
-          })}
-          onSubmit={(values) => {
-            onHandleSubmit(values);
-          }}
-        >
-          {({ resetForm }) => (
+        <Box ml={3}>
+          <Box my={7}>
+            <H5> {id ? 'Update' : 'Create'} Useful Link </H5>
+          </Box>
+          <Formik
+            key="addusefullink"
+            enableReinitialize
+            initialValues={initialValues}
+            validationSchema={object().shape({
+              name: string().required('*Name Required'),
+              url: string().url().required('*URL Required'),
+            })}
+            onSubmit={(values) => {
+              onHandleSubmit(values);
+            }}
+          >
             <Form>
-              <Box px={10}>
-                <Box display="flex">
-                  <Box width={[1, 1 / 2]} my={5} px={5}>
+              <Box>
+                <Box display="flex" flexDirection="column" pb={10}>
+                  <Box width={[1, 1 / 3]} my={5}>
                     <Input
                       variant="outlined"
                       OutlinedInputPlaceholder="Name*"
@@ -40,7 +50,7 @@ export function AddUsefulLinkPage({ onHandleSubmit, id, initialValues }) {
                       IconClickable={false}
                     />
                   </Box>
-                  <Box width={[1, 1 / 2]} my={5} px={5}>
+                  <Box width={[1, 1 / 3]}>
                     <Input
                       OutlinedInputPlaceholder="Url*"
                       name="url"
@@ -51,14 +61,14 @@ export function AddUsefulLinkPage({ onHandleSubmit, id, initialValues }) {
                     />
                   </Box>
                 </Box>
-                <Box display="flex" pl={5}>
+                <Box display="flex">
                   <Box mb={5}>
                     <Button
                       type="submit"
                       color="secondary"
                       variant="contained"
                       fullWidth={false}
-                      endIcon={<SaveIcon />}
+                      startIcon={<SaveIcon />}
                     >
                       {id ? 'Update' : 'Save'}
                     </Button>
@@ -67,20 +77,29 @@ export function AddUsefulLinkPage({ onHandleSubmit, id, initialValues }) {
                     <Button
                       variant="text"
                       fullWidth={false}
-                      onClick={resetForm}
                       startIcon={<ClearIcon />}
+                      onClick={() => {
+                        history.push('/useful-links');
+                      }}
                     >
-                      Clear
+                      Cancel
                     </Button>
                   </Box>
                 </Box>
               </Box>
             </Form>
-          )}
-        </Formik>
+          </Formik>
+        </Box>
       </WrapInCard>
     </WrapInBreadcrumbs>
   );
 }
 
 export default memo(AddUsefulLinkPage);
+
+AddUsefulLinkPage.propTypes = {
+  initialValues: PropTypes.object,
+};
+AddUsefulLinkPage.defaultProps = {
+  initialValues: { name: '', url: '' },
+};
