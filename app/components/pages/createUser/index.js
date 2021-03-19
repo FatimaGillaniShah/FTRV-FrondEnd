@@ -77,7 +77,6 @@ function CreateUser({
       }
     }
   }, [mutation.isSuccess]);
-  console.log(editRole, 'editRole');
   return (
     <>
       <Formik
