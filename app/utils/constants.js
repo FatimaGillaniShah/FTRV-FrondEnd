@@ -22,4 +22,9 @@ export const APIS = {
   USERS_DELETE: '/users/deleteUsers',
   USERS: '/users',
   FILE_UPLOAD: 'users/upload',
+  RETRIEVE_LINKS: '/usefulLinks',
+  CREATE_LINK: '/usefulLinks',
+  GET_LINK: '/usefulLinks',
+  UPDATE_LINK: '/usefulLinks',
+  DELETE_LINK: '/usefulLinks/deleteLinks',
 };

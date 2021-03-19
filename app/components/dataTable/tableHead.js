@@ -20,6 +20,7 @@ export default function EnhancedTableHead({
   role,
   rows,
   currentUserID,
+  matchUserIdWithIDS,
 }) {
   const [usersCount, setUsersCount] = useState(false);
   const createSortHandler = (property) => (event) => {
@@ -35,7 +36,11 @@ export default function EnhancedTableHead({
           <TableCell padding="checkbox">
             <CheckBox
               indeterminate={numSelected > 0 && numSelected < usersCount}
-              checked={rowCount > 0 && numSelected === usersCount}
+              checked={
+                matchUserIdWithIDS
+                  ? usersCount > 0 && numSelected === usersCount
+                  : rowCount > 0 && numSelected === rowCount
+              }
               onChange={onSelectAllClick}
               className={classes.tableHead}
             />
@@ -45,14 +50,6 @@ export default function EnhancedTableHead({
         {headCells.map((headCell) => (
           <TableCell
             align={headCell.numeric ? 'right' : 'left'}
-            padding={
-              // eslint-disable-next-line no-nested-ternary
-              role === ROLES.USER
-                ? 'default'
-                : headCell.disablePadding
-                ? 'none'
-                : 'default'
-            }
             sortDirection={orderBy === headCell.id ? order : false}
             className={classes.headCells}
           >
