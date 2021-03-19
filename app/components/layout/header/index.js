@@ -3,12 +3,11 @@ import {
   Avatar,
   Box,
   Hidden,
-  makeStyles,
   Menu,
   MenuItem,
   Toolbar,
-  Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -16,12 +15,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
+import { H5, H6 } from 'components';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 
 const StyledMenuItem = styled(MenuItem)`
   &&& {
-    padding: 5spx 20px;
+    padding: 5px 20px;
   }
 `;
 const StyledListItemIcon = styled(ListItemIcon)`
@@ -91,24 +91,14 @@ export default function Header() {
             <Box className={classes.profileBox}>
               <Hidden xsDown>
                 <Box className={classes.titleBox}>
-                  <Box className={classes.welcomeTextBox}>
-                    <Typography
-                      component="h1"
-                      variant="subtitle1"
-                      color="inherit"
-                      noWrap
-                    >
-                      Welcome Back
-                    </Typography>
+                  <Box className={classes.welcomeTextBox} mr={2}>
+                    <H6 regular color="primary">
+                      Welcome Back,
+                    </H6>
                   </Box>
-                  <Typography
-                    component="h6"
-                    variant="h6"
-                    color="inherit"
-                    noWrap
-                  >
-                    , {user.data.name}!
-                  </Typography>
+                  <H5 medium color="primary">
+                    {user.data.name}!
+                  </H5>
                 </Box>
               </Hidden>
               <>

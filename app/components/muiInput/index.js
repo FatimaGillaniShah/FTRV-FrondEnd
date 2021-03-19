@@ -5,19 +5,27 @@
  */
 
 import {
-  FormHelperText,
   FormControl,
+  FormHelperText,
   IconButton,
   Input,
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Typography,
 } from '@material-ui/core';
-
+import { makeStyles } from '@material-ui/core/styles';
 import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import React, { memo } from 'react';
+
+const useStyles = makeStyles((theme) => ({
+  label: {
+    color: theme.palette.text.info,
+  },
+  inputColor: {
+    color: theme.palette.text.dark,
+  },
+}));
 
 function InputField({
   placeholderText,
@@ -39,6 +47,7 @@ function InputField({
   ...props
 }) {
   const [field, meta] = useField(props);
+  const classes = useStyles();
   return (
     <FormControl
       fullWidth={fullWidth}
@@ -49,10 +58,8 @@ function InputField({
       {variant === 'outlined' ? (
         <>
           {showInputLabel && (
-            <InputLabel htmlFor={inputID}>
-              <Typography variant="subtitle2">
-                {OutlinedInputPlaceholder}
-              </Typography>
+            <InputLabel htmlFor={inputID} className={classes.label}>
+              {OutlinedInputPlaceholder}
             </InputLabel>
           )}
           <OutlinedInput
@@ -60,7 +67,12 @@ function InputField({
             id={inputID}
             type={inputType}
             disabled={isDisabled}
-            placeholder={!showInputLabel && OutlinedInputPlaceholder}
+            classes={{ input: classes.inputColor }}
+            placeholder={
+              !showInputLabel &&
+              OutlinedInputPlaceholder &&
+              OutlinedInputPlaceholder
+            }
             endAdornment={
               Icon &&
               appendIcon && (
@@ -95,11 +107,14 @@ function InputField({
         </>
       ) : (
         <>
-          <InputLabel htmlFor={inputID}>{placeholderText}</InputLabel>
+          <InputLabel className={classes.label} htmlFor={inputID}>
+            {placeholderText}
+          </InputLabel>
           <Input
             id={inputID}
             type={inputType}
             disabled={isDisabled}
+            classes={{ input: classes.inputColor }}
             endAdornment={
               Icon &&
               appendIcon && (
@@ -162,7 +177,7 @@ InputField.propTypes = {
 };
 InputField.defaultProps = {
   fullWidth: true,
-  IconClickable: true,
+  IconClickable: false,
   showInputLabel: true,
 };
 

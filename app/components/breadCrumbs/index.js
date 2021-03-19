@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { Breadcrumbs, makeStyles, Typography } from '@material-ui/core';
+import { Breadcrumbs } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { BodyTextLarge } from '../typography';
 
 function toTitleCase(str) {
   return str.replace(
@@ -9,10 +11,9 @@ function toTitleCase(str) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   linkStyle: {
     textDecoration: 'none',
-    color: theme.palette.secondary.main,
   },
 }));
 
@@ -28,7 +29,9 @@ export default function App() {
   return (
     <Breadcrumbs aria-label="Breadcrumb">
       <Link className={classes.linkStyle} to="/">
-        Home
+        <BodyTextLarge component="span" color="secondary">
+          Home
+        </BodyTextLarge>
       </Link>
 
       {pathnames.map((value, index) => {
@@ -37,9 +40,9 @@ export default function App() {
         let result = <> </>;
         if (last) {
           result = (
-            <Typography component="span" color="primary">
+            <BodyTextLarge component="span" color="primary">
               {toTitleCase(value)}
-            </Typography>
+            </BodyTextLarge>
           );
         } else {
           result = (
@@ -49,7 +52,9 @@ export default function App() {
               key={to}
               className={classes.linkStyle}
             >
-              {toTitleCase(value)}
+              <BodyTextLarge component="span" color="secondary">
+                {toTitleCase(value)}
+              </BodyTextLarge>
             </Link>
           );
         }

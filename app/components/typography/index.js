@@ -11,11 +11,7 @@ const useStyles = makeStyles((theme) => ({
       } !important`,
     textTransform: (props) => `${props.textTransform} !important`,
     color: (props) =>
-      `${
-        props.color
-          ? theme.palette.textColor[props.color]
-          : theme.palette.textColor.secondary
-      } !important`,
+      `${props.color ? theme.palette.text[props.color] : null} !important`,
   },
 }));
 
@@ -77,37 +73,30 @@ export const H4 = (props) => {
 export const H5 = (props) => {
   const { root } = useStyles(AttachPrefixToFontWeight(props));
 
-  return (
-    <Typography classes={{ root }} variant="h5" {...props}>
-      {props.children}
-    </Typography>
-  );
+  return <Typography classes={{ root }} variant="h5" {...props} />;
 };
 export const H6 = (props) => {
   const { root } = useStyles(AttachPrefixToFontWeight(props));
 
-  return (
-    <Typography classes={{ root }} variant="h6" {...props}>
-      {props.children}
-    </Typography>
-  );
+  return <Typography classes={{ root }} variant="h6" {...props} />;
 };
 
 export const BodyText = (props) => {
   const { root } = useStyles(AttachPrefixToFontWeight(props));
 
-  return (
-    <Typography classes={{ root }} variant="body2" {...props}>
-      {props.children}
-    </Typography>
-  );
+  return <Typography classes={{ root }} variant="body2" {...props} />;
+};
+export const BodyTextLarge = (props) => {
+  const { root } = useStyles(AttachPrefixToFontWeight(props));
+  return <Typography classes={{ root }} variant="body1" {...props} />;
+};
+export const BodyTextSmall = (props) => {
+  const { root } = useStyles(AttachPrefixToFontWeight(props));
+
+  return <Typography classes={{ root }} variant="body2" {...props} />;
 };
 export const ButtonText = (props) => {
   const { root } = useStyles(AttachPrefixToFontWeight(props));
 
-  return (
-    <Typography classes={{ root }} {...props}>
-      {props.children}
-    </Typography>
-  );
+  return <Typography classes={{ root }} variant="button" {...props} />;
 };

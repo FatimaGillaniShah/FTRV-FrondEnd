@@ -1,12 +1,11 @@
 import DateFnsUtils from '@date-io/date-fns';
 import {
+  Avatar,
   Box,
   Button,
   CircularProgress,
   Hidden,
   Tooltip,
-  Typography,
-  Avatar,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
@@ -31,15 +30,22 @@ import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
-import { H4 } from '../../typography';
+import { BodyTextLarge, H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
+import Select from '../../muiSelect';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   imageStyle: {
     width: '150px',
     height: '150px',
+  },
+  label: {
+    color: theme.palette.text.info,
+  },
+  dateColor: {
+    color: theme.palette.text.dark,
   },
 }));
 
@@ -103,6 +109,12 @@ function CreateUser({
             if (data.joiningDate) {
               dataFile.append('joiningDate', data.joiningDate);
             }
+            if (data.dob) {
+              dataFile.append('dob', data.dob);
+            }
+            if (data.role) {
+              dataFile.append('role', data.role);
+            }
             await onUpdateUser(dataFile);
           } catch (err) {
             // ...
@@ -110,7 +122,7 @@ function CreateUser({
         }}
         validationSchema={yupValidation}
       >
-        {({ setFieldValue, values }) => (
+        {({ setFieldValue, values, handleChange }) => (
           <Form>
             <Box
               flexWrap="wrap"
@@ -122,7 +134,7 @@ function CreateUser({
               alignItems="center"
             >
               <Box
-                width={[1, '30%']}
+                width={[1, 1, 1, '30%']}
                 display="flex"
                 flexDirection="column"
                 justifyContent="center"
@@ -167,7 +179,7 @@ function CreateUser({
                   />
                 </Box>
               </Box>
-              <Box width={[1, '70%']}>
+              <Box width={[1, 1, 1, '70%']}>
                 <Box width={1} pt={10} flexWrap="wrap" display="flex" px={2}>
                   <Box width={1} textAlign="center">
                     <H4>{`${
@@ -176,7 +188,7 @@ function CreateUser({
                         : formHeadings[formType]
                     }`}</H4>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Input
                       name="firstName"
                       variant="outlined"
@@ -189,7 +201,7 @@ function CreateUser({
                       isDisabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Input
                       name="lastName"
                       variant="outlined"
@@ -202,7 +214,7 @@ function CreateUser({
                       isDisabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Input
                       name="email"
                       variant="outlined"
@@ -219,7 +231,7 @@ function CreateUser({
                       }
                     />
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Choose strong password">
                       <Input
                         inputProps={{
@@ -244,7 +256,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Choose strong password">
                       <Input
                         OutlinedInputPlaceholder={`${
@@ -254,7 +266,7 @@ function CreateUser({
                         }`}
                         inputProps={{
                           autocomplete: 'off',
-                          placeHolder: `${
+                          placeholder: `${
                             formType === 'add'
                               ? '*Confirm Password'
                               : 'Confirm Password'
@@ -276,7 +288,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Contact Number">
                       <Input
                         name="contactNo"
@@ -294,7 +306,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your phone extenstion">
                       <Input
                         name="extension"
@@ -311,7 +323,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Location">
                       <Input
                         name="location"
@@ -328,7 +340,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Department">
                       <Input
                         name="department"
@@ -346,7 +358,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Designation">
                       <Input
                         name="title"
@@ -363,7 +375,7 @@ function CreateUser({
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
                     <Tooltip title="Choose Joining Date">
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDatePicker
@@ -371,15 +383,16 @@ function CreateUser({
                           id="joiningDate"
                           name="joiningDate"
                           label={
-                            <Typography variant="subtitle2">
+                            <BodyTextLarge className={classes.label}>
                               Joining Date
-                            </Typography>
+                            </BodyTextLarge>
                           }
                           disableFuture
                           inputVariant="outlined"
                           format="dd-MM-yyyy"
                           style={{ width: '100%' }}
                           value={values.joiningDate}
+                          InputProps={{ className: classes.dateColor }}
                           onChange={(value) => {
                             setFieldValue('joiningDate', value);
                           }}
@@ -393,8 +406,51 @@ function CreateUser({
                       </MuiPickersUtilsProvider>
                     </Tooltip>
                   </Box>
+                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
+                    <Tooltip title="Choose Birthday">
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          margin="normal"
+                          id="dob"
+                          name="dob"
+                          label={
+                            <BodyTextLarge className={classes.label}>
+                              Birth Date
+                            </BodyTextLarge>
+                          }
+                          InputProps={{ className: classes.dateColor }}
+                          disableFuture
+                          inputVariant="outlined"
+                          format="dd-MM-yyyy"
+                          style={{ width: '100%' }}
+                          value={values.dob}
+                          onChange={(value) => {
+                            setFieldValue('dob', value);
+                          }}
+                          disabled={mutation.isLoading}
+                          KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                          }}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </Tooltip>
+                  </Box>
+                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
+                    <Select
+                      disabled={mutation.isLoading || isThisMyProfile}
+                      name="role"
+                      selectId="role"
+                      labelId="role"
+                      selectName="role"
+                      formControlProps={{ variant: 'outlined' }}
+                      label="Select User Type"
+                      selectedValue={values.role}
+                      options={Object.keys(ROLES).map((val) => ROLES[val])}
+                      onHandleChange={handleChange('role')}
+                    />
+                  </Box>
                   <Hidden smDown>
-                    <Box width={[1, 1 / 2]} mt={10} px={3}></Box>
+                    <Box width={[1, 1, 1 / 2]} mt={10} px={3}></Box>
                   </Hidden>
                   <Box
                     display="flex"

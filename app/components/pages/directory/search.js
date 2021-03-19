@@ -1,10 +1,11 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import SearchIcon from '@material-ui/icons/Search';
-import { FormControlLabel, Grid, Typography } from '@material-ui/core';
+import { FormControlLabel, Grid } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 import { Formik } from 'formik';
 import { Input } from '../../index';
+import { H5 } from '../../typography';
 
 export function Search({
   onHandleSwitchChange,
@@ -15,9 +16,7 @@ export function Search({
   return (
     <>
       <Grid item xs={2} pl={0}>
-        <Typography color="secondary" variant="h5" fontSize={30}>
-          Directory
-        </Typography>
+        <H5>Directory</H5>
       </Grid>
       <Grid item xs={4}>
         <Formik initialValues={{ query: '' }}>

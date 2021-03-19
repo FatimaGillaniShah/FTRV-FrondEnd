@@ -48,7 +48,7 @@ export const menuItems = [
   },
   {
     name: 'links',
-    link: '/',
+    link: '/useful-links',
     icon: LinkIcon,
   },
   {
@@ -56,6 +56,9 @@ export const menuItems = [
     link: '/',
     icon: BorderColorIcon,
     role: [ROLES.ADMIN],
-    children: [{ name: 'events', link: '/events' }],
+    children: [
+      { name: 'events', link: '/events' },
+      { name: 'Quote', link: '/quote' },
+    ],
   },
 ];

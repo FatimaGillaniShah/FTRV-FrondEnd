@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Box from '@material-ui/core/Box';
 import Alert from '@material-ui/lab/Alert';
-import EnhancedTableHead from './tableHead';
-import { useStyles } from './styles';
-import { CheckBox } from '../index';
-import { getComparator, stableSort } from '../../utils/helper';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { ROLES } from '../../utils/constants';
+import { getComparator, stableSort } from '../../utils/helper';
+import { CheckBox } from '../index';
+import { BodyTextSmall } from '../typography';
+import { useStyles } from './styles';
+import EnhancedTableHead from './tableHead';
+import { useAuthContext } from '../../context/authContext';
 
 export function DataTable({
   data,
   headCells,
   tableRowsPerPage,
-  role,
   selected,
   setSelected,
-  currentUserID,
 }) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
@@ -29,6 +29,13 @@ export function DataTable({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
   const [rows, setRows] = useState([]);
+
+  const {
+    user: {
+      data: { role, id: currentUserID },
+    },
+  } = useAuthContext();
+
   useEffect(() => {
     if (data) {
       setRows(data);
@@ -113,7 +120,7 @@ export function DataTable({
             padding="default"
             align={header.numeric ? 'right' : 'left'}
           >
-            {row[header.id]}
+            <BodyTextSmall color="dark">{row[header.id]}</BodyTextSmall>
           </TableCell>
         );
       })}
@@ -193,9 +200,11 @@ DataTable.propTypes = {
   headCells: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   tableRowsPerPage: PropTypes.number,
+  selected: PropTypes.array,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: 20,
+  selected: [],
 };
 
 export default DataTable;

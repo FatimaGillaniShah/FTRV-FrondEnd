@@ -1,3 +1,6 @@
+import Swal from 'sweetalert2';
+import { colors } from '../theme/colors';
+
 // SORITNG FUNCTIONS
 function getComparator(order, orderBy) {
   return order === 'desc'
@@ -30,26 +33,39 @@ export { getComparator, stableSort };
 // insertParams
 
 export function insertParams(params) {
-  // const str = [];
-  // // eslint-disable-next-line no-prototype-builtins
-  // for (const p in params)
-  //   if (params.hasOwnProperty(p)) {
-  //     str.push(`${encodeURIComponent(p)}=${encodeURIComponent(params[p])}`);
-  //   }
-  // return str.join('&');
-
-  //  params is object
   const str = [];
   const paramObj = { ...params };
 
   Object.keys(paramObj).forEach((key) => {
     const currentParam = paramObj[key];
-    // if (currentParam === '') {
-    //   delete paramObj[key];
-    //   return;
-    // }
     str.push(`${encodeURIComponent(key)}=${encodeURIComponent(currentParam)}`);
-    // paramUrl += `${key}=${currentParam}&`;
   });
   return str.join('&');
 }
+
+// REUSEABLE TOAST
+export const Toast = Swal.mixin({
+  toast: true,
+  position: 'bottom-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer);
+    toast.addEventListener('mouseleave', Swal.resumeTimer);
+  },
+});
+
+// REUSEABLE MODAL
+export const Modal = Swal.mixin({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: colors.modalColors.confirm,
+  cancelButtonColor: colors.modalColors.cancel,
+  confirmButtonText: 'Yes, delete it!',
+});
+
+// USAGE;
+// Modal();

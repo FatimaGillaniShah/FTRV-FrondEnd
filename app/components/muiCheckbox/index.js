@@ -3,6 +3,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const MuiCheckbox = withStyles((theme) => ({
   root: {
+    color: theme.palette.checkbox.main,
     '&$checked': {
       '& .MuiIconButton-label': {
         position: 'relative',

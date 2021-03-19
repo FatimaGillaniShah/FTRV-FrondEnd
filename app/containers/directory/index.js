@@ -6,7 +6,6 @@ import { debounce } from 'lodash';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Toast } from 'components';
 import Swal from 'sweetalert2';
-import { useTheme } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import { deleteUser, fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
@@ -21,6 +20,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
+import { Modal } from '../../utils/helper';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
@@ -30,7 +30,6 @@ function DirectoryContainer() {
   const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
-  const theme = useTheme();
   const history = useHistory();
   const classes = useStyles();
   const mutation = useMutation(deleteUser, {
@@ -46,7 +45,7 @@ function DirectoryContainer() {
   });
   const {
     user: {
-      data: { role, id },
+      data: { role },
     },
   } = useAuthContext();
 
@@ -100,15 +99,7 @@ function DirectoryContainer() {
     if (!selected.length) {
       return;
     }
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: theme.palette.modalColors.confirm,
-      cancelButtonColor: theme.palette.modalColors.cancel,
-      confirmButtonText: 'Yes, delete it!',
-    }).then((result) => {
+    Modal.fire().then((result) => {
       if (result.isConfirmed) {
         mutation.mutate(selected);
       }
@@ -160,12 +151,10 @@ function DirectoryContainer() {
 
             {!isLoading && (
               <DataTable
-                role={role}
                 data={data && data.data.data.rows}
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
-                currentUserID={id}
               />
             )}
           </WrapInCard>
