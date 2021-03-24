@@ -5,6 +5,7 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
 import dummyData from './dummyEvents';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { CustomToolbar } from './customToolbar';
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
@@ -13,6 +14,7 @@ export function EventCalendar() {
   const [events, setEvents] = useState();
   // const [displayDragItemInCell, setDisplayDragItemInCell] = useState(true);
   const localizer = momentLocalizer(moment); // or globalizeLocalizer
+
   const displayDragItemInCell = true;
 
   const handleDragStart = (event) => {
@@ -80,6 +82,7 @@ export function EventCalendar() {
     //   events: this.state.events.concat([hour]),
     // })
   };
+
   return (
     <Box height="100vh">
       <DragAndDropCalendar
@@ -98,11 +101,12 @@ export function EventCalendar() {
         dragFromOutsideItem={displayDragItemInCell ? dragFromOutsideItem : null}
         onDropFromOutside={onDropFromOutside}
         handleDragStart={handleDragStart}
+        components={{
+          toolbar: CustomToolbar,
+        }}
       />
     </Box>
   );
 }
 
 export default memo(EventCalendar);
-
-// import 'react-big-calendar/lib/addons/dragAndDrop/styles.scss'

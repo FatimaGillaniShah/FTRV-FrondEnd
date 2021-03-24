@@ -70,7 +70,7 @@ export function AddUsefulLinkPage({
                       fullWidth={false}
                       startIcon={<SaveIcon />}
                     >
-                      {id ? 'Update' : 'Save'}
+                      {id ? 'Update' : 'Create'}
                     </Button>
                   </Box>
                   <Box ml={2}>
