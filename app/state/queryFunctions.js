@@ -13,6 +13,7 @@ const {
   GET_LINK,
   UPDATE_LINK,
   DELETE_LINK,
+  QUOTE,
 } = APIS;
 
 // USER CRUD
@@ -44,6 +45,10 @@ export const updateUser = (payload) => {
 };
 
 export const getUserById = (id) => http.get(`${USERS}/${id}`);
+
+export const getQuote = () => http.get(`${QUOTE}`);
+
+export const saveQuote = (payload) => http.put(`${QUOTE}`, payload);
 
 export const uploadEmployeeFile = (payload) => http.post(FILE_UPLOAD, payload);
 

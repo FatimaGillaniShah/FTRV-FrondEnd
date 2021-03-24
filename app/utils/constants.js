@@ -21,6 +21,7 @@ export const APIS = {
   USERS_LIST: '/users',
   USERS_DELETE: '/users/deleteUsers',
   USERS: '/users',
+  QUOTE: '/quote',
   FILE_UPLOAD: 'users/upload',
   RETRIEVE_LINKS: '/usefulLinks',
   CREATE_LINK: '/usefulLinks',

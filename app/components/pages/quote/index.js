@@ -5,18 +5,18 @@ import React, { memo } from 'react';
 import { quoteSchema } from '../../../containers/qoute/schema';
 import { H5 } from '../../typography';
 
-const initialValues = {
-  quote: '',
-};
+function Quote({ value, handleSubmit }) {
+  const initialValues = {
+    quote: value,
+  };
 
-function Quote() {
   return (
     <>
       <H5>Quote</H5>
 
       <Formik
         initialValues={initialValues}
-        onSubmit={() => {}}
+        onSubmit={(values) => handleSubmit(values)}
         validationSchema={quoteSchema}
       >
         <Form>
