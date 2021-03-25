@@ -123,7 +123,14 @@ export function DataTable({
           >
             <BodyTextSmall color="dark">
               {header.type === 'link' ? (
-                <a href={row[header.id]} target="_blank">
+                <a
+                  href={
+                    row[header.id].includes('http')
+                      ? row[header.id]
+                      : `http://${row[header.id]}`
+                  }
+                  target="_blank"
+                >
                   {row[header.id]}
                 </a>
               ) : (
