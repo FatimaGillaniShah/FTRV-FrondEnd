@@ -14,6 +14,7 @@ const {
   UPDATE_LINK,
   DELETE_LINK,
   QUOTE,
+  BIRTHDAYS,
 } = APIS;
 
 // USER CRUD
@@ -30,8 +31,6 @@ export const fetchUsers = ({ queryKey }) => {
   return http.get(url);
 };
 
-export const fetchUser = async () => {};
-
 export const deleteUser = (payload) =>
   http.delete(USERS_DELETE, { data: { ids: payload } });
 
@@ -47,6 +46,8 @@ export const updateUser = (payload) => {
 export const getUserById = (id) => http.get(`${USERS}/${id}`);
 
 export const getQuote = () => http.get(`${QUOTE}`);
+
+export const getBirthdays = () => http.get(`${BIRTHDAYS}`);
 
 export const saveQuote = (payload) => http.put(`${QUOTE}`, payload);
 

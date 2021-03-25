@@ -1,5 +1,6 @@
 import { Box } from '@material-ui/core';
 import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
 import { useStyles } from './style';
 import { H6 } from '../typography/index';
 
@@ -23,14 +24,14 @@ export function BirdthdayCard({ item }) {
           justifyContent="center"
           className={classes.backgroundgrid}
         >
-          <img
+          <Avatar
+            alt=""
             className={classes.imgStyle}
-            src={item.imageUrl}
-            alt="Birthday person"
+            src={`${process.env.API_ASSETS_URL}${item.avatar}`}
           />
         </Box>
         <Box justifyContent="center" display="flex" mt={2}>
-          <H6 color="light">{item.name}</H6>
+          <H6 color="light">{item.fullName}</H6>
         </Box>
       </Box>
 
@@ -45,9 +46,9 @@ export function BirdthdayCard({ item }) {
       >
         <H6 color="light" light className={classes.birthdayText}>
           <H6 bold color="light" className={classes.inline}>
-            {item.name}&nbsp;
+            {item.fullName}&nbsp;
           </H6>
-          {item.description}
+          has birthday today
         </H6>
       </Box>
     </Box>

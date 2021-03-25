@@ -3,7 +3,7 @@ import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 
-function muiDatePickerInput({
+function MuiDatePickerInput({
   label,
   fullWidth,
   variant,
@@ -36,14 +36,14 @@ function muiDatePickerInput({
   );
 }
 
-export default memo(muiDatePickerInput);
-
-muiDatePickerInput.propTypes = {
+MuiDatePickerInput.propTypes = {
   name: PropTypes.string.isRequired,
   fullWidth: PropTypes.bool,
   variant: PropTypes.string,
   formControlProps: PropTypes.object,
 };
-muiDatePickerInput.defaultProps = {
+MuiDatePickerInput.defaultProps = {
   fullWidth: true,
 };
+
+export default memo(MuiDatePickerInput);
