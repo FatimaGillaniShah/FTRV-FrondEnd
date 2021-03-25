@@ -27,7 +27,7 @@ const theme = createMuiTheme({
       secondary: colors.checkbox.secondary,
     },
     modalColors: {
-      confirm: colors.modalColors.confirm,
+      confirm: colors.red,
       cancel: colors.modalColors.cancel,
     },
   },
