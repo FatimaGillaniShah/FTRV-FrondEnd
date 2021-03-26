@@ -29,7 +29,7 @@ export function BirdthdayCard({ item }) {
             src={`${process.env.API_ASSETS_URL}${item.avatar}`}
           />
         </Box>
-        <Box justifyContent="center" textAlign="center" display="flex" mt={2}>
+        <Box justifyContent="center" display="flex" mt={2} textAlign="center">
           <H6 color="light">{item.fullName}</H6>
         </Box>
       </Box>
