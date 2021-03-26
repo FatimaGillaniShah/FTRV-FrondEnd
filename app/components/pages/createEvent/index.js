@@ -44,7 +44,7 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
             enableReinitialize
             initialValues={initialValues}
             validationSchema={object().shape({
-              name: string().required('*Title Required'),
+              title: string().required('*Title Required'),
               startDate: date().required(),
               endDate: date().required(),
               description: string(),
@@ -61,16 +61,16 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                       <Input
                         variant="outlined"
                         OutlinedInputPlaceholder="Title*"
-                        name="name"
+                        name="title"
                         appendIcon
                         Icon={TitleIcon}
                         IconClickable
                       />
                     </Box>
-                    <Box width={[1, 1 / 3]}>
+                    <Box width={[1, 1 / 3]} mb={5}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
-                          margin="normal"
+                          // margin="normal"
                           id="startDate"
                           name="startDate"
                           label={
@@ -81,8 +81,9 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                           disablePast
                           inputVariant="outlined"
                           // format="MM-dd-yyyy"
-                          format="yyyy/MM/dd hh:mm a"
+                          format="yyyy/MM/dd hh:mm  a"
                           fullWidth
+                          showTodayButton
                           value={values.startDate}
                           InputProps={{ className: classes.dateColor }}
                           onChange={(value) => {
@@ -91,10 +92,9 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                         />
                       </MuiPickersUtilsProvider>
                     </Box>
-                    <Box width={[1, 1 / 3]}>
+                    <Box width={[1, 1 / 3]} mb={5}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
-                          margin="normal"
                           id="endDate"
                           name="endDate"
                           label={
@@ -107,6 +107,7 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                           // format="MM-dd-yyyy"
                           format="yyyy/MM/dd hh:mm a"
                           fullWidth
+                          showTodayButton
                           value={values.endDate}
                           InputProps={{ className: classes.dateColor }}
                           onChange={(value) => {
@@ -115,7 +116,7 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                         />
                       </MuiPickersUtilsProvider>
                     </Box>
-                    <Box width={[1, 1 / 3]} my={5}>
+                    <Box width={[1, 1 / 3]} mb={5}>
                       <Input
                         variant="outlined"
                         OutlinedInputPlaceholder="Description"
@@ -166,7 +167,7 @@ CreateEventPage.propTypes = {
 };
 CreateEventPage.defaultProps = {
   initialValues: {
-    name: '',
+    title: '',
     startDate: new Date(),
     endDate: new Date(),
     description: '',
