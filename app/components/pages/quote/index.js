@@ -2,22 +2,20 @@ import { Box, Button } from '@material-ui/core';
 import { TextField } from 'components';
 import { Form, Formik } from 'formik';
 import React, { memo } from 'react';
-import { quoteSchema } from '../../../containers/qoute/schema';
 import { H5 } from '../../typography';
 
-const initialValues = {
-  quote: '',
-};
+function Quote({ value, handleSubmit }) {
+  const initialValues = {
+    quote: value,
+  };
 
-function Quote() {
   return (
     <>
       <H5>Quote</H5>
 
       <Formik
         initialValues={initialValues}
-        onSubmit={() => {}}
-        validationSchema={quoteSchema}
+        onSubmit={(values) => handleSubmit(values)}
       >
         <Form>
           <Box mt={4}>

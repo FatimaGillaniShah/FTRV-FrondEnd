@@ -57,8 +57,11 @@ export const menuItems = [
     icon: BorderColorIcon,
     role: [ROLES.ADMIN],
     children: [
-      { name: 'events', link: '/events' },
       { name: 'Quote', link: '/quote' },
+      {
+        name: 'Announcement',
+        link: '/announcement',
+      },
     ],
   },
 ];

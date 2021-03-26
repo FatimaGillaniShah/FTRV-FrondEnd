@@ -31,7 +31,12 @@ export function AddUsefulLinkPage({
             initialValues={initialValues}
             validationSchema={object().shape({
               name: string().required('*Name Required'),
-              url: string().url().required('*URL Required'),
+              url: string()
+                .matches(
+                  /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+                  'Enter correct URL'
+                )
+                .required('*URL Required'),
             })}
             onSubmit={(values) => {
               onHandleSubmit(values);
