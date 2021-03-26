@@ -7,6 +7,7 @@ import BirthdayCarousel from '../../birthdayCard';
 import { keys } from '../../../state/queryKeys';
 import { getBirthdays, getQuote } from '../../../state/queryFunctions';
 import BoxWithBg from '../../boxWithBg';
+import { H6 } from '../../typography';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -47,7 +48,7 @@ function Index() {
               title="Daily Dose of Motivation"
               bgColor="secondary.main"
             >
-              {quote}
+              <H6>{quote}</H6>
             </BoxWithBg>
           )}
         </Grid>
