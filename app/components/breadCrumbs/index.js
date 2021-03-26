@@ -3,6 +3,10 @@ import { useLocation, Link } from 'react-router-dom';
 import { Breadcrumbs } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { BodyTextLarge } from '../typography';
+import {
+  returnBreadCrumbKey,
+  returnNoOfEntriesToSkip,
+} from '../../routes/routeFuncs';
 
 function toTitleCase(str) {
   return str.replace(
@@ -17,14 +21,52 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function App() {
+function BreadCrumbs() {
   const location = useLocation();
   const classes = useStyles();
   const pathnames = location.pathname.split('/').filter((x) => x);
-  if (['edit'].includes(pathnames[pathnames.length - 2])) {
-    pathnames.pop();
-  }
-  const lastIndex = pathnames.length - 1;
+
+  // input ['directory','edit','5']
+  // output ['directory','edit']
+  const removeUselessEntriesFromPathnames = (_pathnames) => {
+    const result = [..._pathnames];
+    const paths = _pathnames;
+    for (let i = 0; i < paths.length; i += 1) {
+      if (i === 0) {
+        result.splice(
+          i + 1 < paths.length ? i + 1 : i,
+          returnNoOfEntriesToSkip(paths[0])
+        );
+      } else {
+        result.splice(
+          i + 1 < paths.length ? i + 1 : i,
+          returnNoOfEntriesToSkip(paths[0], paths[i])
+        );
+      }
+    }
+    return result;
+  };
+
+  // input ['useful-links','motivational-quote']
+  // output ['Useful Links', 'Quote']
+  const fetchBreadCrumbNames = (_pathnames) => {
+    const parent = _pathnames[0];
+    const breadCrumbArray = [];
+    const paths = _pathnames;
+    paths.map((val, index) => {
+      if (index === 0) {
+        return breadCrumbArray.push(returnBreadCrumbKey(parent));
+      }
+      return breadCrumbArray.push(returnBreadCrumbKey(parent, val));
+    });
+    return breadCrumbArray;
+  };
+
+  const data = fetchBreadCrumbNames(
+    removeUselessEntriesFromPathnames(pathnames) || pathnames
+  );
+
+  const lastIndex = data.length - 1;
 
   return (
     <Breadcrumbs aria-label="Breadcrumb">
@@ -34,7 +76,7 @@ export default function App() {
         </BodyTextLarge>
       </Link>
 
-      {pathnames.map((value, index) => {
+      {data.map((value, index) => {
         const last = index === lastIndex;
         const to = `/${pathnames.slice(0, index + 1)}`;
         let result = <> </>;
@@ -64,3 +106,5 @@ export default function App() {
     </Breadcrumbs>
   );
 }
+
+export default BreadCrumbs;

@@ -4,9 +4,8 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
 import { useLocation, useHistory } from 'react-router-dom';
-import { Toast } from 'components';
+import { Alert } from 'components';
 import Swal from 'sweetalert2';
-import Alert from '@material-ui/lab/Alert';
 import { deleteUser, fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
@@ -20,7 +19,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
-import { Modal } from '../../utils/helper';
+import { Modal, Toast } from '../../utils/helper';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
@@ -41,6 +40,16 @@ function DirectoryContainer() {
       setSelected([]);
       Swal.fire('Deleted!', `${count} user deleted.`, 'success');
       queryClient.invalidateQueries(keys.getUsers({}));
+    },
+    onError: ({
+      response: {
+        data: { message },
+      },
+    }) => {
+      Toast({
+        icon: 'error',
+        title: message || 'Some error occured',
+      });
     },
   });
   const {
@@ -77,6 +86,14 @@ function DirectoryContainer() {
     settoastValue(temp);
     history.replace({}, '');
   }, []);
+  useEffect(() => {
+    if (toastValue && toastValue.toastType) {
+      Toast({
+        icon: toastValue.toastType,
+        title: toastValue.message || 'Some error occured',
+      });
+    }
+  }, [toastValue]);
 
   if (mutation.isError) {
     Swal.fire(
@@ -85,15 +102,6 @@ function DirectoryContainer() {
       'error'
     );
   }
-  useEffect(() => {
-    window.addEventListener('beforeunload', () => {
-      history.replace({}, '');
-    });
-
-    return () => {
-      window.removeEventListener('beforeunload', () => {});
-    };
-  }, []);
 
   const handleDelete = () => {
     if (!selected.length) {
@@ -107,12 +115,6 @@ function DirectoryContainer() {
   };
   return (
     <>
-      {toastValue && toastValue.toastType && (
-        <>
-          <Toast variant={toastValue.toastType}>{toastValue.message}</Toast>
-        </>
-      )}
-
       <Helmet>
         <title>Directory Listing</title>
       </Helmet>
@@ -155,6 +157,7 @@ function DirectoryContainer() {
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
+                matchUserIdWithIDS
               />
             )}
           </WrapInCard>

@@ -22,15 +22,15 @@ export const userProfileValidation = object().shape({
         (value) => value && SUPPORTED_FORMATS.includes(value.type)
       ),
   }),
-  firstName: string(),
+  firstName: string().max(100, 'Too Long!'),
   // .matches(
   //   /^[a-zA-Z0-9 ]*$/,
   //   'First Name can only include alphabets and white spaces'
   // )
-  lastName: string().max(30, 'Too Long!'),
-  location: string().max(60, 'Too Long!'),
-  department: string().max(30, 'Too Long!'),
-  title: string().max(30, 'Too Long!'),
+  lastName: string().max(100, 'Too Long!'),
+  location: string().max(200, 'Too Long!'),
+  department: string().max(200, 'Too Long!'),
+  title: string().max(200, 'Too Long!'),
 
   email: string().max(320, 'Invalid').email(),
   password: string()
@@ -49,8 +49,10 @@ export const userProfileValidation = object().shape({
   }),
   contactNo: string().max(16, 'Too Long!').nullable(),
   extension: string()
-    .max(5, 'Too Long!')
+    .max(10, 'Too Long!')
     .matches(/^[0-9]*$/, 'Extension can only contains numerics')
     .nullable(),
   joiningDate: date().notRequired().default(null).nullable(),
+  dob: date().notRequired().default(null).nullable(),
+  role: string().max(30, 'Too Long!'),
 });

@@ -3,13 +3,14 @@ import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import BoxWithBg from '../boxWithBg';
 import BirdthdayCard from './birthdayCard';
+import { colors } from '../../theme/colors';
 
 export function BirthdayCarousel({ items }) {
   return (
     <>
       {items?.length >= 1 && (
         <Box>
-          <BoxWithBg title="Birthdays" bgColor="bgColor.orange">
+          <BoxWithBg title="Birthdays" bgColor={colors.orange}>
             <Carousel
               autoPlay
               animation="fade"

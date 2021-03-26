@@ -1,38 +1,62 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
+import { useMutation, useQuery } from 'react-query';
 import { useHistory, useParams } from 'react-router';
 import { AddUsefulLinkPage } from '../../components/pages/addUsefulLink';
+import {
+  createLink,
+  getLinkById,
+  updateLink,
+} from '../../state/queryFunctions';
+import { keys } from '../../state/queryKeys';
 import { Toast } from '../../utils/helper';
-import { data } from './data';
+import { Loading } from '../../components/loading';
 
 function AddUsefulLink() {
   const history = useHistory();
   const { id } = useParams();
-  const [initialValues, setInitialValues] = useState({
-    name: '',
-    url: '',
-  });
-  const handleSubmit = () => {
-    Toast.fire({
-      icon: 'success',
-      title: 'Link saved successfully',
-    });
-    history.push('/useful-links');
-  };
-  useEffect(() => {
-    if (data) {
-      setInitialValues(data);
+  const { data, isLoading } = useQuery(
+    keys.getLink(id),
+    () => getLinkById(id),
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
     }
-  }, [data]);
+  );
+  const mutation = useMutation(id ? updateLink : createLink, {
+    onSuccess: () => {
+      history.push('/useful-links');
+      Toast({
+        icon: 'success',
+        title: `Link ${id ? 'updated' : 'created'}  successfully`,
+      });
+    },
+    onError: ({
+      response: {
+        data: { message },
+      },
+    }) => {
+      Toast({
+        icon: 'error',
+        title: message || 'Some error occured',
+      });
+    },
+  });
+  const handleSubmit = (values) => {
+    mutation.mutate(values);
+  };
+
   return (
     <>
       <Helmet>
         <title>Useful Links</title>
       </Helmet>
+      {isLoading && <Loading />}
       <AddUsefulLinkPage
-        onHandleSubmit={handleSubmit}
         id={id}
-        initialValues={initialValues}
+        onHandleSubmit={handleSubmit}
+        initialValues={data?.data.data}
+        history={history}
       />
     </>
   );

@@ -1,6 +1,6 @@
 import { Box } from '@material-ui/core';
 import React from 'react';
-import { Breadcrumbs } from 'components';
+import Breadcrumbs from '../../breadCrumbs';
 
 function index({ children, ...props }) {
   return (
@@ -13,4 +13,4 @@ function index({ children, ...props }) {
   );
 }
 
-export default index;
+export { index as default };

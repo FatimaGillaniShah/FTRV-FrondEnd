@@ -3,12 +3,28 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
+import Swal from 'sweetalert2';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal } from '../../utils/helper';
+import { deleteLink } from '../../state/queryFunctions';
+import { keys } from '../../state/queryKeys';
 
-const ActionButtons = ({ data }) => {
+const ActionButtons = ({ data, setSelected, disabled }) => {
   const history = useHistory();
+  const queryClient = useQueryClient();
+  const mutation = useMutation(deleteLink, {
+    onSuccess: ({
+      data: {
+        data: { count },
+      },
+    }) => {
+      setSelected([]);
+      Swal.fire('Deleted!', `${count} link(s) deleted.`, 'success');
+      queryClient.invalidateQueries(keys.getLinks);
+    },
+  });
   const {
     user: {
       data: { role },
@@ -16,20 +32,24 @@ const ActionButtons = ({ data }) => {
   } = useAuthContext();
 
   const handleDeleteLinks = () => {
-    Modal.fire();
+    Modal.fire().then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate([data.id]);
+      }
+    });
   };
 
   return (
     <>
       {role === ROLES.ADMIN && (
         <>
-          <IconButton>
-            <EditIcon
-              color="secondary"
-              onClick={() => history.push(`/useful-links/edit/${data.id}`)}
-            />
+          <IconButton
+            onClick={() => history.push(`/useful-links/edit/${data.id}`)}
+            disabled={disabled}
+          >
+            <EditIcon color="secondary" />
           </IconButton>
-          <IconButton onClick={() => handleDeleteLinks()}>
+          <IconButton onClick={() => handleDeleteLinks()} disabled={disabled}>
             <DeleteIcon color="error" />
           </IconButton>
         </>
@@ -47,11 +67,11 @@ export const headCells = [
     type: 'label',
   },
   {
-    id: 'link',
+    id: 'url',
     numeric: false,
     disablePadding: false,
     label: 'Links',
-    type: 'label',
+    type: 'link',
   },
   {
     id: 'actions',

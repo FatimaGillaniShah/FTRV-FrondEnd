@@ -1,11 +1,16 @@
+const red = '#d33';
+const green = '#4BB543';
 export const colors = {
   primary: '#153D73',
   secondary: '#1875C0',
   light: 'white',
+  orange: '#FF9200',
+  red,
+  green,
+
   bgColor: {
     main: '#F0F2F5',
     secondary: 'white',
-    orange: '#FF9200',
   },
   textColor: {
     primary: '#153D73',
@@ -30,7 +35,10 @@ export const colors = {
     secondary: 'white',
   },
   modalColors: {
-    confirm: '#d33',
     cancel: '#3085d6',
+  },
+  toastColors: {
+    success: green,
+    error: red,
   },
 };

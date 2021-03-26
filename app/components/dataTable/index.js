@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { ROLES } from '../../utils/constants';
 import { getComparator, stableSort } from '../../utils/helper';
 import { CheckBox } from '../index';
-import { BodyTextLarge } from '../typography';
+import { BodyTextSmall } from '../typography';
 import { useStyles } from './styles';
 import EnhancedTableHead from './tableHead';
 import { useAuthContext } from '../../context/authContext';
@@ -22,6 +22,7 @@ export function DataTable({
   tableRowsPerPage,
   selected,
   setSelected,
+  matchUserIdWithIDS,
 }) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
@@ -51,7 +52,7 @@ export function DataTable({
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows
-        .filter((row) => row.id !== currentUserID)
+        .filter((row) => (matchUserIdWithIDS ? row.id !== currentUserID : true))
         .map((n) => n.id);
       setSelected(newSelecteds);
       return;
@@ -120,7 +121,22 @@ export function DataTable({
             padding="default"
             align={header.numeric ? 'right' : 'left'}
           >
-            <BodyTextLarge color="dark">{row[header.id]}</BodyTextLarge>
+            <BodyTextSmall color="dark">
+              {header.type === 'link' ? (
+                <a
+                  href={
+                    row[header.id].includes('http')
+                      ? row[header.id]
+                      : `http://${row[header.id]}`
+                  }
+                  target="_blank"
+                >
+                  {row[header.id]}
+                </a>
+              ) : (
+                row[header.id]
+              )}
+            </BodyTextSmall>
           </TableCell>
         );
       })}
@@ -146,6 +162,7 @@ export function DataTable({
             role={role}
             currentUserID={currentUserID}
             rows={rows}
+            matchUserIdWithIDS={matchUserIdWithIDS}
           />
           <TableBody>
             {stableSort(rows, getComparator(order, orderBy))
@@ -162,13 +179,13 @@ export function DataTable({
                     tabIndex={-1}
                     key={row.name}
                     selected={isItemSelected}
-                    disabled={row.id === currentUserID}
+                    disabled={matchUserIdWithIDS && row.id === currentUserID}
                   >
                     {mapRows(
                       row,
                       isItemSelected,
                       labelId,
-                      row.id === currentUserID
+                      matchUserIdWithIDS && row.id === currentUserID
                     )}
                   </TableRow>
                 );
@@ -176,7 +193,7 @@ export function DataTable({
 
             {!rows.length && (
               <TableRow>
-                <TableCell colSpan={headCells.length}>
+                <TableCell colSpan={headCells.length + 1}>
                   <Alert severity="error">No data found</Alert>
                 </TableCell>
               </TableRow>
@@ -201,10 +218,12 @@ DataTable.propTypes = {
   data: PropTypes.array.isRequired,
   tableRowsPerPage: PropTypes.number,
   selected: PropTypes.array,
+  matchUserIdWithIDS: PropTypes.bool,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: 20,
   selected: [],
+  matchUserIdWithIDS: false,
 };
 
 export default DataTable;

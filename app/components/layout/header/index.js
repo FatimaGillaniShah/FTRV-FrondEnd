@@ -15,13 +15,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import { H4, H5 } from 'components';
+import { H5, H6 } from 'components';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 
 const StyledMenuItem = styled(MenuItem)`
   &&& {
-    padding: 5spx 20px;
+    padding: 5px 20px;
   }
 `;
 const StyledListItemIcon = styled(ListItemIcon)`
@@ -92,13 +92,13 @@ export default function Header() {
               <Hidden xsDown>
                 <Box className={classes.titleBox}>
                   <Box className={classes.welcomeTextBox} mr={2}>
-                    <H5 light color="primary">
-                      Welcome back
-                    </H5>
+                    <H6 regular color="primary">
+                      Welcome Back,
+                    </H6>
                   </Box>
-                  <H4 medium color="primary">
+                  <H5 medium color="primary">
                     {user.data.name}!
-                  </H4>
+                  </H5>
                 </Box>
               </Hidden>
               <>

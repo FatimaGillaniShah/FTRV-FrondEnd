@@ -4,7 +4,7 @@
  *
  */
 
-import { Toast, WrapInCard } from 'components';
+import { WrapInCard } from 'components';
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -16,11 +16,19 @@ import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 import { parseDate } from '../../utils/functions';
+import { Toast } from '../../utils/helper';
+import { ROLES } from '../../utils/constants';
+import { useAuthContext } from '../../context/authContext';
 
 function EditUser() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const history = useHistory();
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
 
   const { data, isLoading } = useQuery(
     keys.getUser(id),
@@ -40,11 +48,18 @@ function EditUser() {
       });
 
       queryClient.removeQueries(keys.getUser(id));
-      queryClient.invalidateQueries(keys.getUser(id));
+    },
+    onError: ({
+      response: {
+        data: { message },
+      },
+    }) => {
+      Toast({
+        icon: 'error',
+        title: message || 'Error while Updating',
+      });
     },
   });
-
-  const errorMessage = mutation?.error?.response?.data?.message;
 
   const initialData = data?.data?.data || null;
   const handleSubmit = (updatedData) => {
@@ -59,13 +74,14 @@ function EditUser() {
     contactNo: '',
     department: '',
     location: '',
-    role: '',
     title: '',
     email: '',
     extension: '',
     status: '',
-    joiningDate: '',
+    joiningDate: null,
+    dob: null,
     avatar: '',
+    role: ROLES.USER,
   };
 
   defaultData.isProfilePicAttached = false;
@@ -79,6 +95,13 @@ function EditUser() {
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
     }
+    if (initialData.dob) {
+      initialData.dob = parseDate(initialData.dob);
+    }
+
+    if (!initialData.role) {
+      initialData.role = ROLES.USER;
+    }
   }
   return (
     <>
@@ -87,9 +110,6 @@ function EditUser() {
         <meta name="updateUser" content="ftrv - update user data" />
       </Helmet>
 
-      {mutation.isError && (
-        <Toast variant="error">{errorMessage || 'Error while Updating'}</Toast>
-      )}
       <WrapInBreadcrumbs>
         <WrapInCard>
           {isLoading ? (
@@ -100,6 +120,7 @@ function EditUser() {
               initialData={initialData || defaultData}
               onUpdateUser={handleSubmit}
               formType="edit"
+              editRole={role}
             />
           )}
         </WrapInCard>

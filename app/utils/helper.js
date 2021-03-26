@@ -44,12 +44,18 @@ export function insertParams(params) {
 }
 
 // REUSEABLE TOAST
-export const Toast = Swal.mixin({
+export const Toast = ({ icon, ...props }) => {
+  mixin.fire({ icon, background: colors.toastColors[icon], ...props });
+};
+const mixin = Swal.mixin({
   toast: true,
   position: 'bottom-end',
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
+  customClass: {
+    title: 'toastTitleColor',
+  },
   didOpen: (toast) => {
     toast.addEventListener('mouseenter', Swal.stopTimer);
     toast.addEventListener('mouseleave', Swal.resumeTimer);
@@ -68,4 +74,4 @@ export const Modal = Swal.mixin({
 });
 
 // USAGE;
-// Modal();
+// Modal({});

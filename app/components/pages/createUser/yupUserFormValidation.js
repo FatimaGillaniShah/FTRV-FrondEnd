@@ -24,7 +24,7 @@ export const yupUserFormValidaton = object().shape({
   }),
   firstName: string()
     .min(1, 'Too Short!')
-    .max(40, 'Too Long!')
+    .max(200, 'Too Long!')
     // .matches(
     //   /^[a-zA-Z0-9 ]*$/,
     //   'First Name can only include alphabets and white spaces'
@@ -32,7 +32,7 @@ export const yupUserFormValidaton = object().shape({
     .required('*First Name Required'),
   lastName: string()
     .min(1, 'Too Short!')
-    .max(40, 'Too Long!')
+    .max(200, 'Too Long!')
     // .matches(
     //   /^[a-zA-Z0-9 ]*$/,
     //   'Last Name can only include alphabets,nu and white spaces'
@@ -40,7 +40,7 @@ export const yupUserFormValidaton = object().shape({
     .required('*Last Name Required'),
   location: string()
     .min(1, 'Too Short!')
-    .max(70, 'Too Long!')
+    .max(200, 'Too Long!')
     // .matches(
     //   /^[#,-/ a-zA-Z0-9]*$/,
     //   'Location can only include alphabets, numerics,whitespaces and [#,-./]'
@@ -48,7 +48,7 @@ export const yupUserFormValidaton = object().shape({
     .required('*Location Required'),
   department: string()
     .min(1, 'Too Short!')
-    .max(30, 'Too Long!')
+    .max(200, 'Too Long!')
     // .matches(
     //   /^[a-zA-Z ]*$/,
     //   'Department can only include alphabets and white spaces'
@@ -56,7 +56,7 @@ export const yupUserFormValidaton = object().shape({
     .required('*Department Required'),
   title: string()
     .min(1, 'Too Short!')
-    .max(30, 'Too Long!')
+    .max(200, 'Too Long!')
     // .matches(
     //   /^[a-zA-Z ]*$/,
     //   'Designation can only include alphabets and white spaces'
@@ -78,6 +78,8 @@ export const yupUserFormValidaton = object().shape({
       .oneOf([ref('password'), null], 'Passwords must match'),
   }),
   contactNo: string().max(15, 'Too Long!').nullable(),
-  extension: string().max(5, 'Too Long!').nullable(),
+  extension: string().max(10, 'Too Long!').nullable(),
   joiningDate: date().notRequired().default(null).nullable(),
+  dob: date().notRequired().default(null).nullable(),
+  role: string().max(30, 'Too Long!'),
 });
