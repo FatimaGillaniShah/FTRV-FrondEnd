@@ -1,12 +1,11 @@
+import React, { memo, useState } from 'react';
 import { FormControl, Radio } from '@material-ui/core';
-
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
-import React, { memo } from 'react';
 
-function muiRadioButtons() {
-  const [value, setValue] = React.useState('high');
+const Priority = () => {
+  const [value, setValue] = useState('high');
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -21,6 +20,6 @@ function muiRadioButtons() {
       </RadioGroup>
     </FormControl>
   );
-}
+};
 
-export default memo(muiRadioButtons);
+export default memo(Priority);
