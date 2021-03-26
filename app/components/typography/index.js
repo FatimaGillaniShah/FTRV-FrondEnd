@@ -63,11 +63,7 @@ export const H3 = (props) => {
 export const H4 = (props) => {
   const { root } = useStyles(AttachPrefixToFontWeight(props));
 
-  return (
-    <Typography classes={{ root }} variant="h4" {...props}>
-      {props.children}
-    </Typography>
-  );
+  return <Typography classes={{ root }} variant="h4" {...props} />;
 };
 
 export const H5 = (props) => {

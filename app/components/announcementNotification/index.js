@@ -17,7 +17,8 @@ export function AnnouncementNotification() {
       <Box
         width={1}
         height={1}
-        p={2}
+        py={6}
+        pr={2}
         justifyContent="center"
         display="flex"
         className={classes.mainBox}

@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
   mainBox: {
     backgroundColor: theme.palette.bgColor.secondary,
     borderRadius: '6px',
+    minHeight: '120px',
   },
   icon: {
     fontSize: '3em',
