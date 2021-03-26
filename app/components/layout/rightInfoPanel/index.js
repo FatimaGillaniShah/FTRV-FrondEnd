@@ -5,7 +5,8 @@ import { useQuery } from 'react-query';
 import AnnouncementNotification from '../../announcementNotification';
 import BirthdayCarousel from '../../birthdayCard';
 import { keys } from '../../../state/queryKeys';
-import { getBirthdays } from '../../../state/queryFunctions';
+import { getBirthdays, getQuote } from '../../../state/queryFunctions';
+import BoxWithBg from '../../boxWithBg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,15 +21,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.bgColor.secondary,
   },
   motivationSection: {
-    marginBlock: '0.2rem',
-    backgroundColor: theme.palette.bgColor.secondary,
+    minHeight: 80,
+    whiteSpace: 'pre-line',
   },
 }));
 function Index() {
   const classes = useStyles();
   const { data } = useQuery(keys.birthday, getBirthdays);
+  const { data: quoteData } = useQuery(keys.quote, getQuote);
 
   const birthdays = data?.data?.data;
+  const quote = quoteData?.data?.data;
   return (
     <>
       <Grid xs={12} className={classes.root}>
@@ -40,7 +43,17 @@ function Index() {
           <BirthdayCarousel items={birthdays} />
         </Grid>
 
-        <Grid xs={12} className={classes.motivationSection} />
+        <Grid xs={12} className={classes.items}>
+          {quote && (
+            <BoxWithBg
+              styles={classes.motivationSection}
+              title="Daily Dose  of Motivation"
+              bgColor="primary.main"
+            >
+              {quote}
+            </BoxWithBg>
+          )}
+        </Grid>
       </Grid>
     </>
   );
