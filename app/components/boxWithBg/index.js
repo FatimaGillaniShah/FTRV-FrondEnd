@@ -8,8 +8,10 @@ export default function BoxWithBg({
   titleColor = 'dark',
   titleWeight = { bold: 'bold' },
   bgColor,
+  color = 'text.light',
   textAlignment = 'null',
   children,
+  styles,
 }) {
   return (
     <Box>
@@ -21,7 +23,9 @@ export default function BoxWithBg({
         </Box>
       )}
       <Box
+        className={styles}
         bgcolor={bgColor}
+        color={color}
         textAlign={textAlignment}
         borderRadius="5px"
         m={1}

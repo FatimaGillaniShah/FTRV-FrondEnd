@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { H5, H6 } from 'components';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
@@ -84,9 +84,9 @@ export default function Header() {
     <>
       <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
-          <a href="/home">
+          <Link to="/home">
             <img src={Logo} alt="intranet logo" className={classes.logoStyle} />
-          </a>
+          </Link>
           {user.isAuthenticated && (
             <Box className={classes.profileBox}>
               <Hidden xsDown>

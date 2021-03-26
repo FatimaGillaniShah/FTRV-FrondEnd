@@ -44,7 +44,7 @@ export function BirdthdayCard({ item }) {
         pt={[3, 3, 3, 0]}
         ml={5}
       >
-        <H6 color="light" light className={classes.birthdayText}>
+        <H6 className={classes.birthdayText}>
           Today is
           <Box display={['inline', 'inline', 'inline', 'block']}>
             <H6 bold color="light" className={classes.inline}>
@@ -52,7 +52,7 @@ export function BirdthdayCard({ item }) {
               {"'s"}&nbsp;
             </H6>
           </Box>
-          birthday
+          Birthday!
         </H6>
       </Box>
     </Box>
