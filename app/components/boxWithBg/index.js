@@ -16,7 +16,7 @@ export default function BoxWithBg({
   return (
     <Box>
       {showTitle && (
-        <Box my={4} ml={2}>
+        <Box my={4}>
           <H5 color={titleColor} {...titleWeight}>
             {title}
           </H5>
