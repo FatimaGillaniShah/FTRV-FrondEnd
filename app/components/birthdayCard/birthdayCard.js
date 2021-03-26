@@ -48,7 +48,7 @@ export function BirdthdayCard({ item }) {
               {"'s"}
             </H6>
           </Box>
-          birthday
+          Birthday!
         </H6>
       </Box>
     </Box>

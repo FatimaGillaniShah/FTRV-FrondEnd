@@ -8,7 +8,7 @@ import { keys } from '../../../state/queryKeys';
 import { getBirthdays, getQuote } from '../../../state/queryFunctions';
 import BoxWithBg from '../../boxWithBg';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
     ' & > div': {
       marginBottom: '1rem',
     },
-  },
-  birthdaySection: {
-    backgroundColor: theme.palette.bgColor.secondary,
   },
   motivationSection: {
     minHeight: 80,
@@ -47,8 +44,8 @@ function Index() {
           {quote && (
             <BoxWithBg
               styles={classes.motivationSection}
-              title="Daily Dose  of Motivation"
-              bgColor="primary.main"
+              title="Daily Dose of Motivation"
+              bgColor="secondary.main"
             >
               {quote}
             </BoxWithBg>
