@@ -10,20 +10,16 @@ export function BirdthdayCard({ item }) {
     <Box
       display="flex"
       flexDirection={['column', 'column', 'column', 'row']}
-      justifyContent="space-around"
+      justifyContent="space-between"
     >
       <Box
-        width={1}
+        width="40%"
         display="flex"
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
       >
-        <Box
-          display="flex"
-          justifyContent="center"
-          className={classes.backgroundgrid}
-        >
+        <Box className={classes.backgroundgrid}>
           <Avatar
             alt=""
             className={classes.imgStyle}
@@ -36,7 +32,7 @@ export function BirdthdayCard({ item }) {
       </Box>
 
       <Box
-        width={1}
+        width="60%"
         textAlign="center"
         alignItems="center"
         display="flex"
@@ -45,10 +41,14 @@ export function BirdthdayCard({ item }) {
         pt={[3, 3, 3, 0]}
       >
         <H6 color="light" light className={classes.birthdayText}>
-          <H6 bold color="light" className={classes.inline}>
-            {item.fullName}&nbsp;
-          </H6>
-          has birthday today
+          Today is
+          <Box>
+            <H6 bold color="light" className={classes.inline}>
+              {item.firstName}
+              {"'s"}
+            </H6>
+          </Box>
+          birthday
         </H6>
       </Box>
     </Box>
