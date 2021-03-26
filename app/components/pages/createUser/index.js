@@ -19,7 +19,6 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
-import moment from 'moment';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -35,6 +34,7 @@ import { BodyTextLarge, H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
+import { parseDate } from '../../../utils/functions';
 import Select from '../../muiSelect';
 
 const useStyles = makeStyles((theme) => ({
@@ -107,13 +107,10 @@ function CreateUser({
               dataFile.append('password', data.password);
             }
             if (data.joiningDate) {
-              dataFile.append(
-                'joiningDate',
-                moment(data.joiningDate).format('YYYY-MM-DD')
-              );
+              dataFile.append('joiningDate', parseDate(data.joiningDate));
             }
             if (data.dob) {
-              dataFile.append('dob', moment(data.dob).format('YYYY-MM-DD'));
+              dataFile.append('dob', parseDate(data.dob));
             }
             if (data.role) {
               dataFile.append('role', data.role);
