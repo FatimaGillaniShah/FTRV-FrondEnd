@@ -4,6 +4,7 @@ export const useStyles = makeStyles((theme) => ({
   backgroundgrid: {
     backgroundRepeat: 'no-repeat',
     backgroundSize: '154px 160px',
+    marginTop: '-80px',
   },
   textBox: {
     overflowWrap: 'break-word',
