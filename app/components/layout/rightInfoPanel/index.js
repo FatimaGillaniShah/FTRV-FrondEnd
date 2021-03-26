@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   motivationSection: {
     minHeight: 80,
+    whiteSpace: 'pre-line',
   },
 }));
 function Index() {
