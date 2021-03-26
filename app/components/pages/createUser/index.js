@@ -19,6 +19,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
+import moment from 'moment';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
@@ -106,10 +107,13 @@ function CreateUser({
               dataFile.append('password', data.password);
             }
             if (data.joiningDate) {
-              dataFile.append('joiningDate', data.joiningDate);
+              dataFile.append(
+                'joiningDate',
+                moment(data.joiningDate).format('YYYY-MM-DD')
+              );
             }
             if (data.dob) {
-              dataFile.append('dob', data.dob);
+              dataFile.append('dob', moment(data.dob).format('YYYY-MM-DD'));
             }
             if (data.role) {
               dataFile.append('role', data.role);
