@@ -34,6 +34,7 @@ import { BodyTextLarge, H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
+import { parseDate } from '../../../utils/functions';
 import Select from '../../muiSelect';
 
 const useStyles = makeStyles((theme) => ({
@@ -106,10 +107,10 @@ function CreateUser({
               dataFile.append('password', data.password);
             }
             if (data.joiningDate) {
-              dataFile.append('joiningDate', data.joiningDate);
+              dataFile.append('joiningDate', parseDate(data.joiningDate));
             }
             if (data.dob) {
-              dataFile.append('dob', data.dob);
+              dataFile.append('dob', parseDate(data.dob));
             }
             if (data.role) {
               dataFile.append('role', data.role);

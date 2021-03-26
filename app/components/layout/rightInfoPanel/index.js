@@ -44,7 +44,7 @@ function Index() {
           {quote && (
             <BoxWithBg
               styles={classes.motivationSection}
-              title="Daily Dose  of Motivation"
+              title="Daily Dose of Motivation"
               bgColor="secondary.main"
             >
               {quote}
