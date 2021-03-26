@@ -27,7 +27,7 @@ export function BirdthdayCard({ item }) {
           />
         </Box>
         <Box justifyContent="center" display="flex" mt={2}>
-          <H6 color="light">{item.fullName}</H6>
+          <H6>{item.fullName}</H6>
         </Box>
       </Box>
 
@@ -40,7 +40,7 @@ export function BirdthdayCard({ item }) {
         className={classes.textBox}
         pt={[3, 3, 3, 0]}
       >
-        <H6 color="light" light className={classes.birthdayText}>
+        <H6 className={classes.birthdayText}>
           Today is
           <Box>
             <H6 bold color="light" className={classes.inline}>
