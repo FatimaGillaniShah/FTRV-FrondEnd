@@ -62,6 +62,7 @@ export const menuItems = [
         name: 'Announcement',
         link: '/announcement',
       },
+      { name: 'events', link: '/events' },
     ],
   },
 ];

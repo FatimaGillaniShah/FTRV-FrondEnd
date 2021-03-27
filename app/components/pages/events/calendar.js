@@ -3,16 +3,16 @@ import React, { memo, useState } from 'react';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import moment from 'moment';
-import dummyData from './dummyEvents';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { CustomToolbar } from './customToolbar';
 
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
-export function EventCalendar() {
+export function EventCalendar({ eventList }) {
   const [draggedEvent, setDraggedEvent] = useState({});
   const [events, setEvents] = useState();
-  // const [displayDragItemInCell, setDisplayDragItemInCell] = useState(true);
+  const history = useHistory();
   const localizer = momentLocalizer(moment); // or globalizeLocalizer
 
   const displayDragItemInCell = true;
@@ -52,8 +52,6 @@ export function EventCalendar() {
     );
 
     setEvents(nextEvents);
-
-    // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
   };
 
   const resizeEvent = ({ event, start, end }) => {
@@ -64,23 +62,9 @@ export function EventCalendar() {
     );
 
     setEvents(nextEvents);
-
-    // alert(`${event.title} was resized to ${start}-${end}`)
   };
-
-  const newEvent = () => {
-    // let idList = this.state.events.map(a => a.id)
-    // let newId = Math.max(...idList) + 1
-    // let hour = {
-    //   id: newId,
-    //   title: 'New Event',
-    //   allDay: event.slots.length == 1,
-    //   start: event.start,
-    //   end: event.end,
-    // }
-    // this.setState({
-    //   events: this.state.events.concat([hour]),
-    // })
+  const handleSelectEvent = (event) => {
+    history.push(`/events/edit/${event.id}`);
   };
 
   return (
@@ -88,13 +72,11 @@ export function EventCalendar() {
       <DragAndDropCalendar
         selectable
         localizer={localizer}
-        events={dummyData}
+        events={eventList}
         onEventDrop={moveEvent}
         resizable
         onEventResize={resizeEvent}
-        onSelectSlot={newEvent}
         views={{ month: true }}
-        // onDragStart={console.log}
         defaultView={Views.MONTH}
         defaultDate={new Date()}
         popup
@@ -104,6 +86,7 @@ export function EventCalendar() {
         components={{
           toolbar: CustomToolbar,
         }}
+        onSelectEvent={handleSelectEvent}
       />
     </Box>
   );

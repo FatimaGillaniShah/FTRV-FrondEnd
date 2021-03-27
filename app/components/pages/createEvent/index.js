@@ -15,10 +15,13 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { Link } from 'react-router-dom';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
+import { ROLES } from '../../../utils/constants';
+import { useAuthContext } from '../../../context/authContext';
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -30,23 +33,34 @@ const useStyles = makeStyles((theme) => ({
   linkStyle: { textDecoration: 'none' },
 }));
 
-export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
+export function CreateEventPage({
+  onHandleSubmit,
+  id,
+  initialValues,
+  pageTitle,
+  onHandleDeleteEvent,
+}) {
   const classes = useStyles();
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
         <Box ml={3}>
           <Box my={7}>
-            <H5> {id ? 'Update' : 'Create'} New Event </H5>
+            <H5> {role === ROLES.USER ? 'View' : pageTitle} Event </H5>
           </Box>
           <Formik
-            key="addusefullink"
+            key="editEvent"
             enableReinitialize
             initialValues={initialValues}
             validationSchema={object().shape({
               title: string().required('*Title Required'),
-              startDate: date().required(),
-              endDate: date().required(),
+              start: date().required(),
+              end: date().required(),
               description: string(),
             })}
             onSubmit={(values) => {
@@ -65,14 +79,14 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                         appendIcon
                         Icon={TitleIcon}
                         IconClickable
+                        isDisabled={role === ROLES.USER}
                       />
                     </Box>
                     <Box width={[1, 1 / 3]} mb={5}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
-                          // margin="normal"
-                          id="startDate"
-                          name="startDate"
+                          id="start"
+                          name="start"
                           label={
                             <BodyTextLarge className={classes.label}>
                               Start Date*
@@ -80,23 +94,23 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                           }
                           disablePast
                           inputVariant="outlined"
-                          // format="MM-dd-yyyy"
                           format="yyyy/MM/dd hh:mm  a"
                           fullWidth
                           showTodayButton
-                          value={values.startDate}
+                          value={values.start}
                           InputProps={{ className: classes.dateColor }}
                           onChange={(value) => {
-                            setFieldValue('startDate', value);
+                            setFieldValue('start', value);
                           }}
+                          disabled={role === ROLES.USER}
                         />
                       </MuiPickersUtilsProvider>
                     </Box>
                     <Box width={[1, 1 / 3]} mb={5}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
-                          id="endDate"
-                          name="endDate"
+                          id="end"
+                          name="end"
                           label={
                             <BodyTextLarge className={classes.label}>
                               End Date*
@@ -104,15 +118,15 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                           }
                           disablePast
                           inputVariant="outlined"
-                          // format="MM-dd-yyyy"
                           format="yyyy/MM/dd hh:mm a"
                           fullWidth
                           showTodayButton
-                          value={values.endDate}
+                          value={values.end}
                           InputProps={{ className: classes.dateColor }}
                           onChange={(value) => {
-                            setFieldValue('endDate', value);
+                            setFieldValue('end', value);
                           }}
+                          disabled={role === ROLES.USER}
                         />
                       </MuiPickersUtilsProvider>
                     </Box>
@@ -128,24 +142,42 @@ export function CreateEventPage({ onHandleSubmit, id, initialValues }) {
                         multiline
                         rows={4}
                         rowsMax={10}
+                        isDisabled={role === ROLES.USER}
                       />
                     </Box>
                   </Box>
                   <Box display="flex">
-                    <Box mb={5}>
-                      <Button
-                        type="submit"
-                        color="secondary"
-                        variant="contained"
-                        startIcon={<SaveIcon />}
-                      >
-                        {id ? 'Update' : 'Create'}
-                      </Button>
-                    </Box>
+                    {role === ROLES.ADMIN && (
+                      <>
+                        {id && (
+                          <Box mb={5} mr={2}>
+                            <Button
+                              color="secondary"
+                              variant="contained"
+                              startIcon={<DeleteOutlineOutlinedIcon />}
+                              onClick={onHandleDeleteEvent}
+                            >
+                              Delete
+                            </Button>
+                          </Box>
+                        )}
+                        <Box mb={5}>
+                          <Button
+                            type="submit"
+                            color="secondary"
+                            variant="contained"
+                            startIcon={<SaveIcon />}
+                          >
+                            {id ? 'Update' : 'Create'}
+                          </Button>
+                        </Box>
+                      </>
+                    )}
+
                     <Box ml={2}>
                       <Link to="/events" className={classes.linkStyle}>
                         <Button variant="text" startIcon={<ClearIcon />}>
-                          Cancel
+                          {role === ROLES.ADMIN ? 'Cancel' : 'Back'}
                         </Button>
                       </Link>
                     </Box>
@@ -164,12 +196,13 @@ export default memo(CreateEventPage);
 
 CreateEventPage.propTypes = {
   initialValues: PropTypes.object,
+  pageTitle: PropTypes.string,
 };
 CreateEventPage.defaultProps = {
   initialValues: {
     title: '',
-    startDate: new Date(),
-    endDate: new Date(),
+    start: new Date(),
+    end: new Date(),
     description: '',
   },
 };

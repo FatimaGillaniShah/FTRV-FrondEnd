@@ -108,7 +108,7 @@ export const routeArray = [
     path: '/events',
     component: Events,
     exact: true,
-    breadCrumbKey: 'My Profile',
+    breadCrumbKey: 'Events',
     routeType: routeTypes.private,
     nestedRoutes: [
       {
@@ -118,6 +118,14 @@ export const routeArray = [
         breadCrumbKey: 'Create New Event',
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: createEvent,
+        exact: true,
+        breadCrumbKey: 'Edit Event',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN, ROLES.USER],
       },
     ],
   },

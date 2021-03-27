@@ -6,7 +6,7 @@ function Events() {
   return (
     <>
       <Helmet>
-        <title>Event Calendar</title>
+        <title>Company Events</title>
       </Helmet>
       <EventsPage />
     </>
