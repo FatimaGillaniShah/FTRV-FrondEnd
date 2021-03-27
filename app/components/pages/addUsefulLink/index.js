@@ -26,7 +26,7 @@ export function AddUsefulLinkPage({
             <H5> {id ? 'Update' : 'Create'} Useful Link </H5>
           </Box>
           <Formik
-            key={`addusefullink-${id}`}
+            key="addusefullink"
             enableReinitialize
             initialValues={initialValues}
             validationSchema={object().shape({
