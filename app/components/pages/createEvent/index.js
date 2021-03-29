@@ -1,11 +1,9 @@
-import { Box, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
-import { string, object, date } from 'yup';
+import { string, object, date, ref } from 'yup';
 
-import EventNoteIcon from '@material-ui/icons/EventNote';
 import ClearIcon from '@material-ui/icons/Clear';
 import TitleIcon from '@material-ui/icons/Title';
 import PropTypes from 'prop-types';
@@ -22,16 +20,16 @@ import { Input } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
+import { useStyles } from './style';
 
-const useStyles = makeStyles((theme) => ({
-  label: {
-    color: theme.palette.text.info,
-  },
-  dateColor: {
-    color: theme.palette.text.dark,
-  },
-  linkStyle: { textDecoration: 'none' },
-}));
+const eventSchema = object().shape({
+  title: string().required('*Title Required'),
+  start: date().required('*Start Date Required'),
+  end: date()
+    .min(ref('start'), 'End date should be greater than start date')
+    .required('*End Date Required'),
+  description: string(),
+});
 
 export function CreateEventPage({
   onHandleSubmit,
@@ -50,28 +48,36 @@ export function CreateEventPage({
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
         <Box ml={3}>
-          <Box my={7}>
-            <H5> {role === ROLES.USER ? 'View' : pageTitle} Event </H5>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            width={[1, 1, 1 / 2, 1 / 3]}
+          >
+            <Box my={7}>
+              <H5> {role === ROLES.USER ? 'View' : pageTitle} Event </H5>
+            </Box>
+            {id && (
+              <Box mr={3}>
+                <IconButton onClick={onHandleDeleteEvent}>
+                  <DeleteOutlineOutlinedIcon color="error" />
+                </IconButton>
+              </Box>
+            )}
           </Box>
           <Formik
-            key="editEvent"
             enableReinitialize
             initialValues={initialValues}
-            validationSchema={object().shape({
-              title: string().required('*Title Required'),
-              start: date().required(),
-              end: date().required(),
-              description: string(),
-            })}
+            validationSchema={eventSchema}
             onSubmit={(values) => {
               onHandleSubmit(values);
             }}
           >
-            {({ setFieldValue, values }) => (
+            {({ setFieldValue, values, errors, handleBlur, touched }) => (
               <Form>
                 <Box>
                   <Box display="flex" flexDirection="column" pb={10}>
-                    <Box width={[1, 1 / 3]} my={5}>
+                    <Box width={[1, 1, 1 / 2, 1 / 3]} my={5}>
                       <Input
                         variant="outlined"
                         OutlinedInputPlaceholder="Title*"
@@ -82,7 +88,7 @@ export function CreateEventPage({
                         isDisabled={role === ROLES.USER}
                       />
                     </Box>
-                    <Box width={[1, 1 / 3]} mb={5}>
+                    <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
                           id="start"
@@ -99,14 +105,18 @@ export function CreateEventPage({
                           showTodayButton
                           value={values.start}
                           InputProps={{ className: classes.dateColor }}
+                          onBlur={handleBlur}
                           onChange={(value) => {
                             setFieldValue('start', value);
                           }}
                           disabled={role === ROLES.USER}
                         />
                       </MuiPickersUtilsProvider>
+                      {errors.start && touched.start && (
+                        <FormHelperText error>{errors.start}</FormHelperText>
+                      )}
                     </Box>
-                    <Box width={[1, 1 / 3]} mb={5}>
+                    <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
                           id="end"
@@ -122,6 +132,7 @@ export function CreateEventPage({
                           fullWidth
                           showTodayButton
                           value={values.end}
+                          onBlur={handleBlur}
                           InputProps={{ className: classes.dateColor }}
                           onChange={(value) => {
                             setFieldValue('end', value);
@@ -129,14 +140,16 @@ export function CreateEventPage({
                           disabled={role === ROLES.USER}
                         />
                       </MuiPickersUtilsProvider>
+                      {errors.end && touched.end && (
+                        <FormHelperText error>{errors.end}</FormHelperText>
+                      )}
                     </Box>
-                    <Box width={[1, 1 / 3]} mb={5}>
+                    <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
                       <Input
                         variant="outlined"
                         OutlinedInputPlaceholder="Description"
                         name="description"
                         appendIcon
-                        Icon={EventNoteIcon}
                         IconClickable
                         fullWidth
                         multiline
@@ -148,30 +161,16 @@ export function CreateEventPage({
                   </Box>
                   <Box display="flex">
                     {role === ROLES.ADMIN && (
-                      <>
-                        {id && (
-                          <Box mb={5} mr={2}>
-                            <Button
-                              color="secondary"
-                              variant="contained"
-                              startIcon={<DeleteOutlineOutlinedIcon />}
-                              onClick={onHandleDeleteEvent}
-                            >
-                              Delete
-                            </Button>
-                          </Box>
-                        )}
-                        <Box mb={5}>
-                          <Button
-                            type="submit"
-                            color="secondary"
-                            variant="contained"
-                            startIcon={<SaveIcon />}
-                          >
-                            {id ? 'Update' : 'Create'}
-                          </Button>
-                        </Box>
-                      </>
+                      <Box mb={5}>
+                        <Button
+                          type="submit"
+                          color="secondary"
+                          variant="contained"
+                          startIcon={<SaveIcon />}
+                        >
+                          {id ? 'Update' : 'Create'}
+                        </Button>
+                      </Box>
                     )}
 
                     <Box ml={2}>

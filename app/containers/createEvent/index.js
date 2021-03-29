@@ -28,7 +28,7 @@ function CreateEvent() {
       <CreateEventPage
         onHandleSubmit={handleSubmit}
         id={id}
-        initialValues={id ? {} : undefined}
+        initialValues={id ? {} : {}}
         pageTitle={id ? 'Update' : 'Create New'}
         onHandleDeleteEvent={handleDeleteEvent}
       />

@@ -19,10 +19,19 @@ export function EventsPage({ eventList }) {
   );
 }
 
-export default memo(EventsPage);
 EventsPage.propTypes = {
-  eventList: PropTypes.array,
+  eventList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      allDay: PropTypes.bool,
+      start: PropTypes.instanceOf(Date).isRequired,
+      end: PropTypes.instanceOf(Date).isRequired,
+    })
+  ),
 };
 EventsPage.defaultProps = {
   eventList: [],
 };
+
+export default memo(EventsPage);

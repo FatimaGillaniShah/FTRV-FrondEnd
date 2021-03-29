@@ -5,7 +5,7 @@ export { default as Toast } from './alert';
 export { default as WrapInCard } from './layout/wrapInCard';
 export { default as TextField } from './muiTextAreaInput';
 export { default as Alert } from './muiAlert';
-export { default as Dailogue } from './muiDailogue';
+export { default as Dailogue } from './muiDailog';
 
 export {
   H1,

@@ -1,5 +1,4 @@
 import { Box, Button, IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import React, { memo } from 'react';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -8,10 +7,8 @@ import AddIcon from '@material-ui/icons/Add';
 import { H5 } from '../../typography';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import { useStyles } from './style';
 
-const useStyles = makeStyles(() => ({
-  linkStyle: { textDecoration: 'none' },
-}));
 export const CustomToolbar = ({ label, onNavigate }) => {
   const classes = useStyles();
   const navigate = (action) => {

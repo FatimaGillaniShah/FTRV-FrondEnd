@@ -12,6 +12,16 @@ import WrapInCard from '../../layout/wrapInCard';
 import { Input } from '../../index';
 import { H5 } from '../../typography';
 
+const useFulLinksSchema = object().shape({
+  name: string().required('*Name Required'),
+  url: string()
+    .matches(
+      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      'Enter correct URL'
+    )
+    .required('*URL Required'),
+});
+
 export function AddUsefulLinkPage({
   onHandleSubmit,
   id,
@@ -26,18 +36,9 @@ export function AddUsefulLinkPage({
             <H5> {id ? 'Update' : 'Create'} Useful Link </H5>
           </Box>
           <Formik
-            key="addusefullink"
             enableReinitialize
             initialValues={initialValues}
-            validationSchema={object().shape({
-              name: string().required('*Name Required'),
-              url: string()
-                .matches(
-                  /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-                  'Enter correct URL'
-                )
-                .required('*URL Required'),
-            })}
+            validationSchema={useFulLinksSchema}
             onSubmit={(values) => {
               onHandleSubmit(values);
             }}
