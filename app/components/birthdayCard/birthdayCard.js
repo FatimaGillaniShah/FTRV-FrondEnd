@@ -3,7 +3,6 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import { useStyles } from './style';
 import { H6 } from '../typography/index';
-import img from '../../images/photoBg.png';
 
 export function BirdthdayCard({ item }) {
   const classes = useStyles();
@@ -19,9 +18,7 @@ export function BirdthdayCard({ item }) {
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
-        ml={4}
       >
-        <img src={img} alt="sprinkles" />
         <Box className={classes.backgroundgrid}>
           <Avatar
             alt=""
@@ -29,7 +26,7 @@ export function BirdthdayCard({ item }) {
             src={`${process.env.API_ASSETS_URL}${item.avatar}`}
           />
         </Box>
-        <Box justifyContent="center" display="flex" mt={4} textAlign="center">
+        <Box justifyContent="center" display="flex" textAlign="center">
           <H6 color="light">{item.fullName}</H6>
         </Box>
       </Box>
@@ -42,7 +39,6 @@ export function BirdthdayCard({ item }) {
         justifyContent="center"
         className={classes.textBox}
         pt={[3, 3, 3, 0]}
-        ml={5}
       >
         <H6 className={classes.birthdayText}>
           Today is
