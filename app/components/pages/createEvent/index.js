@@ -1,4 +1,10 @@
-import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  FormHelperText,
+  IconButton,
+  Link,
+} from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
@@ -12,11 +18,10 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { Link } from 'react-router-dom';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input } from '../../index';
+import { Input, TextArea } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
@@ -145,18 +150,7 @@ export function CreateEventPage({
                       )}
                     </Box>
                     <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
-                      <Input
-                        variant="outlined"
-                        OutlinedInputPlaceholder="Description"
-                        name="description"
-                        appendIcon
-                        IconClickable
-                        fullWidth
-                        multiline
-                        rows={4}
-                        rowsMax={10}
-                        isDisabled={role === ROLES.USER}
-                      />
+                      <TextArea name="description" />
                     </Box>
                   </Box>
                   <Box display="flex">
@@ -174,7 +168,7 @@ export function CreateEventPage({
                     )}
 
                     <Box ml={2}>
-                      <Link to="/events" className={classes.linkStyle}>
+                      <Link href="/events" underline="none">
                         <Button variant="text" startIcon={<ClearIcon />}>
                           {role === ROLES.ADMIN ? 'Cancel' : 'Back'}
                         </Button>
@@ -191,8 +185,6 @@ export function CreateEventPage({
   );
 }
 
-export default memo(CreateEventPage);
-
 CreateEventPage.propTypes = {
   initialValues: PropTypes.object,
   pageTitle: PropTypes.string,
@@ -205,3 +197,5 @@ CreateEventPage.defaultProps = {
     description: '',
   },
 };
+
+export default memo(CreateEventPage);

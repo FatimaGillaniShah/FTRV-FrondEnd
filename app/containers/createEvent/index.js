@@ -1,9 +1,6 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import {
-  useHistory,
-  useParams,
-} from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, useParams } from 'react-router-dom';
 import { CreateEventPage } from '../../components/pages/createEvent';
 import { Modal, Toast } from '../../utils/helper';
 

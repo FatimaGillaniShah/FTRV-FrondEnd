@@ -1,16 +1,13 @@
-import { Box, Button, IconButton } from '@material-ui/core';
+import { Box, Button, IconButton, Link } from '@material-ui/core';
 import React, { memo } from 'react';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { Link } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import { H5 } from '../../typography';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
-import { useStyles } from './style';
 
 export const CustomToolbar = ({ label, onNavigate }) => {
-  const classes = useStyles();
   const navigate = (action) => {
     onNavigate(action);
   };
@@ -31,7 +28,7 @@ export const CustomToolbar = ({ label, onNavigate }) => {
       flexDirection={['column', 'column', 'row']}
     >
       {role === ROLES.ADMIN && (
-        <Link to="/events/add" className={classes.linkStyle}>
+        <Link href="/events/add" underline="none">
           <Button variant="contained" color="secondary" startIcon={<AddIcon />}>
             New Event
           </Button>
