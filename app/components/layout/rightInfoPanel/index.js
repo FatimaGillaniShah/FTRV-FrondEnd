@@ -33,15 +33,15 @@ function Index() {
   return (
     <>
       <Grid xs={12} className={classes.root}>
-        <Grid xs={12} className={classes.items}>
+        <Grid xs={12}>
           <AnnouncementNotification />
         </Grid>
 
-        <Grid xs={12} className={classes.items}>
+        <Grid xs={12}>
           <BirthdayCarousel items={birthdays} />
         </Grid>
 
-        <Grid xs={12} className={classes.items}>
+        <Grid xs={12}>
           {quote && (
             <BoxWithBg
               styles={classes.motivationSection}

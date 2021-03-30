@@ -16,7 +16,7 @@ export default function BoxWithBg({
   return (
     <Box>
       {showTitle && (
-        <Box my={4} ml={2}>
+        <Box my={4}>
           <H5 color={titleColor} {...titleWeight}>
             {title}
           </H5>
@@ -28,7 +28,6 @@ export default function BoxWithBg({
         color={color}
         textAlign={textAlignment}
         borderRadius="5px"
-        m={1}
         p={3}
       >
         {children}
