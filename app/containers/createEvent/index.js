@@ -17,6 +17,12 @@ function CreateEvent() {
   const handleDeleteEvent = () => {
     Modal.fire();
   };
+  const initialValues = {
+    title: '',
+    start: new Date(),
+    end: new Date(),
+    description: '',
+  };
   return (
     <>
       <Helmet>
@@ -25,7 +31,7 @@ function CreateEvent() {
       <CreateEventPage
         onHandleSubmit={handleSubmit}
         id={id}
-        initialValues={id ? {} : {}}
+        initialValues={id ? {} : initialValues}
         pageTitle={id ? 'Update' : 'Create New'}
         onHandleDeleteEvent={handleDeleteEvent}
       />
