@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function MuiDailog({
+export default function MuiDialog({
   onClose,
   open,
   title,
@@ -38,7 +38,7 @@ export default function MuiDailog({
   );
 }
 
-MuiDailog.propTypes = {
+MuiDialog.propTypes = {
   fullWidth: PropTypes.bool,
   maxWidth: PropTypes.string,
   onClose: PropTypes.func,
@@ -46,7 +46,7 @@ MuiDailog.propTypes = {
   title: PropTypes.string,
   content: PropTypes.string,
 };
-MuiDailog.defaultProps = {
+MuiDialog.defaultProps = {
   fullWidth: true,
   maxWidth: 'sm',
 };

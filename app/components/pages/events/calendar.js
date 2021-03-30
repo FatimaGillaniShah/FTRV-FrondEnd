@@ -83,6 +83,11 @@ export function EventCalendar({ eventList }) {
         dragFromOutsideItem={displayDragItemInCell ? dragFromOutsideItem : null}
         onDropFromOutside={onDropFromOutside}
         handleDragStart={handleDragStart}
+        tooltipAccessor={(event) =>
+          `${event.start.toLocaleTimeString([], { timeStyle: 'short' })} - ${
+            event.title
+          } - ${event.end.toLocaleTimeString([], { timeStyle: 'short' })}`
+        }
         components={{
           toolbar: CustomToolbar,
         }}
