@@ -33,5 +33,4 @@ EventsPage.propTypes = {
 EventsPage.defaultProps = {
   eventList: [],
 };
-
 export default memo(EventsPage);
