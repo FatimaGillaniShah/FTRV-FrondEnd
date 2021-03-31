@@ -13,7 +13,7 @@ export function BirdthdayCard({ item }) {
       justifyContent="space-between"
     >
       <Box
-        width="40%"
+        width={[1, 1, 1, '40%']}
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -26,13 +26,13 @@ export function BirdthdayCard({ item }) {
             src={`${process.env.API_ASSETS_URL}${item.avatar}`}
           />
         </Box>
-        <Box justifyContent="center" display="flex" mt={2}>
-          <H6>{item.fullName}</H6>
+        <Box justifyContent="center" display="flex" textAlign="center">
+          <H6 color="light">{item.fullName}</H6>
         </Box>
       </Box>
 
       <Box
-        width="60%"
+        width={[1, 1, 1, '60%']}
         textAlign="center"
         alignItems="center"
         display="flex"
@@ -42,10 +42,10 @@ export function BirdthdayCard({ item }) {
       >
         <H6 className={classes.birthdayText}>
           Today is
-          <Box>
+          <Box display={['inline', 'inline', 'inline', 'block']}>
             <H6 bold color="light" className={classes.inline}>
-              {item.firstName}
-              {"'s"}
+              &nbsp;{`${item.firstName}`}
+              {"'s"}&nbsp;
             </H6>
           </Box>
           Birthday!
