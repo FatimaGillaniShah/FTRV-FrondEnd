@@ -12,8 +12,11 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: false,
     token: null,
     data: {},
+    announcement: [],
   };
+
   const [user, setUser] = useState(initData);
+
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user));
   }, [user]);

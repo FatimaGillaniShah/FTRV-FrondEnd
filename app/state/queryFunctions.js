@@ -15,6 +15,8 @@ const {
   DELETE_LINK,
   QUOTE,
   BIRTHDAYS,
+  ANNOUNCEMENT,
+  GET_ANNOUNCEMENTS,
 } = APIS;
 
 // USER CRUD
@@ -70,3 +72,12 @@ export const updateLink = (payload) =>
 
 export const deleteLink = (payload) =>
   http.delete(DELETE_LINK, { data: { ids: payload } });
+export const createAnnouncement = (payload) => http.post(ANNOUNCEMENT, payload);
+
+export const retrieveAnnouncements = () => http.get(`${GET_ANNOUNCEMENTS}`);
+
+export const retrieveAnnouncementById = (id) =>
+  http.get(`${ANNOUNCEMENT}/${id}`);
+
+export const updateAnnouncement = (payload) =>
+  http.put(`${ANNOUNCEMENT}/${payload.id}`, payload);

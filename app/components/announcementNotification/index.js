@@ -1,15 +1,28 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import CancelIcon from '@material-ui/icons/Cancel';
 import useStyles from './style';
 import { H6, BodyText } from '../typography';
+import { useAuthContext } from '../../context/authContext';
+import { colors } from '../../theme/colors';
 
-export function AnnouncementNotification() {
+export function AnnouncementNotification({ item }) {
+  let notificationBackgroundColor;
+  if (item.priority === 'high') {
+    notificationBackgroundColor = colors.red;
+  } else if (item.priority === 'medium') {
+    notificationBackgroundColor = colors.orange;
+  } else if (item.priority === 'low') {
+    notificationBackgroundColor = colors.green;
+  }
   const classes = useStyles();
-  const [clicked, setClicked] = useState(true);
-  const onClose = () => {
-    setClicked(false);
+  const { user, setUser } = useAuthContext();
+  const closedAnnouncement = (user && user.announcement) || [];
+
+  const onClose = (itemAnnouncement) => {
+    closedAnnouncement.push(itemAnnouncement);
+    setUser({ ...user, announcement: closedAnnouncement });
   };
 
   return (
@@ -17,12 +30,10 @@ export function AnnouncementNotification() {
       <Box
         width={1}
         height={1}
-        py={6}
-        pr={2}
+        p={2}
         justifyContent="center"
         display="flex"
         className={classes.mainBox}
-        style={clicked ? { visibility: 'visible' } : { visibility: 'hidden' }}
       >
         <Box width="0.22" alignSelf="center">
           <Box
@@ -30,6 +41,7 @@ export function AnnouncementNotification() {
             display="flex"
             justifyContent="center"
             alignItems="center"
+            bgcolor={notificationBackgroundColor}
             className={classes.iconBox}
           >
             <NotificationsActiveIcon className={classes.icon} />
@@ -44,14 +56,14 @@ export function AnnouncementNotification() {
           alignItems="center"
         >
           <Box mb={2}>
-            <H6 color="dark">Notification</H6>
+            <H6 color="dark">{item.title}</H6>
           </Box>
           <Box className={classes.textBox}>
-            <BodyText color="dark">The office will be closed.</BodyText>
+            <BodyText color="dark">{item.description}</BodyText>
           </Box>
         </Box>
         <Box width="0.02" mb={2}>
-          <CancelIcon onClick={onClose} />
+          <CancelIcon onClick={() => onClose(item)} />
         </Box>
       </Box>
     </>

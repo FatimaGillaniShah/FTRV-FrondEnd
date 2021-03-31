@@ -19,7 +19,7 @@ function HomeContainer() {
     if (!user || !user.isAuthenticated) {
       history.push('/');
     }
-  }, [user]);
+  }, []);
 
   return (
     <>

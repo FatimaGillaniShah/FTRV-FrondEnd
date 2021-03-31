@@ -1,11 +1,16 @@
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import AnnouncementNotification from '../../announcementNotification';
 import BirthdayCarousel from '../../birthdayCard';
 import { keys } from '../../../state/queryKeys';
-import { getBirthdays, getQuote } from '../../../state/queryFunctions';
+import { useAuthContext } from '../../../context/authContext';
+import {
+  getBirthdays,
+  getQuote,
+  retrieveAnnouncements,
+} from '../../../state/queryFunctions';
 import BoxWithBg from '../../boxWithBg';
 import { H6 } from '../../typography';
 
@@ -27,15 +32,36 @@ function Index() {
   const classes = useStyles();
   const { data } = useQuery(keys.birthday, getBirthdays);
   const { data: quoteData } = useQuery(keys.quote, getQuote);
+  const { data: announcementData } = useQuery(
+    keys.getAnnouncements,
+    retrieveAnnouncements
+  );
 
   const birthdays = data?.data?.data;
   const quote = quoteData?.data?.data;
+  let activeAnnouncements = [];
+  const { user } = useAuthContext();
+  const [filterArray, setFilterArray] = useState([]);
+
+  useEffect(() => {
+    activeAnnouncements = announcementData?.data?.data.filter(
+      (row) =>
+        !user.announcement.find(
+          (localAnnouncement) => row.id === localAnnouncement.id
+        )
+    );
+
+    setFilterArray(activeAnnouncements);
+  }, [announcementData, user]);
+
   return (
     <>
       <Grid xs={12} className={classes.root}>
-        <Grid xs={12}>
-          <AnnouncementNotification />
-        </Grid>
+        {filterArray?.map((item) => (
+          <Grid xs={12}>
+            <AnnouncementNotification item={item} />
+          </Grid>
+        ))}
 
         <Grid xs={12}>
           <BirthdayCarousel items={birthdays} />

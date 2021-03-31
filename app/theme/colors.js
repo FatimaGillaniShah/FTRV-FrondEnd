@@ -1,7 +1,6 @@
 const red = '#d33';
 const green = '#4BB543';
 const lightblue = '#1875C0';
-
 export const colors = {
   primary: '#153D73',
   secondary: lightblue,
@@ -16,7 +15,7 @@ export const colors = {
   },
   textColor: {
     primary: '#153D73',
-    secondary: '#1875C0',
+    secondary: lightblue,
     dark: '#424242',
     light: '#FFF',
     info: '#757575',
@@ -24,12 +23,12 @@ export const colors = {
   },
   iconColor: {
     primary: '#153D73',
-    secondary: '#1875C0',
+    secondary: lightblue,
     default: 'white',
   },
   menuColor: {
     primary: '#153D73',
-    secondary: '#1875C0',
+    secondary: lightblue,
     tertiary: '#335e96',
   },
   checkbox: {

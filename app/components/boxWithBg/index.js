@@ -28,6 +28,7 @@ export default function BoxWithBg({
         color={color}
         textAlign={textAlignment}
         borderRadius="5px"
+        m={1}
         p={3}
       >
         {children}

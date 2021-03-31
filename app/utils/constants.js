@@ -29,4 +29,5 @@ export const APIS = {
   GET_LINK: '/usefulLinks',
   UPDATE_LINK: '/usefulLinks',
   DELETE_LINK: '/usefulLinks/deleteLinks',
+  GET_ANNOUNCEMENTS: '/announcements/userAnnouncements',
 };

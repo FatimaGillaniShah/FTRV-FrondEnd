@@ -12,7 +12,7 @@ const Priority = () => {
   };
   return (
     <FormControl>
-      <FormLabel>Priority</FormLabel>
+      <FormLabel component="legend">Priority</FormLabel>
       <RadioGroup row value={value} onChange={handleChange}>
         <FormControlLabel value="high" control={<Radio />} label="High" />
         <FormControlLabel value="medium" control={<Radio />} label="Medium" />

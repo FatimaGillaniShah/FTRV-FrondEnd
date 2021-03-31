@@ -19,11 +19,13 @@ function LoginContainer() {
   const history = useHistory();
 
   if (isSuccess) {
-    setUser({
+    const updatedUser = {
+      ...user,
       data: data.data.data,
       isAuthenticated: true,
       token: data.data.data.token,
-    });
+    };
+    setUser(updatedUser);
   }
 
   useEffect(() => {

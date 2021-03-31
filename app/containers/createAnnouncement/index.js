@@ -2,7 +2,6 @@ import { WrapInCard } from 'components';
 import CreateNewAnnouncement from 'components/pages/createAnnouncement';
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 
 function CreateAnnouncement() {
