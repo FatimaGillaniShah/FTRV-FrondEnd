@@ -75,6 +75,7 @@ export default function Header() {
   };
   const handleLogout = () => {
     setUser({
+      announcement: [],
       data: {},
       isAuthenticated: false,
       token: null,
