@@ -8,7 +8,9 @@ import Login from '../containers/login';
 import Quote from '../containers/qoute/loadable';
 import usefulLinks from '../containers/usefulLinks/loadable';
 import UserProfile from '../containers/userProfile/loadable';
+import Events from '../containers/events/loadable';
 import { ROLES } from '../utils/constants';
+import createEvent from '../containers/createEvent/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -99,6 +101,31 @@ export const routeArray = [
         noOfEnteriesToSkipAfterThisEntry: 1,
         breadCrumbKey: 'Edit Link',
         routeType: routeTypes.private,
+      },
+    ],
+  },
+  {
+    path: '/events',
+    component: Events,
+    exact: true,
+    breadCrumbKey: 'Events',
+    routeType: routeTypes.private,
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: createEvent,
+        exact: true,
+        breadCrumbKey: 'Create New Event',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: createEvent,
+        exact: true,
+        breadCrumbKey: 'Edit Event',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN, ROLES.USER],
       },
     ],
   },

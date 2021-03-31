@@ -3,8 +3,9 @@ export { default as Select } from './muiSelect';
 export { default as CheckBox } from './muiCheckbox';
 export { default as Toast } from './alert';
 export { default as WrapInCard } from './layout/wrapInCard';
-export { default as TextField } from './muiTextAreaInput';
+export { default as TextArea } from './muiTextAreaInput';
 export { default as Alert } from './muiAlert';
+export { default as Dailogue } from './muiDialog';
 
 export {
   H1,

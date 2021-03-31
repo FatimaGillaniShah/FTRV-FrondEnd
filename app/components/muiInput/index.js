@@ -155,8 +155,6 @@ function InputField({
   );
 }
 
-export default memo(InputField);
-
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
   fullWidth: PropTypes.bool,
@@ -180,6 +178,8 @@ InputField.defaultProps = {
   IconClickable: false,
   showInputLabel: true,
 };
+
+export default memo(InputField);
 
 // Usage
 

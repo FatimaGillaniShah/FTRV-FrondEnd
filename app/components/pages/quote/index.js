@@ -1,5 +1,5 @@
 import { Box, Button } from '@material-ui/core';
-import { TextField } from 'components';
+import { TextArea } from 'components';
 import { Form, Formik } from 'formik';
 import React, { memo } from 'react';
 import { H5 } from '../../typography';
@@ -18,8 +18,8 @@ function Quote({ value, handleSubmit }) {
         onSubmit={(values) => handleSubmit(values)}
       >
         <Form>
-          <Box mt={4}>
-            <TextField name="quote" variant="outlined" />
+          <Box mt={4} width={1 / 2}>
+            <TextArea name="quote" variant="outlined" />
           </Box>
           <Box mt={4} width={1 / 2} display="flex" justifyContent="flex-end">
             <Button color="secondary" variant="contained" type="submit">

@@ -68,7 +68,7 @@ export const Modal = Swal.mixin({
   text: "You won't be able to revert this!",
   icon: 'warning',
   showCancelButton: true,
-  confirmButtonColor: colors.modalColors.confirm,
+  confirmButtonColor: colors.red,
   cancelButtonColor: colors.modalColors.cancel,
   confirmButtonText: 'Yes, delete it!',
 });
