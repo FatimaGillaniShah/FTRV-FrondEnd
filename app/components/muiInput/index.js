@@ -44,6 +44,7 @@ function InputField({
   OutlinedInputPlaceholder,
   helperText,
   showInputLabel,
+  tabIndex,
   ...props
 }) {
   const [field, meta] = useField(props);
@@ -78,7 +79,12 @@ function InputField({
               appendIcon && (
                 <InputAdornment position="end">
                   {IconClickable ? (
-                    <IconButton id={iconID} onClick={onIconClick} {...props}>
+                    <IconButton
+                      id={iconID}
+                      onClick={onIconClick}
+                      tabIndex={tabIndex}
+                      {...props}
+                    >
                       <Icon />
                     </IconButton>
                   ) : (
@@ -92,7 +98,12 @@ function InputField({
               prependIcon && (
                 <InputAdornment position="start">
                   {IconClickable ? (
-                    <IconButton id={iconID} onClick={onIconClick} {...props}>
+                    <IconButton
+                      id={iconID}
+                      onClick={onIconClick}
+                      tabIndex={tabIndex}
+                      {...props}
+                    >
                       <Icon />
                     </IconButton>
                   ) : (
@@ -120,7 +131,12 @@ function InputField({
               appendIcon && (
                 <InputAdornment position="end">
                   {IconClickable ? (
-                    <IconButton id={iconID} onClick={onIconClick} {...props}>
+                    <IconButton
+                      id={iconID}
+                      onClick={onIconClick}
+                      tabIndex={tabIndex}
+                      {...props}
+                    >
                       <Icon />
                     </IconButton>
                   ) : (
@@ -134,7 +150,12 @@ function InputField({
               prependIcon && (
                 <InputAdornment position="start">
                   {IconClickable ? (
-                    <IconButton id={iconID} onClick={onIconClick} {...props}>
+                    <IconButton
+                      id={iconID}
+                      onClick={onIconClick}
+                      tabIndex={tabIndex}
+                      {...props}
+                    >
                       <Icon />
                     </IconButton>
                   ) : (
@@ -172,11 +193,13 @@ InputField.propTypes = {
   OutlinedInputPlaceholder: PropTypes.string,
   IconClickable: PropTypes.bool,
   showInputLabel: PropTypes.bool,
+  tabIndex: PropTypes.number,
 };
 InputField.defaultProps = {
   fullWidth: true,
   IconClickable: false,
   showInputLabel: true,
+  tabIndex: -1,
 };
 
 export default memo(InputField);

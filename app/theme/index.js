@@ -3,6 +3,13 @@ import { colors } from './colors';
 
 const theme = createMuiTheme({
   overrides: {
+    MuiIconButton: {
+      root: {
+        '&:hover': {
+          backgroundColor: '$labelcolor',
+        },
+      },
+    },
     MuiCssBaseline: {
       '@global': {
         html: {

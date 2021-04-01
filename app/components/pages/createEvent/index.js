@@ -115,6 +115,7 @@ export function CreateEventPage({
                             setFieldValue('start', value);
                           }}
                           disabled={role === ROLES.USER}
+                          KeyboardButtonProps={{ tabIndex: -1 }}
                         />
                       </MuiPickersUtilsProvider>
                       {errors.start && touched.start && (
@@ -143,6 +144,7 @@ export function CreateEventPage({
                             setFieldValue('end', value);
                           }}
                           disabled={role === ROLES.USER}
+                          KeyboardButtonProps={{ tabIndex: -1 }}
                         />
                       </MuiPickersUtilsProvider>
                       {errors.end && touched.end && (

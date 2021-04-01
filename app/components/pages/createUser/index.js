@@ -401,6 +401,7 @@ function CreateUser({
                           }
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
+                            tabIndex: -1,
                           }}
                         />
                       </MuiPickersUtilsProvider>
@@ -432,6 +433,7 @@ function CreateUser({
                           }
                           KeyboardButtonProps={{
                             'aria-label': 'change date',
+                            tabIndex: -1,
                           }}
                         />
                       </MuiPickersUtilsProvider>
