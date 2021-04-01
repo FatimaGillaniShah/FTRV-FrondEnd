@@ -6,6 +6,7 @@ export const keys = {
   login: 'login',
   getLinks: 'links',
   getLink: (payload) => ['link', payload],
+  getAnnouncementById: (id) => ['announcement', id],
   announcement: 'announcement',
   getAnnouncements: 'announcements',
 };

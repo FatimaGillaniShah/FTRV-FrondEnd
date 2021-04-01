@@ -9,7 +9,7 @@ import { useAuthContext } from '../../../context/authContext';
 import {
   getBirthdays,
   getQuote,
-  retrieveAnnouncements,
+  retrieveActiveAnnouncements,
 } from '../../../state/queryFunctions';
 import BoxWithBg from '../../boxWithBg';
 import { H6 } from '../../typography';
@@ -34,7 +34,7 @@ function Index() {
   const { data: quoteData } = useQuery(keys.quote, getQuote);
   const { data: announcementData } = useQuery(
     keys.getAnnouncements,
-    retrieveAnnouncements
+    retrieveActiveAnnouncements
   );
 
   const birthdays = data?.data?.data;

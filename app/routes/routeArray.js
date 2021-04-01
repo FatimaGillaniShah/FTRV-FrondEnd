@@ -3,6 +3,9 @@ import CreateUser from '../containers/createUser/loadable';
 import Directory from '../containers/directory/loadable';
 import DirectoryImporter from '../containers/directoryImporter/loadable';
 import EditUser from '../containers/editUser/loadable';
+import Announcement from '../containers/announcement/loadable';
+import CreateAnnouncement from '../containers/createAnnouncement/loadable';
+import EditAnnouncement from '../containers/editAnnouncement/loadable';
 import Home from '../containers/home/loadable';
 import Login from '../containers/login';
 import Quote from '../containers/qoute/loadable';
@@ -105,6 +108,34 @@ export const routeArray = [
     ],
   },
   {
+    path: '/announcement',
+    component: Announcement,
+    exact: true,
+    breadCrumbKey: 'Announcement',
+    routeType: routeTypes.private,
+    nestedRoutes: [
+      {
+        path: `/add`,
+        component: CreateAnnouncement,
+        exact: true,
+        breadCrumbKey: 'Create Announcement',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: EditAnnouncement,
+        exact: true,
+        simplifiedPath: 'edit',
+        breadCrumbKey: 'Edit Announcement',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+    ],
+  },
+  {
     path: '/events',
     component: Events,
     exact: true,
@@ -118,14 +149,6 @@ export const routeArray = [
         breadCrumbKey: 'Create New Event',
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
-      },
-      {
-        path: '/edit/:id',
-        component: createEvent,
-        exact: true,
-        breadCrumbKey: 'Edit Event',
-        routeType: routeTypes.private,
-        roles: [ROLES.ADMIN, ROLES.USER],
       },
     ],
   },

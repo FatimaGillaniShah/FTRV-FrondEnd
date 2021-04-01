@@ -15,6 +15,10 @@ export const ROLES = {
   ADMIN: 'admin',
   USER: 'user',
 };
+export const ANNOUNCEMENT_STATUS = {
+  ACTIVE: 'active',
+  INACTIVE: 'inactive',
+};
 
 export const APIS = {
   LOGIN: 'users/login',
@@ -29,5 +33,7 @@ export const APIS = {
   GET_LINK: '/usefulLinks',
   UPDATE_LINK: '/usefulLinks',
   DELETE_LINK: '/usefulLinks/deleteLinks',
+  ANNOUNCEMENT: '/announcements',
+  ANNOUNCEMENT_DELETE: '/announcements/deleteAnnouncements',
   GET_ANNOUNCEMENTS: '/announcements/userAnnouncements',
 };

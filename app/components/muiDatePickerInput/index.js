@@ -1,4 +1,4 @@
-import { FormHelperText, FormControl, TextArea } from '@material-ui/core';
+import { FormHelperText, FormControl, TextField } from '@material-ui/core';
 import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import React, { memo } from 'react';
@@ -18,7 +18,7 @@ function MuiDatePickerInput({
       {...formControlProps}
       variant={variant}
     >
-      <TextArea
+      <TextField
         label={label}
         type="date"
         variant="outlined"

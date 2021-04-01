@@ -3,16 +3,41 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
+import Swal from 'sweetalert2';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
+import { Modal } from '../../utils/helper';
+import { deleteAnnouncement } from '../../state/queryFunctions';
+import { keys } from '../../state/queryKeys';
 
-const ActionButtons = ({ data, disabled }) => {
+const ActionButtons = ({ data, setSelected, disabled }) => {
   const history = useHistory();
+  const queryClient = useQueryClient();
+  const mutation = useMutation(deleteAnnouncement, {
+    onSuccess: ({
+      data: {
+        data: { count },
+      },
+    }) => {
+      setSelected([]);
+      Swal.fire('Deleted!', `${count} announcement(s) deleted.`, 'success');
+      queryClient.invalidateQueries(keys.getAnnouncements);
+    },
+  });
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
+
+  const handleDeleteAnnouncements = () => {
+    Modal.fire().then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate([data.id]);
+      }
+    });
+  };
 
   return (
     <>
@@ -24,7 +49,10 @@ const ActionButtons = ({ data, disabled }) => {
               onClick={() => history.push(`announcement/edit/${data.id}`)}
             />
           </IconButton>
-          <IconButton disabled={disabled}>
+          <IconButton
+            onClick={() => handleDeleteAnnouncements()}
+            disabled={disabled}
+          >
             <DeleteIcon color="error" />
           </IconButton>
         </>
@@ -49,24 +77,24 @@ export const headCells = [
     type: 'label',
   },
   {
-    id: 'expiry',
+    id: 'startTime',
     numeric: false,
     disablePadding: false,
-    label: 'Expiry Date',
+    label: 'Start Time',
     type: 'label',
   },
   {
-    id: 'start',
+    id: 'endTime',
     numeric: false,
     disablePadding: false,
-    label: 'Start Date',
+    label: 'End Time',
     type: 'label',
   },
   {
-    id: 'end',
+    id: 'status',
     numeric: false,
     disablePadding: false,
-    label: 'End Date',
+    label: 'Status',
     type: 'label',
   },
   {
