@@ -13,7 +13,9 @@ export function EventsPage({ eventList }) {
         <Box pb={7} pt={3}>
           <H5> Events </H5>
         </Box>
-        <EventCalendar eventList={eventList} />
+        <Box height="100vh" width={1}>
+          <EventCalendar eventList={eventList} />
+        </Box>
       </WrapInCard>
     </WrapInBreadcrumbs>
   );

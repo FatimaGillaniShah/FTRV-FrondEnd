@@ -18,7 +18,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input, TextArea } from '../../index';
@@ -65,7 +65,7 @@ export function CreateEventPage({
             {id && (
               <Box mr={3}>
                 <IconButton onClick={onHandleDeleteEvent}>
-                  <DeleteOutlineOutlinedIcon color="error" />
+                  <DeleteIcon color="error" />
                 </IconButton>
               </Box>
             )}

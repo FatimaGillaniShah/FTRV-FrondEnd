@@ -1,6 +1,7 @@
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
+import { EventCalendar } from '../events/calendar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +28,13 @@ function Home() {
     <>
       <Grid xs={12} className={classes.root}>
         <Grid xs={12} className={classes.bannerGridSection} />
-        <Grid xs={12} className={classes.statsSection} />
+        <Grid xs={12} className={classes.statsSection}>
+          <Box m={10}>
+            <Box height="50vh" width={[1, 1, 1, 1 / 2]}>
+              <EventCalendar home />
+            </Box>
+          </Box>
+        </Grid>
       </Grid>
     </>
   );

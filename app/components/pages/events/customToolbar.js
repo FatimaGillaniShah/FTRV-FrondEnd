@@ -4,55 +4,52 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import AddIcon from '@material-ui/icons/Add';
 import { H5 } from '../../typography';
-import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 
-export const CustomToolbar = ({ label, onNavigate }) => {
+export const CustomToolbar = ({ home, data: { role } }) => ({
+  label,
+  onNavigate,
+}) => {
   const navigate = (action) => {
     onNavigate(action);
   };
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
-  return (
-    <Box
-      pb={7}
-      display="flex"
-      justifyContent={[
-        'center',
-        role === ROLES.ADMIN ? 'space-between' : 'center',
-      ]}
-      alignItems={['stretch', 'stretch', 'center']}
-      flexDirection={['column', 'column', 'row']}
-    >
-      {role === ROLES.ADMIN && (
-        <Link href="/events/add" underline="none">
-          <Button variant="contained" color="secondary" startIcon={<AddIcon />}>
-            New Event
-          </Button>
-        </Link>
-      )}
 
+  return (
+    <>
+      {role === ROLES.ADMIN && !home && (
+        <Box mb={5}>
+          <Link href="/events/add" underline="none">
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<AddIcon />}
+            >
+              New Event
+            </Button>
+          </Link>
+        </Box>
+      )}
       <Box
         display="flex"
         flexDirection="row"
         alignItems="center"
         justifyContent="center"
-        pt={[5, 5, 0]}
-        mr={[0, 0, role === ROLES.ADMIN ? 35 : 0]}
+        bgcolor="secondary.main"
       >
         <IconButton onClick={() => navigate('PREV')}>
-          <ArrowBackIosIcon />
+          <Box color="text.light">
+            <ArrowBackIosIcon />
+          </Box>
         </IconButton>
-        <H5>{label}</H5>
+        <H5 color="light">{label}</H5>
         <IconButton onClick={() => navigate('NEXT')}>
-          <ArrowForwardIosIcon />
+          <Box color="text.light">
+            <ArrowForwardIosIcon />
+          </Box>
         </IconButton>
       </Box>
       <Box />
-    </Box>
+    </>
   );
 };
 
