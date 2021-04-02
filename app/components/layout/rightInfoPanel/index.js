@@ -40,9 +40,8 @@ function Index() {
   const birthdays = data?.data?.data || [];
   const quote = quoteData?.data?.data;
   let activeAnnouncements = [];
-  const {
-    user: { announcement = [] },
-  } = useAuthContext();
+  const { user } = useAuthContext();
+  const { announcement = [] } = user;
   const [filterArray, setFilterArray] = useState([]);
 
   useEffect(() => {
@@ -54,7 +53,7 @@ function Index() {
     );
 
     setFilterArray(activeAnnouncements);
-  }, [announcementData, announcement]);
+  }, [announcementData, user]);
 
   return (
     <>
