@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '1.2rem',
+    margin: '0 1.2rem',
     ' & > div': {
       marginBottom: '1rem',
     },
@@ -37,16 +37,17 @@ function Index() {
     retrieveActiveAnnouncements
   );
 
-  const birthdays = data?.data?.data;
+  const birthdays = data?.data?.data || [];
   const quote = quoteData?.data?.data;
   let activeAnnouncements = [];
   const { user } = useAuthContext();
+  const { announcement = [] } = user;
   const [filterArray, setFilterArray] = useState([]);
 
   useEffect(() => {
     activeAnnouncements = announcementData?.data?.data.filter(
       (row) =>
-        !user.announcement.find(
+        !announcement.find(
           (localAnnouncement) => row.id === localAnnouncement.id
         )
     );
@@ -63,9 +64,11 @@ function Index() {
           </Grid>
         ))}
 
-        <Grid xs={12}>
-          <BirthdayCarousel items={birthdays} />
-        </Grid>
+        {birthdays.length > 0 && (
+          <Grid xs={12}>
+            <BirthdayCarousel items={birthdays} />
+          </Grid>
+        )}
 
         <Grid xs={12}>
           {quote && (
