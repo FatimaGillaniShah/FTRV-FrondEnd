@@ -21,7 +21,7 @@ function AnnouncementContainer() {
   const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(
-    keys.getAnnouncements,
+    keys.adminAnnouncements,
     retrieveAnnouncements,
     { refetchOnWindowFocus: false }
   );
@@ -33,7 +33,7 @@ function AnnouncementContainer() {
     }) => {
       setSelected([]);
       Swal.fire('Deleted!', `${count} announcement deleted.`, 'success');
-      queryClient.invalidateQueries(keys.getAnnouncements);
+      queryClient.invalidateQueries(keys.announcements);
     },
     onError: ({
       response: {

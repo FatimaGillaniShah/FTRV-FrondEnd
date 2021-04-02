@@ -8,5 +8,6 @@ export const keys = {
   getLink: (payload) => ['link', payload],
   getAnnouncementById: (id) => ['announcement', id],
   announcement: 'announcement',
-  getAnnouncements: 'announcements',
+  announcements: 'announcements',
+  adminAnnouncements: 'adminAnnouncements',
 };

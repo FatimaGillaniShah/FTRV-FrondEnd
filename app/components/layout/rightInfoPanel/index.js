@@ -33,7 +33,7 @@ function Index() {
   const { data } = useQuery(keys.birthday, getBirthdays);
   const { data: quoteData } = useQuery(keys.quote, getQuote);
   const { data: announcementData } = useQuery(
-    keys.getAnnouncements,
+    keys.announcements,
     retrieveActiveAnnouncements
   );
 
