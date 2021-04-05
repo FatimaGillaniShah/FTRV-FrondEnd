@@ -29,9 +29,9 @@ import { useStyles } from './style';
 
 const eventSchema = object().shape({
   title: string().required('*Title Required'),
-  start: date().required('*Start Date Required'),
-  end: date()
-    .min(ref('start'), 'End date should be greater than start date')
+  startDate: date().required('*Start Date Required'),
+  endDate: date()
+    .min(ref('startDate'), 'End date should be greater than start date')
     .required('*End Date Required'),
   description: string(),
 });
@@ -96,8 +96,8 @@ export function CreateEventPage({
                     <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
-                          id="start"
-                          name="start"
+                          id="startDate"
+                          name="startDate"
                           label={
                             <BodyTextLarge className={classes.label}>
                               Start Date*
@@ -108,25 +108,27 @@ export function CreateEventPage({
                           format="yyyy/MM/dd hh:mm  a"
                           fullWidth
                           showTodayButton
-                          value={values.start}
+                          value={values.startDate}
                           InputProps={{ className: classes.dateColor }}
                           onBlur={handleBlur}
                           onChange={(value) => {
-                            setFieldValue('start', value);
+                            setFieldValue('startDate', value);
                           }}
                           disabled={role === ROLES.USER}
                           KeyboardButtonProps={{ tabIndex: -1 }}
                         />
                       </MuiPickersUtilsProvider>
-                      {errors.start && touched.start && (
-                        <FormHelperText error>{errors.start}</FormHelperText>
+                      {errors.startDate && touched.startDate && (
+                        <FormHelperText error>
+                          {errors.startDate}
+                        </FormHelperText>
                       )}
                     </Box>
                     <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <KeyboardDateTimePicker
-                          id="end"
-                          name="end"
+                          id="endDate"
+                          name="endDate"
                           label={
                             <BodyTextLarge className={classes.label}>
                               End Date*
@@ -137,18 +139,18 @@ export function CreateEventPage({
                           format="yyyy/MM/dd hh:mm a"
                           fullWidth
                           showTodayButton
-                          value={values.end}
+                          value={values.endDate}
                           onBlur={handleBlur}
                           InputProps={{ className: classes.dateColor }}
                           onChange={(value) => {
-                            setFieldValue('end', value);
+                            setFieldValue('endDate', value);
                           }}
                           disabled={role === ROLES.USER}
                           KeyboardButtonProps={{ tabIndex: -1 }}
                         />
                       </MuiPickersUtilsProvider>
-                      {errors.end && touched.end && (
-                        <FormHelperText error>{errors.end}</FormHelperText>
+                      {errors.endDate && touched.endDate && (
+                        <FormHelperText error>{errors.endDate}</FormHelperText>
                       )}
                     </Box>
                     <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
@@ -194,8 +196,8 @@ CreateEventPage.propTypes = {
 CreateEventPage.defaultProps = {
   initialValues: {
     title: '',
-    start: new Date(),
-    end: new Date(),
+    startDate: new Date(),
+    endDate: new Date(),
     description: '',
   },
 };

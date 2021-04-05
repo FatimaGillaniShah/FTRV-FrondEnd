@@ -27,8 +27,8 @@ EventsPage.propTypes = {
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       allDay: PropTypes.bool,
-      start: PropTypes.instanceOf(Date).isRequired,
-      end: PropTypes.instanceOf(Date).isRequired,
+      startDate: PropTypes.instanceOf(Date).isRequired,
+      endDate: PropTypes.instanceOf(Date).isRequired,
     })
   ),
 };

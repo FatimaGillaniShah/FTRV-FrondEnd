@@ -95,13 +95,18 @@ export function EventCalendar({ eventList, home }) {
     e.stopPropagation();
     e.preventDefault();
   };
+  const calendarEvents = eventList.map((val) => ({
+    title: val.title,
+    start: val.startDate,
+    end: val.endDate,
+  }));
 
   return (
     <DragAndDropCalendar
       formats={formats}
       selectable
       localizer={localizer}
-      events={eventList}
+      events={calendarEvents}
       onEventDrop={moveEvent}
       resizable
       onEventResize={resizeEvent}

@@ -18,6 +18,7 @@ const {
   ANNOUNCEMENT,
   GET_ANNOUNCEMENTS,
   ANNOUNCEMENT_DELETE,
+  CREATE_EVENT,
 } = APIS;
 
 // USER CRUD
@@ -92,3 +93,7 @@ export const deleteAnnouncement = (payload) =>
   http.delete(ANNOUNCEMENT_DELETE, { data: { ids: payload } });
 
 export const retrieveAnnouncement = () => http.get(`${GET_ANNOUNCEMENTS}`);
+
+// EVENTS CRUD
+
+export const createEvent = (payload) => http.post(CREATE_EVENT, payload);
