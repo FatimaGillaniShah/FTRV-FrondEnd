@@ -168,6 +168,14 @@ export const routeArray = [
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
       },
+      {
+        path: '/edit/:id',
+        component: createEvent,
+        exact: true,
+        breadCrumbKey: 'Edit Event',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN, ROLES.USER],
+      },
     ],
   },
 ];

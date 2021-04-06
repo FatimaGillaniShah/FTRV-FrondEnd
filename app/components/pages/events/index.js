@@ -6,16 +6,18 @@ import WrapInCard from '../../layout/wrapInCard';
 import { EventCalendar } from './calendar';
 import { H5 } from '../../typography';
 
-export function EventsPage({ eventList }) {
+export function EventsPage({ eventList, isLoading }) {
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
         <Box pb={7} pt={3}>
           <H5> Events </H5>
         </Box>
-        <Box height="100vh" width={1}>
-          <EventCalendar eventList={eventList} />
-        </Box>
+        {!isLoading && (
+          <Box height="100vh" width={1}>
+            <EventCalendar eventList={eventList} />
+          </Box>
+        )}
       </WrapInCard>
     </WrapInBreadcrumbs>
   );

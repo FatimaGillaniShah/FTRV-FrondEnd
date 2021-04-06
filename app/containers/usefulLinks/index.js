@@ -12,7 +12,7 @@ import { headCells } from './columns';
 function UsefulLinks() {
   const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery(keys.getLinks, fetchLinks, {
+  const { data, isLoading } = useQuery(keys.links, fetchLinks, {
     refetchOnWindowFocus: false,
   });
   const mutation = useMutation(deleteLink, {
@@ -23,7 +23,7 @@ function UsefulLinks() {
     }) => {
       setSelected([]);
       Swal.fire('Deleted!', `${count} link(s) deleted.`, 'success');
-      queryClient.invalidateQueries(keys.getLinks);
+      queryClient.invalidateQueries(keys.links);
     },
     onError: ({
       response: {

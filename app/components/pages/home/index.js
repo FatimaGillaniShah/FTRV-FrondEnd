@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     marginBlock: '0.2rem',
   },
 }));
-function Home() {
+function Home({ eventList, isLoading }) {
   const classes = useStyles();
 
   return (
@@ -31,7 +31,7 @@ function Home() {
         <Grid xs={12} className={classes.statsSection}>
           <Box m={10}>
             <Box height="50vh" width={[1, 1, 1, 1 / 2]}>
-              <EventCalendar home />
+              <EventCalendar home eventList={eventList} isLoading={isLoading} />
             </Box>
           </Box>
         </Grid>

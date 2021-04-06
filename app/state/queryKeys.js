@@ -4,10 +4,11 @@ export const keys = {
   quote: 'quote',
   birthday: 'birthday',
   login: 'login',
-  getLinks: 'links',
+  links: 'links',
   getLink: (payload) => ['link', payload],
   getAnnouncementById: (id) => ['announcement', id],
   announcement: 'announcement',
   announcements: 'announcements',
   adminAnnouncements: 'adminAnnouncements',
+  events: 'events',
 };

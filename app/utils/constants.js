@@ -37,4 +37,6 @@ export const APIS = {
   ANNOUNCEMENT_DELETE: '/announcements/deleteAnnouncements',
   GET_ANNOUNCEMENTS: '/announcements/userAnnouncements',
   CREATE_EVENT: '/events',
+  EVENTS: '/events',
+  DELETE_EVENTS: '/events',
 };

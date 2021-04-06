@@ -22,7 +22,7 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
     }) => {
       setSelected([]);
       Swal.fire('Deleted!', `${count} link(s) deleted.`, 'success');
-      queryClient.invalidateQueries(keys.getLinks);
+      queryClient.invalidateQueries(keys.links);
     },
   });
   const {
