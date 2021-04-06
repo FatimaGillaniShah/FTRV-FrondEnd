@@ -11,7 +11,13 @@ export const menuItems = [
   {
     name: 'members',
     icon: PeopleIcon,
-    children: [{ name: 'Directory', link: '/directory' }],
+    children: [
+      { name: 'Directory', link: '/directory' },
+      {
+        name: 'Ceo Message',
+        link: '/ceo-message',
+      },
+    ],
   },
   {
     name: 'blog',

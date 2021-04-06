@@ -1,4 +1,5 @@
 import addUsefulLink from '../containers/addUsefulLink/loadable';
+import addCeoMessage from '../containers/addCeoMessage/loadable';
 import CreateUser from '../containers/createUser/loadable';
 import Directory from '../containers/directory/loadable';
 import DirectoryImporter from '../containers/directoryImporter/loadable';
@@ -11,6 +12,7 @@ import Login from '../containers/login';
 import Quote from '../containers/qoute/loadable';
 import usefulLinks from '../containers/usefulLinks/loadable';
 import UserProfile from '../containers/userProfile/loadable';
+import CeoMessage from '../containers/ceoMessage/loadable';
 import Events from '../containers/events/loadable';
 import { ROLES } from '../utils/constants';
 import createEvent from '../containers/createEvent/loadable';
@@ -104,6 +106,22 @@ export const routeArray = [
         noOfEnteriesToSkipAfterThisEntry: 1,
         breadCrumbKey: 'Edit Link',
         routeType: routeTypes.private,
+      },
+    ],
+  },
+  {
+    path: '/ceo-message',
+    component: CeoMessage,
+    exact: true,
+    breadCrumbKey: 'Ceo Message',
+    routeType: routeTypes.private,
+    nestedRoutes: [
+      {
+        path: '/edit',
+        component: addCeoMessage,
+        exact: true,
+        breadCrumbKey: 'Edit Ceo Message',
+        roles: [ROLES.ADMIN],
       },
     ],
   },
