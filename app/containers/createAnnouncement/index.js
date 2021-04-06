@@ -13,8 +13,8 @@ function CreateAnnouncement() {
   const defaultData = {
     title: '',
     description: '',
-    startTime: '',
-    endTime: '',
+    startTime: new Date(),
+    endTime: new Date(),
     status: 'active',
     priority: '',
   };
@@ -58,7 +58,7 @@ function CreateAnnouncement() {
       <WrapInBreadcrumbs>
         <WrapInCard>
           <CreateAnnouncementInfo
-            initialData={defaultData}
+            initialValues={defaultData}
             onUpdateAnnouncement={handleSubmit}
             formType="add"
           />

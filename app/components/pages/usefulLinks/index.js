@@ -21,7 +21,7 @@ function UsefulLinksPage({
         {selected.length > 0 && (
           <Box my={4}>
             <Alert severity="info">
-              <strong>{selected.length}</strong> Links(s) Selected
+              <strong>{selected.length}</strong> Link(s) Selected
             </Alert>
           </Box>
         )}

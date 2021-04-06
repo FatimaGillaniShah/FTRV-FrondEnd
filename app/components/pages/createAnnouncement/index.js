@@ -1,21 +1,53 @@
-import { Box, Button, Hidden, FormLabel } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Hidden,
+  FormLabel,
+  FormHelperText,
+} from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
-import TitleIcon from '@material-ui/icons/Title';
-import DescriptionIcon from '@material-ui/icons/Description';
-import MuiDatePickerInput from 'components/muiDatePickerInput';
+import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { Field, Form, Formik } from 'formik';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 import { useHistory } from 'react-router-dom';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
-import { ANNOUNCEMENT_STATUS } from '../../../utils/constants';
-import FormikRadioGroup from '../../muiRadioButtons';
-import { H4 } from '../../typography';
-import { yupAnnouncementFormValidation } from './yupAnnouncementFormValidation';
-import Select from '../../muiSelect';
-import { Input } from '../../index';
+import {
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
+import { string, object, date, ref } from 'yup';
+import { ANNOUNCEMENT_STATUS, ROLES } from '../../../utils/constants';
+import FormikRadioGroup from '../../muiRadioButtons';
+import { BodyTextLarge, H4 } from '../../typography';
+import Select from '../../muiSelect';
+import { useAuthContext } from '../../../context/authContext';
+import { Input } from '../../index';
+import { parseDate } from '../../../utils/functions';
+
+const useStyles = makeStyles((theme) => ({
+  label: {
+    color: theme.palette.text.info,
+  },
+  dateColor: {
+    color: theme.palette.text.dark,
+  },
+}));
+const announcementSchema = object().shape({
+  title: string().required('*Title Required'),
+  startTime: date().required('*Start Date Required'),
+  endTime: date()
+    .min(ref('startTime'), 'End date should be greater than start date')
+    .required('*End Date Required'),
+  description: string().required('*Description Required'),
+  priority: string().required('*Priority Required'),
+});
 function CreateAnnouncement({
-  initialData,
+  initialValues,
   onUpdateAnnouncement,
   formType = 'add',
 }) {
@@ -24,10 +56,15 @@ function CreateAnnouncement({
     { value: 'medium', label: 'Medium' },
     { value: 'low', label: 'Low' },
   ];
+  const classes = useStyles();
   const statusOptions = Object.keys(ANNOUNCEMENT_STATUS).map(
     (val) => ANNOUNCEMENT_STATUS[val]
   );
-
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
   const history = useHistory();
   const formHeadings = {
     add: 'Create New Announcement',
@@ -37,23 +74,23 @@ function CreateAnnouncement({
     history.push('/announcement');
   };
 
-  const yupValidation = yupAnnouncementFormValidation;
-
   return (
     <>
       <Formik
-        initialValues={initialData}
+        initialValues={initialValues}
         onSubmit={async (values) => {
           try {
             const data = values;
+            data.startTime = parseDate(data.startTime);
+            data.endTime = parseDate(data.endTime);
             await onUpdateAnnouncement(data);
           } catch (err) {
             // ...
           }
         }}
-        validationSchema={yupValidation}
+        validationSchema={announcementSchema}
       >
-        {({ values }) => (
+        {({ setFieldValue, values, errors, touched, handleBlur }) => (
           <Form>
             <Box
               flexWrap="wrap"
@@ -74,7 +111,7 @@ function CreateAnnouncement({
                       name="title"
                       variant="outlined"
                       OutlinedInputPlaceholder="*Title"
-                      Icon={TitleIcon}
+                      Icon={TitleOutlinedIcon}
                       appendIcon
                     />
                   </Box>
@@ -83,25 +120,70 @@ function CreateAnnouncement({
                       name="description"
                       variant="outlined"
                       OutlinedInputPlaceholder="*Description"
-                      Icon={DescriptionIcon}
+                      Icon={DescriptionOutlinedIcon}
                       appendIcon
-                    />
-                  </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <MuiDatePickerInput
-                      name="startTime"
-                      variant="outlined"
-                      label="Start Time"
                     />
                   </Box>
 
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <MuiDatePickerInput
-                      name="endTime"
-                      variant="outlined"
-                      label="End Time"
-                    />
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <KeyboardDatePicker
+                        id="startTime"
+                        name="startTime"
+                        label={
+                          <BodyTextLarge className={classes.label}>
+                            Start Date*
+                          </BodyTextLarge>
+                        }
+                        disablePast
+                        inputVariant="outlined"
+                        format="MM-dd-yyyy"
+                        fullWidth
+                        showTodayButton
+                        value={values.startTime}
+                        InputProps={{ className: classes.dateColor }}
+                        onBlur={handleBlur}
+                        onChange={(value) => {
+                          setFieldValue('startTime', value);
+                        }}
+                        disabled={role === ROLES.USER}
+                        KeyboardButtonProps={{ tabIndex: -1 }}
+                      />
+                    </MuiPickersUtilsProvider>
+                    {errors.startTime && touched.startTime && (
+                      <FormHelperText error>{errors.startTime}</FormHelperText>
+                    )}
                   </Box>
+                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <KeyboardDatePicker
+                        id="endTime"
+                        name="endTime"
+                        label={
+                          <BodyTextLarge className={classes.label}>
+                            End Date*
+                          </BodyTextLarge>
+                        }
+                        disablePast
+                        inputVariant="outlined"
+                        format="MM-dd-yyyy"
+                        fullWidth
+                        showTodayButton
+                        value={values.endTime}
+                        onBlur={handleBlur}
+                        InputProps={{ className: classes.dateColor }}
+                        onChange={(value) => {
+                          setFieldValue('endTime', value);
+                        }}
+                        disabled={role === ROLES.USER}
+                        KeyboardButtonProps={{ tabIndex: -1 }}
+                      />
+                    </MuiPickersUtilsProvider>
+                    {errors.endTime && touched.endTime && (
+                      <FormHelperText error>{errors.endTime}</FormHelperText>
+                    )}
+                  </Box>
+
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Select
                       name="status"
@@ -109,7 +191,7 @@ function CreateAnnouncement({
                       labelId="status"
                       selectName="status"
                       formControlProps={{ variant: 'outlined' }}
-                      label="Select User Type"
+                      label="Set Announcement State"
                       selectedValue={values.status}
                       options={statusOptions}
                     />
@@ -162,5 +244,18 @@ function CreateAnnouncement({
     </>
   );
 }
+
+CreateAnnouncement.propTypes = {
+  initialValues: PropTypes.object,
+};
+CreateAnnouncement.defaultProps = {
+  initialValues: {
+    title: '',
+    startTime: new Date(),
+    endTime: new Date(),
+    description: '',
+    priority: '',
+  },
+};
 
 export default memo(CreateAnnouncement);

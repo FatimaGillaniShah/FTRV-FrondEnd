@@ -3,8 +3,8 @@ import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
 import { string, object } from 'yup';
-import LinkIcon from '@material-ui/icons/Link';
-import PersonIcon from '@material-ui/icons/Person';
+import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
+import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
@@ -52,8 +52,8 @@ export function AddUsefulLinkPage({
                       OutlinedInputPlaceholder="Name*"
                       name="name"
                       appendIcon
-                      Icon={PersonIcon}
-                      IconClickable={false}
+                      Icon={PersonOutlinedIcon}
+                      IconClickable
                     />
                   </Box>
                   <Box width={[1, 1 / 3]}>
@@ -62,8 +62,8 @@ export function AddUsefulLinkPage({
                       name="url"
                       variant="outlined"
                       appendIcon
-                      Icon={LinkIcon}
-                      IconClickable={false}
+                      Icon={LinkOutlinedIcon}
+                      IconClickable
                     />
                   </Box>
                 </Box>

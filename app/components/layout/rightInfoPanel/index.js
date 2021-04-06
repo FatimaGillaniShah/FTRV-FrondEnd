@@ -45,7 +45,7 @@ function Index() {
   const [filterArray, setFilterArray] = useState([]);
 
   useEffect(() => {
-    activeAnnouncements = announcementData?.data?.data.filter(
+    activeAnnouncements = announcementData?.data?.data?.filter(
       (row) =>
         !announcement.find(
           (localAnnouncement) => row.id === localAnnouncement.id

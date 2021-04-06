@@ -1,5 +1,6 @@
 const red = '#d33';
 const green = '#4BB543';
+const grey = '#808080';
 const lightblue = '#1875C0';
 export const colors = {
   primary: '#153D73',
@@ -8,6 +9,7 @@ export const colors = {
   orange: '#FF9200',
   red,
   green,
+  grey,
 
   bgColor: {
     main: '#F0F2F5',

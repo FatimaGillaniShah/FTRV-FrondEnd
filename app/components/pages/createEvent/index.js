@@ -9,9 +9,8 @@ import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
 import { string, object, date, ref } from 'yup';
-
+import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
-import TitleIcon from '@material-ui/icons/Title';
 import PropTypes from 'prop-types';
 import {
   KeyboardDateTimePicker,
@@ -88,7 +87,7 @@ export function CreateEventPage({
                         OutlinedInputPlaceholder="Title*"
                         name="title"
                         appendIcon
-                        Icon={TitleIcon}
+                        Icon={TitleOutlinedIcon}
                         IconClickable
                         isDisabled={role === ROLES.USER}
                       />

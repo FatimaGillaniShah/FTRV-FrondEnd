@@ -61,6 +61,8 @@ const mixin = Swal.mixin({
     toast.addEventListener('mouseleave', Swal.resumeTimer);
   },
 });
+export const capitalize = (string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
 
 // REUSEABLE MODAL
 export const Modal = Swal.mixin({

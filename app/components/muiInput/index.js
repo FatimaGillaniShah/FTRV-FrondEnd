@@ -197,7 +197,7 @@ InputField.propTypes = {
 };
 InputField.defaultProps = {
   fullWidth: true,
-  IconClickable: false,
+  IconClickable: true,
   showInputLabel: true,
   tabIndex: -1,
 };

@@ -12,18 +12,13 @@ import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditAnnouncementInfo from '../../components/pages/createAnnouncement';
-import { useAuthContext } from '../../context/authContext';
 import { Toast } from '../../utils/helper';
 
 function EditAnnouncement() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const history = useHistory();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
+
   const { data, isLoading } = useQuery(
     keys.getAnnouncementById(id),
     () => retrieveAnnouncementById(id),
@@ -63,8 +58,8 @@ function EditAnnouncement() {
   const defaultData = {
     title: '',
     description: '',
-    startTime: '',
-    endTime: '',
+    startTime: new Date(),
+    endTime: new Date(),
     status: '',
     priority: '',
   };
@@ -84,10 +79,9 @@ function EditAnnouncement() {
             <Loading />
           ) : (
             <EditAnnouncementInfo
-              initialData={initialData || defaultData}
+              initialValues={initialData || defaultData}
               onUpdateAnnouncement={handleSubmit}
               formType="edit"
-              editRole={role}
             />
           )}
         </WrapInCard>

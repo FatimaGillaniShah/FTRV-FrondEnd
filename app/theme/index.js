@@ -17,6 +17,16 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiRadio: {
+      root: {
+        color: colors.grey,
+      },
+      colorSecondary: {
+        '&$checked': {
+          color: colors.grey,
+        },
+      },
+    },
   },
   palette: {
     primary: {

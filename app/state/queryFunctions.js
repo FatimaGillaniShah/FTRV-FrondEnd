@@ -79,15 +79,14 @@ export const createAnnouncement = (payload) => http.post(ANNOUNCEMENT, payload);
 export const retrieveActiveAnnouncements = () =>
   http.get(`${GET_ANNOUNCEMENTS}`);
 
-export const retrieveAnnouncements = () => http.get(`${ANNOUNCEMENT}`);
+export const retrieveAnnouncements = () =>
+  http.get(`${ANNOUNCEMENT}?pageSize=1000&`);
 
 export const retrieveAnnouncementById = (id) =>
   http.get(`${ANNOUNCEMENT}/${id}`);
 
-export const updateAnnouncement = (payload) => {
-  const { id, updatedData } = payload;
-  return http.put(`${ANNOUNCEMENT}/${id}`, updatedData);
-};
+export const updateAnnouncement = (payload) =>
+  http.put(`${ANNOUNCEMENT}/${payload.id}`, payload);
 
 export const deleteAnnouncement = (payload) =>
   http.delete(ANNOUNCEMENT_DELETE, { data: { ids: payload } });
