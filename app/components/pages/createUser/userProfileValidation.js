@@ -22,17 +22,24 @@ export const userProfileValidation = object().shape({
         (value) => value && SUPPORTED_FORMATS.includes(value.type)
       ),
   }),
-  firstName: string().max(100, 'Too Long!'),
+  firstName: string()
+    .max(100, 'Too Long!')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   // .matches(
   //   /^[a-zA-Z0-9 ]*$/,
   //   'First Name can only include alphabets and white spaces'
   // )
-  lastName: string().max(100, 'Too Long!'),
+  lastName: string()
+    .max(100, 'Too Long!')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   location: string().max(200, 'Too Long!'),
   department: string().max(200, 'Too Long!'),
   title: string().max(200, 'Too Long!'),
 
-  email: string().max(320, 'Invalid').email(),
+  email: string()
+    .max(320, 'Invalid')
+    .email()
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   password: string()
     .min(4, 'Too Short')
     .max(15, 'Exceeded Maximum Characters Limit')

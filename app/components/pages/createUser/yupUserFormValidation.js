@@ -29,7 +29,8 @@ export const yupUserFormValidaton = object().shape({
     //   /^[a-zA-Z0-9 ]*$/,
     //   'First Name can only include alphabets and white spaces'
     // )
-    .required('*First Name Required'),
+    .required('*First Name Required')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   lastName: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
@@ -37,7 +38,8 @@ export const yupUserFormValidaton = object().shape({
     //   /^[a-zA-Z0-9 ]*$/,
     //   'Last Name can only include alphabets,nu and white spaces'
     // )
-    .required('*Last Name Required'),
+    .required('*Last Name Required')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   location: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
@@ -45,7 +47,8 @@ export const yupUserFormValidaton = object().shape({
     //   /^[#,-/ a-zA-Z0-9]*$/,
     //   'Location can only include alphabets, numerics,whitespaces and [#,-./]'
     // )
-    .required('*Location Required'),
+    .required('*Location Required')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   department: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
@@ -53,7 +56,8 @@ export const yupUserFormValidaton = object().shape({
     //   /^[a-zA-Z ]*$/,
     //   'Department can only include alphabets and white spaces'
     // )
-    .required('*Department Required'),
+    .required('*Department Required')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   title: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
@@ -61,8 +65,13 @@ export const yupUserFormValidaton = object().shape({
     //   /^[a-zA-Z ]*$/,
     //   'Designation can only include alphabets and white spaces'
     // )
-    .required('*Designation Required'),
-  email: string().max(320, 'Invalid').email().required('*Email Required'),
+    .required('*Designation Required')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+  email: string()
+    .max(320, 'Invalid')
+    .email()
+    .required('*Email Required')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   password: string()
     .min(4, 'Too Short')
     .max(15, 'Exceeded Maximum Characters Limit')

@@ -27,12 +27,16 @@ import { useAuthContext } from '../../../context/authContext';
 import { useStyles } from './style';
 
 const eventSchema = object().shape({
-  title: string().required('*Title Required'),
+  title: string()
+    .required('*Title Required')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   startDate: date().required('*Start Date Required'),
   endDate: date()
     .min(ref('startDate'), 'End date should be greater than start date')
     .required('*End Date Required'),
-  description: string(),
+  description: string()
+    .required('*Description Required')
+    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
 });
 
 export function CreateEventPage({
