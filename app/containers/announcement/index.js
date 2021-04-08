@@ -27,7 +27,7 @@ function AnnouncementContainer() {
 
   const { data, isLoading } = useQuery(
     keys.adminAnnouncements,
-    retrieveAnnouncements,
+    retrieveAnnouncements
   );
   const mutation = useMutation(deleteAnnouncement, {
     onSuccess: ({

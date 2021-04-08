@@ -1,9 +1,9 @@
 import { Avatar, Box, Button } from '@material-ui/core';
-import { TextArea } from 'components';
+import { TextArea, Input } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
-import { Input } from 'components';
+
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
 import React, { memo, useState } from 'react';

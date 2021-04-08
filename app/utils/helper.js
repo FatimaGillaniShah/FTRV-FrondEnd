@@ -77,3 +77,7 @@ export const Modal = Swal.mixin({
 
 // USAGE;
 // Modal({});
+
+export function isFunction(possibleFunction) {
+  return typeof possibleFunction === typeof Function;
+}

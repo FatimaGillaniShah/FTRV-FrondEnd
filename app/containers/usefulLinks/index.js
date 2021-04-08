@@ -1,38 +1,21 @@
 import React, { memo, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import Swal from 'sweetalert2';
+import { useQuery } from 'react-query';
 import { Loading } from '../../components/loading';
 import UsefulLinksPage from '../../components/pages/usefulLinks';
-import { deleteLink, fetchLinks } from '../../state/queryFunctions';
+import { useDeleteLink } from '../../hooks/usefulLinks';
+import { fetchLinks } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Modal, Toast } from '../../utils/helper';
+import { Modal } from '../../utils/helper';
 import { headCells } from './columns';
 
 function UsefulLinks() {
   const [selected, setSelected] = useState([]);
-  const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery(keys.links, fetchLinks);
-  const mutation = useMutation(deleteLink, {
-    onSuccess: ({
-      data: {
-        data: { count },
-      },
-    }) => {
-      setSelected([]);
-      Swal.fire('Deleted!', `${count} link(s) deleted.`, 'success');
-      queryClient.invalidateQueries(keys.links);
-    },
-    onError: ({
-      response: {
-        data: { message },
-      },
-    }) => {
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occured',
-      });
-    },
+  const { data, isLoading } = useQuery(keys.links, fetchLinks, {
+    refetchOnWindowFocus: false,
+  });
+  const mutation = useDeleteLink({
+    callbackFn: () => setSelected([]),
   });
 
   const handleDeleteLinks = () => {

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useParams } from 'react-router';
 import { AddUsefulLinkPage } from '../../components/pages/addUsefulLink';
 import {
@@ -15,6 +15,7 @@ import { Loading } from '../../components/loading';
 function AddUsefulLink() {
   const history = useHistory();
   const { id } = useParams();
+  const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(
     keys.getLink(id),
     () => getLinkById(id),
@@ -29,6 +30,7 @@ function AddUsefulLink() {
         icon: 'success',
         title: `Link ${id ? 'updated' : 'created'}  successfully`,
       });
+      queryClient.invalidateQueries(keys.links);
     },
     onError: ({
       response: {
