@@ -30,7 +30,9 @@ const eventSchema = object().shape({
   title: string()
     .required('*Title Required')
     .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
-  startDate: date().required('*Start Date Required'),
+  startDate: date()
+    .min(new Date().toLocaleString())
+    .required('*Start Date Required'),
   endDate: date()
     .min(ref('startDate'), 'End date should be greater than start date')
     .required('*End Date Required'),
@@ -65,7 +67,7 @@ export function CreateEventPage({
             <Box my={7}>
               <H5> {role === ROLES.USER ? 'View' : pageTitle} Event </H5>
             </Box>
-            {id && (
+            {role === ROLES.ADMIN && id && (
               <Box mr={3}>
                 <IconButton onClick={onHandleDeleteEvent}>
                   <DeleteIcon color="error" />
@@ -117,6 +119,7 @@ export function CreateEventPage({
                           onChange={(value) => {
                             setFieldValue('startDate', value);
                           }}
+                          minDateMessage=""
                           disabled={role === ROLES.USER}
                           KeyboardButtonProps={{ tabIndex: -1 }}
                         />
@@ -145,6 +148,7 @@ export function CreateEventPage({
                           value={values.endDate}
                           onBlur={handleBlur}
                           InputProps={{ className: classes.dateColor }}
+                          minDateMessage=""
                           onChange={(value) => {
                             setFieldValue('endDate', value);
                           }}
@@ -157,7 +161,10 @@ export function CreateEventPage({
                       )}
                     </Box>
                     <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
-                      <TextArea name="description" />
+                      <TextArea
+                        name="description"
+                        isDisabled={role === ROLES.USER}
+                      />
                     </Box>
                   </Box>
                   <Box display="flex">

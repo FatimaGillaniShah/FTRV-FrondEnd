@@ -21,6 +21,8 @@ const {
   CREATE_EVENT,
   EVENTS,
   DELETE_EVENTS,
+  GET_EVENT,
+  UPDATE_EVENTS,
 } = APIS;
 
 // USER CRUD
@@ -71,8 +73,8 @@ export const createLink = (payload) => http.post(CREATE_LINK, payload);
 
 export const getLinkById = (id) => http.get(`${GET_LINK}/${id}`);
 
-export const updateLink = (payload) =>
-  http.put(`${UPDATE_LINK}/${payload.id}`, payload);
+export const updateLink = ({ id, ...payload }) =>
+  http.put(`${UPDATE_LINK}/${id}`, payload);
 
 export const deleteLink = (payload) =>
   http.delete(DELETE_LINK, { data: { ids: payload } });
@@ -103,3 +105,10 @@ export const fetchEvents = () => http.get(`${EVENTS}?pageSize=1000&`);
 
 export const deleteEvents = (payload) =>
   http.delete(DELETE_EVENTS, { data: { ids: payload } });
+
+export const getEventById = ({ queryKey }) => {
+  http.get(`${GET_EVENT}/${queryKey[1]}`);
+};
+
+export const updateEvent = ({ id, ...payload }) =>
+  http.put(`${UPDATE_EVENTS}/${id}`, payload);

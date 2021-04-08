@@ -2,6 +2,7 @@ import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import LayersIcon from '@material-ui/icons/Layers';
 import LinkIcon from '@material-ui/icons/Link';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import PeopleIcon from '@material-ui/icons/People';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import StorageIcon from '@material-ui/icons/Storage';
@@ -56,6 +57,12 @@ export const menuItems = [
     name: 'links',
     link: '/useful-links',
     icon: LinkIcon,
+  },
+  {
+    name: 'events',
+    link: '/events',
+    icon: CalendarTodayIcon,
+    role: [ROLES.USER],
   },
   {
     name: 'settings',

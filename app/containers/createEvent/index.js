@@ -1,10 +1,16 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { Loading } from '../../components/loading';
 import { CreateEventPage } from '../../components/pages/createEvent';
-import { createEvent, deleteEvents } from '../../state/queryFunctions';
+import {
+  createEvent,
+  deleteEvents,
+  getEventById,
+  updateEvent,
+} from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Modal, Toast } from '../../utils/helper';
 
@@ -12,12 +18,27 @@ function CreateEvent() {
   const history = useHistory();
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(createEvent, {
+  const { data, isLoading } = useQuery(keys.getEvent(id), getEventById, {
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    onError: ({
+      response: {
+        data: { message },
+      },
+    }) => {
+      Toast({
+        icon: 'error',
+        title: message || 'Some error occurred',
+      });
+    },
+  });
+  const { mutate } = useMutation(id ? updateEvent : createEvent, {
     onSuccess: () => {
       Toast({
         icon: 'success',
         title: `Event ${id ? 'Updated' : 'Created'}  Successfully`,
       });
+      queryClient.invalidateQueries(keys.getEvent(id));
       history.push('/events');
     },
     onError: ({
@@ -71,13 +92,17 @@ function CreateEvent() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Event</title>
       </Helmet>
-      <CreateEventPage
-        onHandleSubmit={handleSubmit}
-        id={id}
-        initialValues={id ? initialValues : initialValues}
-        pageTitle={id ? 'Update' : 'Create New'}
-        onHandleDeleteEvent={handleDeleteEvent}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <CreateEventPage
+          onHandleSubmit={handleSubmit}
+          id={id}
+          initialValues={id ? data?.data?.data : initialValues}
+          pageTitle={id ? 'Update' : 'Create New'}
+          onHandleDeleteEvent={handleDeleteEvent}
+        />
+      )}
     </>
   );
 }

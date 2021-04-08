@@ -39,4 +39,6 @@ export const APIS = {
   CREATE_EVENT: '/events',
   EVENTS: '/events',
   DELETE_EVENTS: '/events',
+  GET_EVENT: '/events',
+  UPDATE_EVENTS: '/events',
 };
