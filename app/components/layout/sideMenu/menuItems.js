@@ -21,7 +21,7 @@ export const menuItems = [
   },
   {
     name: 'blog',
-    link: '/blog',
+    externalLink: 'https://www.funtownrv.com/blog/',
     icon: BorderColorIcon,
   },
   {

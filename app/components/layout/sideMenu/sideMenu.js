@@ -66,7 +66,11 @@ const SideMenu = ({ item }) => {
         variant="contained"
         {...bindHover(popupState)}
         onClick={() => {
-          if (item.link) history.push(item.link);
+          if (item?.link) {
+            history.push(item.link);
+          } else if (item?.externalLink) {
+            window.open(item.externalLink, '_blank');
+          }
         }}
       >
         <IconButton aria-label="delete" className={classes.iconStyle}>
