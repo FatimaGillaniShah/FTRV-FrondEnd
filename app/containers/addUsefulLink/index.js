@@ -20,7 +20,6 @@ function AddUsefulLink() {
     () => getLinkById(id),
     {
       enabled: !!id,
-      refetchOnWindowFocus: false,
     }
   );
   const mutation = useMutation(id ? updateLink : createLink, {

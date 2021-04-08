@@ -19,10 +19,8 @@ function EditAnnouncement() {
   const queryClient = useQueryClient();
   const history = useHistory();
 
-  const { data, isLoading } = useQuery(
-    keys.getAnnouncementById(id),
-    () => retrieveAnnouncementById(id),
-    { refetchOnWindowFocus: false }
+  const { data, isLoading } = useQuery(keys.getAnnouncementById(id), () =>
+    retrieveAnnouncementById(id)
   );
   const mutation = useMutation(updateAnnouncement, {
     onSuccess: () => {

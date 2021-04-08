@@ -25,11 +25,7 @@ function EditUser() {
   const { user, setUser } = useAuthContext();
   const id = user && user.data && user.data.id;
   const userRole = user && user.data && user.data.role;
-  const { data, isLoading } = useQuery(
-    keys.getUser(id),
-    () => getUserById(id),
-    { refetchOnWindowFocus: false }
-  );
+  const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
   const mutation = useMutation(updateUser, {
     onSuccess: ({
       data: {

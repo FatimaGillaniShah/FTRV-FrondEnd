@@ -30,11 +30,14 @@ const useStyles = makeStyles(() => ({
 }));
 function Index() {
   const classes = useStyles();
-  const { data } = useQuery(keys.birthday, getBirthdays);
+  const { data } = useQuery(keys.birthday, getBirthdays, {
+    refetchOnWindowFocus: true,
+  });
   const { data: quoteData } = useQuery(keys.quote, getQuote);
   const { data: announcementData } = useQuery(
     keys.announcements,
-    retrieveActiveAnnouncements
+    retrieveActiveAnnouncements,
+    { refetchOnWindowFocus: true }
   );
 
   const birthdays = data?.data?.data || [];

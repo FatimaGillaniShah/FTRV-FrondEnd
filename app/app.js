@@ -13,7 +13,14 @@ import theme from './theme';
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const MOUNT_NODE = document.getElementById('app');
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 10000,
+    },
+  },
+});
 (() => {
   ReactDOM.render(
     <QueryClientProvider client={queryClient}>

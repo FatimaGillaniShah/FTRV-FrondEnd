@@ -28,7 +28,6 @@ function AnnouncementContainer() {
   const { data, isLoading } = useQuery(
     keys.adminAnnouncements,
     retrieveAnnouncements,
-    { refetchOnWindowFocus: false }
   );
   const mutation = useMutation(deleteAnnouncement, {
     onSuccess: ({

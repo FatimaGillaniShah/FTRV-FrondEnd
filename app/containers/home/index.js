@@ -24,9 +24,7 @@ function HomeContainer() {
       history.push('/');
     }
   }, []);
-  const { data, isLoading } = useQuery(keys.events, fetchEvents, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, isLoading } = useQuery(keys.events, fetchEvents);
 
   return (
     <>

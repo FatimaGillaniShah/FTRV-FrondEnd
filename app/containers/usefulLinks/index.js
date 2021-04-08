@@ -12,9 +12,7 @@ import { headCells } from './columns';
 function UsefulLinks() {
   const [selected, setSelected] = useState([]);
   const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery(keys.links, fetchLinks, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, isLoading } = useQuery(keys.links, fetchLinks);
   const mutation = useMutation(deleteLink, {
     onSuccess: ({
       data: {

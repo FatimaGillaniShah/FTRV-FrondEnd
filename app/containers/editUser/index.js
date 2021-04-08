@@ -30,11 +30,7 @@ function EditUser() {
     },
   } = useAuthContext();
 
-  const { data, isLoading } = useQuery(
-    keys.getUser(id),
-    () => getUserById(id),
-    { refetchOnWindowFocus: false }
-  );
+  const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
 
   const mutation = useMutation(updateUser, {
     onSuccess: () => {

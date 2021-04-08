@@ -66,7 +66,6 @@ function DirectoryContainer() {
   const { data, isLoading } = useQuery(
     keys.getUsers({ query, filters }),
     fetchUsers,
-    { refetchOnWindowFocus: false }
   );
 
   const handleSwitchChange = ({ target }) => {

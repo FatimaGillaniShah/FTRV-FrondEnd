@@ -7,9 +7,7 @@ import { fetchEvents } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 
 function Events() {
-  const { data, isLoading } = useQuery(keys.events, fetchEvents, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, isLoading } = useQuery(keys.events, fetchEvents);
   return (
     <>
       <Helmet>
