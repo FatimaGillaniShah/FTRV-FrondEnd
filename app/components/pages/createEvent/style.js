@@ -7,5 +7,4 @@ export const useStyles = makeStyles((theme) => ({
   dateColor: {
     color: theme.palette.text.dark,
   },
-  linkStyle: { textDecoration: 'none' },
 }));

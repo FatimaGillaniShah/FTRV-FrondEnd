@@ -32,25 +32,28 @@ function CreateEvent() {
       });
     },
   });
-  const { mutate } = useMutation(id ? updateEvent : createEvent, {
-    onSuccess: () => {
-      Toast({
-        icon: 'success',
-        title: `Event ${id ? 'Updated' : 'Created'}  Successfully`,
-      });
-      queryClient.invalidateQueries(keys.getEvent(id));
-      history.push('/events');
-    },
-    onError: ({
-      response: {
-        data: { message },
+  const { mutate, isLoading: loading } = useMutation(
+    id ? updateEvent : createEvent,
+    {
+      onSuccess: () => {
+        Toast({
+          icon: 'success',
+          title: `Event ${id ? 'Updated' : 'Created'}  Successfully`,
+        });
+        queryClient.invalidateQueries(keys.getEvent(id));
+        history.push('/events');
       },
-    }) =>
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occurred',
-      }),
-  });
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) =>
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        }),
+    }
+  );
   const mutation = useMutation(deleteEvents, {
     onSuccess: ({
       data: {
@@ -92,7 +95,7 @@ function CreateEvent() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Event</title>
       </Helmet>
-      {isLoading ? (
+      {isLoading || loading || mutation.isLoading ? (
         <Loading />
       ) : (
         <CreateEventPage

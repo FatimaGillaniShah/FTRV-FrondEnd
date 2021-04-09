@@ -16,6 +16,7 @@ import CeoMessage from '../containers/ceoMessage/loadable';
 import Events from '../containers/events/loadable';
 import { ROLES } from '../utils/constants';
 import createEvent from '../containers/createEvent/loadable';
+import ViewEvent from '../containers/viewEvent/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -173,8 +174,20 @@ export const routeArray = [
         component: createEvent,
         exact: true,
         breadCrumbKey: 'Edit Event',
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
-        roles: [ROLES.ADMIN, ROLES.USER],
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/view/:id',
+        component: ViewEvent,
+        exact: true,
+        breadCrumbKey: 'View Event',
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.USER],
       },
     ],
   },
