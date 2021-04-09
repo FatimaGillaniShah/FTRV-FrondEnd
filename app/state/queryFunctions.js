@@ -18,6 +18,7 @@ const {
   ANNOUNCEMENT,
   GET_ANNOUNCEMENTS,
   ANNOUNCEMENT_DELETE,
+  CEO_MESSAGE,
   CREATE_EVENT,
   EVENTS,
   DELETE_EVENTS,
@@ -97,6 +98,9 @@ export const deleteAnnouncement = (payload) =>
 
 export const retrieveAnnouncement = () => http.get(`${GET_ANNOUNCEMENTS}`);
 
+export const getCeoMessage = () => http.get(`${CEO_MESSAGE}`);
+
+export const saveCeoMessage = (payload) => http.put(`${CEO_MESSAGE}`, payload);
 // EVENTS CRUD
 
 export const createEvent = (payload) => http.post(CREATE_EVENT, payload);

@@ -22,7 +22,5 @@ export const formValidaton = object().shape({
         (value) => value && SUPPORTED_FORMATS.includes(value.type)
       ),
   }),
-  message: string()
-    .required('*Message Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+  content: string().required('*Content Required'),
 });

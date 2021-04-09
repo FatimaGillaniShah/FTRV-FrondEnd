@@ -1,12 +1,12 @@
 import { Avatar, Box, Button } from '@material-ui/core';
-import { TextArea, Input } from 'components';
+import { TextArea } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
 
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES } from 'utils/constants';
 import WrapInCard from '../../layout/wrapInCard';
@@ -14,33 +14,33 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import { H4 } from '../../typography';
 import { formValidaton } from './formValidation';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   imageStyle: {
     width: '150px',
     height: '150px',
   },
-  label: {
-    color: theme.palette.text.info,
-  },
-  dateColor: {
-    color: theme.palette.text.dark,
-  },
 }));
 
-function AddCeoMessage({ initialData }) {
+function AddCeoMessage({ mutation, onHandleSubmit, value }) {
   const classes = useStyles();
-  const [imgFile, setImgFile] = useState(
-    (initialData && initialData.avatar) || null
-  );
+  const [imgFile, setImgFile] = useState((value && value.avatar) || null);
   const history = useHistory();
+
+  useEffect(() => {
+    if (value) {
+      setImgFile(process.env.API_ASSETS_URL + imgFile);
+    }
+  }, []);
 
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
         <Formik
-          initialValues={initialData}
+          initialValues={value}
           validationSchema={formValidaton}
-          onSubmit={async () => {}}
+          onSubmit={(values) => {
+            onHandleSubmit(values);
+          }}
         >
           {({ setFieldValue }) => (
             <Form>
@@ -86,7 +86,7 @@ function AddCeoMessage({ initialData }) {
                       inputComponent={(props) => (
                         <MuiFileInput
                           name="file"
-                          mutation=""
+                          mutation={mutation}
                           setImgFile={setImgFile}
                           setFieldValue={setFieldValue}
                           acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
@@ -107,7 +107,7 @@ function AddCeoMessage({ initialData }) {
 
                     <Box width={1} mt={10} px={3} mb={8}>
                       <TextArea
-                        name="message"
+                        name="content"
                         variant="outlined"
                         OutlinedInputPlaceholder="ceo message"
                         multiline

@@ -36,6 +36,7 @@ export const APIS = {
   ANNOUNCEMENT: '/announcements',
   ANNOUNCEMENT_DELETE: '/announcements/deleteAnnouncements',
   GET_ANNOUNCEMENTS: '/announcements/userAnnouncements',
+  CEO_MESSAGE: '/ceo',
   CREATE_EVENT: '/events',
   EVENTS: '/events',
   DELETE_EVENTS: '/events',

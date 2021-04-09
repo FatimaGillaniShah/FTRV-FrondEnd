@@ -8,6 +8,8 @@ export const keys = {
   getLink: (payload) => ['link', payload],
   getAnnouncementById: (id) => ['announcement', id],
   announcement: 'announcement',
+  getAnnouncements: 'announcements',
+  ceoMessage: 'ceo',
   announcements: 'announcements',
   adminAnnouncements: 'adminAnnouncements',
   events: 'events',
