@@ -3,7 +3,6 @@ import { TextArea } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
-
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
 import React, { memo, useState, useEffect } from 'react';

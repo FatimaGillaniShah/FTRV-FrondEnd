@@ -29,13 +29,16 @@ function EditUser() {
   const mutation = useMutation(updateUser, {
     onSuccess: ({
       data: {
-        data: { avatar },
+        data: { avatar, firstName, lastName },
       },
     }) => {
       if (avatar) {
         const parsedUserData = { ...user };
         if (parsedUserData.data) {
           parsedUserData.data.avatar = avatar;
+          parsedUserData.data.firstname = firstName;
+          parsedUserData.data.lastname = lastName;
+          parsedUserData.data.name = `${firstName}${' '}${lastName}`;
           setUser(parsedUserData);
         }
       }
