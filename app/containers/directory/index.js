@@ -1,12 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Alert } from 'components';
-import Swal from 'sweetalert2';
-import { deleteUser, fetchUsers } from '../../state/queryFunctions';
+import { fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
@@ -20,6 +19,7 @@ import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
 import { Modal, Toast } from '../../utils/helper';
+import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({});
@@ -28,30 +28,9 @@ function DirectoryContainer() {
   const [checked, setChecked] = useState(false);
   const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
-  const queryClient = useQueryClient();
   const history = useHistory();
   const classes = useStyles();
-  const mutation = useMutation(deleteUser, {
-    onSuccess: ({
-      data: {
-        data: { count },
-      },
-    }) => {
-      setSelected([]);
-      Swal.fire('Deleted!', `${count} user deleted.`, 'success');
-      queryClient.invalidateQueries(keys.getUsers({}));
-    },
-    onError: ({
-      response: {
-        data: { message },
-      },
-    }) => {
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occured',
-      });
-    },
-  });
+  const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
   const {
     user: {
       data: { role },
@@ -93,14 +72,6 @@ function DirectoryContainer() {
       });
     }
   }, [toastValue]);
-
-  if (mutation.isError) {
-    Swal.fire(
-      '',
-      'Some error occured in deleting the user. Please  try again',
-      'error'
-    );
-  }
 
   const handleDelete = () => {
     if (!selected.length) {
@@ -150,7 +121,7 @@ function DirectoryContainer() {
               </Box>
             )}
 
-            {!isLoading && (
+            {!isLoading && !mutation.isLoading && (
               <DataTable
                 data={data && data.data.data.rows}
                 headCells={headCells}

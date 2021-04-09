@@ -2,12 +2,11 @@ import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import { Loading } from '../../components/loading';
 import { CreateEventPage } from '../../components/pages/createEvent';
+import { useDeleteEvent } from '../../hooks/event';
 import {
   createEvent,
-  deleteEvents,
   getEventById,
   updateEvent,
 } from '../../state/queryFunctions';
@@ -54,26 +53,7 @@ function CreateEvent() {
         }),
     }
   );
-  const mutation = useMutation(deleteEvents, {
-    onSuccess: ({
-      data: {
-        data: { count },
-      },
-    }) => {
-      Swal.fire('Deleted!', `${count} event deleted.`, 'success');
-      queryClient.invalidateQueries(keys.events);
-      history.push('/events');
-    },
-    onError: ({
-      response: {
-        data: { message },
-      },
-    }) =>
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occurred',
-      }),
-  });
+  const mutation = useDeleteEvent();
   const handleSubmit = (values) => {
     mutate(values);
   };

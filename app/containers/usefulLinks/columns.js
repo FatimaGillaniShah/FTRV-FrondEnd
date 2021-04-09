@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal } from '../../utils/helper';
-import { useDeleteLink } from '../../hooks/usefulLinks';
+import { useDeleteLink } from '../../hooks/usefulLink';
 
 const ActionButtons = ({ data, setSelected, disabled }) => {
   const history = useHistory();
