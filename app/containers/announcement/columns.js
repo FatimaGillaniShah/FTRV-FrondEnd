@@ -3,28 +3,14 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
-import Swal from 'sweetalert2';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal } from '../../utils/helper';
-import { deleteAnnouncement } from '../../state/queryFunctions';
-import { keys } from '../../state/queryKeys';
+import { useDeleteAnnouncement } from '../../hooks/announcement';
 
 const ActionButtons = ({ data, setSelected, disabled }) => {
   const history = useHistory();
-  const queryClient = useQueryClient();
-  const mutation = useMutation(deleteAnnouncement, {
-    onSuccess: ({
-      data: {
-        data: { count },
-      },
-    }) => {
-      setSelected([]);
-      Swal.fire('Deleted!', `${count} announcement(s) deleted.`, 'success');
-      queryClient.invalidateQueries(keys.adminAnnouncements);
-    },
-  });
+  const mutation = useDeleteAnnouncement({ callbackFn: () => setSelected([]) });
   const {
     user: {
       data: { role },

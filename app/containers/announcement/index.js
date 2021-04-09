@@ -1,8 +1,7 @@
 import React, { memo, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Box from '@material-ui/core/Box';
-import Swal from 'sweetalert2';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { Alert } from '@material-ui/lab';
 import moment from 'moment';
 import { headCells } from './columns';
@@ -13,43 +12,20 @@ import { useAuthContext } from '../../context/authContext';
 import { Loading } from '../../components/loading';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
-import {
-  retrieveAnnouncements,
-  deleteAnnouncement,
-} from '../../state/queryFunctions';
+import { retrieveAnnouncements } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Modal, Toast, capitalize } from '../../utils/helper';
+import { Modal, capitalize } from '../../utils/helper';
+import { useDeleteAnnouncement } from '../../hooks/announcement';
 
 function AnnouncementContainer() {
   const [selected, setSelected] = useState([]);
   const [formatData, setFormatData] = useState([]);
-  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery(
     keys.adminAnnouncements,
     retrieveAnnouncements
   );
-  const mutation = useMutation(deleteAnnouncement, {
-    onSuccess: ({
-      data: {
-        data: { count },
-      },
-    }) => {
-      setSelected([]);
-      Swal.fire('Deleted!', `${count} Announcement(s) deleted.`, 'success');
-      queryClient.invalidateQueries(keys.adminAnnouncements);
-    },
-    onError: ({
-      response: {
-        data: { message },
-      },
-    }) => {
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occured',
-      });
-    },
-  });
+  const mutation = useDeleteAnnouncement({ callbackFn: () => setSelected([]) });
 
   const {
     user: {
@@ -114,7 +90,7 @@ function AnnouncementContainer() {
                 )}
               </Box>
             )}
-            {!isLoading && (
+            {!isLoading && !mutation.isLoading && (
               <DataTable
                 data={formatData}
                 headCells={headCells}

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Loading } from '../../components/loading';
 import UsefulLinksPage from '../../components/pages/usefulLinks';
-import { useDeleteLink } from '../../hooks/usefulLinks';
+import { useDeleteLink } from '../../hooks/usefulLink';
 import { fetchLinks } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Modal } from '../../utils/helper';

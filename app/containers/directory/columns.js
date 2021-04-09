@@ -2,43 +2,22 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
-import { deleteUser } from '../../state/queryFunctions';
-import { keys } from '../../state/queryKeys';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal } from '../../utils/helper';
+import { useDeleteUser } from '../../hooks/user';
 
 const ActionButtons = ({ data, disabled, setSelected }) => {
   const history = useHistory();
-  const queryClient = useQueryClient();
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
 
-  const mutation = useMutation(deleteUser, {
-    onSuccess: ({
-      data: {
-        data: { count },
-      },
-    }) => {
-      setSelected([]);
-      Swal.fire('Deleted!', `${count} user deleted.`, 'success');
-      queryClient.invalidateQueries(keys.getUsers({}));
-    },
-  });
+  const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
 
-  if (mutation.isError) {
-    Swal.fire(
-      '',
-      'Some error occured in deleting the user. Please  try again',
-      'error'
-    );
-  }
   const handleDeleteUser = () => {
     Modal.fire().then((result) => {
       if (result.isConfirmed) {
