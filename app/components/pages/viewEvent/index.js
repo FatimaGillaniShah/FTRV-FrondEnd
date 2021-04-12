@@ -3,21 +3,13 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import ClearIcon from '@material-ui/icons/Clear';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { ROLES } from '../../../utils/constants';
-import { useAuthContext } from '../../../context/authContext';
 import { H5, H6 } from '../../typography';
 
 export function ViewEventPage({
   eventDetails: { title, startDate, endDate, description },
 }) {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
   const history = useHistory();
 
   return (
@@ -46,12 +38,10 @@ export function ViewEventPage({
           <Box mt={10}>
             <Button
               variant="text"
-              startIcon={
-                role === ROLES.ADMIN ? <ClearIcon /> : <KeyboardBackspaceIcon />
-              }
+              startIcon={<KeyboardBackspaceIcon />}
               onClick={() => history.goBack()}
             >
-              {role === ROLES.ADMIN ? 'Cancel' : 'Back'}
+              Back
             </Button>
           </Box>
         </Box>
