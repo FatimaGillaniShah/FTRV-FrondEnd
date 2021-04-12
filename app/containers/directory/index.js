@@ -22,7 +22,7 @@ import { Modal, Toast } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
-  const [query, setQuery] = useState({});
+  const [query, setQuery] = useState({ searchString: '' });
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
@@ -31,6 +31,7 @@ function DirectoryContainer() {
   const history = useHistory();
   const classes = useStyles();
   const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
+  const initialValues = { query: query.searchString };
   const {
     user: {
       data: { role },
@@ -48,15 +49,21 @@ function DirectoryContainer() {
   );
 
   const handleSwitchChange = ({ target }) => {
+    setQuery({ searchString: '' });
+    console.log('----------------query');
     setChecked(target.checked);
   };
-
+  console.log('------------query', query);
   const handleSearch = debounce(({ target: { value } }) => {
+    console.log('--------------handle', value);
     setQuery({ searchString: value });
   }, 500);
 
   const handleFilterSearch = (values) => {
     setFilters(values);
+  };
+  const onClear = () => {
+    setFilters([]);
   };
 
   useEffect(() => {
@@ -94,14 +101,19 @@ function DirectoryContainer() {
           <WrapInCard mb={8}>
             <Box display="flex">
               <Search
+                initialValues={initialValues}
                 onHandleSwitchChange={handleSwitchChange}
                 checked={checked}
                 onHandleSearch={handleSearch}
-                query={query}
               />
             </Box>
             <Box mt={8}>
-              {checked && <Filters onHandleFilterSearch={handleFilterSearch} />}
+              {checked && (
+                <Filters
+                  onHandleFilterSearch={handleFilterSearch}
+                  onClear={onClear}
+                />
+              )}
             </Box>
           </WrapInCard>
           <WrapInCard>

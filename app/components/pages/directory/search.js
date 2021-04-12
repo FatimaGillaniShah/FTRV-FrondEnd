@@ -8,18 +8,19 @@ import { Input } from '../../index';
 import { H5 } from '../../typography';
 
 export function Search({
+  initialValues,
   onHandleSwitchChange,
   checked,
   onHandleSearch,
-  query: { value },
 }) {
+  console.log('------------initial', initialValues);
   return (
     <>
       <Grid item xs={2} pl={0}>
         <H5>Directory</H5>
       </Grid>
       <Grid item xs={4}>
-        <Formik initialValues={{ query: '' }}>
+        <Formik initialValues={initialValues}>
           <Input
             name="query"
             variant="outlined"
@@ -30,7 +31,6 @@ export function Search({
             IconClickable={false}
             onChange={onHandleSearch}
             disabled={checked && true}
-            value={value}
             showInputLabel={false}
           />
         </Formik>
