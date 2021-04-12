@@ -23,7 +23,7 @@ function AddUsefulLink() {
       enabled: !!id,
     }
   );
-  let a;
+
   const mutation = useMutation(id ? updateLink : createLink, {
     onSuccess: () => {
       history.push('/useful-links');
