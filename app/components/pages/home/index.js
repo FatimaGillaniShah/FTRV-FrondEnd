@@ -1,4 +1,4 @@
-import { Avatar, Box, Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import bannerImage from '../../../images/group.png';
