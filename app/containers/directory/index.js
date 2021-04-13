@@ -30,40 +30,39 @@ function DirectoryContainer() {
   const [selected, setSelected] = useState([]);
   const history = useHistory();
   const classes = useStyles();
+  const [fieldFunc, setFieldFunc] = useState();
   const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
-  const initialValues = { query: query.searchString };
+
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
-
   useEffect(() => {
     if (checked) {
-      setQuery('');
+      fieldFunc.setFormikField('searchString', '');
+      setQuery({ searchString: '' });
     }
   }, [checked]);
   const { data, isLoading } = useQuery(
     keys.getUsers({ query, filters }),
     fetchUsers
   );
+  console.log('--------------filters', filters);
 
   const handleSwitchChange = ({ target }) => {
-    setQuery({ searchString: '' });
-    console.log('----------------query');
     setChecked(target.checked);
   };
-  console.log('------------query', query);
-  const handleSearch = debounce(({ target: { value } }) => {
-    console.log('--------------handle', value);
-    setQuery({ searchString: value });
+  const handleSearch = debounce((e, setFieldValue) => {
+    setFieldFunc({ setFormikField: setFieldValue });
+    setQuery({ searchString: e.target.value });
   }, 500);
 
   const handleFilterSearch = (values) => {
     setFilters(values);
   };
   const onClear = () => {
-    setFilters([]);
+    // setFilters([]);
   };
 
   useEffect(() => {
@@ -101,7 +100,7 @@ function DirectoryContainer() {
           <WrapInCard mb={8}>
             <Box display="flex">
               <Search
-                initialValues={initialValues}
+                initialValues={query}
                 onHandleSwitchChange={handleSwitchChange}
                 checked={checked}
                 onHandleSearch={handleSearch}

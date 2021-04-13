@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  FormHelperText,
-  IconButton,
-  Link,
-} from '@material-ui/core';
+import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
@@ -18,12 +12,11 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useHistory } from 'react-router';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input, TextArea } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
-import { ROLES } from '../../../utils/constants';
-import { useAuthContext } from '../../../context/authContext';
 import { useStyles } from './style';
 
 const eventSchema = object().shape({
@@ -49,11 +42,7 @@ export function CreateEventPage({
   onHandleDeleteEvent,
 }) {
   const classes = useStyles();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
+  const history = useHistory();
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -65,15 +54,13 @@ export function CreateEventPage({
             width={[1, 1, 1 / 2, 1 / 3]}
           >
             <Box my={7}>
-              <H5> {role === ROLES.USER ? 'View' : pageTitle} Event </H5>
+              <H5> {pageTitle} Event </H5>
             </Box>
-            {role === ROLES.ADMIN && id && (
-              <Box mr={3}>
-                <IconButton onClick={onHandleDeleteEvent}>
-                  <DeleteIcon color="error" />
-                </IconButton>
-              </Box>
-            )}
+            <Box mr={3}>
+              <IconButton onClick={onHandleDeleteEvent}>
+                <DeleteIcon color="error" />
+              </IconButton>
+            </Box>
           </Box>
           <Formik
             enableReinitialize
@@ -95,7 +82,6 @@ export function CreateEventPage({
                         appendIcon
                         Icon={TitleOutlinedIcon}
                         IconClickable
-                        isDisabled={role === ROLES.USER}
                       />
                     </Box>
                     <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
@@ -120,7 +106,6 @@ export function CreateEventPage({
                             setFieldValue('startDate', value);
                           }}
                           minDateMessage=""
-                          disabled={role === ROLES.USER}
                           KeyboardButtonProps={{ tabIndex: -1 }}
                         />
                       </MuiPickersUtilsProvider>
@@ -152,7 +137,6 @@ export function CreateEventPage({
                           onChange={(value) => {
                             setFieldValue('endDate', value);
                           }}
-                          disabled={role === ROLES.USER}
                           KeyboardButtonProps={{ tabIndex: -1 }}
                         />
                       </MuiPickersUtilsProvider>
@@ -161,32 +145,28 @@ export function CreateEventPage({
                       )}
                     </Box>
                     <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
-                      <TextArea
-                        name="description"
-                        isDisabled={role === ROLES.USER}
-                      />
+                      <TextArea name="description" />
                     </Box>
                   </Box>
                   <Box display="flex">
-                    {role === ROLES.ADMIN && (
-                      <Box mb={5}>
-                        <Button
-                          type="submit"
-                          color="secondary"
-                          variant="contained"
-                          startIcon={<SaveIcon />}
-                        >
-                          {id ? 'Update' : 'Create'}
-                        </Button>
-                      </Box>
-                    )}
-
+                    <Box mb={5}>
+                      <Button
+                        type="submit"
+                        color="secondary"
+                        variant="contained"
+                        startIcon={<SaveIcon />}
+                      >
+                        {id ? 'Update' : 'Create'}
+                      </Button>
+                    </Box>
                     <Box ml={2}>
-                      <Link href="/events" underline="none">
-                        <Button variant="text" startIcon={<ClearIcon />}>
-                          {role === ROLES.ADMIN ? 'Cancel' : 'Back'}
-                        </Button>
-                      </Link>
+                      <Button
+                        variant="text"
+                        startIcon={<ClearIcon />}
+                        onClick={() => history.goBack()}
+                      >
+                        Cancel
+                      </Button>
                     </Box>
                   </Box>
                 </Box>

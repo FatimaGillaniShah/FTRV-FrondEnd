@@ -12,7 +12,12 @@ export function Search({
   onHandleSwitchChange,
   checked,
   onHandleSearch,
+<<<<<<< HEAD
+=======
+  initialValues,
+>>>>>>> fix/2ndzda-empty-search-onFilterToggle
 }) {
+  console.log('------------initial', initialValues);
   return (
     <>
       <Grid item xs={2} pl={0}>
@@ -20,6 +25,20 @@ export function Search({
       </Grid>
       <Grid item xs={4}>
         <Formik initialValues={initialValues}>
+<<<<<<< HEAD
+          <Input
+            name="query"
+            variant="outlined"
+            prependIcon
+            Icon={SearchIcon}
+            OutlinedInputPlaceholder="Type here to search"
+            margin="dense"
+            IconClickable={false}
+            onChange={onHandleSearch}
+            disabled={checked && true}
+            showInputLabel={false}
+          />
+=======
           {({ handleChange, setFieldValue }) => (
             <Form>
               <Input
@@ -39,6 +58,7 @@ export function Search({
               />
             </Form>
           )}
+>>>>>>> fix/2ndzda-empty-search-onFilterToggle
         </Formik>
       </Grid>
       <Grid item xs={2}>

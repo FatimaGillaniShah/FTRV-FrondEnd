@@ -8,6 +8,7 @@ import { useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { CustomToolbar } from './customToolbar';
 import { useAuthContext } from '../../../context/authContext';
+import { ROLES } from '../../../utils/constants';
 
 export function EventCalendar({ eventList, home }) {
   const history = useHistory();
@@ -19,7 +20,8 @@ export function EventCalendar({ eventList, home }) {
   } = useAuthContext();
 
   const handleSelectEvent = (event) => {
-    history.push(`/events/edit/${event.id}`);
+    if (data.role === ROLES.ADMIN) history.push(`/events/edit/${event.id}`);
+    else if (data.role === ROLES.USER) history.push(`/events/view/${event.id}`);
   };
   const dayFormat = () => {
     if (home || matches) {

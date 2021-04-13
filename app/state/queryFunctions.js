@@ -110,9 +110,8 @@ export const fetchEvents = () => http.get(`${EVENTS}?pageSize=1000&`);
 export const deleteEvents = (payload) =>
   http.delete(DELETE_EVENTS, { data: { ids: payload } });
 
-export const getEventById = ({ queryKey }) => {
+export const getEventById = ({ queryKey }) =>
   http.get(`${GET_EVENT}/${queryKey[1]}`);
-};
 
 export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);

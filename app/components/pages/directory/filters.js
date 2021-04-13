@@ -21,6 +21,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
           location: '',
         }}
         onSubmit={(values) => {
+          console.log('--------------------', values);
           onHandleFilterSearch(values);
         }}
       >
