@@ -7,7 +7,8 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { Input } from '../../index';
 
 function Filters({ onHandleFilterSearch, onClear }) {
-  const clearFilteringSearch = () => {
+  const clearFilteringSearch = (resetForm) => {
+    resetForm();
     onClear();
   };
   return (
@@ -21,7 +22,6 @@ function Filters({ onHandleFilterSearch, onClear }) {
           location: '',
         }}
         onSubmit={(values) => {
-          console.log('--------------------', values);
           onHandleFilterSearch(values);
         }}
       >

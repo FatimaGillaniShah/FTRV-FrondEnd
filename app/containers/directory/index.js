@@ -40,7 +40,7 @@ function DirectoryContainer() {
   } = useAuthContext();
   useEffect(() => {
     if (checked) {
-      fieldFunc.setFormikField('searchString', '');
+      fieldFunc?.setFormikField('searchString', '');
       setQuery({ searchString: '' });
     }
   }, [checked]);
@@ -48,7 +48,6 @@ function DirectoryContainer() {
     keys.getUsers({ query, filters }),
     fetchUsers
   );
-  console.log('--------------filters', filters);
 
   const handleSwitchChange = ({ target }) => {
     setChecked(target.checked);
@@ -62,7 +61,7 @@ function DirectoryContainer() {
     setFilters(values);
   };
   const onClear = () => {
-    // setFilters([]);
+    setFilters([]);
   };
 
   useEffect(() => {
