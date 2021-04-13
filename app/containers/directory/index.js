@@ -22,7 +22,7 @@ import { Modal, Toast } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
-  const [query, setQuery] = useState({});
+  const [query, setQuery] = useState({ query: '' });
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
@@ -30,6 +30,7 @@ function DirectoryContainer() {
   const [selected, setSelected] = useState([]);
   const history = useHistory();
   const classes = useStyles();
+  const [fieldFunc, setFieldFunc] = useState();
   const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
   const {
     user: {
@@ -39,7 +40,8 @@ function DirectoryContainer() {
 
   useEffect(() => {
     if (checked) {
-      setQuery('');
+      fieldFunc.setFormikField('query', '');
+      setQuery({ query: '' });
     }
   }, [checked]);
   const { data, isLoading } = useQuery(
@@ -51,8 +53,9 @@ function DirectoryContainer() {
     setChecked(target.checked);
   };
 
-  const handleSearch = debounce(({ target: { value } }) => {
-    setQuery({ searchString: value });
+  const handleSearch = debounce((e, setFieldValue) => {
+    setFieldFunc({ setFormikField: setFieldValue });
+    setQuery({ query: e.target.value });
   }, 500);
 
   const handleFilterSearch = (values) => {
@@ -97,7 +100,7 @@ function DirectoryContainer() {
                 onHandleSwitchChange={handleSwitchChange}
                 checked={checked}
                 onHandleSearch={handleSearch}
-                query={query}
+                initialValues={query}
               />
             </Box>
             <Box mt={8}>
