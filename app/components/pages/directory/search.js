@@ -23,7 +23,7 @@ export function Search({
           {({ handleChange, setFieldValue }) => (
             <Form>
               <Input
-                name="query"
+                name="searchString"
                 variant="outlined"
                 prependIcon
                 Icon={SearchIcon}

@@ -22,7 +22,7 @@ import { Modal, Toast } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
-  const [query, setQuery] = useState({ query: '' });
+  const [query, setQuery] = useState({ searchString: '' });
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
@@ -40,8 +40,8 @@ function DirectoryContainer() {
 
   useEffect(() => {
     if (checked) {
-      fieldFunc.setFormikField('query', '');
-      setQuery({ query: '' });
+      fieldFunc.setFormikField('searchString', '');
+      setQuery({ searchString: '' });
     }
   }, [checked]);
   const { data, isLoading } = useQuery(
@@ -55,7 +55,7 @@ function DirectoryContainer() {
 
   const handleSearch = debounce((e, setFieldValue) => {
     setFieldFunc({ setFormikField: setFieldValue });
-    setQuery({ query: e.target.value });
+    setQuery({ searchString: e.target.value });
   }, 500);
 
   const handleFilterSearch = (values) => {
