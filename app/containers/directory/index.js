@@ -50,6 +50,7 @@ function DirectoryContainer() {
   );
 
   const handleSwitchChange = ({ target }) => {
+    onClear();
     setChecked(target.checked);
   };
   const handleSearch = debounce((e, setFieldValue) => {
