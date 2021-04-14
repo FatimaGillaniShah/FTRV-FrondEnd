@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useHistory } from 'react-router';
 import AddCeoMessageInfo from '../../components/pages/updateCeoMessage';
 import { getCeoMessage, saveCeoMessage } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
@@ -8,10 +9,12 @@ import { Loading } from '../../components/loading';
 import { Toast } from '../../components';
 
 function AddCeoMessage() {
+  const history = useHistory();
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(keys.ceoMessage, getCeoMessage);
   const mutation = useMutation(saveCeoMessage, {
     onSuccess: () => {
+      history.push('/ceo-message');
       queryClient.invalidateQueries(keys.ceoMessage);
     },
   });
