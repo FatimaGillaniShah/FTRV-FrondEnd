@@ -81,3 +81,13 @@ export const Modal = Swal.mixin({
 export function isFunction(possibleFunction) {
   return typeof possibleFunction === typeof Function;
 }
+
+export function formatDate(date) {
+  return new Date(date).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}

@@ -2,7 +2,7 @@ import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
-import { string, object, date, ref } from 'yup';
+import { string, object, date } from 'yup';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
@@ -24,10 +24,19 @@ const eventSchema = object().shape({
     .required('*Title Required')
     .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
   startDate: date()
-    .min(new Date().toLocaleString())
+    .min(
+      new Date().toLocaleString(),
+      ({ min }) => `Start Date must be equal or greater to ${min}`
+    )
     .required('*Start Date Required'),
   endDate: date()
-    .min(ref('startDate'), 'End date should be greater than start date')
+    .when('startDate', (eventStartDate, schema) => {
+      const startDate = new Date(eventStartDate);
+      const dateMin = new Date(
+        startDate.setTime(new Date(startDate).getTime() + 1000 * 60)
+      );
+      return schema.min(dateMin, 'End date should be greater than start date');
+    })
     .required('*End Date Required'),
   description: string()
     .required('*Description Required')
@@ -96,7 +105,7 @@ export function CreateEventPage({
                           }
                           disablePast
                           inputVariant="outlined"
-                          format="yyyy/MM/dd hh:mm  a"
+                          format="MM/dd/yyyy hh:mm  a"
                           fullWidth
                           showTodayButton
                           value={values.startDate}
@@ -127,7 +136,7 @@ export function CreateEventPage({
                           }
                           disablePast
                           inputVariant="outlined"
-                          format="yyyy/MM/dd hh:mm a"
+                          format="MM/dd/yyyy hh:mm  a"
                           fullWidth
                           showTodayButton
                           value={values.endDate}
