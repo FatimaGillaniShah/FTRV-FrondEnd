@@ -1,0 +1,67 @@
+import React from 'react';
+import Box from '@material-ui/core/Box';
+import { Avatar, IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import { makeStyles } from '@material-ui/core/styles';
+import { H5, BodyTextLarge, BodyTextSmall } from '../../typography';
+import blog1 from '../../../images/blog1.jpeg';
+import { useAuthContext } from '../../../context/authContext';
+import { ROLES } from '../../../utils/constants';
+
+const useStyles = makeStyles(() => ({
+  imageView: {
+    width: '80%',
+    height: '100%',
+  },
+}));
+
+export default function Blog() {
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
+  const classes = useStyles();
+  return (
+    <Box display="flex" flexWrap="wrap">
+      <Box
+        display="flex"
+        flexDirection={['column', 'column', 'row', 'row']}
+        mt={5}
+        mb={5}
+      >
+        <Box width={[1, 1, 1, '20%']} mt={3}>
+          {' '}
+          <Avatar variant="square" src={blog1} className={classes.imageView} />
+        </Box>
+        <Box width={[1, '0.78']}>
+          <Box display="flex" flexDirection="row">
+            <Box width={[1, 1 / 2]} mt={2}>
+              <H5 color="dark">12 Reasons to Celebrate Life</H5>
+            </Box>
+            {role === ROLES.ADMIN && (
+              <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
+                <IconButton>
+                  <EditIcon color="secondary" />
+                </IconButton>
+                <IconButton>
+                  <DeleteIcon color="error" />
+                </IconButton>
+              </Box>
+            )}
+          </Box>
+          <Box>
+            <BodyTextLarge></BodyTextLarge>
+          </Box>
+          <Box mt={3}>
+            <BodyTextLarge fontWeight="fontWeightMedium">
+              Alex Smith
+            </BodyTextLarge>
+            <BodyTextSmall>3 hours ago</BodyTextSmall>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
