@@ -56,16 +56,7 @@ export default function Blog() {
             )}
           </Box>
           <Box>
-            <BodyTextLarge className={classes.textColor}>
-              If you’re in the market for a toy hauler that promises to make you
-              feel at home and offers room for all of your favorite toys, look
-              no further than the impressive Stryker from Cruiser. You’ll love
-              how you get everything you need to feel at home, without
-              compromising on things like quality or a spacious garage If you’re
-              in the market for a toy hauler that promises to make you feel at
-              home and offers room for all of your favorite toys, look no
-              further than the impressive Stryker from Cruiser....
-            </BodyTextLarge>
+            <BodyTextLarge className={classes.textColor}></BodyTextLarge>
           </Box>
           <Box mt={3}>
             <BodyTextLarge
