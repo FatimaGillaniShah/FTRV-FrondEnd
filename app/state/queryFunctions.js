@@ -30,7 +30,7 @@ const {
 
 export const fetchUsers = ({ queryKey }) => {
   let url;
-  if (queryKey[1].query) {
+  if (queryKey[1].query.searchString) {
     url = `${`${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].query)}`}`;
   } else if (queryKey[1].filters) {
     url = `${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].filters)}`;
