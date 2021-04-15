@@ -21,43 +21,42 @@ export default function CeoMessage({ ceoMessageData }) {
   } = useAuthContext();
 
   return (
-    <Box display="flex" flexWrap="wrap">
-      <Box flex={1}>
-        <Box className={classes.rightBox}>
-          <Box display="flex">
-            <Box
-              className={classes.backgroundImage}
-              height={1}
-              width={1}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Avatar
-                className={classes.ceoImage}
-                src={`${process.env.API_ASSETS_URL}${ceoMessageData.avatar}`}
-                alt="person"
-              ></Avatar>
-            </Box>
-          </Box>
-        </Box>
-        <Box width="68%" p={2} m={2} mt={5} display="flex" mb={4}>
-          <Box width={1 / 2}>
-            <H5>CEO Message</H5>
-          </Box>
-          {role === ROLES.ADMIN && (
-            <Box width={1 / 2} display="flex" justifyContent="flex-end">
-              <EditIcon
-                className={classes.editIcon}
-                onClick={() => navigateTo('/ceo-message/edit')}
-              />{' '}
-            </Box>
-          )}
-        </Box>
-        <Box p={2} m={2}>
-          <BodyTextLarge>{ceoMessageData.content}</BodyTextLarge>
+    <>
+      <Box width={[1, 1, 1, '30%']} display="flex" className={classes.rightBox}>
+        <Box
+          className={classes.backgroundImage}
+          height={1}
+          width={1}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Avatar
+            className={classes.ceoImage}
+            src={`${process.env.API_ASSETS_URL}${ceoMessageData.avatar}`}
+            alt="person"
+          ></Avatar>
         </Box>
       </Box>
-    </Box>
+      <Box width={[1, 1, 1, '68%']} p={2} m={2} mt={5} display="flex" mb={4}>
+        <Box width={1 / 2}>
+          <H5>CEO Message</H5>
+        </Box>
+        {role === ROLES.ADMIN && (
+          <Box width={1 / 2} display="flex" justifyContent="flex-end">
+            <EditIcon
+              className={classes.editIcon}
+              onClick={() => navigateTo('/ceo-message/edit')}
+            />{' '}
+          </Box>
+        )}
+      </Box>
+      <Box p={2} m={2}>
+        <BodyTextLarge className={classes.lineBreak}>
+          {' '}
+          {ceoMessageData.content}
+        </BodyTextLarge>
+      </Box>
+    </>
   );
 }
