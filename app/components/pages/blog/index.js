@@ -8,11 +8,15 @@ import { H5, BodyTextLarge, BodyTextSmall } from '../../typography';
 import blog1 from '../../../images/blog1.jpeg';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import { colors } from '../../../theme/colors';
 
 const useStyles = makeStyles(() => ({
   imageView: {
     width: '80%',
     height: '100%',
+  },
+  textColor: {
+    color: colors.grey,
   },
 }));
 
@@ -38,7 +42,7 @@ export default function Blog() {
         <Box width={[1, '0.78']}>
           <Box display="flex" flexDirection="row">
             <Box width={[1, 1 / 2]} mt={2}>
-              <H5 color="dark">12 Reasons to Celebrate Life</H5>
+              <H5>12 Reasons to Celebrate Life</H5>
             </Box>
             {role === ROLES.ADMIN && (
               <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
@@ -52,13 +56,27 @@ export default function Blog() {
             )}
           </Box>
           <Box>
-            <BodyTextLarge></BodyTextLarge>
+            <BodyTextLarge className={classes.textColor}>
+              If you’re in the market for a toy hauler that promises to make you
+              feel at home and offers room for all of your favorite toys, look
+              no further than the impressive Stryker from Cruiser. You’ll love
+              how you get everything you need to feel at home, without
+              compromising on things like quality or a spacious garage If you’re
+              in the market for a toy hauler that promises to make you feel at
+              home and offers room for all of your favorite toys, look no
+              further than the impressive Stryker from Cruiser....
+            </BodyTextLarge>
           </Box>
           <Box mt={3}>
-            <BodyTextLarge fontWeight="fontWeightMedium">
+            <BodyTextLarge
+              className={classes.textColor}
+              fontWeight="fontWeightMedium"
+            >
               Alex Smith
             </BodyTextLarge>
-            <BodyTextSmall>3 hours ago</BodyTextSmall>
+            <BodyTextSmall className={classes.textColor}>
+              3 hours ago
+            </BodyTextSmall>
           </Box>
         </Box>
       </Box>
