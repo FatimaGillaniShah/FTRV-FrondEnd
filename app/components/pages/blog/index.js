@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Blog({ blog }) {
+function Blog({ title, content, shortText, thumbnail, createdAt }) {
   const {
     user: {
       data: { role },
@@ -39,14 +39,14 @@ function Blog({ blog }) {
           {' '}
           <Avatar
             variant="square"
-            src={blog.thumbnail}
+            src={thumbnail}
             className={classes.imageView}
           />
         </Box>
         <Box width={[1, '0.78']}>
           <Box display="flex" flexDirection="row">
             <Box width={[1, 1 / 2]} mt={2}>
-              <H5>{blog.title}</H5>
+              <H5>{title}</H5>
             </Box>
             {role === ROLES.ADMIN && (
               <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
@@ -60,31 +60,25 @@ function Blog({ blog }) {
             )}
           </Box>
           <Box>
-            <BodyTextLarge color="grey">{blog.content}</BodyTextLarge>
+            <BodyTextLarge color="grey">{content}</BodyTextLarge>
           </Box>
           <Box mt={3}>
             <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
-              {blog.shortText}
+              {shortText}
             </BodyTextLarge>
-            <BodyTextSmall color="grey">{blog.createdAt}</BodyTextSmall>
+            <BodyTextSmall color="grey">{createdAt}</BodyTextSmall>
           </Box>
         </Box>
       </Box>
     </Box>
   );
 }
-
 Blog.propTypes = {
-  blog: PropTypes.object,
-};
-Blog.defaultProps = {
-  blog: {
-    title: '',
-    content: '',
-    shortText: '',
-    thumbnail: '',
-    createdAt: '',
-  },
+  title: PropTypes.string,
+  content: PropTypes.string,
+  shortText: PropTypes.string,
+  thumbnail: PropTypes.string,
+  createdAt: PropTypes.string,
 };
 
 export default memo(Blog);
