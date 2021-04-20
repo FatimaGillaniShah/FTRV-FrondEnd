@@ -10,75 +10,70 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 
 const useStyles = makeStyles(() => ({
-  main: {
-    margin: 'auto',
-  },
   imageView: {
-    width: '80%',
-    height: '100%',
+    width: '300px',
+    height: '200px',
   },
 }));
 
-function Blog({ title, content, shortText, thumbnail, createdAt }) {
+function Blog({ item }) {
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
   const classes = useStyles();
+
   return (
-    <Box display="flex" flexWrap="wrap">
-      <Box
-        display="flex"
-        flexDirection={['column', 'column', 'row', 'row']}
-        mt={5}
-        mb={5}
-        className={classes.main}
-      >
-        <Box width={[1, 1, 1, '20%']} mt={3}>
-          {' '}
-          <Avatar
-            variant="square"
-            src={thumbnail}
-            className={classes.imageView}
-          />
-        </Box>
-        <Box width={[1, '0.78']}>
-          <Box display="flex" flexDirection="row">
-            <Box width={[1, 1 / 2]} mt={2}>
-              <H5>{title}</H5>
+    <Box
+      display="flex"
+      flexDirection={['column', 'column', 'row', 'row']}
+      mt={8}
+      mb={10}
+    >
+      <Box width={[1, 1, 1, '22%']} mt={3}>
+        {' '}
+        <Avatar
+          variant="square"
+          src={`${process.env.API_ASSETS_URL}${item.thumbnail}`}
+          className={classes.imageView}
+        />
+      </Box>
+      <Box width={[1, '75%']}>
+        <Box display="flex" flexDirection="row">
+          <Box width={[1, 1 / 2]} mt={2}>
+            <H5>{item.title}</H5>
+          </Box>
+          {role === ROLES.ADMIN && (
+            <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
+              <IconButton>
+                <EditIcon color="secondary" />
+              </IconButton>
+              <IconButton>
+                <DeleteIcon color="error" />
+              </IconButton>
             </Box>
-            {role === ROLES.ADMIN && (
-              <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
-                <IconButton>
-                  <EditIcon color="secondary" />
-                </IconButton>
-                <IconButton>
-                  <DeleteIcon color="error" />
-                </IconButton>
-              </Box>
-            )}
-          </Box>
-          <Box>
-            <BodyTextLarge color="grey">{content}</BodyTextLarge>
-          </Box>
-          <Box mt={3}>
-            <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
-              {shortText}
-            </BodyTextLarge>
-            <BodyTextSmall color="grey">{createdAt}</BodyTextSmall>
-          </Box>
+          )}
+        </Box>
+        <Box>
+          <BodyTextLarge color="grey">{item.shortText}</BodyTextLarge>
+        </Box>
+        <Box mt={3}>
+          <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
+            {`${item.user.firstName}${' '}${item.user.lastName}`}
+          </BodyTextLarge>
+          <BodyTextSmall color="grey">{item.createdAt}</BodyTextSmall>
         </Box>
       </Box>
     </Box>
   );
 }
-Blog.propTypes = {
-  title: PropTypes.string,
-  content: PropTypes.string,
-  shortText: PropTypes.string,
-  thumbnail: PropTypes.string,
-  createdAt: PropTypes.string,
-};
+// Blog.propTypes = {
+//   title: PropTypes.string,
+//   shortText: PropTypes.string,
+//   shortText: PropTypes.string,
+//   thumbnail: PropTypes.string,
+//   createdAt: PropTypes.string,
+// };
 
 export default memo(Blog);

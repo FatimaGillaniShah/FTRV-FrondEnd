@@ -14,4 +14,5 @@ export const keys = {
   adminAnnouncements: 'adminAnnouncements',
   events: 'events',
   getEvent: (payload) => ['event', payload],
+  blog: 'blog',
 };
