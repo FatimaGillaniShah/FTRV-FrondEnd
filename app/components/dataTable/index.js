@@ -22,11 +22,14 @@ export function DataTable({
   tableRowsPerPage,
   selected,
   setSelected,
+  onChangeSort,
+  sortOrder,
+  sortColumn,
   matchUserIdWithIDS,
 }) {
   const classes = useStyles();
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('fullName');
+  const [order, setOrder] = useState(sortOrder || 'asc');
+  const [orderBy, setOrderBy] = useState(sortColumn || '');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
   const [rows, setRows] = useState([]);
@@ -47,6 +50,7 @@ export function DataTable({
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+    onChangeSort(isAsc ? 'desc' : 'asc', property);
   };
 
   const handleSelectAllClick = (event) => {
@@ -218,6 +222,9 @@ DataTable.propTypes = {
   data: PropTypes.array.isRequired,
   tableRowsPerPage: PropTypes.number,
   selected: PropTypes.array,
+  onChangeSort: PropTypes.func,
+  sortOrder: PropTypes.string,
+  sortColumn: PropTypes.string,
   matchUserIdWithIDS: PropTypes.bool,
 };
 DataTable.defaultProps = {

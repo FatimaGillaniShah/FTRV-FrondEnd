@@ -28,6 +28,8 @@ function DirectoryContainer() {
   const [checked, setChecked] = useState(false);
   const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortColumn, setSortColumn] = useState('firstName');
   const history = useHistory();
   const classes = useStyles();
   const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
@@ -41,9 +43,9 @@ function DirectoryContainer() {
     if (checked) {
       setQuery('');
     }
-  }, [checked]);
+  }, [checked, sortOrder, sortColumn]);
   const { data, isLoading } = useQuery(
-    keys.getUsers({ query, filters }),
+    keys.getUsers({ query, filters, sortOrder, sortColumn }),
     fetchUsers
   );
 
@@ -58,6 +60,28 @@ function DirectoryContainer() {
   const handleFilterSearch = (values) => {
     setFilters(values);
   };
+
+  const onChangeSort = (order, property) => {
+    setSortOrder(order);
+    setSortColumn(property);
+
+    // const { data, isLoading } = useQuery(
+    // key.getUsers({ query, filters, order, property }),
+    //   fetchUsers
+    // );
+
+    // if (dealerId !== '')
+    //   dispatch(
+    //     dealerAnalysis({
+    //       dealerId: dealerId.id,
+    //       date,
+    //       page: currentPage,
+    //       sort: val,
+    //     }),
+    //   );
+  };
+
+  // console.log(sortOrder, sortColumn);
 
   useEffect(() => {
     const temp = { ...state };
@@ -127,6 +151,9 @@ function DirectoryContainer() {
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
+                sortOrder={sortOrder}
+                sortColumn={sortColumn}
+                onChangeSort={onChangeSort}
                 matchUserIdWithIDS
               />
             )}

@@ -47,7 +47,7 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
 
 export const headCells = [
   {
-    id: 'fullName',
+    id: 'firstName',
     numeric: false,
     disablePadding: true,
     label: 'Name',

@@ -29,11 +29,18 @@ const {
 // USER CRUD
 
 export const fetchUsers = ({ queryKey }) => {
+  console.log(queryKey[1], 'queryKey');
   let url;
+  const { sortColumn } = queryKey[1];
+  const { sortOrder } = queryKey[1];
   if (queryKey[1].query) {
-    url = `${`${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].query)}`}`;
+    url = `${`${USERS_LIST}?pageSize=1000&${insertParams(
+      queryKey[1].query
+    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`}`;
   } else if (queryKey[1].filters) {
-    url = `${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].filters)}`;
+    url = `${USERS_LIST}?pageSize=1000&${insertParams(
+      queryKey[1].filters
+    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
   } else {
     url = USERS_LIST;
   }
