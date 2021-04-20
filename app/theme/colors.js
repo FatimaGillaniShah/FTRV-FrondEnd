@@ -18,6 +18,7 @@ export const colors = {
   textColor: {
     primary: '#153D73',
     secondary: lightblue,
+    grey,
     dark: '#424242',
     light: '#FFF',
     info: '#757575',
