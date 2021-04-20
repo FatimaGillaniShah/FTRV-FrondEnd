@@ -29,7 +29,6 @@ const {
 // USER CRUD
 
 export const fetchUsers = ({ queryKey }) => {
-  console.log(queryKey[1], 'queryKey');
   let url;
   const { sortColumn } = queryKey[1];
   const { sortOrder } = queryKey[1];

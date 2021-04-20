@@ -64,24 +64,7 @@ function DirectoryContainer() {
   const onChangeSort = (order, property) => {
     setSortOrder(order);
     setSortColumn(property);
-
-    // const { data, isLoading } = useQuery(
-    // key.getUsers({ query, filters, order, property }),
-    //   fetchUsers
-    // );
-
-    // if (dealerId !== '')
-    //   dispatch(
-    //     dealerAnalysis({
-    //       dealerId: dealerId.id,
-    //       date,
-    //       page: currentPage,
-    //       sort: val,
-    //     }),
-    //   );
   };
-
-  // console.log(sortOrder, sortColumn);
 
   useEffect(() => {
     const temp = { ...state };
