@@ -73,7 +73,7 @@ export function MuiFileInput({
               onClick={handleClick}
               variant="contained"
               startIcon={BtnIcon && <BtnIcon fontSize="small" />}
-              disabled={mutation.isLoading}
+              disabled={mutation?.isLoading}
             >
               {buttonText}
             </Button>

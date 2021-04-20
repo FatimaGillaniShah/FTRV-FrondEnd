@@ -17,7 +17,7 @@ class Http {
         // eslint-disable-next-line no-param-reassign
         config.headers.common.Authorization = `Bearer ${token}`;
 
-        if (['/users/upload', '/users'].includes(config.url)) {
+        if (['/users/upload', '/users', '/blogs/add'].includes(config.url)) {
           // eslint-disable-next-line no-param-reassign
           config.headers.post['Content-Type'] = 'multipart/form-data';
         }
