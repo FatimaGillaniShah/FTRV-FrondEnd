@@ -6,6 +6,7 @@ import DirectoryImporter from '../containers/directoryImporter/loadable';
 import EditUser from '../containers/editUser/loadable';
 import Announcement from '../containers/announcement/loadable';
 import Blogs from '../containers/blog/loadable';
+import BlogDetail from '../containers/blogDetail/loadable';
 import CreateAnnouncement from '../containers/createAnnouncement/loadable';
 import EditAnnouncement from '../containers/editAnnouncement/loadable';
 import Home from '../containers/home/loadable';
@@ -200,8 +201,8 @@ export const routeArray = [
     routeType: routeTypes.private,
     nestedRoutes: [
       {
-        path: '/blogs/detail',
-        component: createEvent,
+        path: '/detail/:id',
+        component: BlogDetail,
         exact: true,
         breadCrumbKey: 'Details',
         routeType: routeTypes.private,

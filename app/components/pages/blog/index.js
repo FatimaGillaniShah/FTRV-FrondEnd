@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
+function Blog({ item: { id, title, thumbnail, shortText, user, createdAt } }) {
   const history = useHistory();
   const classes = useStyles();
   const pattern = /[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/gi;
@@ -48,7 +48,7 @@ function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
       <Box width={[1, '75%']}>
         <Box display="flex" flexDirection="row" mt={8}>
           <Box width={[1, 1 / 2]} mt={2}>
-            <Link href="#" onClick={() => navigateTo('/ceo-message/edit')}>
+            <Link onClick={() => navigateTo(`/blogs/detail/${id}`)}>
               <H5>{title}</H5>
             </Link>
           </Box>

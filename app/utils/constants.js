@@ -43,4 +43,5 @@ export const APIS = {
   GET_EVENT: '/events',
   UPDATE_EVENTS: '/events',
   BLOG: '/blogs',
+  GET_BLOG: '/blogs',
 };

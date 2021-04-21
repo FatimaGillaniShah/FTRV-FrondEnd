@@ -15,4 +15,5 @@ export const keys = {
   events: 'events',
   getEvent: (payload) => ['event', payload],
   blog: 'blog',
+  getBlog: (payload) => ['link', payload],
 };
