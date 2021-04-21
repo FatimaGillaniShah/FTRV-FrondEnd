@@ -16,13 +16,16 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Blog({ item }) {
+function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
+
   const classes = useStyles();
+  const pattern = /[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/gi;
+  const creationDate = createdAt?.match(pattern);
 
   return (
     <Box
@@ -35,14 +38,14 @@ function Blog({ item }) {
         {' '}
         <Avatar
           variant="square"
-          src={`${process.env.API_ASSETS_URL}${item.thumbnail}`}
+          src={`${process.env.API_ASSETS_URL}${thumbnail}`}
           className={classes.imageView}
         />
       </Box>
       <Box width={[1, '75%']}>
-        <Box display="flex" flexDirection="row">
+        <Box display="flex" flexDirection="row" mt={8}>
           <Box width={[1, 1 / 2]} mt={2}>
-            <H5>{item.title}</H5>
+            <H5>{title}</H5>
           </Box>
           {role === ROLES.ADMIN && (
             <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
@@ -56,24 +59,38 @@ function Blog({ item }) {
           )}
         </Box>
         <Box>
-          <BodyTextLarge color="grey">{item.shortText}</BodyTextLarge>
+          <BodyTextLarge color="grey">{shortText}</BodyTextLarge>
         </Box>
-        <Box mt={3}>
-          <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
-            {`${item.user.firstName}${' '}${item.user.lastName}`}
-          </BodyTextLarge>
-          <BodyTextSmall color="grey">{item.createdAt}</BodyTextSmall>
+        <Box display="flex" flexDirection="column" mt={8}>
+          <Box>
+            <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
+              {`${user.firstName}${' '}${user.lastName}`}
+            </BodyTextLarge>
+          </Box>
+          <Box mt={1}>
+            <BodyTextSmall color="grey">{creationDate}</BodyTextSmall>
+          </Box>
         </Box>
       </Box>
     </Box>
   );
 }
-// Blog.propTypes = {
-//   title: PropTypes.string,
-//   shortText: PropTypes.string,
-//   shortText: PropTypes.string,
-//   thumbnail: PropTypes.string,
-//   createdAt: PropTypes.string,
-// };
+Blog.propTypes = {
+  item: PropTypes.object,
+  title: PropTypes.string,
+  thumbnail: PropTypes.string,
+  shortText: PropTypes.string,
+  user: PropTypes.object,
+  createdAt: PropTypes.string,
+};
+
+Blog.defaultProps = {
+  item: {},
+  title: '',
+  thumbnail: '',
+  shortText: '',
+  user: {},
+  createdAt: '',
+};
 
 export default memo(Blog);
