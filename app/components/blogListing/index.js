@@ -1,6 +1,6 @@
 import { Box, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import Blog from '../pages/blog';
 import { H5 } from '../typography';
@@ -15,10 +15,8 @@ const useStyles = makeStyles((theme) => ({
 export function BlogListing(items) {
   const classes = useStyles();
   const itemsPerPage = 5;
-  const [page, setPage] = React.useState(1);
-  const [noOfPages] = React.useState(
-    Math.ceil(items.blogs.length / itemsPerPage)
-  );
+  const [page, setPage] = useState(1);
+  const [noOfPages] = useState(Math.ceil(items.blogs.length / itemsPerPage));
 
   const handleChange = (event, value) => {
     setPage(value);
