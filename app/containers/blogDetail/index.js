@@ -25,6 +25,7 @@ function BlogDetail() {
       });
     },
   });
+
   return (
     <>
       <Helmet>

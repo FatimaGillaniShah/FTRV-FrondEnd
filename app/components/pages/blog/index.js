@@ -82,6 +82,7 @@ function Blog({ item: { id, title, thumbnail, shortText, user, createdAt } }) {
 }
 Blog.propTypes = {
   item: PropTypes.object,
+  id: PropTypes.number,
   title: PropTypes.string,
   thumbnail: PropTypes.string,
   shortText: PropTypes.string,

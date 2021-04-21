@@ -204,7 +204,7 @@ export const routeArray = [
         path: '/detail/:id',
         component: BlogDetail,
         exact: true,
-        breadCrumbKey: 'Details',
+        breadCrumbKey: 'detail',
         routeType: routeTypes.private,
       },
     ],

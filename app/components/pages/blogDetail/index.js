@@ -3,8 +3,7 @@ import Box from '@material-ui/core/Box';
 import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import ReactHtmlParser, { domToReact } from 'html-react-parser';
-import DOMPurify from 'dompurify';
+import ReactHtmlParser from 'html-react-parser';
 
 import { H5, BodyTextSmall, BodyTextLarge } from '../../typography';
 
@@ -16,8 +15,7 @@ const useStyles = makeStyles(() => ({
 }));
 function BlogDetail({ blog }) {
   const classes = useStyles();
-  const content = ReactHtmlParser(blog.content);
-  console.log(content);
+
   return (
     <Box ml={3}>
       <Box my={7}>
@@ -36,9 +34,9 @@ function BlogDetail({ blog }) {
           />
         </Box>
         <Box mt={7}>
-          {/* <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
-            {content}
-          </BodyTextLarge> */}
+          <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
+            {ReactHtmlParser(blog.content)}
+          </BodyTextLarge>
         </Box>
       </Box>
     </Box>
