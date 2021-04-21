@@ -198,5 +198,14 @@ export const routeArray = [
     exact: true,
     breadCrumbKey: 'Blogs',
     routeType: routeTypes.private,
+    nestedRoutes: [
+      {
+        path: '/blogs/detail',
+        component: createEvent,
+        exact: true,
+        breadCrumbKey: 'Details',
+        routeType: routeTypes.private,
+      },
+    ],
   },
 ];

@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
-import { Avatar, IconButton } from '@material-ui/core';
+import { Avatar, IconButton, Link } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { useHistory } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,16 +18,18 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
+  const history = useHistory();
+  const classes = useStyles();
+  const pattern = /[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/gi;
+  const creationDate = createdAt?.match(pattern);
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
-
-  const classes = useStyles();
-  const pattern = /[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/gi;
-  const creationDate = createdAt?.match(pattern);
-
+  const navigateTo = (url) => {
+    history.push(url);
+  };
   return (
     <Box
       display="flex"
@@ -45,7 +48,9 @@ function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
       <Box width={[1, '75%']}>
         <Box display="flex" flexDirection="row" mt={8}>
           <Box width={[1, 1 / 2]} mt={2}>
-            <H5>{title}</H5>
+            <Link href="#" onClick={() => navigateTo('/ceo-message/edit')}>
+              <H5>{title}</H5>
+            </Link>
           </Box>
           {role === ROLES.ADMIN && (
             <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
