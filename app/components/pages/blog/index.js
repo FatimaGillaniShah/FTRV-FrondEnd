@@ -5,14 +5,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import moment from 'moment';
 import { H5, BodyTextLarge, BodyTextSmall } from '../../typography';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 
 const useStyles = makeStyles(() => ({
   imageView: {
-    width: '300px',
-    height: '200px',
+    width: '280px',
+    height: '180px',
+    borderRadius: '6px',
   },
 }));
 
@@ -24,9 +26,8 @@ function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
   } = useAuthContext();
 
   const classes = useStyles();
-  const pattern = /[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/gi;
-  const creationDate = createdAt?.match(pattern);
-
+  const pattern = new Date(createdAt);
+  const creationDate = moment(pattern).format('MMMM d, YYYY');
   return (
     <Box
       display="flex"
@@ -43,7 +44,7 @@ function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
         />
       </Box>
       <Box width={[1, '75%']}>
-        <Box display="flex" flexDirection="row" mt={8}>
+        <Box display="flex" flexDirection="row" mt={0.5}>
           <Box width={[1, 1 / 2]} mt={2}>
             <H5>{title}</H5>
           </Box>
@@ -59,7 +60,10 @@ function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
           )}
         </Box>
         <Box>
-          <BodyTextLarge color="grey">{shortText}</BodyTextLarge>
+          <BodyTextLarge color="grey">
+            {' '}
+            {`${shortText}${' '}${'....'}`}
+          </BodyTextLarge>
         </Box>
         <Box display="flex" flexDirection="column" mt={8}>
           <Box>
