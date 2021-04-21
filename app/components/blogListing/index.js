@@ -15,7 +15,7 @@ export function BlogListing(items) {
   return (
     <>
       <Box m={4}>
-        <H5>Blog Listing</H5>
+        <H5>Blogs</H5>
         {items && items.blogs && items?.blogs?.length >= 1 && (
           <Box mt={5}>
             {items &&
