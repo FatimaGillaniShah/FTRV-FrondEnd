@@ -8,6 +8,9 @@ import moment from 'moment';
 import { H5, BodyTextSmall, BodyTextLarge } from '../../typography';
 
 const useStyles = makeStyles(() => ({
+  root: {
+    '& img': { width: '100%' },
+  },
   imageView: {
     width: '100%',
     height: 'auto',
@@ -38,7 +41,7 @@ function BlogDetail({ blog: { title, createdAt, content, thumbnail } }) {
         </Box>
         <Box mt={7}>
           <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
-            {ReactHtmlParser(content)}
+            <Box className={classes.root}>{ReactHtmlParser(content)}</Box>
           </BodyTextLarge>
         </Box>
       </Box>
