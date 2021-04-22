@@ -35,7 +35,16 @@ function BlogDetail() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading ? <Loading /> : <BlogDetailInfo blog={data?.data?.data} />}
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <BlogDetailInfo
+              title={data?.data?.data.title}
+              thumbnail={data?.data?.data.thumbnail}
+              content={data?.data?.data.content}
+              createdAt={data?.data?.data.createdAt}
+            />
+          )}
         </WrapInCard>
       </WrapInBreadcrumbs>
     </>

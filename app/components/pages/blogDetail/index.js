@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function BlogDetail({ blog: { title, createdAt, content, thumbnail } }) {
+function BlogDetail({ title, createdAt, content, thumbnail }) {
   const classes = useStyles();
   const pattern = new Date(createdAt);
   const creationDate = moment(pattern).format('MMMM d, YYYY');
@@ -31,14 +31,16 @@ function BlogDetail({ blog: { title, createdAt, content, thumbnail } }) {
             {creationDate}
           </BodyTextSmall>
         </Box>
-        <Box width={[1, 1, 1, '40%']} mt={2}>
-          {' '}
-          <Avatar
-            variant="square"
-            src={`${process.env.API_ASSETS_URL}${thumbnail}`}
-            className={classes.imageView}
-          />
-        </Box>
+        {thumbnail && (
+          <Box width={[1, 1, 1, '40%']} mt={2}>
+            {' '}
+            <Avatar
+              variant="square"
+              src={`${process.env.API_ASSETS_URL}${thumbnail}`}
+              className={classes.imageView}
+            />
+          </Box>
+        )}
         <Box mt={7}>
           <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
             <Box className={classes.root}>{ReactHtmlParser(content)}</Box>
@@ -49,7 +51,6 @@ function BlogDetail({ blog: { title, createdAt, content, thumbnail } }) {
   );
 }
 BlogDetail.propTypes = {
-  blog: PropTypes.object,
   title: PropTypes.string,
   content: PropTypes.object,
   thumbnail: PropTypes.string,
