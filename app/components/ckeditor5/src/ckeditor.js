@@ -12,6 +12,7 @@ import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading.js';
 import Image from '@ckeditor/ckeditor5-image/src/image.js';
 import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption.js';
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize.js';
 import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle.js';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
@@ -30,28 +31,29 @@ class Editor extends ClassicEditor {}
 
 // Plugins to include in the build.
 Editor.builtinPlugins = [
-  Autoformat,
-  Base64UploadAdapter,
-  BlockQuote,
-  Bold,
-  CloudServices,
-  Essentials,
-  Heading,
-  Image,
-  ImageCaption,
-  ImageStyle,
-  ImageToolbar,
-  ImageUpload,
-  Indent,
-  Italic,
-  Link,
-  List,
-  MediaEmbed,
-  Paragraph,
-  PasteFromOffice,
-  Table,
-  TableToolbar,
-  TextTransformation,
+	Autoformat,
+	Base64UploadAdapter,
+	BlockQuote,
+	Bold,
+	CloudServices,
+	Essentials,
+	Heading,
+	Image,
+	ImageCaption,
+	ImageResize,
+	ImageStyle,
+	ImageToolbar,
+	ImageUpload,
+	Indent,
+	Italic,
+	Link,
+	List,
+	MediaEmbed,
+	Paragraph,
+	PasteFromOffice,
+	Table,
+	TableToolbar,
+	TextTransformation
 ];
 
 export default Editor;

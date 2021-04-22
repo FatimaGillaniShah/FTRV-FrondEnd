@@ -10,6 +10,7 @@ import { FILE_ACCEPT_TYPES } from 'utils/constants';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import SaveIcon from '@material-ui/icons/Save';
+import PropTypes from 'prop-types';
 import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
 import ClassicEditor from '../../ckeditor5/build/ckeditor';
 import WrapInCard from '../../layout/wrapInCard';
@@ -17,10 +18,11 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { H4 } from '../../typography';
 import { blogSchema } from './blogSchema';
 import { useStyles } from './style';
-import placeholderimage from '../../../images/placeholder.jpg';
 
-function CreateBlog({ onHandleSubmit, id }) {
-  const [imgFile, setImgFile] = useState(placeholderimage);
+function CreateBlog({ onHandleSubmit, id, initialValues }) {
+  const imgURL =
+    initialValues?.file && process.env.API_ASSETS_URL + initialValues?.file;
+  const [imgFile, setImgFile] = useState(imgURL);
   const history = useHistory();
   const classes = useStyles();
   const customConfig = {
@@ -58,11 +60,7 @@ function CreateBlog({ onHandleSubmit, id }) {
       <WrapInBreadcrumbs>
         <WrapInCard mb={8}>
           <Formik
-            initialValues={{
-              title: '',
-              content: '',
-              file: '',
-            }}
+            initialValues={initialValues}
             validationSchema={blogSchema}
             onSubmit={onHandleSubmit}
           >
@@ -202,5 +200,22 @@ function CreateBlog({ onHandleSubmit, id }) {
     </>
   );
 }
+
+CreateBlog.propTypes = {
+  initialValues: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.string,
+    file: PropTypes.string,
+  }),
+  id: PropTypes.number,
+  onHandleSubmit: PropTypes.func,
+};
+CreateBlog.defaultProps = {
+  initialValues: PropTypes.shape({
+    title: '',
+    content: '',
+    file: '',
+  }),
+};
 
 export default memo(CreateBlog);
