@@ -68,7 +68,7 @@ const theme = createMuiTheme({
     },
     h3: {
       fontSize: '2.0rem',
-      color: 'black',
+      color: colors.textColor.secondary,
       fontWeight: 600,
     },
     h4: {
