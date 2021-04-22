@@ -32,8 +32,8 @@ function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
     <Box
       display="flex"
       flexDirection={['column', 'column', 'row', 'row']}
-      mt={8}
-      mb={10}
+      mt={6}
+      mb={8}
     >
       <Box width={[1, 1, 1, '22%']} mt={3}>
         {' '}

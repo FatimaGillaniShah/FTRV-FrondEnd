@@ -1,6 +1,7 @@
-import { Box, Divider } from '@material-ui/core';
+import { Box, Divider, Button, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
+import AddIcon from '@material-ui/icons/Add';
 import Pagination from '@material-ui/lab/Pagination';
 import Blog from '../pages/blog';
 import { H5 } from '../typography';
@@ -25,7 +26,20 @@ export function BlogListing(items) {
   return (
     <>
       <Box m={4}>
-        <H5>Blogs</H5>
+        <Box>
+          <H5>Blogs</H5>
+        </Box>
+        <Box mt={10}>
+          <Link href="/blog/add" underline="none">
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<AddIcon />}
+            >
+              New Blog
+            </Button>
+          </Link>
+        </Box>
         {items && items.blogs && items?.blogs?.length >= 1 && (
           <Box mt={5}>
             {items.blogs
