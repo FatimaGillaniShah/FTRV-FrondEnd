@@ -48,7 +48,7 @@ function Blog({ item: { id, title, thumbnail, shortText, user, createdAt } }) {
       <Box width={[1, '75%']}>
         <Box display="flex" flexDirection="row" mt={8}>
           <Box width={[1, 1 / 2]} mt={2}>
-            <Link to={() => navigateTo(`/blogs/detail/${id}`)}>
+            <Link onClick={() => navigateTo(`/blogs/detail/${id}`)}>
               <H5>{title}</H5>
             </Link>
           </Box>
