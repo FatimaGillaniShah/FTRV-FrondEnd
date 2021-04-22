@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Blog({ item: { title, thumbnail, shortText, user, createdAt } }) {
+function Blog({ title, thumbnail, shortText, user, createdAt }) {
   const {
     user: {
       data: { role },

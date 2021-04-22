@@ -44,9 +44,16 @@ export function BlogListing(items) {
           <Box mt={5}>
             {items.blogs
               .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-              .map((item) => (
+              .map(({ id, title, thumbnail, shortText, user, createdAt }) => (
                 <Box>
-                  <Blog item={item} />
+                  <Blog
+                    id={id}
+                    title={title}
+                    thumbnail={thumbnail}
+                    shortText={shortText}
+                    user={user}
+                    createdAt={createdAt}
+                  />
                   <Divider />
                 </Box>
               ))}
