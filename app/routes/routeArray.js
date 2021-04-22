@@ -205,6 +205,8 @@ export const routeArray = [
         component: BlogDetail,
         exact: true,
         breadCrumbKey: 'View Blog',
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
       },
     ],

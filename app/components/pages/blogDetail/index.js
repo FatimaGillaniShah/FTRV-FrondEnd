@@ -13,6 +13,7 @@ const useStyles = makeStyles(() => ({
     height: 'auto',
   },
 }));
+
 function BlogDetail({ blog: { title, createdAt, content, thumbnail } }) {
   const classes = useStyles();
   const pattern = new Date(createdAt);
