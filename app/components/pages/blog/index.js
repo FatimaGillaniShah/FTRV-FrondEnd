@@ -88,7 +88,6 @@ Blog.propTypes = {
 };
 
 Blog.defaultProps = {
-  item: {},
   title: '',
   thumbnail: '',
   shortText: '',

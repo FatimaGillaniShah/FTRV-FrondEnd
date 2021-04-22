@@ -54,7 +54,7 @@ export function BlogListing(items) {
                     user={user}
                     createdAt={createdAt}
                   />
-                  <Divider />
+                  {items.blogs[items.blogs.length - 1].id !== id && <Divider />}
                 </Box>
               ))}
           </Box>
