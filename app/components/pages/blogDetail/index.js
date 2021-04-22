@@ -4,7 +4,7 @@ import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'html-react-parser';
-
+import moment from 'moment';
 import { H5, BodyTextSmall, BodyTextLarge } from '../../typography';
 
 const useStyles = makeStyles(() => ({
@@ -15,6 +15,8 @@ const useStyles = makeStyles(() => ({
 }));
 function BlogDetail({ blog: { title, createdAt, content, thumbnail } }) {
   const classes = useStyles();
+  const pattern = new Date(createdAt);
+  const creationDate = moment(pattern).format('MMMM d, YYYY');
 
   return (
     <Box ml={3}>
@@ -22,7 +24,7 @@ function BlogDetail({ blog: { title, createdAt, content, thumbnail } }) {
         <H5> {title} </H5>
         <Box mt={4} mb={6}>
           <BodyTextSmall color="grey" fontWeight="fontWeightMedium">
-            {createdAt}
+            {creationDate}
           </BodyTextSmall>
         </Box>
         <Box width={[1, 1, 1, '40%']} mt={2}>

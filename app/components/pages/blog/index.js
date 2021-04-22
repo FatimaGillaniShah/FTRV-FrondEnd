@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import { Avatar, IconButton, Link } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useHistory } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,7 +17,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Blog({ item: { id, title, thumbnail, shortText, user, createdAt } }) {
-  const history = useHistory();
   const classes = useStyles();
   const pattern = /[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/gi;
   const creationDate = createdAt?.match(pattern);
@@ -27,9 +25,7 @@ function Blog({ item: { id, title, thumbnail, shortText, user, createdAt } }) {
       data: { role },
     },
   } = useAuthContext();
-  const navigateTo = (url) => {
-    history.push(url);
-  };
+
   return (
     <Box
       display="flex"
@@ -48,7 +44,7 @@ function Blog({ item: { id, title, thumbnail, shortText, user, createdAt } }) {
       <Box width={[1, '75%']}>
         <Box display="flex" flexDirection="row" mt={8}>
           <Box width={[1, 1 / 2]} mt={2}>
-            <Link onClick={() => navigateTo(`/blogs/detail/${id}`)}>
+            <Link href={`/blogs/detail/${id}`}>
               <H5>{title}</H5>
             </Link>
           </Box>
