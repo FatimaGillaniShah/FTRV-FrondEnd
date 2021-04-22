@@ -90,4 +90,12 @@ Blog.propTypes = {
   createdAt: PropTypes.string,
 };
 
+Blog.defaultProps = {
+  title: '',
+  thumbnail: '',
+  shortText: '',
+  user: {},
+  createdAt: '',
+};
+
 export default memo(Blog);
