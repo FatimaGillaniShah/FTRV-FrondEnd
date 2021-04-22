@@ -20,7 +20,6 @@ export const colors = {
     secondary: lightblue,
     grey,
     dark: '#424242',
-    grey,
     light: '#FFF',
     info: '#757575',
     error: 'red',

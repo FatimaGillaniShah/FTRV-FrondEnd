@@ -10,6 +10,7 @@ import { FILE_ACCEPT_TYPES } from 'utils/constants';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import SaveIcon from '@material-ui/icons/Save';
+import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
 import ClassicEditor from '../../ckeditor5/build/ckeditor';
 import WrapInCard from '../../layout/wrapInCard';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
@@ -19,9 +20,9 @@ import { useStyles } from './style';
 import placeholderimage from '../../../images/placeholder.jpg';
 
 function CreateBlog({ onHandleSubmit, id }) {
-  const classes = useStyles();
   const [imgFile, setImgFile] = useState(placeholderimage);
   const history = useHistory();
+  const classes = useStyles();
   const customConfig = {
     placeholder: 'Start by typing content here!',
     toolbar: {
@@ -60,12 +61,10 @@ function CreateBlog({ onHandleSubmit, id }) {
             initialValues={{
               title: '',
               content: '',
-              thumbnail: '',
+              file: '',
             }}
             validationSchema={blogSchema}
-            onSubmit={(values) => {
-              onHandleSubmit(values);
-            }}
+            onSubmit={onHandleSubmit}
           >
             {({ setFieldValue, errors, touched, values }) => (
               <Form>
@@ -91,29 +90,30 @@ function CreateBlog({ onHandleSubmit, id }) {
                         display="flex"
                         justifyContent="center"
                       >
-                        <Avatar src={imgFile} className={classes.imageStyle} />
+                        {imgFile ? (
+                          <Avatar
+                            src={imgFile}
+                            className={classes.imageStyle}
+                          />
+                        ) : (
+                          <ImageRoundedIcon
+                            style={{ fontSize: '160px', borderRadius: '100%' }}
+                            color="disabled"
+                          />
+                        )}
                       </Box>
                     </Box>
                     <Box ml={1} pt={5} display="flex" justifyContent="center">
-                      <Input
-                        name="thumbnail"
-                        inputID="file"
-                        inputType="file"
-                        disableUnderline
-                        inputComponent={(props) => (
-                          <MuiFileInput
-                            name="thumbnail"
-                            setImgFile={setImgFile}
-                            setFieldValue={setFieldValue}
-                            acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                            toolTipTitle="Select thumbnail"
-                            buttonText={
-                              id ? 'Update thumbnail' : 'Upload thumbnail'
-                            }
-                            BtnIcon={Add}
-                            {...props}
-                          />
-                        )}
+                      <MuiFileInput
+                        name="file"
+                        setImgFile={setImgFile}
+                        setFieldValue={setFieldValue}
+                        acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
+                        toolTipTitle="Select thumbnail"
+                        buttonText={
+                          id ? 'Update thumbnail' : 'Upload thumbnail'
+                        }
+                        BtnIcon={Add}
                       />
                     </Box>
                   </Box>

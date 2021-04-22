@@ -24,6 +24,7 @@ const {
   DELETE_EVENTS,
   GET_EVENT,
   UPDATE_EVENTS,
+  CREATE_BLOG,
 } = APIS;
 
 // USER CRUD
@@ -115,3 +116,6 @@ export const getEventById = ({ queryKey }) =>
 
 export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);
+
+// BLOGS CRUD
+export const createBlog = (payload) => http.post(CREATE_BLOG, payload);
