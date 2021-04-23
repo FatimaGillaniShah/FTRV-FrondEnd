@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   centerAlign: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   error: {
     color: theme.palette.text.error,
