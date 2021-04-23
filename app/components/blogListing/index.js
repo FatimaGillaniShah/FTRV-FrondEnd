@@ -30,7 +30,7 @@ export function BlogListing({ items, onHandleDeleteBlog }) {
           <H5>Blogs</H5>
         </Box>
         <Box mt={10}>
-          <Link href="/blog/add" underline="none">
+          <Link href="/blogs/add" underline="none">
             <Button
               variant="contained"
               color="secondary"

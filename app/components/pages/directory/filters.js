@@ -6,7 +6,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Input } from '../../index';
 
-function Filters({ onHandleFilterSearch }) {
+function Filters({ onHandleFilterSearch, onClear }) {
+  const clearFilteringSearch = (resetForm) => {
+    resetForm();
+    onClear();
+  };
   return (
     <>
       <Formik
@@ -56,7 +60,7 @@ function Filters({ onHandleFilterSearch }) {
                 <Button
                   variant="text"
                   fullWidth={false}
-                  onClick={resetForm}
+                  onClick={() => clearFilteringSearch(resetForm)}
                   startIcon={<ClearIcon />}
                 >
                   Clear Filter

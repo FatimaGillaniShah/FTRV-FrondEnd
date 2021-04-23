@@ -26,9 +26,12 @@ const {
   UPDATE_EVENTS,
   BLOG,
   GET_BLOG,
+<<<<<<< HEAD
   DELETE_BLOG,
+=======
   CREATE_BLOG,
   UPDATE_BLOG,
+>>>>>>> feat/FTIP-0029-blog-detail-container
 } = APIS;
 
 // USER CRUD

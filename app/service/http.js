@@ -16,12 +16,6 @@ class Http {
         const { token } = JSON.parse(localStorage.getItem('user'));
         // eslint-disable-next-line no-param-reassign
         config.headers.common.Authorization = `Bearer ${token}`;
-
-        if (['/users/upload', '/users'].includes(config.url)) {
-          // eslint-disable-next-line no-param-reassign
-          config.headers.post['Content-Type'] = 'multipart/form-data';
-        }
-
         return config;
       },
       (error) => Promise.reject(error)

@@ -22,7 +22,11 @@ export const menuItems = [
   },
   {
     name: 'blog',
+<<<<<<< HEAD
     link: '/blogs',
+=======
+    link: '/blogs/add',
+>>>>>>> develop
     icon: BorderColorIcon,
   },
   {
