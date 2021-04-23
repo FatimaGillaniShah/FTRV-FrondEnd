@@ -60,10 +60,10 @@ export default function Header() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
-  const userAvatar =
-    user.data && user.data.avatar
-      ? process.env.API_ASSETS_URL + user.data.avatar
-      : 'http://www.gravatar.com/avatar/?d=mp';
+  const avatarPrefix = !user.data.avatar?.includes('http')
+    ? process.env.API_ASSETS_URL
+    : '';
+  const userAvatar = `${avatarPrefix}${user.data.avatar}`;
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
@@ -104,7 +104,7 @@ export default function Header() {
               </Hidden>
               <>
                 <Button onClick={handleClick}>
-                  <Avatar alt="avatar" src={userAvatar} />
+                  <Avatar src={userAvatar} />
                 </Button>
                 <Menu
                   id="simple-menu"

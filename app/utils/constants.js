@@ -22,6 +22,7 @@ export const ANNOUNCEMENT_STATUS = {
 
 export const APIS = {
   LOGIN: 'users/login',
+  GOOGLE_LOGIN: 'users/googleLogin',
   USERS_LIST: '/users',
   USERS_DELETE: '/users/deleteUsers',
   USERS: '/users',

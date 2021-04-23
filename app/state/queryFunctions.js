@@ -27,6 +27,7 @@ const {
   CREATE_BLOG,
   UPDATE_BLOG,
   GET_BLOG,
+  GOOGLE_LOGIN,
 } = APIS;
 
 // USER CRUD
@@ -68,6 +69,8 @@ export const uploadEmployeeFile = (payload) => http.post(FILE_UPLOAD, payload);
 export const createUser = (payload) => http.post(USERS, payload);
 
 export const login = (payload) => http.post(LOGIN, payload);
+
+export const googleLogin = (payload) => http.post(GOOGLE_LOGIN, payload);
 
 // USEFUL LINKS CRUD
 
