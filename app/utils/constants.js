@@ -44,4 +44,5 @@ export const APIS = {
   UPDATE_EVENTS: '/events',
   BLOG: '/blogs',
   GET_BLOG: '/blogs',
+  DELETE_BLOG: '/blogs',
 };

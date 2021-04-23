@@ -26,6 +26,7 @@ const {
   UPDATE_EVENTS,
   BLOG,
   GET_BLOG,
+  DELETE_BLOG,
 } = APIS;
 
 // USER CRUD
@@ -122,3 +123,6 @@ export const getBlogs = () => http.get(`${BLOG}`);
 
 export const getBlogById = ({ queryKey }) =>
   http.get(`${GET_BLOG}/${queryKey[1]}`);
+
+export const deleteBlog = (payload) =>
+  http.delete(DELETE_BLOG, { data: { id: payload } });

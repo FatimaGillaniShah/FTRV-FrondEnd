@@ -18,7 +18,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Blog({ id, title, thumbnail, shortText, user, createdAt }) {
+function Blog({
+  id,
+  title,
+  thumbnail,
+  shortText,
+  user,
+  createdAt,
+  onHandleDeleteBlog,
+}) {
   const {
     user: {
       data: { role },
@@ -55,7 +63,7 @@ function Blog({ id, title, thumbnail, shortText, user, createdAt }) {
               <IconButton>
                 <EditIcon color="secondary" />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => onHandleDeleteBlog(id)}>
                 <DeleteIcon color="error" />
               </IconButton>
             </Box>
