@@ -4,9 +4,8 @@ import Swal from 'sweetalert2';
 import { Toast } from '../components';
 import { deleteBlog } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
-import { isFunction } from '../utils/helper';
 
-export function useDeleteBlog({ callbackFn } = {}) {
+export function useDeleteBlog() {
   const queryClient = useQueryClient();
   const history = useHistory();
   return useMutation(deleteBlog, {
@@ -15,7 +14,6 @@ export function useDeleteBlog({ callbackFn } = {}) {
         data: { count },
       },
     }) => {
-      if (isFunction(callbackFn)) callbackFn();
       Swal.fire('Deleted!', `${count} blog deleted.`, 'success');
       queryClient.invalidateQueries(keys.blog);
       history.push('/blogs');
