@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { CustomToolbar } from './customToolbar';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import { formatDate } from '../../../utils/helper';
 
 export function EventCalendar({ eventList, home }) {
   const history = useHistory();
@@ -65,11 +66,7 @@ export function EventCalendar({ eventList, home }) {
       popup
       onSelectEvent={handleSelectEvent}
       tooltipAccessor={(event) =>
-        `${new Date(event?.start).toLocaleTimeString([], {
-          timeStyle: 'short',
-        })} - ${event?.title} - ${new Date(event?.end).toLocaleTimeString([], {
-          timeStyle: 'short',
-        })}`
+        `${formatDate(event?.start)} - ${formatDate(event?.end)}`
       }
       components={{
         toolbar: CustomToolbar({ home, data }),

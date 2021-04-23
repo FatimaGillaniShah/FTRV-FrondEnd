@@ -13,13 +13,23 @@ import LockIcon from '@material-ui/icons/Lock';
 import Button from '@material-ui/core/Button';
 import { Form, Formik } from 'formik';
 import Alert from '@material-ui/lab/Alert';
+import { GoogleLogin } from 'react-google-login';
 import { Input } from '../../index';
 import { loginSchema } from '../../../containers/login/schema';
 import { H3 } from '../../typography';
 import useStyles from './style';
 
-export function Login({ onHandleSubmit, isError, errorMessage }) {
+export function Login({
+  onHandleSubmit,
+  googleError,
+  errorMessage,
+  onGoogleSuccess,
+  onGoogleFailed,
+}) {
   const classes = useStyles();
+  const domain = process.env.GSUITE_DOMAIN;
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+
   return (
     <Box className={classes.bgContainer} h="100%" width={1}>
       <Container component="main" maxWidth="xs">
@@ -39,9 +49,14 @@ export function Login({ onHandleSubmit, isError, errorMessage }) {
           >
             <Form>
               <Paper className={classes.loginBox}>
-                {isError && (
+                {errorMessage && (
                   <Box mt={6} textAlign="center">
                     <Alert severity="error">{errorMessage}</Alert>
+                  </Box>
+                )}
+                {googleError && (
+                  <Box mt={6} textAlign="center">
+                    <Alert severity="error">{googleError}</Alert>
                   </Box>
                 )}
                 <Box mt={7}>
@@ -73,6 +88,16 @@ export function Login({ onHandleSubmit, isError, errorMessage }) {
                   >
                     Login
                   </Button>
+
+                  <GoogleLogin
+                    clientId={clientId}
+                    buttonText="Login with Google"
+                    onSuccess={(res) => onGoogleSuccess(res)}
+                    onFailure={(e) => onGoogleFailed(e)}
+                    cookiePolicy="single_host_origin"
+                    theme="dark"
+                    hostedDomain={domain}
+                  />
                 </Box>
               </Paper>
             </Form>

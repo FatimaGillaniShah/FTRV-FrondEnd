@@ -15,7 +15,7 @@ export const menuItems = [
     children: [
       { name: 'Directory', link: '/directory' },
       {
-        name: 'Ceo Message',
+        name: 'Message from CEO',
         link: '/ceo-message',
       },
     ],

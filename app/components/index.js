@@ -5,8 +5,8 @@ export { default as Toast } from './alert';
 export { default as WrapInCard } from './layout/wrapInCard';
 export { default as TextArea } from './muiTextAreaInput';
 export { default as Alert } from './muiAlert';
-export { default as DatePicker } from './muiDatePickerInput';
 export { default as Dailogue } from './muiDialog';
+export { default as DatePicker } from './muiDatePicker';
 
 export {
   H1,

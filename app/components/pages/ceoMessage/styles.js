@@ -7,19 +7,21 @@ const useStyles = makeStyles(() => ({
     height: '29rem',
     width: '30rem',
     backgroundImage: `url(${Image})`,
+    margin: 'auto',
   },
   ceoImage: {
     height: '80%',
     width: '65%',
   },
-
   editIcon: {
     color: colors.secondary,
     cursor: 'pointer',
   },
-
   rightBox: {
     float: 'right',
+  },
+  lineBreak: {
+    whiteSpace: 'pre-wrap',
   },
 }));
 export { useStyles };

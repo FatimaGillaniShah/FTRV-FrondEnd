@@ -2,6 +2,7 @@ const red = '#d33';
 const green = '#4BB543';
 const grey = '#808080';
 const lightblue = '#1875C0';
+
 export const colors = {
   primary: '#153D73',
   secondary: lightblue,
@@ -10,7 +11,6 @@ export const colors = {
   red,
   green,
   grey,
-
   bgColor: {
     main: '#F0F2F5',
     secondary: 'white',
