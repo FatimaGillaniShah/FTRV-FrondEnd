@@ -19,17 +19,12 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import { Input, BodyTextLarge } from 'components';
+import { Input, DatePicker } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
-import DateFnsUtils from '@date-io/date-fns';
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
@@ -377,66 +372,27 @@ function CreateUser({
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
                     <Tooltip title="Choose Joining Date">
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                          margin="normal"
-                          id="joiningDate"
-                          name="joiningDate"
-                          label={
-                            <BodyTextLarge className={classes.label}>
-                              Joining Date
-                            </BodyTextLarge>
-                          }
-                          disableFuture
-                          inputVariant="outlined"
-                          format="MM-dd-yyyy"
-                          style={{ width: '100%' }}
-                          value={values.joiningDate}
-                          InputProps={{ className: classes.dateColor }}
-                          onChange={(value) => {
-                            setFieldValue('joiningDate', value);
-                          }}
-                          disabled={
-                            mutation.isLoading || isUserEditingHisProfile
-                          }
-                          KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                            tabIndex: -1,
-                          }}
-                        />
-                      </MuiPickersUtilsProvider>
+                      <DatePicker
+                        disableFuture
+                        id="joiningDate"
+                        name="joiningDate"
+                        label="Joining Date"
+                        inputVariant="outlined"
+                        margin="normal"
+                        disabled={mutation.isLoading || isUserEditingHisProfile}
+                      />
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
                     <Tooltip title="Choose Birthday">
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                          margin="normal"
-                          id="dob"
-                          name="dob"
-                          label={
-                            <BodyTextLarge className={classes.label}>
-                              Birth Date
-                            </BodyTextLarge>
-                          }
-                          InputProps={{ className: classes.dateColor }}
-                          disableFuture
-                          inputVariant="outlined"
-                          format="MM-dd-yyyy"
-                          style={{ width: '100%' }}
-                          value={values.dob}
-                          onChange={(value) => {
-                            setFieldValue('dob', value);
-                          }}
-                          disabled={
-                            mutation.isLoading || editRole === ROLES.USER
-                          }
-                          KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                            tabIndex: -1,
-                          }}
-                        />
-                      </MuiPickersUtilsProvider>
+                      <DatePicker
+                        disableFuture
+                        id="dob"
+                        name="dob"
+                        label="Birth Date"
+                        margin="normal"
+                        disabled={mutation.isLoading || editRole === ROLES.USER}
+                      />
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={6} px={3}>

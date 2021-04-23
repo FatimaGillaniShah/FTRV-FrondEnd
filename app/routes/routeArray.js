@@ -19,6 +19,7 @@ import Events from '../containers/events/loadable';
 import { ROLES } from '../utils/constants';
 import createEvent from '../containers/createEvent/loadable';
 import ViewEvent from '../containers/viewEvent/loadable';
+import createBlog from '../containers/createBlog/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -200,6 +201,24 @@ export const routeArray = [
     breadCrumbKey: 'Blogs',
     routeType: routeTypes.private,
     nestedRoutes: [
+      {
+        path: '/add',
+        component: createBlog,
+        exact: true,
+        breadCrumbKey: 'Create New Blog',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: createBlog,
+        exact: true,
+        breadCrumbKey: 'Edit Blog',
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
       {
         path: '/detail/:id',
         component: BlogDetail,

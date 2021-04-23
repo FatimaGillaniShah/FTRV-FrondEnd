@@ -24,10 +24,13 @@ const {
   DELETE_EVENTS,
   GET_EVENT,
   UPDATE_EVENTS,
+<<<<<<< HEAD
   BLOG,
-  GET_BLOG,
+=======
   CREATE_BLOG,
   UPDATE_BLOG,
+>>>>>>> develop
+  GET_BLOG,
 } = APIS;
 
 // USER CRUD
@@ -120,7 +123,10 @@ export const getEventById = ({ queryKey }) =>
 export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);
 
+<<<<<<< HEAD
 export const getBlogs = () => http.get(`${BLOG}`);
+=======
+// BLOGS CRUD
 export const createBlog = (payload) => http.post(CREATE_BLOG, payload);
 
 export const updateBlog = (payload) => {
@@ -128,6 +134,7 @@ export const updateBlog = (payload) => {
   payload.delete('id');
   return http.put(`${UPDATE_BLOG}/${id}`, payload);
 };
+>>>>>>> develop
 
 export const getBlogById = ({ queryKey }) =>
   http.get(`${GET_BLOG}/${queryKey[1]}`);

@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import { Avatar, IconButton, Link } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
@@ -26,8 +27,13 @@ function Blog({ id, title, thumbnail, shortText, user, createdAt }) {
   } = useAuthContext();
 
   const classes = useStyles();
+  const history = useHistory();
   const pattern = new Date(createdAt);
   const creationDate = moment(pattern).format('MMMM d, YYYY');
+
+  const navigateTo = (url) => {
+    history.push(url);
+  };
   return (
     <Box
       display="flex"
@@ -53,7 +59,10 @@ function Blog({ id, title, thumbnail, shortText, user, createdAt }) {
           {role === ROLES.ADMIN && (
             <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
               <IconButton>
-                <EditIcon color="secondary" />
+                <EditIcon
+                  color="secondary"
+                  onClick={() => navigateTo(`blogs/edit/${id}`)}
+                />
               </IconButton>
               <IconButton>
                 <DeleteIcon color="error" />
