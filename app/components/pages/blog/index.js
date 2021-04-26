@@ -19,7 +19,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Blog({ id, title, thumbnail, shortText, user, createdAt }) {
+function Blog({
+  id,
+  title,
+  thumbnail,
+  shortText,
+  user,
+  createdAt,
+  onHandleDeleteBlog,
+}) {
   const {
     user: {
       data: { role },
@@ -64,7 +72,7 @@ function Blog({ id, title, thumbnail, shortText, user, createdAt }) {
                   onClick={() => navigateTo(`blogs/edit/${id}`)}
                 />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => onHandleDeleteBlog(id)}>
                 <DeleteIcon color="error" />
               </IconButton>
             </Box>
