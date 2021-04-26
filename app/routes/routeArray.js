@@ -6,6 +6,7 @@ import DirectoryImporter from '../containers/directoryImporter/loadable';
 import EditUser from '../containers/editUser/loadable';
 import Announcement from '../containers/announcement/loadable';
 import Blogs from '../containers/blog/loadable';
+import BlogDetail from '../containers/blogDetail/loadable';
 import CreateAnnouncement from '../containers/createAnnouncement/loadable';
 import EditAnnouncement from '../containers/editAnnouncement/loadable';
 import Home from '../containers/home/loadable';
@@ -65,31 +66,6 @@ export const routeArray = [
         exact: true,
         simplifiedPath: 'edit',
         breadCrumbKey: 'Edit User',
-        noOfEnteriesToSkipAfterThisEntry: 1,
-        routeType: routeTypes.private,
-        roles: [ROLES.ADMIN],
-      },
-    ],
-  },
-  {
-    path: '/blogs',
-    component: createBlog,
-    routeType: routeTypes.private,
-    nestedRoutes: [
-      {
-        path: '/add',
-        component: createBlog,
-        exact: true,
-        breadCrumbKey: 'Create New Blog',
-        routeType: routeTypes.private,
-        roles: [ROLES.ADMIN],
-      },
-      {
-        path: '/edit/:id',
-        component: createBlog,
-        exact: true,
-        breadCrumbKey: 'Edit Blog',
-        simplifiedPath: 'edit',
         noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
@@ -224,5 +200,34 @@ export const routeArray = [
     exact: true,
     breadCrumbKey: 'Blogs',
     routeType: routeTypes.private,
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: createBlog,
+        exact: true,
+        breadCrumbKey: 'Create New Blog',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: createBlog,
+        exact: true,
+        breadCrumbKey: 'Edit Blog',
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/detail/:id',
+        component: BlogDetail,
+        exact: true,
+        breadCrumbKey: 'Detail',
+        simplifiedPath: 'detail',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+      },
+    ],
   },
 ];

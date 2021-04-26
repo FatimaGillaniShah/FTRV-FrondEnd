@@ -1,8 +1,9 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
-import { Avatar, IconButton } from '@material-ui/core';
+import { Avatar, IconButton, Link } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
@@ -18,7 +19,15 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function Blog({ title, thumbnail, shortText, user, createdAt }) {
+function Blog({
+  id,
+  title,
+  thumbnail,
+  shortText,
+  user,
+  createdAt,
+  onHandleDeleteBlog,
+}) {
   const {
     user: {
       data: { role },
@@ -26,8 +35,13 @@ function Blog({ title, thumbnail, shortText, user, createdAt }) {
   } = useAuthContext();
 
   const classes = useStyles();
+  const history = useHistory();
   const pattern = new Date(createdAt);
   const creationDate = moment(pattern).format('MMMM d, YYYY');
+
+  const navigateTo = (url) => {
+    history.push(url);
+  };
   return (
     <Box
       display="flex"
@@ -46,14 +60,19 @@ function Blog({ title, thumbnail, shortText, user, createdAt }) {
       <Box width={[1, '75%']}>
         <Box display="flex" flexDirection="row" mt={0.5}>
           <Box width={[1, 1 / 2]} mt={2}>
-            <H5>{title}</H5>
+            <Link href={`/blogs/detail/${id}`}>
+              <H5>{title}</H5>
+            </Link>
           </Box>
           {role === ROLES.ADMIN && (
             <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
               <IconButton>
-                <EditIcon color="secondary" />
+                <EditIcon
+                  color="secondary"
+                  onClick={() => navigateTo(`blogs/edit/${id}`)}
+                />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => onHandleDeleteBlog(id)}>
                 <DeleteIcon color="error" />
               </IconButton>
             </Box>
@@ -80,6 +99,7 @@ function Blog({ title, thumbnail, shortText, user, createdAt }) {
   );
 }
 Blog.propTypes = {
+  id: PropTypes.number,
   title: PropTypes.string,
   thumbnail: PropTypes.string,
   shortText: PropTypes.string,

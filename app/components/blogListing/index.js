@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function BlogListing(items) {
+export function BlogListing({ items, onHandleDeleteBlog }) {
   const classes = useStyles();
   const itemsPerPage = 5;
   const [page, setPage] = useState(1);
-  const [noOfPages] = useState(Math.ceil(items.blogs.length / itemsPerPage));
+  const [noOfPages] = useState(Math.ceil(items.length / itemsPerPage));
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -30,7 +30,7 @@ export function BlogListing(items) {
           <H5>Blogs</H5>
         </Box>
         <Box mt={10}>
-          <Link href="/blog/add" underline="none">
+          <Link href="/blogs/add" underline="none">
             <Button
               variant="contained"
               color="secondary"
@@ -40,9 +40,9 @@ export function BlogListing(items) {
             </Button>
           </Link>
         </Box>
-        {items && items.blogs && items?.blogs?.length >= 1 && (
+        {items && items?.length >= 1 && (
           <Box mt={5}>
-            {items.blogs
+            {items
               .slice((page - 1) * itemsPerPage, page * itemsPerPage)
               .map(({ id, title, thumbnail, shortText, user, createdAt }) => (
                 <Box>
@@ -53,8 +53,9 @@ export function BlogListing(items) {
                     shortText={shortText}
                     user={user}
                     createdAt={createdAt}
+                    onHandleDeleteBlog={onHandleDeleteBlog}
                   />
-                  {items.blogs[items.blogs.length - 1].id !== id && <Divider />}
+                  {items[items.length - 1].id !== id && <Divider />}
                 </Box>
               ))}
           </Box>
