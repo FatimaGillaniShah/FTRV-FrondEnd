@@ -47,4 +47,5 @@ export const APIS = {
   CREATE_BLOG: '/blogs',
   UPDATE_BLOG: '/blogs',
   GET_BLOG: '/blogs',
+  DELETE_BLOG: '/blogs',
 };

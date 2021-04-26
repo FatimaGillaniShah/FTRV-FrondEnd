@@ -25,9 +25,10 @@ const {
   GET_EVENT,
   UPDATE_EVENTS,
   BLOG,
+  GET_BLOG,
+  DELETE_BLOG,
   CREATE_BLOG,
   UPDATE_BLOG,
-  GET_BLOG,
   GOOGLE_LOGIN,
 } = APIS;
 
@@ -134,3 +135,6 @@ export const updateBlog = (payload) => {
 
 export const getBlogById = ({ queryKey }) =>
   http.get(`${GET_BLOG}/${queryKey[1]}`);
+
+export const deleteBlog = (payload) =>
+  http.delete(DELETE_BLOG, { data: { id: payload } });
