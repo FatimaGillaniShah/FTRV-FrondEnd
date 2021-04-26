@@ -22,7 +22,7 @@ export const menuItems = [
   },
   {
     name: 'blog',
-    link: '/blogs/add',
+    link: '/blogs',
     icon: BorderColorIcon,
   },
   {

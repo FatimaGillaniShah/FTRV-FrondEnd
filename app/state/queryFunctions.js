@@ -24,6 +24,7 @@ const {
   DELETE_EVENTS,
   GET_EVENT,
   UPDATE_EVENTS,
+  BLOG,
   CREATE_BLOG,
   UPDATE_BLOG,
   GET_BLOG,
@@ -133,3 +134,5 @@ export const updateBlog = (payload) => {
 
 export const getBlogById = ({ queryKey }) =>
   http.get(`${GET_BLOG}/${queryKey[1]}`);
+
+export const getBlogs = () => http.get(`${BLOG}`);

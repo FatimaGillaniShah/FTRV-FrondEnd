@@ -5,6 +5,7 @@ import Directory from '../containers/directory/loadable';
 import DirectoryImporter from '../containers/directoryImporter/loadable';
 import EditUser from '../containers/editUser/loadable';
 import Announcement from '../containers/announcement/loadable';
+import Blogs from '../containers/blog/loadable';
 import CreateAnnouncement from '../containers/createAnnouncement/loadable';
 import EditAnnouncement from '../containers/editAnnouncement/loadable';
 import Home from '../containers/home/loadable';
@@ -216,5 +217,12 @@ export const routeArray = [
         roles: [ROLES.USER],
       },
     ],
+  },
+  {
+    path: '/blogs',
+    component: Blogs,
+    exact: true,
+    breadCrumbKey: 'Blogs',
+    routeType: routeTypes.private,
   },
 ];
