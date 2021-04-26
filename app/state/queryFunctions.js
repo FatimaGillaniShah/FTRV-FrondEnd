@@ -45,7 +45,7 @@ export const fetchUsers = ({ queryKey }) => {
       queryKey[1].filters
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
   } else {
-    url = USERS_LIST;
+    url = `${USERS_LIST}?sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
   }
   return http.get(url);
 };
