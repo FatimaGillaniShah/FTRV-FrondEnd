@@ -25,6 +25,7 @@ export function DataTable({
   onChangeSort,
   sortOrder,
   sortColumn,
+  isServerSorting,
   matchUserIdWithIDS,
 }) {
   const classes = useStyles();
@@ -169,31 +170,57 @@ export function DataTable({
             matchUserIdWithIDS={matchUserIdWithIDS}
           />
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
+            {!isServerSorting
+              ? stableSort(rows, getComparator(order, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => {
+                    const isItemSelected = isSelected(row.id);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.name}
-                    selected={isItemSelected}
-                    disabled={matchUserIdWithIDS && row.id === currentUserID}
-                  >
-                    {mapRows(
-                      row,
-                      isItemSelected,
-                      labelId,
-                      matchUserIdWithIDS && row.id === currentUserID
-                    )}
-                  </TableRow>
-                );
-              })}
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.name}
+                        selected={isItemSelected}
+                        disabled={
+                          matchUserIdWithIDS && row.id === currentUserID
+                        }
+                      >
+                        {mapRows(
+                          row,
+                          isItemSelected,
+                          labelId,
+                          matchUserIdWithIDS && row.id === currentUserID
+                        )}
+                      </TableRow>
+                    );
+                  })
+              : rows.map((row, index) => {
+                  const isItemSelected = isSelected(row.id);
+                  const labelId = `enhanced-table-checkbox-${index}`;
+
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.name}
+                      selected={isItemSelected}
+                      disabled={matchUserIdWithIDS && row.id === currentUserID}
+                    >
+                      {mapRows(
+                        row,
+                        isItemSelected,
+                        labelId,
+                        matchUserIdWithIDS && row.id === currentUserID
+                      )}
+                    </TableRow>
+                  );
+                })}
 
             {!rows.length && (
               <TableRow>
@@ -217,6 +244,7 @@ export function DataTable({
     </Box>
   );
 }
+
 DataTable.propTypes = {
   headCells: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
@@ -224,13 +252,15 @@ DataTable.propTypes = {
   selected: PropTypes.array,
   onChangeSort: PropTypes.func,
   sortOrder: PropTypes.string,
-  sortColumn: PropTypes.string,
+  sortColumn: PropTypes.string.isRequired,
+  isServerSorting: PropTypes.bool,
   matchUserIdWithIDS: PropTypes.bool,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: 20,
   selected: [],
   matchUserIdWithIDS: false,
+  isServerSorting: false,
 };
 
 export default DataTable;

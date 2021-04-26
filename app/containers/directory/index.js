@@ -31,6 +31,7 @@ function DirectoryContainer() {
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortColumn, setSortColumn] = useState('firstName');
   const history = useHistory();
+  const isServerSorting = true;
   const classes = useStyles();
   const [fieldFunc, setFieldFunc] = useState();
   const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
@@ -68,8 +69,14 @@ function DirectoryContainer() {
   };
 
   const onChangeSort = (order, property) => {
-    setSortOrder(order);
-    setSortColumn(property);
+    if (isServerSorting) {
+      if (property === 'fullName') {
+        setSortColumn('firstName');
+      } else {
+        setSortColumn(property);
+      }
+      setSortOrder(order);
+    }
   };
 
   useEffect(() => {
@@ -148,6 +155,7 @@ function DirectoryContainer() {
                 sortOrder={sortOrder}
                 sortColumn={sortColumn}
                 onChangeSort={onChangeSort}
+                isServerSorting={isServerSorting}
                 matchUserIdWithIDS
               />
             )}

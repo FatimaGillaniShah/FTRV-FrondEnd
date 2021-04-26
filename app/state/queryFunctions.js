@@ -34,15 +34,14 @@ const {
 
 export const fetchUsers = ({ queryKey }) => {
   let url;
-  const { sortColumn } = queryKey[1];
-  const { sortOrder } = queryKey[1];
-  if (queryKey[1].query.searchString) {
+  const { sortColumn, sortOrder, query, filters } = queryKey[1];
+  if (query.searchString) {
     url = `${`${USERS_LIST}?pageSize=1000&${insertParams(
-      queryKey[1].query
+      query
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`}`;
-  } else if (queryKey[1].filters) {
+  } else if (filters) {
     url = `${USERS_LIST}?pageSize=1000&${insertParams(
-      queryKey[1].filters
+      filters
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
   } else {
     url = `${USERS_LIST}?sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
