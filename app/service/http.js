@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { LOCAL_STORAGE_ENTRIES } from '../utils/constants';
+/* eslint-disable no-param-reassign */
 
 class Http {
   constructor() {
@@ -13,14 +15,18 @@ class Http {
 
     service.interceptors.request.use(
       (config) => {
-        const { token } = JSON.parse(localStorage.getItem('user'));
-        // eslint-disable-next-line no-param-reassign
+        const { token, googleToken } = JSON.parse(
+          localStorage.getItem(LOCAL_STORAGE_ENTRIES.user)
+        );
         config.headers.common.Authorization = `Bearer ${token}`;
+        if (googleToken) {
+          config.headers.GTOKEN = `${googleToken}`;
+        }
+
         return config;
       },
       (error) => Promise.reject(error)
     );
-
     this.service = service;
   }
 

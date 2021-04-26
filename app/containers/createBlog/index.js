@@ -54,10 +54,14 @@ function CreateBlog() {
       }),
   });
   const handleSubmit = (values) => {
+    const filteredContent = values.content.replace(
+      /(<br\s*\/?>|&nbsp;)/gm,
+      ' '
+    );
     const formData = new FormData();
     if (id) formData.append('id', id);
     formData.append('title', values.title);
-    formData.append('content', values.content);
+    formData.append('content', filteredContent);
     formData.append('file', values.file);
     mutate(formData);
   };
