@@ -8,6 +8,7 @@ module.exports = {
     ],
     '@babel/preset-react',
   ],
+  ignore: ['./app/components/ckeditor5'],
   plugins: [
     'styled-components',
     '@babel/plugin-proposal-class-properties',

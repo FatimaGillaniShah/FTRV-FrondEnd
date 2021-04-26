@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
+import Collapse from '@material-ui/core/Collapse';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import CancelIcon from '@material-ui/icons/Cancel';
 import useStyles from './style';
@@ -16,56 +17,60 @@ export function AnnouncementNotification({ item }) {
   } else if (item.priority === 'low') {
     notificationBackgroundColor = colors.green;
   }
+  const [isNotificationClosed, setIsNotificationClosed] = React.useState(true);
   const classes = useStyles();
   const { user, setUser } = useAuthContext();
   const closedAnnouncement = (user && user.announcement) || [];
 
   const onClose = (itemAnnouncement) => {
-    closedAnnouncement.push(itemAnnouncement);
-    setUser({ ...user, announcement: closedAnnouncement });
+    setIsNotificationClosed(false);
+    setTimeout(() => {
+      closedAnnouncement.push(itemAnnouncement);
+      setUser({ ...user, announcement: closedAnnouncement });
+    }, 3000);
   };
-
   return (
     <>
-      <Box
-        width={1}
-        height={1}
-        p={2}
-        justifyContent="center"
-        display="flex"
-        className={classes.mainBox}
-      >
-        <Box width="0.22" alignSelf="center">
+      <Collapse in={isNotificationClosed}>
+        <Box
+          width={1}
+          height={1}
+          p={2}
+          justifyContent="center"
+          display="flex"
+          className={classes.mainBox}
+        >
+          <Box width="0.22" alignSelf="center">
+            <Box
+              width="0.67"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              bgcolor={notificationBackgroundColor}
+              className={classes.iconBox}
+            >
+              <NotificationsActiveIcon className={classes.icon} />
+            </Box>
+          </Box>
           <Box
-            width="0.76"
+            width="0.67"
             display="flex"
+            flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            bgcolor={notificationBackgroundColor}
-            className={classes.iconBox}
           >
-            <NotificationsActiveIcon className={classes.icon} />
+            <Box mb={2}>
+              <H6 color="dark">{item.title}</H6>
+            </Box>
+            <Box className={classes.textBox}>
+              <BodyText color="dark">{item.description}</BodyText>
+            </Box>
+          </Box>
+          <Box width="0.02" mb={2}>
+            <CancelIcon onClick={() => onClose(item)} />
           </Box>
         </Box>
-
-        <Box
-          width="0.67"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Box mb={2}>
-            <H6 color="dark">{item.title}</H6>
-          </Box>
-          <Box className={classes.textBox}>
-            <BodyText color="dark">{item.description}</BodyText>
-          </Box>
-        </Box>
-        <Box width="0.02" mb={2}>
-          <CancelIcon onClick={() => onClose(item)} />
-        </Box>
-      </Box>
+      </Collapse>
     </>
   );
 }

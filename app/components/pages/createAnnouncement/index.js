@@ -1,42 +1,22 @@
-import {
-  Box,
-  Button,
-  Hidden,
-  FormLabel,
-  FormHelperText,
-} from '@material-ui/core';
+import { Box, Button, Hidden, FormLabel } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import { Field, Form, Formik } from 'formik';
-import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 import { useHistory } from 'react-router-dom';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 
 import { string, object, date, ref } from 'yup';
 import { ANNOUNCEMENT_STATUS, ROLES } from '../../../utils/constants';
 import FormikRadioGroup from '../../muiRadioButtons';
-import { BodyTextLarge, H4 } from '../../typography';
+import { H4 } from '../../typography';
 import Select from '../../muiSelect';
 import { useAuthContext } from '../../../context/authContext';
-import { Input } from '../../index';
+import { DatePicker, Input } from '../../index';
 import { parseDate } from '../../../utils/functions';
 
-const useStyles = makeStyles((theme) => ({
-  label: {
-    color: theme.palette.text.info,
-  },
-  dateColor: {
-    color: theme.palette.text.dark,
-  },
-}));
 const announcementSchema = object().shape({
   title: string()
     .required('*Title Required')
@@ -60,7 +40,6 @@ function CreateAnnouncement({
     { value: 'medium', label: 'Medium' },
     { value: 'low', label: 'Low' },
   ];
-  const classes = useStyles();
   const statusOptions = Object.keys(ANNOUNCEMENT_STATUS).map(
     (val) => ANNOUNCEMENT_STATUS[val]
   );
@@ -94,7 +73,7 @@ function CreateAnnouncement({
         }}
         validationSchema={announcementSchema}
       >
-        {({ setFieldValue, values, errors, touched, handleBlur }) => (
+        {({ values }) => (
           <Form>
             <Box
               flexWrap="wrap"
@@ -130,62 +109,22 @@ function CreateAnnouncement({
                   </Box>
 
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
-                        id="startTime"
-                        name="startTime"
-                        label={
-                          <BodyTextLarge className={classes.label}>
-                            Start Date*
-                          </BodyTextLarge>
-                        }
-                        disablePast
-                        inputVariant="outlined"
-                        format="MM-dd-yyyy"
-                        fullWidth
-                        showTodayButton
-                        value={values.startTime}
-                        InputProps={{ className: classes.dateColor }}
-                        onBlur={handleBlur}
-                        onChange={(value) => {
-                          setFieldValue('startTime', value);
-                        }}
-                        disabled={role === ROLES.USER}
-                        KeyboardButtonProps={{ tabIndex: -1 }}
-                      />
-                    </MuiPickersUtilsProvider>
-                    {errors.startTime && touched.startTime && (
-                      <FormHelperText error>{errors.startTime}</FormHelperText>
-                    )}
+                    <DatePicker
+                      disablePast
+                      id="startTime"
+                      name="startTime"
+                      label="Start Date*"
+                      disabled={role === ROLES.USER}
+                    />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
-                        id="endTime"
-                        name="endTime"
-                        label={
-                          <BodyTextLarge className={classes.label}>
-                            End Date*
-                          </BodyTextLarge>
-                        }
-                        disablePast
-                        inputVariant="outlined"
-                        format="MM-dd-yyyy"
-                        fullWidth
-                        showTodayButton
-                        value={values.endTime}
-                        onBlur={handleBlur}
-                        InputProps={{ className: classes.dateColor }}
-                        onChange={(value) => {
-                          setFieldValue('endTime', value);
-                        }}
-                        disabled={role === ROLES.USER}
-                        KeyboardButtonProps={{ tabIndex: -1 }}
-                      />
-                    </MuiPickersUtilsProvider>
-                    {errors.endTime && touched.endTime && (
-                      <FormHelperText error>{errors.endTime}</FormHelperText>
-                    )}
+                    <DatePicker
+                      id="endTime"
+                      name="endTime"
+                      label="End Date*"
+                      disablePast
+                      disabled={role === ROLES.USER}
+                    />
                   </Box>
 
                   <Box width={[1, 1 / 2]} mt={10} px={3}>

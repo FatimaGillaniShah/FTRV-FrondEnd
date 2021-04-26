@@ -22,6 +22,7 @@ export const ANNOUNCEMENT_STATUS = {
 
 export const APIS = {
   LOGIN: 'users/login',
+  GOOGLE_LOGIN: 'users/googleLogin',
   USERS_LIST: '/users',
   USERS_DELETE: '/users/deleteUsers',
   USERS: '/users',
@@ -42,4 +43,7 @@ export const APIS = {
   DELETE_EVENTS: '/events',
   GET_EVENT: '/events',
   UPDATE_EVENTS: '/events',
+  CREATE_BLOG: '/blogs',
+  UPDATE_BLOG: '/blogs',
+  GET_BLOG: '/blogs',
 };

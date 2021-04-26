@@ -15,14 +15,14 @@ export const menuItems = [
     children: [
       { name: 'Directory', link: '/directory' },
       {
-        name: 'Ceo Message',
+        name: 'Message from CEO',
         link: '/ceo-message',
       },
     ],
   },
   {
     name: 'blog',
-    externalLink: 'https://www.funtownrv.com/blog/',
+    link: '/blogs/add',
     icon: BorderColorIcon,
   },
   {

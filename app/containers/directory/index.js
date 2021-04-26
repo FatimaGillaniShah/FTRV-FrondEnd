@@ -22,7 +22,7 @@ import { Modal, Toast } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
-  const [query, setQuery] = useState({});
+  const [query, setQuery] = useState({ searchString: '' });
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
@@ -32,16 +32,18 @@ function DirectoryContainer() {
   const [sortColumn, setSortColumn] = useState('firstName');
   const history = useHistory();
   const classes = useStyles();
+  const [fieldFunc, setFieldFunc] = useState();
   const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
+
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
-
   useEffect(() => {
     if (checked) {
-      setQuery('');
+      fieldFunc?.setFormikField('searchString', '');
+      setQuery({ searchString: '' });
     }
   }, [checked, sortOrder, sortColumn]);
   const { data, isLoading } = useQuery(
@@ -50,15 +52,19 @@ function DirectoryContainer() {
   );
 
   const handleSwitchChange = ({ target }) => {
+    onClear();
     setChecked(target.checked);
   };
-
-  const handleSearch = debounce(({ target: { value } }) => {
-    setQuery({ searchString: value });
+  const handleSearch = debounce((e, setFieldValue) => {
+    setFieldFunc({ setFormikField: setFieldValue });
+    setQuery({ searchString: e.target.value });
   }, 500);
 
   const handleFilterSearch = (values) => {
     setFilters(values);
+  };
+  const onClear = () => {
+    setFilters([]);
   };
 
   const onChangeSort = (order, property) => {
@@ -101,14 +107,19 @@ function DirectoryContainer() {
           <WrapInCard mb={8}>
             <Box display="flex">
               <Search
+                initialValues={query}
                 onHandleSwitchChange={handleSwitchChange}
                 checked={checked}
                 onHandleSearch={handleSearch}
-                query={query}
               />
             </Box>
             <Box mt={8}>
-              {checked && <Filters onHandleFilterSearch={handleFilterSearch} />}
+              {checked && (
+                <Filters
+                  onHandleFilterSearch={handleFilterSearch}
+                  onClear={onClear}
+                />
+              )}
             </Box>
           </WrapInCard>
           <WrapInCard>

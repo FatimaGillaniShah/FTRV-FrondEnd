@@ -1,9 +1,3 @@
-/**
- *
- * Home
- *
- */
-
 import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';

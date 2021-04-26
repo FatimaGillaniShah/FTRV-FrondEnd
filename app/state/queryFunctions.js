@@ -24,6 +24,10 @@ const {
   DELETE_EVENTS,
   GET_EVENT,
   UPDATE_EVENTS,
+  CREATE_BLOG,
+  UPDATE_BLOG,
+  GET_BLOG,
+  GOOGLE_LOGIN,
 } = APIS;
 
 // USER CRUD
@@ -32,7 +36,7 @@ export const fetchUsers = ({ queryKey }) => {
   let url;
   const { sortColumn } = queryKey[1];
   const { sortOrder } = queryKey[1];
-  if (queryKey[1].query) {
+  if (queryKey[1].query.searchString) {
     url = `${`${USERS_LIST}?pageSize=1000&${insertParams(
       queryKey[1].query
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`}`;
@@ -71,6 +75,8 @@ export const uploadEmployeeFile = (payload) => http.post(FILE_UPLOAD, payload);
 export const createUser = (payload) => http.post(USERS, payload);
 
 export const login = (payload) => http.post(LOGIN, payload);
+
+export const googleLogin = (payload) => http.post(GOOGLE_LOGIN, payload);
 
 // USEFUL LINKS CRUD
 
@@ -121,3 +127,15 @@ export const getEventById = ({ queryKey }) =>
 
 export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);
+
+// BLOGS CRUD
+export const createBlog = (payload) => http.post(CREATE_BLOG, payload);
+
+export const updateBlog = (payload) => {
+  const id = payload.get('id');
+  payload.delete('id');
+  return http.put(`${UPDATE_BLOG}/${id}`, payload);
+};
+
+export const getBlogById = ({ queryKey }) =>
+  http.get(`${GET_BLOG}/${queryKey[1]}`);
