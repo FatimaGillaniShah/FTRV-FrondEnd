@@ -52,7 +52,7 @@ function BlogDetail({ title, createdAt, content, thumbnail }) {
 }
 BlogDetail.propTypes = {
   title: PropTypes.string,
-  content: PropTypes.object,
+  content: PropTypes.string,
   thumbnail: PropTypes.string,
   createdAt: PropTypes.string,
 };

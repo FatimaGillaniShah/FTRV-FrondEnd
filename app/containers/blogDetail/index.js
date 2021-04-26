@@ -25,7 +25,7 @@ function BlogDetail() {
       });
     },
   });
-
+  const blog = data?.data?.data;
   return (
     <>
       <Helmet>
@@ -39,10 +39,10 @@ function BlogDetail() {
             <Loading />
           ) : (
             <BlogDetailInfo
-              title={data?.data?.data.title}
-              thumbnail={data?.data?.data.thumbnail}
-              content={data?.data?.data.content}
-              createdAt={data?.data?.data.createdAt}
+              title={blog.title}
+              thumbnail={blog.thumbnail}
+              content={blog.content}
+              createdAt={blog.createdAt}
             />
           )}
         </WrapInCard>
