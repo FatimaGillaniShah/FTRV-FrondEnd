@@ -1,5 +1,5 @@
 import { WrapInCard } from 'components';
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import BlogListing from '../../components/blogListing';
@@ -11,8 +11,13 @@ import { Loading } from '../../components/loading';
 import { useDeleteBlog } from '../../hooks/blog';
 
 function Blog() {
-  const { data, isLoading } = useQuery(keys.blog, getBlogs);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, isLoading } = useQuery([keys.blog, currentPage], getBlogs, {
+    keepPreviousData: true,
+  });
+  const handleChange = (event, pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   const mutation = useDeleteBlog();
   const handleDeleteBlog = (id) => {
     Modal.fire().then(({ isConfirmed }) => {
@@ -21,6 +26,7 @@ function Blog() {
       }
     });
   };
+  const blog = data?.data?.data;
   return (
     <>
       <Helmet>
@@ -34,7 +40,10 @@ function Blog() {
             <Loading />
           ) : (
             <BlogListing
-              items={data?.data?.data?.rows}
+              page={currentPage}
+              blogs={blog.rows}
+              handleChange={handleChange}
+              count={blog.count}
               onHandleDeleteBlog={handleDeleteBlog}
             />
           )}

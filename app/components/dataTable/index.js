@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { ROLES } from '../../utils/constants';
+import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import { getComparator, stableSort } from '../../utils/helper';
 import { CheckBox } from '../index';
 import { BodyTextSmall } from '../typography';
@@ -221,7 +221,7 @@ DataTable.propTypes = {
   matchUserIdWithIDS: PropTypes.bool,
 };
 DataTable.defaultProps = {
-  tableRowsPerPage: 20,
+  tableRowsPerPage: PAGE_SIZE,
   selected: [],
   matchUserIdWithIDS: false,
 };

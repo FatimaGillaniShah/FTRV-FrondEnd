@@ -1,5 +1,5 @@
 import http from '../service/http';
-import { APIS } from '../utils/constants';
+import { APIS, PAGE_SIZE } from '../utils/constants';
 import { insertParams } from '../utils/helper';
 
 const {
@@ -124,7 +124,10 @@ export const getEventById = ({ queryKey }) =>
 export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);
 
-export const getBlogs = () => http.get(`${BLOG}`);
+export const getBlogs = ({ queryKey }) => {
+  const url = `${BLOG}?pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
+  return http.get(url);
+};
 export const createBlog = (payload) => http.post(CREATE_BLOG, payload);
 
 export const updateBlog = (payload) => {

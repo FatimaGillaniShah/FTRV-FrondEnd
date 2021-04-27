@@ -1,28 +1,29 @@
 import { Box, Divider, Button, Link } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import React from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import Pagination from '@material-ui/lab/Pagination';
 import Blog from '../pages/blog';
 import { H5 } from '../typography';
+import { PAGE_SIZE } from '../../utils/constants';
 
 const useStyles = makeStyles((theme) => ({
   paginator: {
     justifyContent: 'center',
-    marginTop: theme.spacing(7),
+    marginTop: theme.spacing(5),
   },
 }));
 
-export function BlogListing({ items, onHandleDeleteBlog }) {
+export function BlogListing({
+  currentPage,
+  blogs,
+  handleChange,
+  count,
+  onHandleDeleteBlog,
+}) {
   const classes = useStyles();
-  const itemsPerPage = 5;
-  const [page, setPage] = useState(1);
-  const [noOfPages] = useState(Math.ceil(items.length / itemsPerPage));
-
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
-
+  const defaultPage = 1;
+  const noOfPages = Math.ceil(count / PAGE_SIZE);
   return (
     <>
       <Box m={4}>
@@ -40,11 +41,10 @@ export function BlogListing({ items, onHandleDeleteBlog }) {
             </Button>
           </Link>
         </Box>
-        {items && items?.length >= 1 && (
+        {blogs && blogs?.length >= 1 && (
           <Box mt={5}>
-            {items
-              .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-              .map(({ id, title, thumbnail, shortText, user, createdAt }) => (
+            {blogs.map(
+              ({ id, title, thumbnail, shortText, user, createdAt }) => (
                 <Box>
                   <Blog
                     id={id}
@@ -55,17 +55,18 @@ export function BlogListing({ items, onHandleDeleteBlog }) {
                     createdAt={createdAt}
                     onHandleDeleteBlog={onHandleDeleteBlog}
                   />
-                  {items[items.length - 1].id !== id && <Divider />}
+                  {blogs[blogs.length - 1].id !== id && <Divider />}
                 </Box>
-              ))}
+              )
+            )}
           </Box>
         )}
         <Box component="span">
           <Pagination
             count={noOfPages}
-            page={page}
+            page={currentPage}
             onChange={handleChange}
-            defaultPage={1}
+            defaultPage={defaultPage}
             color="primary"
             size="large"
             showFirstButton

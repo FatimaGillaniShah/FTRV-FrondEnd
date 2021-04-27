@@ -18,7 +18,6 @@ const useStyles = makeStyles(() => ({
     borderRadius: '6px',
   },
 }));
-
 function Blog({
   id,
   title,
