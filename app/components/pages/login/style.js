@@ -37,12 +37,13 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '10px',
   },
   loginBtn: {
-    paddingLeft: '40px',
-    paddingRight: '40px',
+    padding: '9px 0',
+    width: '54%',
   },
   centerAlign: {
     display: 'flex',
-    justifyContent: 'space-around',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   error: {
     color: theme.palette.text.error,

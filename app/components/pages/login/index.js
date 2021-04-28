@@ -81,23 +81,23 @@ export function Login({
                 <Box className={classes.centerAlign}>
                   <Button
                     className={classes.loginBtn}
-                    fullWidth={false}
                     variant="contained"
                     color="primary"
                     type="submit"
                   >
                     Login
                   </Button>
-
-                  <GoogleLogin
-                    clientId={clientId}
-                    buttonText="Login with Google"
-                    onSuccess={(res) => onGoogleSuccess(res)}
-                    onFailure={(e) => onGoogleFailed(e)}
-                    cookiePolicy="single_host_origin"
-                    theme="dark"
-                    hostedDomain={domain}
-                  />
+                  <Box mt={5}>
+                    <GoogleLogin
+                      clientId={clientId}
+                      buttonText="Login with Google"
+                      onSuccess={(res) => onGoogleSuccess(res)}
+                      onFailure={(e) => onGoogleFailed(e)}
+                      cookiePolicy="single_host_origin"
+                      theme="dark"
+                      hostedDomain={domain}
+                    />
+                  </Box>
                 </Box>
               </Paper>
             </Form>
