@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
 function BlogDetail({ title, createdAt, content, thumbnail }) {
   const classes = useStyles();
   const pattern = new Date(createdAt);
-  const creationDate = moment(pattern).format('MMMM d, YYYY');
+  const creationDate = moment(pattern).format('MMMM DD, YYYY');
 
   return (
     <Box ml={3}>

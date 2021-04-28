@@ -36,7 +36,7 @@ function Blog({
   const classes = useStyles();
   const history = useHistory();
   const pattern = new Date(createdAt);
-  const creationDate = moment(pattern).format('MMMM d, YYYY');
+  const creationDate = moment(pattern).format('MMMM DD, YYYY');
 
   const navigateTo = (url) => {
     history.push(url);
