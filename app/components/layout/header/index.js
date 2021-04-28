@@ -71,7 +71,6 @@ export default function Header() {
 
   const handleClose = () => {
     setAnchorEl(null);
-    history.push('/profile');
   };
   const handleLogout = () => {
     setUser({
@@ -119,7 +118,7 @@ export default function Header() {
                     horizontal: 'center',
                   }}
                 >
-                  <StyledMenuItem onClick={handleClose}>
+                  <StyledMenuItem onClick={() => history.push('/profile')}>
                     <StyledListItemIcon>
                       <AccountCircle />
                     </StyledListItemIcon>
