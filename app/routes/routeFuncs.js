@@ -4,6 +4,7 @@ import PrivateRoute from '../components/hoc/privateRoute';
 import Home from '../containers/home/loadable';
 import { ROLES } from '../utils/constants';
 import { routeArray } from './routeArray';
+import NotFoundPage from '../containers/pageNotFound/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 const renderRoutes = (_routeArray, parentPath = '') =>
@@ -25,7 +26,9 @@ const renderRoutes = (_routeArray, parentPath = '') =>
           roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
         />
       )}
+
       {route.nestedRoutes && renderRoutes(route.nestedRoutes, route.path)}
+      <Route path="/abc" component={NotFoundPage} />
     </>
   ));
 
