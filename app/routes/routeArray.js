@@ -20,6 +20,7 @@ import { ROLES } from '../utils/constants';
 import createEvent from '../containers/createEvent/loadable';
 import ViewEvent from '../containers/viewEvent/loadable';
 import createBlog from '../containers/createBlog/loadable';
+import NotFoundPage from '../containers/pageNotFound/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -29,6 +30,13 @@ export const routeArray = [
     exact: true,
     breadCrumbKey: 'login',
     routeType: routeTypes.public,
+  },
+  {
+    path: '/not-found-page',
+    component: NotFoundPage,
+    exact: true,
+    breadCrumbKey: 'login',
+    routeType: routeTypes.private,
   },
   {
     path: '/home',
