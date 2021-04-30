@@ -16,6 +16,7 @@ import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { H5, H6 } from 'components';
+import { useGoogleLogin } from 'react-google-login';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 
@@ -64,6 +65,7 @@ export default function Header() {
     ? process.env.API_ASSETS_URL
     : '';
   const userAvatar = `${avatarPrefix}${user.data.avatar}`;
+  const clientId = process.env.GOOGLE_CLIENT_ID;
   const handleClick = (event) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
@@ -72,7 +74,21 @@ export default function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // INITIALIZING
+  useGoogleLogin({
+    clientId,
+    cookiePolicy: 'single_host_origin',
+  });
+  const onGoogleLogout = () => {
+    // You must initialize the GoogleAuth object with before calling window.gapi.auth2.getAuthInstance() method.
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    if (auth2 != null) {
+      auth2.signOut().then(auth2.disconnect());
+    }
+  };
   const handleLogout = () => {
+    onGoogleLogout();
     setUser({
       announcement: [],
       data: {},
