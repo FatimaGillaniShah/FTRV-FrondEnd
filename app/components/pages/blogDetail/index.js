@@ -1,11 +1,13 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 import ReactHtmlParser from 'html-react-parser';
-import moment from 'moment';
-import { H5, BodyTextSmall, BodyTextLarge } from '../../typography';
+import { H5, BodyTextLarge } from '../../typography';
+import BlogCreatorInfo from '../blog/blogCreatorInfo';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,37 +19,44 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function BlogDetail({ title, createdAt, content, thumbnail }) {
+function BlogDetail({ title, createdAt, content, thumbnail, user }) {
   const classes = useStyles();
-  const pattern = new Date(createdAt);
-  const creationDate = moment(pattern).format('MMMM DD, YYYY');
-
+  const history = useHistory();
   return (
-    <Box ml={3}>
-      <Box my={7}>
-        <H5> {title} </H5>
-        <Box mt={4} mb={6}>
-          <BodyTextSmall color="grey" fontWeight="fontWeightMedium">
-            {creationDate}
-          </BodyTextSmall>
-        </Box>
-        {thumbnail && (
-          <Box width={[1, 1, 1, '40%']} mt={2}>
-            {' '}
-            <Avatar
-              variant="square"
-              src={`${process.env.API_ASSETS_URL}${thumbnail}`}
-              className={classes.imageView}
-            />
+    <>
+      <Box mt={2} mb={4}>
+        <Button
+          variant="text"
+          startIcon={<KeyboardBackspaceIcon />}
+          onClick={() => history.goBack()}
+        >
+          Back
+        </Button>
+      </Box>
+      <Box ml={3}>
+        <Box my={7}>
+          <H5> {title} </H5>
+          <Box mt={3}>
+            <BlogCreatorInfo user={user} createdAt={createdAt} />
           </Box>
-        )}
-        <Box mt={7}>
-          <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
-            <Box className={classes.root}>{ReactHtmlParser(content)}</Box>
-          </BodyTextLarge>
+          {thumbnail && (
+            <Box width={[1, 1, 1, '40%']} mt={2}>
+              {' '}
+              <Avatar
+                variant="square"
+                src={`${process.env.API_ASSETS_URL}${thumbnail}`}
+                className={classes.imageView}
+              />
+            </Box>
+          )}
+          <Box mt={7}>
+            <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
+              <Box className={classes.root}>{ReactHtmlParser(content)}</Box>
+            </BodyTextLarge>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 BlogDetail.propTypes = {
@@ -55,6 +64,7 @@ BlogDetail.propTypes = {
   content: PropTypes.string,
   thumbnail: PropTypes.string,
   createdAt: PropTypes.string,
+  user: PropTypes.object,
 };
 
 export default memo(BlogDetail);

@@ -125,7 +125,7 @@ export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);
 
 export const getBlogs = ({ queryKey }) => {
-  const url = `${BLOG}?pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
+  const url = `${BLOG}?sortColumn=updatedAt&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
   return http.get(url);
 };
 export const createBlog = (payload) => http.post(CREATE_BLOG, payload);

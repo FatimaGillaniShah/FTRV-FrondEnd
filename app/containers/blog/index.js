@@ -15,6 +15,7 @@ function Blog() {
   const { data, isLoading } = useQuery([keys.blog, currentPage], getBlogs, {
     keepPreviousData: true,
   });
+  const blog = data?.data?.data;
   const handleChange = (event, pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -23,10 +24,13 @@ function Blog() {
     Modal.fire().then(({ isConfirmed }) => {
       if (isConfirmed) {
         mutation.mutate([id]);
+        if (blog.rows.length === 1) {
+          setCurrentPage(1);
+        }
       }
     });
   };
-  const blog = data?.data?.data;
+
   return (
     <>
       <Helmet>
@@ -40,7 +44,7 @@ function Blog() {
             <Loading />
           ) : (
             <BlogListing
-              page={currentPage}
+              currentPage={currentPage}
               blogs={blog.rows}
               handleChange={handleChange}
               count={blog.count}

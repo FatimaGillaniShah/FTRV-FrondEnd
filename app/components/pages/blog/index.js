@@ -1,21 +1,24 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
-import { Avatar, IconButton, Link } from '@material-ui/core';
+import { Avatar, IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import moment from 'moment';
-import { H5, BodyTextLarge, BodyTextSmall } from '../../typography';
+import { H5, BodyTextLarge } from '../../typography';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import BlogCreatorInfo from './blogCreatorInfo';
 
 const useStyles = makeStyles(() => ({
   imageView: {
     width: '280px',
     height: '180px',
     borderRadius: '6px',
+  },
+  title: {
+    cursor: 'pointer',
   },
 }));
 function Blog({
@@ -35,8 +38,6 @@ function Blog({
 
   const classes = useStyles();
   const history = useHistory();
-  const pattern = new Date(createdAt);
-  const creationDate = moment(pattern).format('MMMM DD, YYYY');
 
   const navigateTo = (url) => {
     history.push(url);
@@ -59,9 +60,12 @@ function Blog({
       <Box width={[1, '75%']}>
         <Box display="flex" flexDirection="row" mt={0.5}>
           <Box width={[1, 1 / 2]} mt={2}>
-            <Link href={`/blogs/detail/${id}`}>
-              <H5>{title}</H5>
-            </Link>
+            <H5
+              className={classes.title}
+              onClick={() => navigateTo(`blogs/detail/${id}`)}
+            >
+              {title}
+            </H5>
           </Box>
           {role === ROLES.ADMIN && (
             <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
@@ -84,14 +88,7 @@ function Blog({
           </BodyTextLarge>
         </Box>
         <Box display="flex" flexDirection="column" mt={8}>
-          <Box>
-            <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
-              {`${user.firstName}${' '}${user.lastName}`}
-            </BodyTextLarge>
-          </Box>
-          <Box mt={1}>
-            <BodyTextSmall color="grey">{creationDate}</BodyTextSmall>
-          </Box>
+          <BlogCreatorInfo user={user} createdAt={createdAt} />
         </Box>
       </Box>
     </Box>

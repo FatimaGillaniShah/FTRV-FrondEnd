@@ -43,6 +43,7 @@ function BlogDetail() {
               thumbnail={blog.thumbnail}
               content={blog.content}
               createdAt={blog.createdAt}
+              user={blog.user}
             />
           )}
         </WrapInCard>
