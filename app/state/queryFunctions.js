@@ -36,12 +36,15 @@ const {
 
 export const fetchUsers = ({ queryKey }) => {
   let url;
+  url = `${USERS_LIST}?pageNumber=${queryKey[1].pageNumber}&pageSize=${queryKey[1].pageSize}`;
   if (queryKey[1].query.searchString) {
-    url = `${`${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].query)}`}`;
+    url = `${`${USERS_LIST}?pageNumber=${queryKey[1].pageNumber}&pageSize=${
+      queryKey[1].pageSize
+    }&${insertParams(queryKey[1].query)}`}`;
   } else if (queryKey[1].filters) {
-    url = `${USERS_LIST}?pageSize=1000&${insertParams(queryKey[1].filters)}`;
-  } else {
-    url = USERS_LIST;
+    url = `${USERS_LIST}?pageNumber=${queryKey[1].pageNumber}&pageSize=${
+      queryKey[1].pageSize
+    }&${insertParams(queryKey[1].filters)}`;
   }
   return http.get(url);
 };

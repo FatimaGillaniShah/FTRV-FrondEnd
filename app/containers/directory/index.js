@@ -23,8 +23,11 @@ import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [filters, setFilters] = useState();
   const { state } = useLocation();
+  const isServerPagination = false;
   const [checked, setChecked] = useState(false);
   const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -45,9 +48,13 @@ function DirectoryContainer() {
     }
   }, [checked]);
   const { data, isLoading } = useQuery(
-    keys.getUsers({ query, filters }),
-    fetchUsers
+    keys.getUsers({ query, filters, pageNumber, pageSize }),
+    fetchUsers,
+    {
+      keepPreviousData: true,
+    }
   );
+  const tableData = data?.data?.data;
 
   const handleSwitchChange = ({ target }) => {
     onClear();
@@ -88,6 +95,12 @@ function DirectoryContainer() {
         mutation.mutate(selected);
       }
     });
+  };
+  const handleServerPageNumber = (value) => {
+    setPageNumber(value.currentPage);
+  };
+  const handleServerPageSize = (value) => {
+    setPageSize(value.rowPerPage);
   };
   return (
     <>
@@ -134,11 +147,15 @@ function DirectoryContainer() {
 
             {!isLoading && !mutation.isLoading && (
               <DataTable
-                data={data && data.data.data.rows}
+                data={tableData.rows}
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
+                isServerPagination={isServerPagination}
                 matchUserIdWithIDS
+                count={tableData.count}
+                handleServerPageNumber={handleServerPageNumber}
+                handleServerPageSize={handleServerPageSize}
               />
             )}
           </WrapInCard>
