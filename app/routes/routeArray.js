@@ -20,6 +20,7 @@ import { ROLES } from '../utils/constants';
 import createEvent from '../containers/createEvent/loadable';
 import ViewEvent from '../containers/viewEvent/loadable';
 import createBlog from '../containers/createBlog/loadable';
+import createPoll from '../containers/createPoll/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -227,6 +228,34 @@ export const routeArray = [
         simplifiedPath: 'detail',
         noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
+      },
+    ],
+  },
+  {
+    path: '/polls',
+    component: createPoll,
+    exact: true,
+    breadCrumbKey: 'Polls',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: createPoll,
+        exact: true,
+        breadCrumbKey: 'Create New Event',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: createPoll,
+        exact: true,
+        breadCrumbKey: 'Edit Poll',
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
       },
     ],
   },

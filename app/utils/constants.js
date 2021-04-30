@@ -21,6 +21,8 @@ export const ANNOUNCEMENT_STATUS = {
   INACTIVE: 'inactive',
 };
 
+export const POLL_OPTIONS_LIMIT = 4;
+
 export const APIS = {
   LOGIN: 'users/login',
   GOOGLE_LOGIN: 'users/googleLogin',
