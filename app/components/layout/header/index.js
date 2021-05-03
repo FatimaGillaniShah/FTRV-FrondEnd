@@ -61,6 +61,7 @@ export default function Header() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
+  const useGoogleLogout = useGoogleLogin;
   const avatarPrefix = !user.data.avatar?.includes('http')
     ? process.env.API_ASSETS_URL
     : '';
@@ -76,12 +77,11 @@ export default function Header() {
   };
 
   // INITIALIZING
-  useGoogleLogin({
+  useGoogleLogout({
     clientId,
     cookiePolicy: 'single_host_origin',
   });
   const onGoogleLogout = () => {
-    // You must initialize the GoogleAuth object with before calling window.gapi.auth2.getAuthInstance() method.
     const auth2 = window.gapi.auth2.getAuthInstance();
     if (auth2 != null) {
       auth2.signOut().then(auth2.disconnect());
