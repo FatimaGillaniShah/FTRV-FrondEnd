@@ -32,9 +32,9 @@ export const userProfileValidation = object().shape({
   lastName: string()
     .max(100, 'Too Long!')
     .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
-  location: string().max(200, 'Too Long!'),
-  department: string().max(200, 'Too Long!'),
-  title: string().max(200, 'Too Long!'),
+  // location: string().max(200, 'Too Long!'),
+  // department: string().max(200, 'Too Long!'),
+  //  title: string().max(200, 'Too Long!'),
 
   email: string()
     .max(320, 'Invalid')
