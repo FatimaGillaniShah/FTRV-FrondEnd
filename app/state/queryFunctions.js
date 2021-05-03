@@ -1,5 +1,5 @@
 import http from '../service/http';
-import { APIS } from '../utils/constants';
+import { APIS, PAGE_SIZE } from '../utils/constants';
 import { insertParams } from '../utils/helper';
 
 const {
@@ -24,9 +24,11 @@ const {
   DELETE_EVENTS,
   GET_EVENT,
   UPDATE_EVENTS,
+  BLOG,
+  GET_BLOG,
+  DELETE_BLOG,
   CREATE_BLOG,
   UPDATE_BLOG,
-  GET_BLOG,
   GOOGLE_LOGIN,
 } = APIS;
 
@@ -34,17 +36,24 @@ const {
 
 export const fetchUsers = ({ queryKey }) => {
   let url;
-  const { sortColumn, sortOrder, query, filters } = queryKey[1];
+  const {
+    sortColumn,
+    sortOrder,
+    pageNumber,
+    pageSize,
+    query,
+    filters,
+  } = queryKey[1];
   if (query.searchString) {
-    url = `${`${USERS_LIST}?pageSize=1000&${insertParams(
+    url = `${USERS_LIST}?pageSize=1000&${insertParams(
       query
-    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`}`;
+    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   } else if (filters) {
     url = `${USERS_LIST}?pageSize=1000&${insertParams(
       filters
-    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
+    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   } else {
-    url = `${USERS_LIST}?sortColumn=${sortColumn}&sortOrder=${sortOrder}`;
+    url = `${USERS_LIST}?sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   }
   return http.get(url);
 };
@@ -127,7 +136,10 @@ export const getEventById = ({ queryKey }) =>
 export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);
 
-// BLOGS CRUD
+export const getBlogs = ({ queryKey }) => {
+  const url = `${BLOG}?sortColumn=updatedAt&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
+  return http.get(url);
+};
 export const createBlog = (payload) => http.post(CREATE_BLOG, payload);
 
 export const updateBlog = (payload) => {
@@ -138,3 +150,6 @@ export const updateBlog = (payload) => {
 
 export const getBlogById = ({ queryKey }) =>
   http.get(`${GET_BLOG}/${queryKey[1]}`);
+
+export const deleteBlog = (payload) =>
+  http.delete(DELETE_BLOG, { data: { id: payload } });

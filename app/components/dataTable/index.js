@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { ROLES } from '../../utils/constants';
+import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import { getComparator, stableSort } from '../../utils/helper';
 import { CheckBox } from '../index';
 import { BodyTextSmall } from '../typography';
@@ -22,11 +22,14 @@ export function DataTable({
   tableRowsPerPage,
   selected,
   setSelected,
+  isServerPagination,
   onChangeSort,
   sortOrder,
   sortColumn,
-  isServerSide,
   matchUserIdWithIDS,
+  count,
+  handleServerPageNumber,
+  handleServerPageSize,
 }) {
   const classes = useStyles();
   const [order, setOrder] = useState(sortOrder || 'asc');
@@ -46,7 +49,6 @@ export function DataTable({
       setRows(data);
     }
   }, [data]);
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -83,14 +85,31 @@ export function DataTable({
     }
     setSelected(newSelected);
   };
-
+  const isServerSidePagination = (paginationMode) => {
+    if (!paginationMode) {
+      return stableSort(rows, getComparator(order, orderBy)).slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+      );
+    }
+    return rows;
+  };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    if (isServerPagination) {
+      const currentPage = newPage + 1;
+      handleServerPageNumber({
+        currentPage,
+      });
+    }
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+    if (isServerPagination) {
+      const rowPerPage = parseInt(event.target.value, 10);
+      handleServerPageSize({ rowPerPage });
+    }
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -170,58 +189,29 @@ export function DataTable({
             matchUserIdWithIDS={matchUserIdWithIDS}
           />
           <TableBody>
-            {!isServerSide
-              ? stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.id);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+            {isServerSidePagination(isServerPagination).map((row, index) => {
+              const isItemSelected = isSelected(row.id);
+              const labelId = `enhanced-table-checkbox-${index}`;
 
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.name}
-                        selected={isItemSelected}
-                        disabled={
-                          matchUserIdWithIDS && row.id === currentUserID
-                        }
-                      >
-                        {mapRows(
-                          row,
-                          isItemSelected,
-                          labelId,
-                          matchUserIdWithIDS && row.id === currentUserID
-                        )}
-                      </TableRow>
-                    );
-                  })
-              : rows.map((row, index) => {
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                      disabled={matchUserIdWithIDS && row.id === currentUserID}
-                    >
-                      {mapRows(
-                        row,
-                        isItemSelected,
-                        labelId,
-                        matchUserIdWithIDS && row.id === currentUserID
-                      )}
-                    </TableRow>
-                  );
-                })}
-
+              return (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  aria-checked={isItemSelected}
+                  tabIndex={-1}
+                  key={row.name}
+                  selected={isItemSelected}
+                  disabled={matchUserIdWithIDS && row.id === currentUserID}
+                >
+                  {mapRows(
+                    row,
+                    isItemSelected,
+                    labelId,
+                    matchUserIdWithIDS && row.id === currentUserID
+                  )}
+                </TableRow>
+              );
+            })}
             {!rows.length && (
               <TableRow>
                 <TableCell colSpan={headCells.length + 1}>
@@ -235,7 +225,7 @@ export function DataTable({
       <TablePagination
         rowsPerPageOptions={[5, 10, 20]}
         component="div"
-        count={rows.length}
+        count={count}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
@@ -253,14 +243,12 @@ DataTable.propTypes = {
   onChangeSort: PropTypes.func,
   sortOrder: PropTypes.string,
   sortColumn: PropTypes.string.isRequired,
-  isServerSide: PropTypes.bool,
   matchUserIdWithIDS: PropTypes.bool,
 };
 DataTable.defaultProps = {
-  tableRowsPerPage: 20,
+  tableRowsPerPage: PAGE_SIZE,
   selected: [],
   matchUserIdWithIDS: false,
-  isServerSide: false,
 };
 
 export default DataTable;

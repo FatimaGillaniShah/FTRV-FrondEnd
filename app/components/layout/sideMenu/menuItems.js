@@ -22,7 +22,7 @@ export const menuItems = [
   },
   {
     name: 'blog',
-    link: '/blogs/add',
+    link: '/blogs',
     icon: BorderColorIcon,
   },
   {
@@ -71,11 +71,13 @@ export const menuItems = [
     role: [ROLES.ADMIN],
     children: [
       { name: 'Quote', link: '/quote' },
+
+      { name: 'events', link: '/events' },
+      { name: 'polls', link: '/polls' },
       {
         name: 'Announcement',
         link: '/announcement',
       },
-      { name: 'events', link: '/events' },
     ],
   },
 ];

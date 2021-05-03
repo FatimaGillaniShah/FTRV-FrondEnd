@@ -41,7 +41,7 @@ function CreateBlog() {
         title: `Blog ${id ? 'Updated' : 'Created'}  Successfully`,
       });
       history.push('/blogs');
-      queryClient.invalidateQueries(keys.blogs);
+      queryClient.invalidateQueries(keys.blog);
     },
     onError: ({
       response: {

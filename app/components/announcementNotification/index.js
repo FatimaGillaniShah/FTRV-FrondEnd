@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
@@ -27,11 +27,14 @@ export function AnnouncementNotification({ item }) {
     setTimeout(() => {
       closedAnnouncement.push(itemAnnouncement);
       setUser({ ...user, announcement: closedAnnouncement });
-    }, 3000);
+    }, 500);
   };
+  useEffect(() => {
+    setIsNotificationClosed(true);
+  }, [item]);
   return (
     <>
-      <Collapse in={isNotificationClosed}>
+      <Collapse in={isNotificationClosed} timeout={{ exit: 500 }}>
         <Box
           width={1}
           height={1}

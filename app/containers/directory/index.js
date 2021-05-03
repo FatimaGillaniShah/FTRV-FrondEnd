@@ -23,8 +23,11 @@ import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [filters, setFilters] = useState();
   const { state } = useLocation();
+  const isServerPagination = true;
   const [checked, setChecked] = useState(false);
   const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -48,9 +51,20 @@ function DirectoryContainer() {
     }
   }, [checked, sortOrder, sortColumn]);
   const { data, isLoading } = useQuery(
-    keys.getUsers({ query, filters, sortOrder, sortColumn }),
-    fetchUsers
+    keys.getUsers({
+      query,
+      filters,
+      sortOrder,
+      sortColumn,
+      pageNumber,
+      pageSize,
+    }),
+    fetchUsers,
+    {
+      keepPreviousData: true,
+    }
   );
+  const tableData = data?.data?.data;
 
   const handleSwitchChange = ({ target }) => {
     onClear();
@@ -103,6 +117,12 @@ function DirectoryContainer() {
       }
     });
   };
+  const handleServerPageNumber = (value) => {
+    setPageNumber(value.currentPage);
+  };
+  const handleServerPageSize = (value) => {
+    setPageSize(value.rowPerPage);
+  };
   return (
     <>
       <Helmet>
@@ -148,7 +168,7 @@ function DirectoryContainer() {
 
             {!isLoading && !mutation.isLoading && (
               <DataTable
-                data={data && data.data.data.rows}
+                data={tableData.rows}
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
@@ -156,7 +176,11 @@ function DirectoryContainer() {
                 sortColumn={sortColumn}
                 onChangeSort={onChangeSort}
                 isServerSide={isServerSide}
+                isServerPagination={isServerPagination}
                 matchUserIdWithIDS
+                count={tableData.count}
+                handleServerPageNumber={handleServerPageNumber}
+                handleServerPageSize={handleServerPageSize}
               />
             )}
           </WrapInCard>

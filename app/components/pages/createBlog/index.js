@@ -181,7 +181,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                         <Box ml={2}>
                           <Button
                             onClick={() => {
-                              history.goBack();
+                              history.push('/blogs');
                             }}
                             startIcon={<ClearIcon fontSize="small" />}
                           >
