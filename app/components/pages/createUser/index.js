@@ -66,7 +66,6 @@ function CreateUser({
   const yupValidation = isUserEditingHisProfile
     ? userProfileValidation
     : yupUserFormValidaton;
-  console.log('------------------here', isUserEditingHisProfile);
 
   useEffect(() => {
     if (mutation.isSuccess && formType === 'add') {
