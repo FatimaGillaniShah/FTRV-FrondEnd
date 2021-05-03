@@ -25,7 +25,7 @@ export function DataTable({
   onChangeSort,
   sortOrder,
   sortColumn,
-  isServerSorting,
+  isServerSide,
   matchUserIdWithIDS,
 }) {
   const classes = useStyles();
@@ -170,7 +170,7 @@ export function DataTable({
             matchUserIdWithIDS={matchUserIdWithIDS}
           />
           <TableBody>
-            {!isServerSorting
+            {!isServerSide
               ? stableSort(rows, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
@@ -253,14 +253,14 @@ DataTable.propTypes = {
   onChangeSort: PropTypes.func,
   sortOrder: PropTypes.string,
   sortColumn: PropTypes.string.isRequired,
-  isServerSorting: PropTypes.bool,
+  isServerSide: PropTypes.bool,
   matchUserIdWithIDS: PropTypes.bool,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: 20,
   selected: [],
   matchUserIdWithIDS: false,
-  isServerSorting: false,
+  isServerSide: false,
 };
 
 export default DataTable;
