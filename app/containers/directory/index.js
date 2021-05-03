@@ -27,7 +27,6 @@ function DirectoryContainer() {
   const [pageSize, setPageSize] = useState(20);
   const [filters, setFilters] = useState();
   const { state } = useLocation();
-  const isServerPagination = true;
   const [checked, setChecked] = useState(false);
   const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
@@ -176,7 +175,6 @@ function DirectoryContainer() {
                 sortColumn={sortColumn}
                 onChangeSort={onChangeSort}
                 isServerSide={isServerSide}
-                isServerPagination={isServerPagination}
                 matchUserIdWithIDS
                 count={tableData.count}
                 handleServerPageNumber={handleServerPageNumber}
