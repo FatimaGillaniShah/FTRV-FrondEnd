@@ -238,4 +238,10 @@ export const routeArray = [
       },
     ],
   },
+  {
+    flag: true,
+    exact: true,
+    component: NotFoundPage,
+    routeType: routeTypes.public,
+  },
 ];

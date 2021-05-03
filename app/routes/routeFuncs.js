@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import PrivateRoute from '../components/hoc/privateRoute';
 import Home from '../containers/home/loadable';
 import { ROLES } from '../utils/constants';
@@ -26,19 +26,25 @@ const renderRoutes = (_routeArray, parentPath = '') =>
           roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
         />
       )}
+      {route.flag && <Route component={NotFoundPage} />}
 
       {route.nestedRoutes && renderRoutes(route.nestedRoutes, route.path)}
-      <Route path="/abc" component={NotFoundPage} />
     </>
   ));
 
-export const AppRoutes = () => <>{renderRoutes(routeArray)}</>;
+export const AppRoutes = () => {
+  console.log(routeArray);
+  return renderRoutes(routeArray);
+
+  // <Route component={NotFoundPage} flag />;
+  // console.log(flag);
+};
 
 const filterRouteArrayByKey = (allRouteArray, key) =>
   allRouteArray.filter((val) => {
     const result = val.simplifiedPath
       ? val.simplifiedPath === key
-      : val.path.substring(1) === key;
+      : val?.path?.substring(1) === key;
 
     return result;
   });
