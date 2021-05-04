@@ -16,7 +16,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
         // check if route is restricted by role
         if (roles && roles.indexOf(user.data.role) === -1) {
           // role not authorised so redirect to home page and logout
-          return <Redirect to="/not-found-page" />;
+          return <Redirect to="/" />;
         }
         return <Component {...props} />;
       }}

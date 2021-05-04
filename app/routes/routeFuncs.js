@@ -31,7 +31,7 @@ const filterRouteArrayByKey = (allRouteArray, key) =>
   allRouteArray.filter((val) => {
     const result = val.simplifiedPath
       ? val.simplifiedPath === key
-      : val?.path?.substring(1) === key;
+      : val.path.substring(1) === key;
 
     return result;
   });
