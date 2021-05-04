@@ -16,7 +16,7 @@ import { PowerSettingsNew, AccountCircle } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { H5, H6 } from 'components';
-import { useGoogleLogin } from 'react-google-login';
+import { useGoogleLogout } from 'react-google-login';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 
@@ -61,7 +61,6 @@ export default function Header() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
-  const useGoogleLogout = useGoogleLogin;
   const avatarPrefix = !user.data.avatar?.includes('http')
     ? process.env.API_ASSETS_URL
     : '';
