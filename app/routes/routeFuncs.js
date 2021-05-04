@@ -1,44 +1,31 @@
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PrivateRoute from '../components/hoc/privateRoute';
 import Home from '../containers/home/loadable';
 import { ROLES } from '../utils/constants';
 import { routeArray } from './routeArray';
-import NotFoundPage from '../containers/pageNotFound/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
-const renderRoutes = (_routeArray, parentPath = '') =>
+export const renderRoutes = (_routeArray, parentPath = '') =>
   _routeArray &&
-  _routeArray.map((route) => (
-    <>
-      {route.routeType === routeTypes.public ? (
-        <Route
-          exact={route.exact || true}
-          path={parentPath + route.path || '/'}
-          component={route.component || Home}
-          roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
-        />
-      ) : (
-        <PrivateRoute
-          exact={route.exact || true}
-          path={parentPath + route.path || '/'}
-          component={route.component || Home}
-          roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
-        />
-      )}
-      {route.flag && <Route component={NotFoundPage} />}
-
-      {route.nestedRoutes && renderRoutes(route.nestedRoutes, route.path)}
-    </>
-  ));
-
-export const AppRoutes = () => {
-  console.log(routeArray);
-  return renderRoutes(routeArray);
-
-  // <Route component={NotFoundPage} flag />;
-  // console.log(flag);
-};
+  _routeArray.map((route) => [
+    route.routeType === routeTypes.public ? (
+      <Route
+        exact={route.exact || true}
+        path={parentPath + route.path || '/'}
+        component={route.component || Home}
+        roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
+      />
+    ) : (
+      <PrivateRoute
+        exact={route.exact || true}
+        path={parentPath + route.path || '/'}
+        component={route.component || Home}
+        roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
+      />
+    ),
+    route.nestedRoutes && renderRoutes(route.nestedRoutes, route.path),
+  ]);
 
 const filterRouteArrayByKey = (allRouteArray, key) =>
   allRouteArray.filter((val) => {
