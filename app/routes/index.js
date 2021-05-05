@@ -1,14 +1,15 @@
 import React from 'react';
 import { Switch } from 'react-router-dom';
-import PrivateRoute from '../components/hoc/privateRoute';
 import NotFoundPage from '../containers/pageNotFound/loadable';
-import { AppRoutes } from './routeFuncs';
+import { renderRoutes } from './routeFuncs';
+import { routeArray } from './routeArray';
+import PrivateRoute from '../components/hoc/privateRoute';
 
 function Routes() {
   return (
     <>
       <Switch>
-        <AppRoutes />
+        {renderRoutes(routeArray)}
         <PrivateRoute component={NotFoundPage} />
       </Switch>
     </>

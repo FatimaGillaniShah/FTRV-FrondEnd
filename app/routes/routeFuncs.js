@@ -6,30 +6,26 @@ import { ROLES } from '../utils/constants';
 import { routeArray } from './routeArray';
 
 const routeTypes = { public: 'public', private: 'private' };
-const renderRoutes = (_routeArray, parentPath = '') =>
+export const renderRoutes = (_routeArray, parentPath = '') =>
   _routeArray &&
-  _routeArray.map((route) => (
-    <>
-      {route.routeType === routeTypes.public ? (
-        <Route
-          exact={route.exact || true}
-          path={parentPath + route.path || '/'}
-          component={route.component || Home}
-          roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
-        />
-      ) : (
-        <PrivateRoute
-          exact={route.exact || true}
-          path={parentPath + route.path || '/'}
-          component={route.component || Home}
-          roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
-        />
-      )}
-      {route.nestedRoutes && renderRoutes(route.nestedRoutes, route.path)}
-    </>
-  ));
-
-export const AppRoutes = () => <>{renderRoutes(routeArray)}</>;
+  _routeArray.map((route) => [
+    route.routeType === routeTypes.public ? (
+      <Route
+        exact={route.exact || true}
+        path={parentPath + route.path || '/'}
+        component={route.component || Home}
+        roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
+      />
+    ) : (
+      <PrivateRoute
+        exact={route.exact || true}
+        path={parentPath + route.path || '/'}
+        component={route.component || Home}
+        roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
+      />
+    ),
+    route.nestedRoutes && renderRoutes(route.nestedRoutes, route.path),
+  ]);
 
 const filterRouteArrayByKey = (allRouteArray, key) =>
   allRouteArray.filter((val) => {
