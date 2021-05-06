@@ -21,6 +21,7 @@ import createEvent from '../containers/createEvent/loadable';
 import ViewEvent from '../containers/viewEvent/loadable';
 import createBlog from '../containers/createBlog/loadable';
 import createPoll from '../containers/createPoll/loadable';
+import createCategory from '../containers/createCategory';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -252,6 +253,34 @@ export const routeArray = [
         component: createPoll,
         exact: true,
         breadCrumbKey: 'Edit Poll',
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+    ],
+  },
+  {
+    path: '/link-categories',
+    component: createCategory,
+    exact: true,
+    breadCrumbKey: 'Categroies',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN, ROLES.USER],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: createCategory,
+        exact: true,
+        breadCrumbKey: 'Create New Category',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: createCategory,
+        exact: true,
+        breadCrumbKey: 'Edit Category',
         simplifiedPath: 'edit',
         noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
