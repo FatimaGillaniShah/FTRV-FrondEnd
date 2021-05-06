@@ -22,19 +22,16 @@ export function AnnouncementNotification({ item }) {
   const { user, setUser } = useAuthContext();
   const closedAnnouncement = (user && user.announcement) || [];
 
-  const onClose = (itemAnnouncement) => {
-    setIsNotificationClosed(false);
-    setTimeout(() => {
-      closedAnnouncement.push(itemAnnouncement);
-      setUser({ ...user, announcement: closedAnnouncement });
-    }, 500);
+  const onClose = () => {
+    closedAnnouncement.push(item);
+    setUser({ ...user, announcement: closedAnnouncement });
   };
   useEffect(() => {
     setIsNotificationClosed(true);
   }, [item]);
   return (
     <>
-      <Collapse in={isNotificationClosed} timeout={{ exit: 500 }}>
+      <Collapse in={isNotificationClosed} onExited={onClose}>
         <Box
           width={1}
           height={1}
@@ -70,7 +67,9 @@ export function AnnouncementNotification({ item }) {
             </Box>
           </Box>
           <Box width="0.02" mb={2}>
-            <CancelIcon onClick={() => onClose(item)} />
+            <CancelIcon
+              onClick={() => setIsNotificationClosed(!isNotificationClosed)}
+            />
           </Box>
         </Box>
       </Collapse>
