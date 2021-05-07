@@ -54,6 +54,9 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
     table: {
       contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
     },
+    mediaEmbed: {
+      previewsInData: true,
+    },
   };
   return (
     <>

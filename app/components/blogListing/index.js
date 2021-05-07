@@ -9,6 +9,7 @@ import Blog from '../pages/blog';
 import { H5 } from '../typography';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
+import NotExist from '../pages/notExist/index';
 
 const useStyles = makeStyles((theme) => ({
   paginator: {
@@ -95,19 +96,10 @@ export function BlogListing({
             </Box>
           </Box>
         ) : (
-          <Box flexDirection="column">
-            <Box display="flex" justifyContent="center" alignItems="center">
-              <SpeakerNotesOutlinedIcon
-                color="disabled"
-                className={classes.iconImage}
-              />
-            </Box>
-            <Box mt={6} mb={18} display="flex" justifyContent="center">
-              <H5 fontWeight="fontWeightMedium" color="grey">
-                No Blogs To Show
-              </H5>
-            </Box>
-          </Box>
+          <NotExist
+            Icon={SpeakerNotesOutlinedIcon}
+            description=" No Blogs To Show"
+          />
         )}
       </Box>
     </>

@@ -25,21 +25,15 @@ export const yupUserFormValidaton = object().shape({
   firstName: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
-    // .matches(
-    //   /^[a-zA-Z0-9 ]*$/,
-    //   'First Name can only include alphabets and white spaces'
-    // )
     .required('*First Name Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   lastName: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
-    // .matches(
-    //   /^[a-zA-Z0-9 ]*$/,
-    //   'Last Name can only include alphabets,nu and white spaces'
-    // )
     .required('*Last Name Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   location: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
@@ -48,33 +42,33 @@ export const yupUserFormValidaton = object().shape({
     //   'Location can only include alphabets, numerics,whitespaces and [#,-./]'
     // )
     .required('*Location Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   department: string()
+    .required('*Department Required')
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
-    // .matches(
-    //   /^[a-zA-Z ]*$/,
-    //   'Department can only include alphabets and white spaces'
-    // )
-    .required('*Department Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .matches(/^[a-zA-Z ]*$/, 'Department can only include alphabets ')
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   title: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
-    // .matches(
-    //   /^[a-zA-Z ]*$/,
-    //   'Designation can only include alphabets and white spaces'
-    // )
+    .matches(/^[a-zA-Z ]*$/, 'Designation can only include alphabets')
     .required('*Designation Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   email: string()
     .max(320, 'Invalid')
     .email()
     .required('*Email Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   password: string()
     .min(4, 'Too Short')
     .max(15, 'Exceeded Maximum Characters Limit')
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces')
     .when('passwordRequired', {
       is: true,
       then: string().required('*Password Required'),
@@ -87,7 +81,10 @@ export const yupUserFormValidaton = object().shape({
       .oneOf([ref('password'), null], 'Passwords must match'),
   }),
   contactNo: string().max(15, 'Too Long!').nullable(),
-  extension: string().max(10, 'Too Long!').nullable(),
+  extension: string()
+    .matches(/^[0-9]*$/, '* Only number are allowed')
+    .max(10, 'Too Long!')
+    .nullable(),
   joiningDate: date().notRequired().default(null).nullable(),
   dob: date().notRequired().default(null).nullable(),
   role: string().max(30, 'Too Long!'),

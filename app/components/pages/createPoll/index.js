@@ -17,12 +17,22 @@ import { BodyTextLarge, H4 } from '../../typography';
 import { POLL_OPTIONS_LIMIT } from '../../../utils/constants';
 
 const pollSchema = object().shape({
-  name: string().notRequired(),
-  question: string().required('*Required'),
-
-  'options-1': string().required('*Option 1 is required'),
-  'options-2': string().required('*Option 2 is required'),
-
+  name: string()
+    .notRequired()
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
+  question: string()
+    .required('*Required')
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
+  'options-1': string()
+    .required('*Option 1 is required')
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
+  'options-2': string()
+    .required('*Option 2 is required')
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   startDate: date()
     .min(
       new Date().toLocaleString(),

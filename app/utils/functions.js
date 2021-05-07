@@ -7,3 +7,9 @@ export const parseDate = (date) => {
   }
   return `${parseMonth}-${parsedDate.getDate()}-${parsedDate.getFullYear()}`;
 };
+
+export function noWhitespace() {
+  return this.transform((value, originalValue) =>
+    /^[ ]*$/.test(originalValue) ? NaN : value
+  );
+}

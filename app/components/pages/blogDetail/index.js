@@ -12,6 +12,7 @@ import BlogCreatorInfo from '../blog/blogCreatorInfo';
 const useStyles = makeStyles(() => ({
   root: {
     '& img': { width: '100%' },
+    '& iframe': { padding: '0 5%' },
   },
   imageView: {
     width: '100%',
