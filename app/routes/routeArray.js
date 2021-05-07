@@ -21,7 +21,7 @@ import createEvent from '../containers/createEvent/loadable';
 import ViewEvent from '../containers/viewEvent/loadable';
 import createBlog from '../containers/createBlog/loadable';
 import createPoll from '../containers/createPoll/loadable';
-import createCategory from '../containers/createCategory';
+import CreateLinkCategory from '../containers/createLinkCategory/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -89,31 +89,6 @@ export const routeArray = [
     exact: true,
     breadCrumbKey: 'My Profile',
     routeType: routeTypes.private,
-  },
-  {
-    path: '/useful-links',
-    component: usefulLinks,
-    exact: true,
-    breadCrumbKey: 'Useful Links',
-    routeType: routeTypes.private,
-    nestedRoutes: [
-      {
-        path: '/add',
-        component: addUsefulLink,
-        exact: true,
-        breadCrumbKey: 'Add New Link',
-        routeType: routeTypes.private,
-      },
-      {
-        path: '/edit/:id',
-        component: addUsefulLink,
-        simplifiedPath: 'edit',
-        exact: true,
-        noOfEnteriesToSkipAfterThisEntry: 1,
-        breadCrumbKey: 'Edit Link',
-        routeType: routeTypes.private,
-      },
-    ],
   },
   {
     path: '/ceo-message',
@@ -262,29 +237,54 @@ export const routeArray = [
   },
   {
     path: '/link-categories',
-    component: createCategory,
+    component: CreateLinkCategory,
     exact: true,
-    breadCrumbKey: 'Categroies',
+    breadCrumbKey: 'Link Categroies',
     routeType: routeTypes.private,
     roles: [ROLES.ADMIN, ROLES.USER],
     nestedRoutes: [
       {
         path: '/add',
-        component: createCategory,
+        component: CreateLinkCategory,
         exact: true,
-        breadCrumbKey: 'Create New Category',
+        breadCrumbKey: 'Create New Link Category',
         routeType: routeTypes.private,
-        roles: [ROLES.ADMIN],
+        roles: [ROLES.ADMIN, ROLES.USER],
       },
       {
         path: '/edit/:id',
-        component: createCategory,
+        component: CreateLinkCategory,
         exact: true,
-        breadCrumbKey: 'Edit Category',
+        breadCrumbKey: 'Edit Link Category',
         simplifiedPath: 'edit',
         noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
-        roles: [ROLES.ADMIN],
+        roles: [ROLES.ADMIN, ROLES.USER],
+      },
+      {
+        path: '/useful-links',
+        component: usefulLinks,
+        exact: true,
+        breadCrumbKey: 'Useful Links',
+        routeType: routeTypes.private,
+        nestedRoutes: [
+          {
+            path: '/add',
+            component: addUsefulLink,
+            exact: true,
+            breadCrumbKey: 'Add New Link',
+            routeType: routeTypes.private,
+          },
+          {
+            path: '/edit/:id',
+            component: addUsefulLink,
+            simplifiedPath: 'edit',
+            exact: true,
+            noOfEnteriesToSkipAfterThisEntry: 1,
+            breadCrumbKey: 'Edit Link',
+            routeType: routeTypes.private,
+          },
+        ],
       },
     ],
   },

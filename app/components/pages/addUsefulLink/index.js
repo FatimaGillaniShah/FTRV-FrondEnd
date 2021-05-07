@@ -87,7 +87,7 @@ export function AddUsefulLinkPage({
                       fullWidth={false}
                       startIcon={<ClearIcon />}
                       onClick={() => {
-                        history.push('/useful-links');
+                        history.push('/link-categories/useful-links');
                       }}
                     >
                       Cancel
