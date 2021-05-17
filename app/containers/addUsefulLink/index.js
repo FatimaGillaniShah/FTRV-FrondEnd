@@ -26,7 +26,7 @@ function AddUsefulLink() {
 
   const mutation = useMutation(id ? updateLink : createLink, {
     onSuccess: () => {
-      history.push('/useful-links');
+      history.push('/link-categories/useful-links');
       Toast({
         icon: 'success',
         title: `Link ${id ? 'updated' : 'created'}  successfully`,
