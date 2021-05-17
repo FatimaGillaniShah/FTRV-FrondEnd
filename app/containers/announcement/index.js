@@ -96,6 +96,7 @@ function AnnouncementContainer() {
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
+                sortColumn="title"
               />
             )}
           </WrapInCard>
