@@ -36,15 +36,24 @@ const {
 
 export const fetchUsers = ({ queryKey }) => {
   let url;
-  url = `${USERS_LIST}?pageNumber=${queryKey[1].pageNumber}&pageSize=${queryKey[1].pageSize}`;
-  if (queryKey[1].query.searchString) {
-    url = `${`${USERS_LIST}?pageNumber=${queryKey[1].pageNumber}&pageSize=${
-      queryKey[1].pageSize
-    }&${insertParams(queryKey[1].query)}`}`;
-  } else if (queryKey[1].filters) {
-    url = `${USERS_LIST}?pageNumber=${queryKey[1].pageNumber}&pageSize=${
-      queryKey[1].pageSize
-    }&${insertParams(queryKey[1].filters)}`;
+  const {
+    sortColumn,
+    sortOrder,
+    pageNumber,
+    pageSize,
+    query,
+    filters,
+  } = queryKey[1];
+  if (query.searchString) {
+    url = `${USERS_LIST}?pageSize=1000&${insertParams(
+      query
+    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+  } else if (filters) {
+    url = `${USERS_LIST}?pageSize=1000&${insertParams(
+      filters
+    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+  } else {
+    url = `${USERS_LIST}?sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   }
   return http.get(url);
 };

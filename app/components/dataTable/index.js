@@ -22,15 +22,18 @@ export function DataTable({
   tableRowsPerPage,
   selected,
   setSelected,
-  isServerPagination,
+  onChangeSort,
+  sortOrder,
+  sortColumn,
+  isServerSide,
   matchUserIdWithIDS,
   count,
   handleServerPageNumber,
   handleServerPageSize,
 }) {
   const classes = useStyles();
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('fullName');
+  const [order, setOrder] = useState(sortOrder || 'asc');
+  const [orderBy, setOrderBy] = useState(sortColumn || '');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
   const [rows, setRows] = useState([]);
@@ -50,6 +53,7 @@ export function DataTable({
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+    onChangeSort(isAsc ? 'desc' : 'asc', property);
   };
 
   const handleSelectAllClick = (event) => {
@@ -92,7 +96,7 @@ export function DataTable({
   };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    if (isServerPagination) {
+    if (isServerSide) {
       const currentPage = newPage + 1;
       handleServerPageNumber({
         currentPage,
@@ -102,7 +106,7 @@ export function DataTable({
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-    if (isServerPagination) {
+    if (isServerSide) {
       const rowPerPage = parseInt(event.target.value, 10);
       handleServerPageSize({ rowPerPage });
     }
@@ -185,7 +189,7 @@ export function DataTable({
             matchUserIdWithIDS={matchUserIdWithIDS}
           />
           <TableBody>
-            {isServerSidePagination(isServerPagination).map((row, index) => {
+            {isServerSidePagination(isServerSide).map((row, index) => {
               const isItemSelected = isSelected(row.id);
               const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -230,17 +234,23 @@ export function DataTable({
     </Box>
   );
 }
+
 DataTable.propTypes = {
   headCells: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   tableRowsPerPage: PropTypes.number,
   selected: PropTypes.array,
+  onChangeSort: PropTypes.func,
+  sortOrder: PropTypes.string,
+  sortColumn: PropTypes.string.isRequired,
+  isServerSide: PropTypes.bool,
   matchUserIdWithIDS: PropTypes.bool,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: PAGE_SIZE,
   selected: [],
   matchUserIdWithIDS: false,
+  isServerSide: false,
 };
 
 export default DataTable;

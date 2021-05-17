@@ -14,8 +14,8 @@ import { H5 } from '../../typography';
 
 const useFulLinksSchema = object().shape({
   name: string()
-    .required('*Name Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   url: string()
     .matches(
       /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
@@ -87,7 +87,7 @@ export function AddUsefulLinkPage({
                       fullWidth={false}
                       startIcon={<ClearIcon />}
                       onClick={() => {
-                        history.push('/useful-links');
+                        history.push('/link-categories/useful-links');
                       }}
                     >
                       Cancel

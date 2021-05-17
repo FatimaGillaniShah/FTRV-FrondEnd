@@ -27,11 +27,13 @@ function DirectoryContainer() {
   const [pageSize, setPageSize] = useState(20);
   const [filters, setFilters] = useState();
   const { state } = useLocation();
-  const isServerPagination = false;
   const [checked, setChecked] = useState(false);
   const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortColumn, setSortColumn] = useState('firstName');
   const history = useHistory();
+  const isServerSide = true;
   const classes = useStyles();
   const [fieldFunc, setFieldFunc] = useState();
   const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
@@ -46,9 +48,16 @@ function DirectoryContainer() {
       fieldFunc?.setFormikField('searchString', '');
       setQuery({ searchString: '' });
     }
-  }, [checked]);
+  }, [checked, sortOrder, sortColumn]);
   const { data, isLoading } = useQuery(
-    keys.getUsers({ query, filters, pageNumber, pageSize }),
+    keys.getUsers({
+      query,
+      filters,
+      sortOrder,
+      sortColumn,
+      pageNumber,
+      pageSize,
+    }),
     fetchUsers,
     {
       keepPreviousData: true,
@@ -70,6 +79,17 @@ function DirectoryContainer() {
   };
   const onClear = () => {
     setFilters([]);
+  };
+
+  const onChangeSort = (order, property) => {
+    if (isServerSide) {
+      if (property === 'fullName') {
+        setSortColumn('firstName');
+      } else {
+        setSortColumn(property);
+      }
+      setSortOrder(order);
+    }
   };
 
   useEffect(() => {
@@ -151,7 +171,10 @@ function DirectoryContainer() {
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
-                isServerPagination={isServerPagination}
+                sortOrder={sortOrder}
+                sortColumn={sortColumn}
+                onChangeSort={onChangeSort}
+                isServerSide={isServerSide}
                 matchUserIdWithIDS
                 count={tableData.count}
                 handleServerPageNumber={handleServerPageNumber}

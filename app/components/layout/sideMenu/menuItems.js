@@ -55,7 +55,7 @@ export const menuItems = [
   },
   {
     name: 'links',
-    link: '/useful-links',
+    link: '/link-categories',
     icon: LinkIcon,
   },
   {

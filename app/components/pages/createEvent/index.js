@@ -22,7 +22,8 @@ import { useStyles } from './style';
 const eventSchema = object().shape({
   title: string()
     .required('*Title Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   startDate: date()
     .min(
       new Date().toLocaleString(),
@@ -40,7 +41,8 @@ const eventSchema = object().shape({
     .required('*End Date Required'),
   description: string()
     .required('*Description Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
 });
 
 export function CreateEventPage({

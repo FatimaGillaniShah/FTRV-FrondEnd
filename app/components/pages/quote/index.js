@@ -2,12 +2,19 @@ import { Box, Button } from '@material-ui/core';
 import { TextArea } from 'components';
 import { Form, Formik } from 'formik';
 import React, { memo } from 'react';
+import { string, object } from 'yup';
 import { H5 } from '../../typography';
 
 function Quote({ value, handleSubmit }) {
   const initialValues = {
     quote: value,
   };
+  const quoteSchema = object().shape({
+    quote: string()
+      .required()
+      .noWhitespace()
+      .typeError('* This field cannot contain only blankspaces'),
+  });
 
   return (
     <>
@@ -15,6 +22,7 @@ function Quote({ value, handleSubmit }) {
 
       <Formik
         initialValues={initialValues}
+        validationSchema={quoteSchema}
         onSubmit={(values) => handleSubmit(values)}
       >
         <Form>

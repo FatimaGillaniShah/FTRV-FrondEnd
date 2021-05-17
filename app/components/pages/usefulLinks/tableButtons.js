@@ -27,7 +27,7 @@ export function TableButtons({ onDelete, numSelected }) {
               variant="contained"
               fullWidth={false}
               startIcon={<AddIcon />}
-              onClick={() => navigateTo('/useful-links/add')}
+              onClick={() => navigateTo('/link-categories/useful-links/add')}
             >
               New
             </Button>

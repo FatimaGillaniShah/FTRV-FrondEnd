@@ -32,7 +32,9 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
       {role === ROLES.ADMIN && (
         <>
           <IconButton
-            onClick={() => history.push(`/useful-links/edit/${data.id}`)}
+            onClick={() =>
+              history.push(`/link-categories/useful-links/edit/${data.id}`)
+            }
             disabled={disabled}
           >
             <EditIcon color="secondary" />

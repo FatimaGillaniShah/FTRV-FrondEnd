@@ -20,14 +20,16 @@ import { parseDate } from '../../../utils/functions';
 const announcementSchema = object().shape({
   title: string()
     .required('*Title Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   startTime: date().required('*Start Date Required'),
   endTime: date()
     .min(ref('startTime'), 'End date should be greater than start date')
     .required('*End Date Required'),
   description: string()
     .required('*Description Required')
-    .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces'),
+    .noWhitespace()
+    .typeError('* This field cannot contain only blankspaces'),
   priority: string().required('*Priority Required'),
 });
 function CreateAnnouncement({
