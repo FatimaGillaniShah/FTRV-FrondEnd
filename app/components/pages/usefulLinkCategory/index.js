@@ -15,10 +15,12 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from 'react-router-dom';
+import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
 import { BodyTextSmall, BodyTextLarge } from '../../typography';
 import { colors } from '../../../theme/colors';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import NotExist from '../notExist';
 
 const useStyles = makeStyles(() => ({
   categoryBox: {
@@ -37,7 +39,7 @@ const useStyles = makeStyles(() => ({
     cursor: 'pointer',
   },
 }));
-function UsefulLinkCategory({ title, noOfFiles }) {
+function UsefulLinkCategory({ title, noOfFiles, count }) {
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -78,87 +80,96 @@ function UsefulLinkCategory({ title, noOfFiles }) {
 
   return (
     <Box height={1} width={1} display="flex" flexDirection="column">
-      <Box ml={12} display="flex" flexDirection="column">
+      <Box ml={12}>
         {role === ROLES.ADMIN && (
           <Box mt={10}>
             <Button
               variant="contained"
               color="secondary"
               startIcon={<AddIcon />}
-              onClick={() => navigateTo('usefulLink/add')}
+              onClick={() => navigateTo('usefulLinks/add')}
             >
               New Category
             </Button>
           </Box>
         )}
       </Box>
-      <Box
-        display="flex"
-        flexDirection={['column', 'column', 'row', 'row']}
-        ml={8}
-        mt={1}
-      >
+      {count > 0 ? (
         <Box
-          width={['60%', '30%', '20%', '11%']}
-          height="100%"
           display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="column"
-          className={classes.categoryBox}
+          flexDirection={['column', 'column', 'row', 'row']}
+          ml={8}
+          mt={1}
         >
-          <Box width="90%" mt={2} display="flex" justifyContent="flex-end">
-            <MoreVertOutlinedIcon
-              className={classes.menuIcon}
-              onClick={handleClick}
-            />
-          </Box>
-          <StyledMenu
-            id="customized-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
+          <Box
+            width={['60%', '30%', '20%', '11%']}
+            height="100%"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flexDirection="column"
+            className={classes.categoryBox}
           >
-            <MenuItem>
-              <ListItemIcon>
-                <EditOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Edit" />
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <DeleteForeverOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Delete" />
-            </MenuItem>
-          </StyledMenu>
-          <Box>
-            <FolderOpenOutlinedIcon className={classes.folderIcon} />
-          </Box>
-          <Box mt={2}>
-            <BodyTextLarge color="secondary" fontWeightMedium>
-              {title}
-            </BodyTextLarge>
-          </Box>
-          <Box mb={5} mt={1}>
-            <BodyTextSmall color="secondary" fontWeightMedium>
-              {noOfFiles}
-            </BodyTextSmall>
+            <Box width="90%" mt={2} display="flex" justifyContent="flex-end">
+              <MoreVertOutlinedIcon
+                className={classes.menuIcon}
+                onClick={handleClick}
+              />
+            </Box>
+            <StyledMenu
+              id="customized-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <EditOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Edit" />
+              </MenuItem>
+              <MenuItem>
+                <ListItemIcon>
+                  <DeleteForeverOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Delete" />
+              </MenuItem>
+            </StyledMenu>
+            <Box>
+              <FolderOpenOutlinedIcon className={classes.folderIcon} />
+            </Box>
+            <Box mt={2}>
+              <BodyTextLarge color="secondary" fontWeightMedium>
+                {title}
+              </BodyTextLarge>
+            </Box>
+            <Box mb={5} mt={1}>
+              <BodyTextSmall color="secondary" fontWeightMedium>
+                {noOfFiles}
+              </BodyTextSmall>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      ) : (
+        <NotExist
+          Icon={CategoryOutlinedIcon}
+          description=" No Category To Show"
+        />
+      )}
     </Box>
   );
 }
 UsefulLinkCategory.propTypes = {
   title: PropTypes.string,
   noOfFiles: PropTypes.string,
+  count: PropTypes.number,
 };
 
 UsefulLinkCategory.defaultProps = {
   title: '',
   noOfFiles: '',
+  count: null,
 };
 
 export default memo(UsefulLinkCategory);
