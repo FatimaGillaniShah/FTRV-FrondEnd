@@ -31,9 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export function Category({ title, noOfFiles }) {
   const classes = useStyles();
-
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

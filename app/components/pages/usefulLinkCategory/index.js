@@ -22,7 +22,7 @@ function UsefulLinkCategory({ title, noOfFiles, count }) {
     history.push(url);
   };
   return (
-    <Box m={3} width={1} display="flex" flexWrap="wrap" flexDirection="column">
+    <Box m={3} width={1} display="flex" flexDirection="column">
       <Box>
         {role === ROLES.ADMIN && (
           <Box mt={6} mb={6}>
@@ -37,7 +37,7 @@ function UsefulLinkCategory({ title, noOfFiles, count }) {
           </Box>
         )}
       </Box>
-      <Box display="flex" flexDirection="row">
+      <Box display="flex" flexDirection="row" flexWrap="wrap">
         <Box width={[1, 1 / 3, 1 / 4, '12%']} mr={5}>
           {count > 0 ? (
             <Category title={title} noOfFiles={noOfFiles} />
