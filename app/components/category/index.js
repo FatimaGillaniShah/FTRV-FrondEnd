@@ -5,6 +5,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Paper,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -15,21 +16,17 @@ import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import { BodyTextSmall, BodyTextLarge } from '../typography';
 import { colors } from '../../theme/colors';
 
-const useStyles = makeStyles(() => ({
-  categoryBox: {
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    marginBottom: theme.spacing(1),
     cursor: 'pointer',
-    borderRadius: '16px',
-    backgroundColor: colors.light,
-    margin: '2% 1%',
-    boxShadow: `1px 1px 1px 1px ${colors.light}`,
+    borderRadius: '20px',
   },
   folderIcon: {
-    width: '80px',
-    height: '70px',
+    fontSize: '55px',
     color: colors.grey,
-  },
-  menuIcon: {
-    cursor: 'pointer',
   },
 }));
 export function Category({ title, noOfFiles }) {
@@ -63,65 +60,46 @@ export function Category({ title, noOfFiles }) {
   ));
 
   return (
-    <>
-      <Box
-        width={1}
-        display="flex"
-        flexDirection={['column', 'column', 'row', 'row']}
-        ml={4}
-        mt={1}
-      >
-        <Box
-          width={['60%', '30%', '20%', '11%']}
-          height="100%"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="column"
-          className={classes.categoryBox}
-        >
-          <Box width="90%" mt={2} display="flex" justifyContent="flex-end">
-            <MoreVertOutlinedIcon
-              className={classes.menuIcon}
-              onClick={handleClick}
-            />
-          </Box>
-          <StyledMenu
-            id="customized-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem>
-              <ListItemIcon>
-                <EditOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Edit" />
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <DeleteForeverOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Delete" />
-            </MenuItem>
-          </StyledMenu>
-          <Box>
-            <FolderOpenOutlinedIcon className={classes.folderIcon} />
-          </Box>
-          <Box mt={2}>
-            <BodyTextLarge color="secondary" fontWeightMedium>
-              {title}
-            </BodyTextLarge>
-          </Box>
-          <Box mb={5} mt={1}>
-            <BodyTextSmall color="secondary" fontWeightMedium>
-              {noOfFiles}
-            </BodyTextSmall>
-          </Box>
+    <Box width={1}>
+      <Paper elevation={3} className={classes.paper}>
+        <Box mt={2} display="flex" justifyContent="flex-end">
+          <MoreVertOutlinedIcon onClick={handleClick} />
         </Box>
-      </Box>
-    </>
+        <StyledMenu
+          id="customized-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem>
+            <ListItemIcon>
+              <EditOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Edit" />
+          </MenuItem>
+          <MenuItem>
+            <ListItemIcon>
+              <DeleteForeverOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Delete" />
+          </MenuItem>
+        </StyledMenu>
+        <Box>
+          <FolderOpenOutlinedIcon className={classes.folderIcon} />
+        </Box>
+        <Box mt={2}>
+          <BodyTextLarge color="secondary" fontWeightMedium>
+            {title}
+          </BodyTextLarge>
+        </Box>
+        <Box mb={5} mt={1}>
+          <BodyTextSmall color="secondary" fontWeightMedium>
+            {noOfFiles}
+          </BodyTextSmall>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
 Category.propTypes = {
