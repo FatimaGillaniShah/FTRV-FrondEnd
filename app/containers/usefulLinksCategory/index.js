@@ -3,24 +3,27 @@ import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Loading } from '../../components/loading';
 import UsefulLinksCategoryPage from '../../components/pages/usefulLinkCategory';
-import { fetchLinks } from '../../state/queryFunctions';
+import { getLinkCategory } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 
 function UsefulLinksCategory() {
-  const { data, isLoading } = useQuery(keys.links, fetchLinks, {
+  const { data, isLoading } = useQuery(keys.linkCategory, getLinkCategory, {
     refetchOnWindowFocus: false,
   });
-
+  const categories = data?.data?.data;
   return (
     <>
       <Helmet>
         <title>Useful Links Category</title>
       </Helmet>
-      {isLoading && <Loading />}
-      <UsefulLinksCategoryPage
-        data={data?.data?.data?.rows}
-        isLoading={isLoading}
-      />
+      <WrapInBreadcrumbs>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <UsefulLinksCategoryPage categories={categories} />
+        )}
+      </WrapInBreadcrumbs>
     </>
   );
 }

@@ -10,7 +10,7 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import NotExist from '../notExist';
 
-function UsefulLinkCategory({ title, noOfFiles, count }) {
+function UsefulLinkCategory({ categories }) {
   const history = useHistory();
   const {
     user: {
@@ -22,23 +22,29 @@ function UsefulLinkCategory({ title, noOfFiles, count }) {
     history.push(url);
   };
   return (
-    <Box height={1} width={1} display="flex" flexDirection="column">
-      <Box ml={12}>
+    <Box m={5} width={1} display="flex" flexDirection="column">
+      <Box>
         {role === ROLES.ADMIN && (
-          <Box mt={10}>
+          <Box mt={6} mb={6}>
             <Button
               variant="contained"
               color="secondary"
               startIcon={<AddIcon />}
-              onClick={() => navigateTo('usefulLinks/add')}
+              onClick={() => navigateTo('link-categories/add')}
             >
               New Category
             </Button>
           </Box>
         )}
       </Box>
-      {count > 0 ? (
-        <Category title={title} noOfFiles={noOfFiles} />
+      {categories.length > 0 ? (
+        <Box display="flex" flexDirection="row" flexWrap="wrap">
+          {categories.map(({ name, linksCount }) => (
+            <Box width={[1, 1 / 3, 1 / 4, '12%']} mr={8} mb={8}>
+              <Category name={name} linksCount={linksCount} />
+            </Box>
+          ))}
+        </Box>
       ) : (
         <NotExist
           Icon={CategoryOutlinedIcon}
@@ -49,15 +55,7 @@ function UsefulLinkCategory({ title, noOfFiles, count }) {
   );
 }
 UsefulLinkCategory.propTypes = {
-  title: PropTypes.string,
-  noOfFiles: PropTypes.string,
-  count: PropTypes.number,
-};
-
-UsefulLinkCategory.defaultProps = {
-  title: '',
-  noOfFiles: '',
-  count: null,
+  categories: PropTypes.array,
 };
 
 export default memo(UsefulLinkCategory);

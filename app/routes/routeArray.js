@@ -22,7 +22,7 @@ import ViewEvent from '../containers/viewEvent/loadable';
 import createBlog from '../containers/createBlog/loadable';
 import createPoll from '../containers/createPoll/loadable';
 import CreateLinkCategory from '../containers/createLinkCategory/loadable';
-import UsefulLinksCategory from '../components/pages/usefulLinkCategory';
+import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
