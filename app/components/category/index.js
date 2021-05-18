@@ -14,6 +14,7 @@ import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import { BodyTextSmall, BodyTextLarge } from '../typography';
 import { colors } from '../../theme/colors';
+import { Modal } from '../../utils/helper';
 
 const useStyles = makeStyles(() => ({
   categoryBox: {
@@ -61,7 +62,9 @@ export function Category({ title, noOfFiles }) {
       {...props}
     />
   ));
-
+  const handleDeleteCategory = () => {
+    Modal.fire();
+  };
   return (
     <>
       <Box
@@ -100,7 +103,7 @@ export function Category({ title, noOfFiles }) {
               <ListItemText primary="Edit" />
             </MenuItem>
             <MenuItem>
-              <ListItemIcon>
+              <ListItemIcon onClick={() => handleDeleteCategory}>
                 <DeleteForeverOutlinedIcon />
               </ListItemIcon>
               <ListItemText primary="Delete" />
