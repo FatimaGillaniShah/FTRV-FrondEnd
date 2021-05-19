@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
   },
   folderIcon: {
-    fontSize: '65px',
+    fontSize: '70px',
     color: colors.grey,
   },
 }));
