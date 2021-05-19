@@ -15,6 +15,7 @@ import { H5 } from '../../typography';
 const useFulLinksSchema = object().shape({
   name: string()
     .noWhitespace()
+    .required()
     .typeError('* This field cannot contain only blankspaces'),
   url: string()
     .matches(
