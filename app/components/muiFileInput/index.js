@@ -15,6 +15,8 @@ export function MuiFileInput({
   toolTipTitle = 'Select File',
   buttonText = 'Upload',
   BtnIcon,
+  variant = 'contained',
+  iconColor = 'secondary',
 }) {
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);
@@ -69,9 +71,9 @@ export function MuiFileInput({
         <Tooltip title={toolTipTitle}>
           <label htmlFor={name}>
             <Button
-              color="secondary"
+              color={iconColor}
               onClick={handleClick}
-              variant="contained"
+              variant={variant}
               startIcon={BtnIcon && <BtnIcon fontSize="small" />}
               disabled={mutation?.isLoading}
             >

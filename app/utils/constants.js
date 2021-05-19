@@ -51,6 +51,9 @@ export const APIS = {
   UPDATE_BLOG: '/blogs',
   GET_BLOG: '/blogs',
   DELETE_BLOG: '/blogs',
+  CREATE_LINK_CATEGORY: '/linkCategories',
+  GET_LINK_CATEGORY: '/linkCategories',
+  UPDATE_LINK_CATEGORY: '/linkCategories',
   CATEGORY: '/linkCategories',
   GET_USEFUL_LINKS: '/usefulLinks',
 };

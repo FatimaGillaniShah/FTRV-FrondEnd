@@ -83,7 +83,7 @@ export function Category({ id, name, linksCount }) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem>
+          <MenuItem onClick={() => navigateTo(`/link-categories/edit/${id}`)}>
             <ListItemIcon>
               <EditOutlinedIcon />
             </ListItemIcon>

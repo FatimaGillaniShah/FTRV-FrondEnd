@@ -18,4 +18,5 @@ export const keys = {
   blogs: 'blogs',
   getBlog: (payload) => ['blog', payload],
   linkCategory: 'category',
+  getLinkCategory: (id) => ['link-category', id],
 };

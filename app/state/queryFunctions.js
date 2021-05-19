@@ -32,6 +32,9 @@ const {
   GOOGLE_LOGIN,
   CATEGORY,
   GET_USEFUL_LINKS,
+  CREATE_LINK_CATEGORY,
+  GET_LINK_CATEGORY,
+  UPDATE_LINK_CATEGORY,
 } = APIS;
 
 // USER CRUD
@@ -138,6 +141,7 @@ export const getEventById = ({ queryKey }) =>
 export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);
 
+// BLOG CRUD
 export const getBlogs = ({ queryKey }) => {
   const url = `${BLOG}?sortColumn=updatedAt&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
   return http.get(url);
@@ -160,3 +164,12 @@ export const getLinkCategory = () => http.get(`${CATEGORY}`);
 
 export const getUsefulLinksById = ({ queryKey }) =>
   http.get(`${GET_USEFUL_LINKS}?categoryId=${queryKey[1]}`);
+// LINK CATEGORY CRUD
+export const createLinkCategory = (payload) =>
+  http.post(CREATE_LINK_CATEGORY, payload);
+
+export const getLinkCategoryById = ({ queryKey }) =>
+  http.get(`${GET_LINK_CATEGORY}/${queryKey[1]}`);
+
+export const updateLinkCategory = ({ id, ...payload }) =>
+  http.put(`${UPDATE_LINK_CATEGORY}/${id}`, payload);

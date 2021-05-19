@@ -21,6 +21,7 @@ import createEvent from '../containers/createEvent/loadable';
 import ViewEvent from '../containers/viewEvent/loadable';
 import createBlog from '../containers/createBlog/loadable';
 import createPoll from '../containers/createPoll/loadable';
+import Polls from '../containers/polls/loadable';
 import CreateLinkCategory from '../containers/createLinkCategory/loadable';
 import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 
@@ -210,7 +211,7 @@ export const routeArray = [
   },
   {
     path: '/polls',
-    component: createPoll,
+    component: Polls,
     exact: true,
     breadCrumbKey: 'Polls',
     routeType: routeTypes.private,
