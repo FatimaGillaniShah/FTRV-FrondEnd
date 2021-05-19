@@ -2,7 +2,7 @@ import { Box, Button } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
-import { string, object } from 'yup';
+import { string, object, number } from 'yup';
 import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -11,7 +11,6 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input, Select } from '../../index';
 import { H5 } from '../../typography';
-import { ANNOUNCEMENT_STATUS } from '../../../utils/constants';
 
 const useFulLinksSchema = object().shape({
   name: string()
@@ -23,6 +22,7 @@ const useFulLinksSchema = object().shape({
       'Enter correct URL'
     )
     .required('*URL Required'),
+  categoryId: number().required().typeError('*Category Required'),
 });
 
 export function AddUsefulLinkPage({
@@ -30,10 +30,8 @@ export function AddUsefulLinkPage({
   id,
   initialValues,
   history,
+  options,
 }) {
-  const statusOptions = Object.keys(ANNOUNCEMENT_STATUS).map(
-    (val) => ANNOUNCEMENT_STATUS[val]
-  );
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -49,69 +47,67 @@ export function AddUsefulLinkPage({
               onHandleSubmit(values);
             }}
           >
-            <Form>
-              <Box>
-                <Box display="flex" flexDirection="column" pb={10}>
-                  <Box width={[1, 1 / 3]} mt={5}>
-                    <Input
-                      variant="outlined"
-                      OutlinedInputPlaceholder="Name*"
-                      name="name"
-                      appendIcon
-                      Icon={PersonOutlinedIcon}
-                      IconClickable
-                    />
+            {({ values }) => (
+              <Form>
+                <Box>
+                  <Box display="flex" flexDirection="column" pb={10}>
+                    <Box width={[1, 1 / 3]} mt={5}>
+                      <Input
+                        variant="outlined"
+                        OutlinedInputPlaceholder="Name*"
+                        name="name"
+                        appendIcon
+                        Icon={PersonOutlinedIcon}
+                        IconClickable
+                      />
+                    </Box>
+                    <Box width={[1, 1 / 3]} mt={5}>
+                      <Input
+                        OutlinedInputPlaceholder="Url*"
+                        name="url"
+                        variant="outlined"
+                        appendIcon
+                        Icon={LinkOutlinedIcon}
+                        IconClickable
+                      />
+                    </Box>
+                    <Box width={[1, 1 / 3]} mt={5}>
+                      <Select
+                        name="categoryId"
+                        label="Category"
+                        selectedValue={values.categoryId}
+                        options={options}
+                      />
+                    </Box>
                   </Box>
-                  <Box width={[1, 1 / 3]} mt={5}>
-                    <Input
-                      OutlinedInputPlaceholder="Url*"
-                      name="url"
-                      variant="outlined"
-                      appendIcon
-                      Icon={LinkOutlinedIcon}
-                      IconClickable
-                    />
-                  </Box>
-                  <Box width={[1, 1 / 3]} mt={5}>
-                    <Select
-                      name="status"
-                      selectId="status"
-                      labelId="status"
-                      selectName="status"
-                      formControlProps={{ variant: 'outlined' }}
-                      label="Set Announcement State"
-                      selectedValue="aa"
-                      options={statusOptions}
-                    />
-                  </Box>
-                </Box>
-                <Box display="flex">
-                  <Box mb={5}>
-                    <Button
-                      type="submit"
-                      color="secondary"
-                      variant="contained"
-                      fullWidth={false}
-                      startIcon={<SaveIcon />}
-                    >
-                      {id ? 'Update' : 'Create'}
-                    </Button>
-                  </Box>
-                  <Box ml={2}>
-                    <Button
-                      variant="text"
-                      fullWidth={false}
-                      startIcon={<ClearIcon />}
-                      onClick={() => {
-                        history.push('/link-categories/useful-links');
-                      }}
-                    >
-                      Cancel
-                    </Button>
+                  <Box display="flex">
+                    <Box mb={5}>
+                      <Button
+                        type="submit"
+                        color="secondary"
+                        variant="contained"
+                        fullWidth={false}
+                        startIcon={<SaveIcon />}
+                      >
+                        {id ? 'Update' : 'Create'}
+                      </Button>
+                    </Box>
+                    <Box ml={2}>
+                      <Button
+                        variant="text"
+                        fullWidth={false}
+                        startIcon={<ClearIcon />}
+                        onClick={() => {
+                          history.push('/link-categories/useful-links');
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            </Form>
+              </Form>
+            )}
           </Formik>
         </Box>
       </WrapInCard>
@@ -125,5 +121,5 @@ AddUsefulLinkPage.propTypes = {
   initialValues: PropTypes.object,
 };
 AddUsefulLinkPage.defaultProps = {
-  initialValues: { name: '', url: '' },
+  initialValues: { name: '', url: '', categoryId: '' },
 };

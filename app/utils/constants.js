@@ -35,7 +35,6 @@ export const APIS = {
   RETRIEVE_LINKS: '/usefulLinks',
   CREATE_LINK: '/usefulLinks',
   GET_LINK: '/usefulLinks',
-  // LINK_CATEGORIES: '',
   UPDATE_LINK: '/usefulLinks',
   DELETE_LINK: '/usefulLinks/deleteLinks',
   ANNOUNCEMENT: '/announcements',
@@ -52,4 +51,5 @@ export const APIS = {
   UPDATE_BLOG: '/blogs',
   GET_BLOG: '/blogs',
   DELETE_BLOG: '/blogs',
+  GET_CATEGORIES: '/linkCategories',
 };

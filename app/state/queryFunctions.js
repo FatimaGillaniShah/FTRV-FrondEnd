@@ -11,7 +11,6 @@ const {
   RETRIEVE_LINKS,
   CREATE_LINK,
   GET_LINK,
-  // LINK_CATEGORIES,
   UPDATE_LINK,
   DELETE_LINK,
   QUOTE,
@@ -31,6 +30,7 @@ const {
   CREATE_BLOG,
   UPDATE_BLOG,
   GOOGLE_LOGIN,
+  GET_CATEGORIES,
 } = APIS;
 
 // USER CRUD
@@ -154,3 +154,5 @@ export const getBlogById = ({ queryKey }) =>
 
 export const deleteBlog = (payload) =>
   http.delete(DELETE_BLOG, { data: { id: payload } });
+
+export const getCategories = () => http.get(GET_CATEGORIES);
