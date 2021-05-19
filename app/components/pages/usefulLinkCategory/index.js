@@ -44,9 +44,9 @@ function UsefulLinkCategory({ categories }) {
       </Box>
       {categories.length > 0 ? (
         <Box display="flex" flexDirection="row" flexWrap="wrap">
-          {categories.map(({ name, linksCount }) => (
+          {categories.map(({ id, name, linksCount }) => (
             <Box width={[1, 1 / 3, 1 / 4, '12%']} m={4}>
-              <Category name={name} linksCount={linksCount} />
+              <Category id={id} name={name} linksCount={linksCount} />
             </Box>
           ))}
         </Box>

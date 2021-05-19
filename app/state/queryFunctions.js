@@ -31,6 +31,7 @@ const {
   UPDATE_BLOG,
   GOOGLE_LOGIN,
   CATEGORY,
+  GET_USEFUL_LINKS,
 } = APIS;
 
 // USER CRUD
@@ -156,3 +157,6 @@ export const deleteBlog = (payload) =>
   http.delete(DELETE_BLOG, { data: { id: payload } });
 
 export const getLinkCategory = () => http.get(`${CATEGORY}`);
+
+export const getUsefulLinksById = ({ queryKey }) =>
+  http.get(`${GET_USEFUL_LINKS}?categoryId=${queryKey[1]}`);

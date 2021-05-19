@@ -7,6 +7,7 @@ import {
   MenuItem,
   Paper,
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import FolderOpenOutlinedIcon from '@material-ui/icons/FolderOpenOutlined';
@@ -21,15 +22,19 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
     marginBottom: theme.spacing(1),
-    cursor: 'pointer',
     borderRadius: '20px',
   },
   folderIcon: {
     fontSize: '55px',
+    cursor: 'pointer',
     color: colors.grey,
   },
+  menuCursor: {
+    cursor: 'pointer',
+  },
 }));
-export function Category({ name, linksCount }) {
+export function Category({ id, name, linksCount }) {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -56,11 +61,19 @@ export function Category({ name, linksCount }) {
       {...props}
     />
   ));
+  const navigateTo = (url) => {
+    history.push(url);
+  };
 
   return (
     <Box width={1}>
       <Paper elevation={3} className={classes.paper}>
-        <Box mt={2} display="flex" justifyContent="flex-end">
+        <Box
+          mt={2}
+          display="flex"
+          justifyContent="flex-end"
+          className={classes.menuCursor}
+        >
           <MoreVertOutlinedIcon onClick={handleClick} />
         </Box>
         <StyledMenu
@@ -83,7 +96,7 @@ export function Category({ name, linksCount }) {
             <ListItemText primary="Delete" />
           </MenuItem>
         </StyledMenu>
-        <Box>
+        <Box onClick={() => navigateTo(`link-categories/useful-links/${id}`)}>
           <FolderOpenOutlinedIcon className={classes.folderIcon} />
         </Box>
         <Box mt={2}>
