@@ -28,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '55px',
     color: colors.grey,
   },
-  name: {
-    fontWeight: '500',
-  },
 }));
 export function Category({ name, linksCount }) {
   const classes = useStyles();
@@ -90,7 +87,7 @@ export function Category({ name, linksCount }) {
           <FolderOpenOutlinedIcon className={classes.folderIcon} />
         </Box>
         <Box mt={2}>
-          <BodyTextLarge color="secondary" className={classes.name}>
+          <BodyTextLarge color="secondary" fontWeight="fontWeightMedium">
             {name}
           </BodyTextLarge>
         </Box>

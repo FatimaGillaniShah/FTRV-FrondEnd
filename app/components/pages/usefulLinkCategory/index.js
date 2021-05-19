@@ -22,10 +22,15 @@ function UsefulLinkCategory({ categories }) {
     history.push(url);
   };
   return (
-    <Box m={5} width={1} display="flex" flexDirection="column">
+    <Box
+      width={1}
+      display="flex"
+      flexDirection="column"
+      justify-content="space-between"
+    >
       <Box>
         {role === ROLES.ADMIN && (
-          <Box mt={6} mb={6}>
+          <Box ml={4} mt={6} mb={4}>
             <Button
               variant="contained"
               color="secondary"
@@ -40,7 +45,7 @@ function UsefulLinkCategory({ categories }) {
       {categories.length > 0 ? (
         <Box display="flex" flexDirection="row" flexWrap="wrap">
           {categories.map(({ name, linksCount }) => (
-            <Box width={[1, 1 / 3, 1 / 4, '12%']} mr={8} mb={8}>
+            <Box width={[1, 1 / 3, 1 / 4, '12%']} m={4}>
               <Category name={name} linksCount={linksCount} />
             </Box>
           ))}
