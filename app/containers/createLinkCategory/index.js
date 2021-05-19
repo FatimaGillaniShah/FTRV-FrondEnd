@@ -1,20 +1,63 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
+import { useMutation, useQuery } from 'react-query';
 import { useHistory, useParams } from 'react-router';
+import { Loading } from '../../components/loading';
 import CreateLinkCategoryPage from '../../components/pages/createLinkCategory';
+import {
+  createLinkCategory,
+  getLinkCategoryById,
+  updateLinkCategory,
+} from '../../state/queryFunctions';
+import { keys } from '../../state/queryKeys';
 import { Toast } from '../../utils/helper';
 
 function CreateLinkCategory() {
   const { id } = useParams();
   const history = useHistory();
 
+  const { data, isLoading: isCategoryLoading } = useQuery(
+    keys.getLinkCategory(id),
+    getLinkCategoryById,
+    {
+      enabled: !!id,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
+      },
+    }
+  );
+
+  const { mutate, isLoading } = useMutation(
+    id ? updateLinkCategory : createLinkCategory,
+    {
+      onSuccess: () => {
+        Toast({
+          icon: 'success',
+          title: `Category ${id ? 'Updated' : 'Created'}  Successfully`,
+        });
+        history.push('/link-categories');
+      },
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) =>
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        }),
+    }
+  );
+
   const handleSubmit = (values) => {
-    if (values)
-      Toast({
-        icon: 'success',
-        title: `Link Category ${id ? 'Updated' : 'Created'}  Successfully`,
-      });
-    history.push('/link-categories');
+    mutate(values);
   };
   const initialValues = {
     name: '',
@@ -24,11 +67,15 @@ function CreateLinkCategory() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Link Category</title>
       </Helmet>
-      <CreateLinkCategoryPage
-        onHandleSubmit={handleSubmit}
-        id={id}
-        initialValues={initialValues}
-      />
+      {isCategoryLoading || isLoading ? (
+        <Loading />
+      ) : (
+        <CreateLinkCategoryPage
+          onHandleSubmit={handleSubmit}
+          id={id}
+          initialValues={id ? data?.data?.data : initialValues}
+        />
+      )}
     </>
   );
 }
