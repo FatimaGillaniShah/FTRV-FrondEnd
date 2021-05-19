@@ -7,7 +7,8 @@ import UsefulLinksPage from '../../components/pages/usefulLinks';
 import { getUsefulLinksById } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
-import { Toast } from '../../utils/helper';
+import { Modal, Toast } from '../../utils/helper';
+import { useDeleteLink } from '../../hooks/usefulLink';
 
 function UsefulLinks() {
   const [selected, setSelected] = useState([]);
@@ -25,6 +26,20 @@ function UsefulLinks() {
       });
     },
   });
+  const mutation = useDeleteLink({
+    callbackFn: () => setSelected([]),
+  });
+
+  const handleDeleteLinks = () => {
+    if (!selected.length) {
+      return;
+    }
+    Modal.fire().then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate(selected);
+      }
+    });
+  };
   return (
     <>
       <Helmet>
@@ -35,6 +50,7 @@ function UsefulLinks() {
         data={data?.data?.data?.rows}
         selected={selected}
         setSelected={setSelected}
+        onDelete={handleDeleteLinks}
         headCells={headCells}
         isLoading={isLoading}
       />
