@@ -9,8 +9,9 @@ import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input } from '../../index';
+import { Input, Select } from '../../index';
 import { H5 } from '../../typography';
+import { ANNOUNCEMENT_STATUS } from '../../../utils/constants';
 
 const useFulLinksSchema = object().shape({
   name: string()
@@ -30,6 +31,9 @@ export function AddUsefulLinkPage({
   initialValues,
   history,
 }) {
+  const statusOptions = Object.keys(ANNOUNCEMENT_STATUS).map(
+    (val) => ANNOUNCEMENT_STATUS[val]
+  );
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -48,7 +52,7 @@ export function AddUsefulLinkPage({
             <Form>
               <Box>
                 <Box display="flex" flexDirection="column" pb={10}>
-                  <Box width={[1, 1 / 3]} my={5}>
+                  <Box width={[1, 1 / 3]} mt={5}>
                     <Input
                       variant="outlined"
                       OutlinedInputPlaceholder="Name*"
@@ -58,7 +62,7 @@ export function AddUsefulLinkPage({
                       IconClickable
                     />
                   </Box>
-                  <Box width={[1, 1 / 3]}>
+                  <Box width={[1, 1 / 3]} mt={5}>
                     <Input
                       OutlinedInputPlaceholder="Url*"
                       name="url"
@@ -66,6 +70,18 @@ export function AddUsefulLinkPage({
                       appendIcon
                       Icon={LinkOutlinedIcon}
                       IconClickable
+                    />
+                  </Box>
+                  <Box width={[1, 1 / 3]} mt={5}>
+                    <Select
+                      name="status"
+                      selectId="status"
+                      labelId="status"
+                      selectName="status"
+                      formControlProps={{ variant: 'outlined' }}
+                      label="Set Announcement State"
+                      selectedValue="aa"
+                      options={statusOptions}
                     />
                   </Box>
                 </Box>
