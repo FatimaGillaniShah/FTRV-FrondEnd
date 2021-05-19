@@ -2,13 +2,14 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal } from '../../utils/helper';
 import { useDeleteLink } from '../../hooks/usefulLink';
 
 const ActionButtons = ({ data, setSelected, disabled }) => {
+  const { id } = useParams();
   const history = useHistory();
   const mutation = useDeleteLink({
     callbackFn: () => setSelected([]),
@@ -33,7 +34,9 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
         <>
           <IconButton
             onClick={() =>
-              history.push(`/link-categories/useful-links/edit/${data.id}`)
+              history.push(
+                `/link-categories/useful-links/${id}/edit/${data.id}`
+              )
             }
             disabled={disabled}
           >
