@@ -30,6 +30,9 @@ const {
   CREATE_BLOG,
   UPDATE_BLOG,
   GOOGLE_LOGIN,
+  CREATE_LINK_CATEGORY,
+  GET_LINK_CATEGORY,
+  UPDATE_LINK_CATEGORY,
 } = APIS;
 
 // USER CRUD
@@ -136,6 +139,7 @@ export const getEventById = ({ queryKey }) =>
 export const updateEvent = ({ id, ...payload }) =>
   http.put(`${UPDATE_EVENTS}/${id}`, payload);
 
+// BLOG CRUD
 export const getBlogs = ({ queryKey }) => {
   const url = `${BLOG}?sortColumn=updatedAt&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
   return http.get(url);
@@ -153,3 +157,13 @@ export const getBlogById = ({ queryKey }) =>
 
 export const deleteBlog = (payload) =>
   http.delete(DELETE_BLOG, { data: { id: payload } });
+
+// LINK CATEGORY CRUD
+export const createLinkCategory = (payload) =>
+  http.post(CREATE_LINK_CATEGORY, payload);
+
+export const getLinkCategoryById = ({ queryKey }) =>
+  http.get(`${GET_LINK_CATEGORY}/${queryKey[1]}`);
+
+export const updateLinkCategory = ({ id, ...payload }) =>
+  http.put(`${UPDATE_LINK_CATEGORY}/${id}`, payload);
