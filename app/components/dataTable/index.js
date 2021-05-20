@@ -245,14 +245,13 @@ DataTable.propTypes = {
   sortColumn: PropTypes.string.isRequired,
   isServerSide: PropTypes.bool,
   matchUserIdWithIDS: PropTypes.bool,
-  count: PropTypes.number,
+  count: PropTypes.number.isRequired,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: PAGE_SIZE,
   selected: [],
   matchUserIdWithIDS: false,
   isServerSide: false,
-  count: 0,
 };
 
 export default DataTable;
