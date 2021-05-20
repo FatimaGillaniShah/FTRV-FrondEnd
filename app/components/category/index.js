@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
 }));
-export function Category({ id, name, linksCount }) {
+export function Category({ id, name, linksCount, handleDeleteCategory }) {
   const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -89,7 +89,7 @@ export function Category({ id, name, linksCount }) {
             </ListItemIcon>
             <ListItemText primary="Edit" />
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={() => handleDeleteCategory(id, linksCount)}>
             <ListItemIcon>
               <DeleteForeverOutlinedIcon />
             </ListItemIcon>

@@ -15,7 +15,6 @@ import { Toast } from '../../utils/helper';
 function CreateLinkCategory() {
   const { id } = useParams();
   const history = useHistory();
-
   const { data, isLoading: isCategoryLoading } = useQuery(
     keys.getLinkCategory(id),
     getLinkCategoryById,
