@@ -33,6 +33,7 @@ const {
   CREATE_LINK_CATEGORY,
   GET_LINK_CATEGORY,
   UPDATE_LINK_CATEGORY,
+  CATEGORY,
 } = APIS;
 
 // USER CRUD
@@ -167,3 +168,4 @@ export const getLinkCategoryById = ({ queryKey }) =>
 
 export const updateLinkCategory = ({ id, ...payload }) =>
   http.put(`${UPDATE_LINK_CATEGORY}/${id}`, payload);
+export const getLinkCategory = () => http.get(`${CATEGORY}`);

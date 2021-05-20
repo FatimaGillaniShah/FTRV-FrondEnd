@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
   },
   folderIcon: {
-    fontSize: '55px',
+    fontSize: '70px',
     color: colors.grey,
   },
 }));
-export function Category({ title, noOfFiles }) {
+export function Category({ name, linksCount }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
@@ -87,13 +87,13 @@ export function Category({ title, noOfFiles }) {
           <FolderOpenOutlinedIcon className={classes.folderIcon} />
         </Box>
         <Box mt={2}>
-          <BodyTextLarge color="secondary" fontWeightMedium>
-            {title}
+          <BodyTextLarge color="secondary" fontWeight="fontWeightMedium">
+            {name}
           </BodyTextLarge>
         </Box>
         <Box mb={5} mt={1}>
-          <BodyTextSmall color="secondary" fontWeightMedium>
-            {noOfFiles}
+          <BodyTextSmall color="secondary">
+            {`${linksCount} links`}
           </BodyTextSmall>
         </Box>
       </Paper>
@@ -101,8 +101,8 @@ export function Category({ title, noOfFiles }) {
   );
 }
 Category.propTypes = {
-  title: PropTypes.string,
-  noOfFiles: PropTypes.string,
+  name: PropTypes.string,
+  linksCount: PropTypes.string,
 };
 
 export default memo(Category);

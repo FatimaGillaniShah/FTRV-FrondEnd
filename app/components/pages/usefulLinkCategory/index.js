@@ -10,7 +10,7 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import NotExist from '../notExist';
 
-function UsefulLinkCategory({ title, noOfFiles, count }) {
+function UsefulLinkCategory({ categories }) {
   const history = useHistory();
   const {
     user: {
@@ -22,46 +22,45 @@ function UsefulLinkCategory({ title, noOfFiles, count }) {
     history.push(url);
   };
   return (
-    <Box m={3} width={1} display="flex" flexDirection="column">
+    <Box
+      width={1}
+      display="flex"
+      flexDirection="column"
+      justify-content="space-between"
+    >
       <Box>
         {role === ROLES.ADMIN && (
-          <Box mt={6} mb={6}>
+          <Box ml={11} mt={7}>
             <Button
               variant="contained"
               color="secondary"
               startIcon={<AddIcon />}
-              onClick={() => navigateTo('usefulLinks/add')}
+              onClick={() => navigateTo('link-categories/add')}
             >
               New Category
             </Button>
           </Box>
         )}
       </Box>
-      <Box display="flex" flexDirection="row" flexWrap="wrap">
-        <Box width={[1, 1 / 3, 1 / 4, '12%']} mr={5}>
-          {count > 0 ? (
-            <Category title={title} noOfFiles={noOfFiles} />
-          ) : (
-            <NotExist
-              Icon={CategoryOutlinedIcon}
-              description=" No Category To Show"
-            />
-          )}
+      {categories.length > 0 ? (
+        <Box display="flex" flexDirection="row" flexWrap="wrap">
+          {categories.map(({ name, linksCount }) => (
+            <Box width={[1, 1 / 2, 1 / 3, '20%']} m="38px">
+              <Category name={name} linksCount={linksCount} />
+            </Box>
+          ))}
         </Box>
-      </Box>
+      ) : (
+        <NotExist
+          Icon={CategoryOutlinedIcon}
+          description=" No Category To Show"
+        />
+      )}
     </Box>
   );
 }
 UsefulLinkCategory.propTypes = {
-  title: PropTypes.string,
-  noOfFiles: PropTypes.string,
-  count: PropTypes.number,
-};
-
-UsefulLinkCategory.defaultProps = {
-  title: '',
-  noOfFiles: '',
-  count: null,
+  categories: PropTypes.array,
 };
 
 export default memo(UsefulLinkCategory);
