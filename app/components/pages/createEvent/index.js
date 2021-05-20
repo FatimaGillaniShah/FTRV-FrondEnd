@@ -18,6 +18,8 @@ import WrapInCard from '../../layout/wrapInCard';
 import { Input, TextArea } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
 import { useStyles } from './style';
+import { useAuthContext } from '../../../context/authContext';
+import { ROLES } from '../../../utils/constants';
 
 const eventSchema = object().shape({
   title: string()
@@ -54,6 +56,12 @@ export function CreateEventPage({
 }) {
   const classes = useStyles();
   const history = useHistory();
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
+
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -67,12 +75,15 @@ export function CreateEventPage({
             <Box my={7}>
               <H5> {pageTitle} Event </H5>
             </Box>
-            <Box mr={3}>
-              <IconButton onClick={onHandleDeleteEvent}>
-                <DeleteIcon color="error" />
-              </IconButton>
-            </Box>
+            {role === ROLES.ADMIN && (
+              <Box mr={3}>
+                <IconButton onClick={onHandleDeleteEvent}>
+                  <DeleteIcon color="error" />
+                </IconButton>
+              </Box>
+            )}
           </Box>
+
           <Formik
             enableReinitialize
             initialValues={initialValues}
