@@ -11,9 +11,7 @@ import { useDeleteCategory } from '../../hooks/usefulLinkCategory';
 import { Modal } from '../../utils/helper';
 
 function UsefulLinksCategory() {
-  const { data, isLoading } = useQuery(keys.linkCategory, getLinkCategory, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, isLoading } = useQuery(keys.linkCategory, getLinkCategory);
   const categories = data?.data?.data;
   const mutation = useDeleteCategory();
   const handleDeleteCategory = (id, linksCount) => {
@@ -21,7 +19,7 @@ function UsefulLinksCategory() {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Unable to delete, category containes links',
+        text: `Unable to delete, category containes ${linksCount} link(s)`,
       });
     } else {
       Modal.fire().then(({ isConfirmed }) => {
