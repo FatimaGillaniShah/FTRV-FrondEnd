@@ -25,8 +25,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
   },
   folderIcon: {
-    fontSize: '55px',
-    cursor: 'pointer',
+    fontSize: '70px',
     color: colors.grey,
   },
   menuCursor: {
