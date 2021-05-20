@@ -30,6 +30,7 @@ const {
   CREATE_BLOG,
   UPDATE_BLOG,
   GOOGLE_LOGIN,
+  CATEGORY,
 } = APIS;
 
 // USER CRUD
@@ -153,3 +154,5 @@ export const getBlogById = ({ queryKey }) =>
 
 export const deleteBlog = (payload) =>
   http.delete(DELETE_BLOG, { data: { id: payload } });
+
+export const getLinkCategory = () => http.get(`${CATEGORY}`);
