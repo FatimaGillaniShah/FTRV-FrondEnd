@@ -12,20 +12,24 @@ import { useDeleteLink } from '../../hooks/usefulLink';
 
 function UsefulLinks() {
   const [selected, setSelected] = useState([]);
-  const { id } = useParams();
-  const { data, isLoading } = useQuery(keys.getLink(id), getUsefulLinksById, {
-    refetchOnWindowFocus: false,
-    onError: ({
-      response: {
-        data: { message },
+  const { categoryId } = useParams();
+  const { data, isLoading } = useQuery(
+    keys.getLink(categoryId),
+    getUsefulLinksById,
+    {
+      refetchOnWindowFocus: false,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
       },
-    }) => {
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occurred',
-      });
-    },
-  });
+    }
+  );
   const mutation = useDeleteLink({
     callbackFn: () => setSelected([]),
   });
