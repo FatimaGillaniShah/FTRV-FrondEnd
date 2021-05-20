@@ -264,7 +264,7 @@ export const routeArray = [
         roles: [ROLES.ADMIN, ROLES.USER],
       },
       {
-        path: '/useful-links/:id',
+        path: '/useful-links/:categoryId',
         component: usefulLinks,
         exact: true,
         breadCrumbKey: 'Useful Links',

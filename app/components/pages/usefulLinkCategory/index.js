@@ -30,7 +30,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
     >
       <Box>
         {role === ROLES.ADMIN && (
-          <Box ml={4} mt={6} mb={4}>
+          <Box ml={11} mt={7}>
             <Button
               variant="contained"
               color="secondary"
@@ -45,7 +45,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
       {categories.length > 0 ? (
         <Box display="flex" flexDirection="row" flexWrap="wrap">
           {categories.map(({ id, name, linksCount }) => (
-            <Box width={[1, 1 / 3, 1 / 4, '12%']} m={4}>
+            <Box width={[1, 1 / 2, 1 / 3, '20%']} m="38px">
               <Category
                 id={id}
                 name={name}
