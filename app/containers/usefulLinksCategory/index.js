@@ -19,7 +19,7 @@ function UsefulLinksCategory() {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: `Unable to delete, category containes ${linksCount} link(s)`,
+        text: `Unable to delete, category contains ${linksCount} link(s)`,
       });
     } else {
       Modal.fire().then(({ isConfirmed }) => {

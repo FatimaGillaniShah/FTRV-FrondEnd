@@ -10,7 +10,7 @@ export function useDeleteCategory() {
   const history = useHistory();
   return useMutation(deleteLinkCategory, {
     onSuccess: () => {
-      Swal.fire('Deleted!', `category deleted.`, 'success');
+      Swal.fire('Deleted!', `Category deleted.`, 'success');
       queryClient.invalidateQueries(keys.linkCategory);
       history.push('/link-categories');
     },
