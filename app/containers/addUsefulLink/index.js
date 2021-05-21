@@ -7,6 +7,7 @@ import {
   createLink,
   getLinkById,
   updateLink,
+  getCategories,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Toast } from '../../utils/helper';
@@ -22,6 +23,10 @@ function AddUsefulLink() {
     {
       enabled: !!id,
     }
+  );
+  const { data: categories, isCategoryLoading } = useQuery(
+    keys.getCategories,
+    getCategories
   );
 
   const mutation = useMutation(id ? updateLink : createLink, {
@@ -48,17 +53,23 @@ function AddUsefulLink() {
     mutation.mutate(values);
   };
 
+  const options = categories?.data.data.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
+
   return (
     <>
       <Helmet>
         <title>Useful Links</title>
       </Helmet>
-      {isLoading && <Loading />}
+      {isLoading && isCategoryLoading && <Loading />}
       <AddUsefulLinkPage
         id={id}
         onHandleSubmit={handleSubmit}
         initialValues={data?.data.data}
         history={history}
+        options={options}
       />
     </>
   );

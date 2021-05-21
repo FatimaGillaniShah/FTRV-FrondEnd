@@ -7,6 +7,7 @@ import { FILE_ACCEPT_TYPES } from 'utils/constants';
 import bannerImage from '../../../images/group.png';
 import { EventCalendar } from '../events/calendar';
 import BannerImage from '../bannerImage/index';
+import { Poll } from '../../poll';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
 }));
-function Home({ eventList, isLoading, bannerImages }) {
+function Home({ eventList, isLoading, bannerImages, pollData }) {
   const classes = useStyles();
   const Images = bannerImages?.avatar || bannerImage;
   const [imgFile, setImgFile] = useState(Images);
@@ -56,10 +57,36 @@ function Home({ eventList, isLoading, bannerImages }) {
           </Box>
         </Grid>
         <Grid xs={12} className={classes.statsSection}>
-          <Box m={10}>
-            <Box height="50vh" width={[1, 1, 1, 1 / 2]}>
+          <Box
+            m={[2, 2, 2, 10]}
+            display="flex"
+            flexDirection={['column', 'column', 'column', 'row']}
+          >
+            <Box
+              height={['45vh', '50vh', '50vh', '50vh']}
+              p={2}
+              width={[1, 1, 1, 1 / 2]}
+              mr={[0, 0, 0, 8]}
+              ml={[0, 0, 0, 8]}
+            >
               <EventCalendar home eventList={eventList} isLoading={isLoading} />
             </Box>
+            {pollData && (
+              <Box
+                p={2}
+                mr={[0, 0, 0, 8]}
+                ml={[0, 0, 0, 8]}
+                width={[1, 1, 1, 1 / 2]}
+              >
+                {pollData?.map((val) => (
+                  <Poll
+                    name={val.name}
+                    description={val.description}
+                    options={val.options}
+                  />
+                ))}
+              </Box>
+            )}
           </Box>
         </Grid>
       </Grid>
