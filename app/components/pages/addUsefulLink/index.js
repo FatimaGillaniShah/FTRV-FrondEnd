@@ -7,6 +7,7 @@ import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import PersonOutlinedIcon from '@material-ui/icons/PersonOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input, Select } from '../../index';
@@ -33,6 +34,7 @@ export function AddUsefulLinkPage({
   history,
   options,
 }) {
+  const { categoryId } = useParams();
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -99,7 +101,9 @@ export function AddUsefulLinkPage({
                         fullWidth={false}
                         startIcon={<ClearIcon />}
                         onClick={() => {
-                          history.push('/link-categories/useful-links');
+                          history.push(
+                            `/link-categories/useful-links/${categoryId}`
+                          );
                         }}
                       >
                         Cancel

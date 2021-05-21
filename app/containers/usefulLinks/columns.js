@@ -9,7 +9,7 @@ import { Modal } from '../../utils/helper';
 import { useDeleteLink } from '../../hooks/usefulLink';
 
 const ActionButtons = ({ data, setSelected, disabled }) => {
-  const { id } = useParams();
+  const { categoryId } = useParams();
   const history = useHistory();
   const mutation = useDeleteLink({
     callbackFn: () => setSelected([]),
@@ -35,7 +35,7 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
           <IconButton
             onClick={() =>
               history.push(
-                `/link-categories/useful-links/${id}/edit/${data.id}`
+                `/link-categories/useful-links/${categoryId}/edit/${data.id}`
               )
             }
             disabled={disabled}

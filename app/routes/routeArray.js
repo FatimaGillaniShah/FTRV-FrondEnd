@@ -269,6 +269,7 @@ export const routeArray = [
         exact: true,
         breadCrumbKey: 'Useful Links',
         simplifiedPath: 'useful-links',
+        noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
         nestedRoutes: [
           {
