@@ -57,6 +57,7 @@ function AddUsefulLink() {
     value: val.id,
     label: val.name,
   }));
+  const initialValues = { name: '', url: '', categoryId };
 
   return (
     <>
@@ -67,7 +68,7 @@ function AddUsefulLink() {
       <AddUsefulLinkPage
         id={id}
         onHandleSubmit={handleSubmit}
-        initialValues={data?.data.data}
+        initialValues={id ? data?.data.data : initialValues}
         history={history}
         options={options}
       />
