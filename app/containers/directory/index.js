@@ -176,7 +176,7 @@ function DirectoryContainer() {
                 onChangeSort={onChangeSort}
                 isServerSide={isServerSide}
                 matchUserIdWithIDS
-                count={tableData.count}
+                count={tableData?.count || 0}
                 handleServerPageNumber={handleServerPageNumber}
                 handleServerPageSize={handleServerPageSize}
               />

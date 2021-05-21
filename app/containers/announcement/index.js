@@ -96,6 +96,7 @@ function AnnouncementContainer() {
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
+                count={formatData?.length || 0}
                 sortColumn="title"
               />
             )}
