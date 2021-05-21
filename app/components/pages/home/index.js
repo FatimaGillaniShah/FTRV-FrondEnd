@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     flex: '0.3',
     marginBlock: '0.2rem',
     display: 'flex',
+    flexDirection: 'column',
   },
   statsSection: {
     backgroundColor: theme.palette.bgColor.secondary,
@@ -27,8 +28,11 @@ const useStyles = makeStyles((theme) => ({
     marginBlock: '0.2rem',
   },
   bannerImage: {
-    padding: theme.spacing(6, 20),
+    padding: theme.spacing(0, 20, 6, 20),
     flex: 1,
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0, 1, 6, 1),
+    },
   },
 }));
 function Home({ eventList, isLoading, bannerImages }) {
@@ -40,10 +44,7 @@ function Home({ eventList, isLoading, bannerImages }) {
     <>
       <Grid xs={12} className={classes.root}>
         <Grid xs={12} className={classes.bannerGridSection}>
-          <Box className={classes.bannerImage}>
-            <BannerImage imgFile={imgFile} />
-          </Box>
-          <Box>
+          <Box alignSelf="flex-end">
             <MuiFileInput
               BtnIcon={EditIcon}
               acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
@@ -52,7 +53,11 @@ function Home({ eventList, isLoading, bannerImages }) {
               variant="text"
               iconColor="primary"
               setImgFile={setImgFile}
+              isIcon
             />
+          </Box>
+          <Box className={classes.bannerImage}>
+            <BannerImage imgFile={imgFile} />
           </Box>
         </Grid>
         <Grid xs={12} className={classes.statsSection}>

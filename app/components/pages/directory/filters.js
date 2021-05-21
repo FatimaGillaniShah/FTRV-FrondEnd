@@ -27,24 +27,48 @@ function Filters({ onHandleFilterSearch, onClear }) {
       >
         {({ resetForm }) => (
           <Form>
-            <Box display="flex" justifyContent="space-between">
-              <Box width={1 / 6}>
-                <Input name="name" placeholderText="Name" />
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              flexDirection={['column', 'column', 'row']}
+            >
+              <Box width={[1, 1, 1 / 6]} mb={5} mt={[1, 2, 5]}>
+                <Input
+                  name="name"
+                  OutlinedInputPlaceholder="Name"
+                  variant="outlined"
+                />
               </Box>
-              <Box width={1 / 6}>
-                <Input name="department" placeholderText="Department" />
+              <Box width={[1, 1, 1 / 6]} my={5}>
+                <Input
+                  name="department"
+                  OutlinedInputPlaceholder="Department"
+                  variant="outlined"
+                />
               </Box>
-              <Box width={1 / 6}>
-                <Input name="title" placeholderText="Designation" />
+              <Box width={[1, 1, 1 / 6]} my={5}>
+                <Input
+                  name="title"
+                  OutlinedInputPlaceholder="Designation"
+                  variant="outlined"
+                />
               </Box>
-              <Box width={1 / 6}>
-                <Input name="location" placeholderText="Location" />
+              <Box width={[1, 1, 1 / 6]} my={5}>
+                <Input
+                  name="location"
+                  OutlinedInputPlaceholder="Location"
+                  variant="outlined"
+                />
               </Box>
-              <Box width={1 / 6}>
-                <Input name="extension" placeholderText="Extension" />
+              <Box width={[1, 1, 1 / 6]} my={5}>
+                <Input
+                  name="extension"
+                  OutlinedInputPlaceholder="Extension"
+                  variant="outlined"
+                />
               </Box>
             </Box>
-            <Box display="flex" my={12}>
+            <Box display="flex" my={12} flexDirection={['column', 'row']}>
               <Box mr={2}>
                 <Button
                   variant="contained"
@@ -56,7 +80,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
                   Search
                 </Button>
               </Box>
-              <Box mr={2}>
+              <Box mr={2} mt={[2, 0]}>
                 <Button
                   variant="text"
                   fullWidth={false}
