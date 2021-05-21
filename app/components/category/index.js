@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   folderIcon: {
     fontSize: '70px',
     color: colors.grey,
+    cursor: 'pointer',
   },
   menuCursor: {
     cursor: 'pointer',
@@ -81,13 +82,11 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
       <Paper elevation={3} className={classes.paper}>
         {role === ROLES.ADMIN && (
           <Box>
-            <Box
-              mt={2}
-              display="flex"
-              justifyContent="flex-end"
-              className={classes.menuCursor}
-            >
-              <MoreVertOutlinedIcon onClick={handleClick} />
+            <Box mt={2} display="flex" justifyContent="flex-end">
+              <MoreVertOutlinedIcon
+                className={classes.menuCursor}
+                onClick={handleClick}
+              />
             </Box>
             <StyledMenu
               id="customized-menu"
