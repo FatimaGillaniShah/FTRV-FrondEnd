@@ -10,7 +10,7 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import NotExist from '../notExist';
 
-function UsefulLinkCategory({ categories }) {
+function UsefulLinkCategory({ categories, handleDeleteCategory }) {
   const history = useHistory();
   const {
     user: {
@@ -46,7 +46,12 @@ function UsefulLinkCategory({ categories }) {
         <Box display="flex" flexDirection="row" flexWrap="wrap">
           {categories.map(({ id, name, linksCount }) => (
             <Box width={[1, 1 / 2, 1 / 3, '20%']} m="38px">
-              <Category id={id} name={name} linksCount={linksCount} />
+              <Category
+                id={id}
+                name={name}
+                linksCount={linksCount}
+                handleDeleteCategory={handleDeleteCategory}
+              />
             </Box>
           ))}
         </Box>
