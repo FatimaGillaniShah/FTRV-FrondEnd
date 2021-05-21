@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
   folderIcon: {
     fontSize: '70px',
     color: colors.grey,
+    cursor: 'pointer',
   },
   menuCursor: {
     cursor: 'pointer',
@@ -67,13 +68,11 @@ export function Category({ id, name, linksCount }) {
   return (
     <Box width={1}>
       <Paper elevation={3} className={classes.paper}>
-        <Box
-          mt={2}
-          display="flex"
-          justifyContent="flex-end"
-          className={classes.menuCursor}
-        >
-          <MoreVertOutlinedIcon onClick={handleClick} />
+        <Box mt={2} display="flex" justifyContent="flex-end">
+          <MoreVertOutlinedIcon
+            className={classes.menuCursor}
+            onClick={handleClick}
+          />
         </Box>
         <StyledMenu
           id="customized-menu"
@@ -95,8 +94,12 @@ export function Category({ id, name, linksCount }) {
             <ListItemText primary="Delete" />
           </MenuItem>
         </StyledMenu>
-        <Box onClick={() => navigateTo(`link-categories/useful-links/${id}`)}>
-          <FolderOpenOutlinedIcon className={classes.folderIcon} />
+
+        <Box>
+          <FolderOpenOutlinedIcon
+            onClick={() => navigateTo(`link-categories/useful-links/${id}`)}
+            className={classes.folderIcon}
+          />
         </Box>
         <Box mt={2}>
           <BodyTextLarge color="secondary" fontWeight="fontWeightMedium">
