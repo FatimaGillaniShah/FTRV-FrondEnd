@@ -44,6 +44,10 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleDeleteWithMenu = (categoryId, usefulLinksCount) => {
+    setAnchorEl(null);
+    handleDeleteCategory(categoryId, usefulLinksCount);
+  };
   const {
     user: {
       data: { role },
@@ -100,7 +104,7 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
                 </ListItemIcon>
                 <ListItemText primary="Edit" />
               </MenuItem>
-              <MenuItem onClick={() => handleDeleteCategory(id, linksCount)}>
+              <MenuItem onClick={() => handleDeleteWithMenu(id, linksCount)}>
                 <ListItemIcon>
                   <DeleteForeverOutlinedIcon />
                 </ListItemIcon>
