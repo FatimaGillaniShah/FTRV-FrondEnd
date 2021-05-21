@@ -36,7 +36,10 @@ function AddUsefulLink() {
         icon: 'success',
         title: `Link ${id ? 'updated' : 'created'}  successfully`,
       });
-      queryClient.invalidateQueries(keys.links);
+      if (id) {
+        queryClient.invalidateQueries(keys.getLink(id));
+      }
+      queryClient.invalidateQueries(keys.getLink(categoryId));
     },
     onError: ({
       response: {

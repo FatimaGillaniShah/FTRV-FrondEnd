@@ -114,16 +114,26 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
             </StyledMenu>
           </Box>
         )}
-        <Box onClick={() => navigateTo(`link-categories/useful-links/${id}`)}>
-          <FolderOpenOutlinedIcon className={classes.folderIcon} />
-        </Box>
+        <FolderOpenOutlinedIcon
+          className={classes.folderIcon}
+          onClick={() => navigateTo(`link-categories/useful-links/${id}`)}
+        />
         <Box mt={2}>
-          <BodyTextLarge color="secondary" fontWeight="fontWeightMedium">
+          <BodyTextLarge
+            color="secondary"
+            fontWeight="fontWeightMedium"
+            className={classes.menuCursor}
+            onClick={() => navigateTo(`link-categories/useful-links/${id}`)}
+          >
             {name}
           </BodyTextLarge>
         </Box>
         <Box mb={5} mt={1}>
-          <BodyTextSmall color="secondary">
+          <BodyTextSmall
+            color="secondary"
+            className={classes.menuCursor}
+            onClick={() => navigateTo(`link-categories/useful-links/${id}`)}
+          >
             {`${linksCount} links`}
           </BodyTextSmall>
         </Box>
