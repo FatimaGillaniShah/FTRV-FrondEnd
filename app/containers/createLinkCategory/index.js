@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useParams } from 'react-router';
 import { Loading } from '../../components/loading';
 import CreateLinkCategoryPage from '../../components/pages/createLinkCategory';
@@ -15,6 +15,7 @@ import { Toast } from '../../utils/helper';
 function CreateLinkCategory() {
   const { id } = useParams();
   const history = useHistory();
+  const queryClient = useQueryClient();
 
   const { data, isLoading: isCategoryLoading } = useQuery(
     keys.getLinkCategory(id),
@@ -43,6 +44,7 @@ function CreateLinkCategory() {
           title: `Category ${id ? 'Updated' : 'Created'}  Successfully`,
         });
         history.push('/link-categories');
+        queryClient.invalidateQueries(keys.linkCategory);
       },
       onError: ({
         response: {
