@@ -20,16 +20,14 @@ export function AddLocationPage({ id, initialValues, options }) {
           <Formik enableReinitialize initialValues={initialValues}>
             {({ values }) => (
               <Form>
-                <Box>
-                  <Box display="flex" flexDirection="column" pb={10}>
-                    <Box width={[1, 1 / 3]} mt={5}>
-                      <Select
-                        name="locationId"
-                        label="Location"
-                        selectedValue={values.locationId}
-                        options={options}
-                      />
-                    </Box>
+                <Box pb={10}>
+                  <Box width={[1, 1 / 3]} mt={5}>
+                    <Select
+                      name="locationId"
+                      label="Location"
+                      selectedValue={values.locationId}
+                      options={options}
+                    />
                   </Box>
                   <Box display="flex">
                     <Box mb={5}>
