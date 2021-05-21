@@ -31,6 +31,7 @@ function UsefulLinksPage({
             headCells={headCells}
             selected={selected}
             setSelected={setSelected}
+            count={data?.length || 0}
             sortColumn="name"
           />
         )}

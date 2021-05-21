@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import { Loading } from '../../components/loading';
 import UsefulLinksPage from '../../components/pages/usefulLinks';
-import { getUsefulLinksById } from '../../state/queryFunctions';
+import { getUsefulLinksByCategoryId } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
 import { Modal, Toast } from '../../utils/helper';
@@ -15,7 +15,7 @@ function UsefulLinks() {
   const { categoryId } = useParams();
   const { data, isLoading } = useQuery(
     keys.getLink(categoryId),
-    getUsefulLinksById,
+    getUsefulLinksByCategoryId,
     {
       refetchOnWindowFocus: false,
       onError: ({

@@ -16,6 +16,7 @@ function CreateLinkCategory() {
   const { id } = useParams();
   const history = useHistory();
   const queryClient = useQueryClient();
+
   const { data, isLoading: isCategoryLoading } = useQuery(
     keys.getLinkCategory(id),
     getLinkCategoryById,

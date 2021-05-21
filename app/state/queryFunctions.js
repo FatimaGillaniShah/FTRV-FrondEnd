@@ -36,6 +36,7 @@ const {
   GET_LINK_CATEGORY,
   UPDATE_LINK_CATEGORY,
   DELETE_CATEGORY,
+  GET_CATEGORIES,
 } = APIS;
 
 // USER CRUD
@@ -163,7 +164,7 @@ export const deleteBlog = (payload) =>
 
 export const getLinkCategory = () => http.get(`${CATEGORY}`);
 
-export const getUsefulLinksById = ({ queryKey }) =>
+export const getUsefulLinksByCategoryId = ({ queryKey }) =>
   http.get(`${GET_USEFUL_LINKS}?categoryId=${queryKey[1]}`);
 // LINK CATEGORY CRUD
 export const createLinkCategory = (payload) =>
@@ -178,3 +179,4 @@ export const updateLinkCategory = ({ id, ...payload }) =>
 export const deleteLinkCategory = (id) => {
   http.delete(`${DELETE_CATEGORY}/${id}`);
 };
+export const getCategories = () => http.get(GET_CATEGORIES);

@@ -49,7 +49,7 @@ export default function SelectInput({
         fullWidth={fullWidth}
         variant="outlined"
         {...formControlProps}
-        error={meta.error && true}
+        error={meta.touched && meta.error}
       >
         <InputLabel className={classes.label} id={selectId}>
           {label}
@@ -58,10 +58,9 @@ export default function SelectInput({
           labelId={labelId}
           id={selectId}
           onChange={onHandleChange}
-          value={selectedValue}
+          defaultValue={selectedValue}
           className={classes.select}
           name={selectName}
-          error={meta.error}
           label={label}
           {...field}
           {...props}
@@ -83,8 +82,7 @@ export default function SelectInput({
             )}
         </Select>
 
-        <FormHelperText>{helperText}</FormHelperText>
-        {meta.touched && meta.error ? (
+        {meta.error && meta.touched ? (
           <FormHelperText error>{meta.error}</FormHelperText>
         ) : null}
       </FormControl>
