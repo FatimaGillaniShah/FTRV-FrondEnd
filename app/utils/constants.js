@@ -54,4 +54,5 @@ export const APIS = {
   CREATE_LINK_CATEGORY: '/linkCategories',
   GET_LINK_CATEGORY: '/linkCategories',
   UPDATE_LINK_CATEGORY: '/linkCategories',
+  GET_CATEGORIES: '/linkCategories',
 };
