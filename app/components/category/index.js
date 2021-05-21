@@ -16,6 +16,8 @@ import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import { BodyTextSmall, BodyTextLarge } from '../typography';
 import { colors } from '../../theme/colors';
+import { useAuthContext } from '../../context/authContext';
+import { ROLES } from '../../utils/constants';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
 }));
-export function Category({ id, name, linksCount }) {
+export function Category({ id, name, linksCount, handleDeleteCategory }) {
   const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -42,6 +44,16 @@ export function Category({ id, name, linksCount }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleDeleteCategoryWithMenu = (categoryId, usefulLinksCount) => {
+    setAnchorEl(null);
+    handleDeleteCategory(categoryId, usefulLinksCount);
+  };
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
+
   const StyledMenu = withStyles({
     paper: {
       border: `1px solid ${colors.grey}`,
@@ -67,34 +79,42 @@ export function Category({ id, name, linksCount }) {
   return (
     <Box width={1}>
       <Paper elevation={3} className={classes.paper}>
-        <Box
-          mt={2}
-          display="flex"
-          justifyContent="flex-end"
-          className={classes.menuCursor}
-        >
-          <MoreVertOutlinedIcon onClick={handleClick} />
-        </Box>
-        <StyledMenu
-          id="customized-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={() => navigateTo(`/link-categories/edit/${id}`)}>
-            <ListItemIcon>
-              <EditOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Edit" />
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <DeleteForeverOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Delete" />
-          </MenuItem>
-        </StyledMenu>
+        {role === ROLES.ADMIN && (
+          <Box>
+            <Box
+              mt={2}
+              display="flex"
+              justifyContent="flex-end"
+              className={classes.menuCursor}
+            >
+              <MoreVertOutlinedIcon onClick={handleClick} />
+            </Box>
+            <StyledMenu
+              id="customized-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                onClick={() => navigateTo(`/link-categories/edit/${id}`)}
+              >
+                <ListItemIcon>
+                  <EditOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Edit" />
+              </MenuItem>
+              <MenuItem
+                onClick={() => handleDeleteCategoryWithMenu(id, linksCount)}
+              >
+                <ListItemIcon>
+                  <DeleteForeverOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Delete" />
+              </MenuItem>
+            </StyledMenu>
+          </Box>
+        )}
         <Box onClick={() => navigateTo(`link-categories/useful-links/${id}`)}>
           <FolderOpenOutlinedIcon className={classes.folderIcon} />
         </Box>
