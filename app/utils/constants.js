@@ -55,4 +55,5 @@ export const APIS = {
   GET_LINK_CATEGORY: '/linkCategories',
   UPDATE_LINK_CATEGORY: '/linkCategories',
   CATEGORY: '/linkCategories',
+  GET_USEFUL_LINKS: '/usefulLinks',
 };
