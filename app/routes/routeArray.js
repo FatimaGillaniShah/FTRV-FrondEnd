@@ -23,6 +23,7 @@ import createBlog from '../containers/createBlog/loadable';
 import createPoll from '../containers/createPoll/loadable';
 import Polls from '../containers/polls/loadable';
 import CreateLinkCategory from '../containers/createLinkCategory/loadable';
+import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -238,7 +239,7 @@ export const routeArray = [
   },
   {
     path: '/link-categories',
-    component: CreateLinkCategory,
+    component: UsefulLinksCategory,
     exact: true,
     breadCrumbKey: 'Link Categroies',
     routeType: routeTypes.private,
@@ -263,10 +264,11 @@ export const routeArray = [
         roles: [ROLES.ADMIN, ROLES.USER],
       },
       {
-        path: '/useful-links',
+        path: '/useful-links/:categoryId',
         component: usefulLinks,
         exact: true,
         breadCrumbKey: 'Useful Links',
+        simplifiedPath: 'useful-links',
         routeType: routeTypes.private,
         nestedRoutes: [
           {
