@@ -13,7 +13,7 @@ import BlogCreatorInfo from './blogCreatorInfo';
 
 const useStyles = makeStyles(() => ({
   imageView: {
-    width: '280px',
+    width: '90%',
     height: '180px',
     borderRadius: '6px',
   },
@@ -45,11 +45,11 @@ function Blog({
   return (
     <Box
       display="flex"
-      flexDirection={['column', 'column', 'row', 'row']}
+      flexDirection={['column', 'row', 'row', 'row']}
       mt={6}
       mb={8}
     >
-      <Box width={[1, 1, 1, '22%']} mt={3}>
+      <Box width={[1, '55%', '30%', '22%']} mt={3}>
         {' '}
         <Avatar
           variant="square"
@@ -57,7 +57,7 @@ function Blog({
           className={classes.imageView}
         />
       </Box>
-      <Box width={[1, '75%']}>
+      <Box width={[1, '30', '60%', '75%']}>
         <Box display="flex" flexDirection="row" mt={0.5}>
           <Box width={[1, 1 / 2]} mt={2}>
             <H5
