@@ -52,11 +52,11 @@ export const fetchUsers = ({ queryKey }) => {
     filters,
   } = queryKey[1];
   if (query.searchString) {
-    url = `${USERS_LIST}?pageSize=1000&${insertParams(
+    url = `${USERS_LIST}?${insertParams(
       query
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   } else if (filters) {
-    url = `${USERS_LIST}?pageSize=1000&${insertParams(
+    url = `${USERS_LIST}?${insertParams(
       filters
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   } else {
