@@ -14,7 +14,7 @@ function DepartmentPage({ selected, setSelected, data, headCells, isLoading }) {
         {selected?.length > 0 && (
           <Box my={4}>
             <Alert severity="info">
-              <strong>{selected?.length}</strong> Links(s) Selected
+              <strong>{selected?.length}</strong> Department(s) Selected
             </Alert>
           </Box>
         )}
