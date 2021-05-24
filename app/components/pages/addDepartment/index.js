@@ -2,14 +2,22 @@ import { Box, Button } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
+import { string, object } from 'yup';
 import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
-import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
+import { useHistory } from 'react-router';
+import BusinessIcon from '@material-ui/icons/Business';
+import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { Select } from '../../index';
+import { Input } from '../../index';
 import { H5 } from '../../typography';
 
-export function AddDepartmentPage({ id, initialValues, options }) {
+const departmentSchema = object().shape({
+  department: string().required('*Department Required'),
+});
+
+export function AddDepartmentPage({ id, initialValues }) {
+  const history = useHistory();
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -17,17 +25,25 @@ export function AddDepartmentPage({ id, initialValues, options }) {
           <Box my={7}>
             <H5> {id ? 'Update' : 'Create'} Department </H5>
           </Box>
-          <Formik enableReinitialize initialValues={initialValues}>
-            {({ values }) => (
+          <Formik
+            enableReinitialize
+            initialValues={initialValues}
+            validationSchema={departmentSchema}
+          >
+            {() => (
               <Form>
-                <Box pb={10}>
-                  <Box width={[1, 1 / 3]} mt={5}>
-                    <Select
-                      name="departmentId"
-                      label="Department"
-                      selectedValue={values.departmentId}
-                      options={options}
-                    />
+                <Box>
+                  <Box display="flex" flexDirection="column" pb={10}>
+                    <Box width={[1, 1, 1 / 2, 1 / 3]} my={5}>
+                      <Input
+                        variant="outlined"
+                        OutlinedInputPlaceholder="Department*"
+                        name="department"
+                        appendIcon
+                        Icon={BusinessIcon}
+                        IconClickable
+                      />
+                    </Box>
                   </Box>
                   <Box display="flex">
                     <Box mb={5}>
@@ -35,7 +51,6 @@ export function AddDepartmentPage({ id, initialValues, options }) {
                         type="submit"
                         color="secondary"
                         variant="contained"
-                        fullWidth={false}
                         startIcon={<SaveIcon />}
                       >
                         {id ? 'Update' : 'Create'}
@@ -43,9 +58,8 @@ export function AddDepartmentPage({ id, initialValues, options }) {
                     </Box>
                     <Box ml={2}>
                       <Button
-                        variant="text"
-                        fullWidth={false}
                         startIcon={<ClearIcon />}
+                        onClick={() => history.goBack()}
                       >
                         Cancel
                       </Button>
@@ -61,11 +75,15 @@ export function AddDepartmentPage({ id, initialValues, options }) {
   );
 }
 
-export default memo(AddDepartmentPage);
-
 AddDepartmentPage.propTypes = {
-  initialValues: PropTypes.object,
+  initialValues: PropTypes.shape({
+    department: PropTypes.string.isRequired,
+  }),
 };
 AddDepartmentPage.defaultProps = {
-  initialValues: { departmentId: '' },
+  initialValues: {
+    department: '',
+  },
 };
+
+export default memo(AddDepartmentPage);
