@@ -51,7 +51,7 @@ export function Search({
         </Formik>
       </Grid>
       <Grid item xs={12} sm={4} md={3} lg={2}>
-        <Box px={5}>
+        <Box px={[0, 5]}>
           <FormControlLabel
             label="Filter"
             control={
