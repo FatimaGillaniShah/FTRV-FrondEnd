@@ -14,7 +14,7 @@ export default function MuiDialog({
   title,
   fullWidth,
   maxWidth,
-  content,
+  children,
 }) {
   return (
     <Dialog
@@ -25,7 +25,7 @@ export default function MuiDialog({
       maxWidth={maxWidth}
     >
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-      <DialogContent>{content}</DialogContent>
+      <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
           Cancel
@@ -44,7 +44,7 @@ MuiDialog.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
   title: PropTypes.string,
-  content: PropTypes.string,
+  children: PropTypes.element,
 };
 MuiDialog.defaultProps = {
   fullWidth: true,

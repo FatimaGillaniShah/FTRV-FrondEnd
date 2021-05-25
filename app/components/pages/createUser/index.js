@@ -31,6 +31,7 @@ import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
 import { parseDate } from '../../../utils/functions';
 import Select from '../../muiSelect';
+import MuiDialog from '../../muiDialog';
 
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
@@ -42,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
   },
   dateColor: {
     color: theme.palette.text.dark,
+  },
+  linkBox: {
+    // textDecoration: 'underline',
+    cursor: 'pointer',
   },
 }));
 
@@ -55,11 +60,19 @@ function CreateUser({
 }) {
   const classes = useStyles();
   const [showPassword, setshowPassword] = useState(false);
+  const [openMuiDialog, setOpenMuiDialog] = useState(false);
   const [imgFile, setImgFile] = useState(
     (initialData && initialData.avatar) || null
   );
   const history = useHistory();
   const formikRef = useRef();
+  const handleMuiDialogOpen = () => {
+    setOpenMuiDialog(true);
+  };
+
+  const handleMuiDialogClose = () => {
+    setOpenMuiDialog(false);
+  };
   const editProfileHeading = 'Edit Profile';
   const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
   const isUserEditingHisProfile = isThisMyProfile && editRole === ROLES.USER;
@@ -73,6 +86,7 @@ function CreateUser({
       }
     }
   }, [mutation.isSuccess]);
+
   return (
     <>
       <Formik
@@ -119,6 +133,25 @@ function CreateUser({
       >
         {({ setFieldValue, values, handleChange }) => (
           <Form>
+            <MuiDialog
+              open={openMuiDialog}
+              onClose={handleMuiDialogClose}
+              title="Create New Location"
+            >
+              <Box width={[1, 1, 1 / 2]} mt={5}>
+                <Input
+                  name="Location"
+                  variant="outlined"
+                  OutlinedInputPlaceholder="*Enter Location"
+                  Icon={LocationOnIcon}
+                  appendIcon
+                  IconClickable={
+                    !(mutation.isLoading || isUserEditingHisProfile)
+                  }
+                  isDisabled={mutation.isLoading || isUserEditingHisProfile}
+                />
+              </Box>
+            </MuiDialog>
             <Box
               flexWrap="wrap"
               flexDirection="row"
@@ -334,6 +367,13 @@ function CreateUser({
                         }
                       />
                     </Tooltip>
+                    <Box
+                      className={classes.linkBox}
+                      onClick={handleMuiDialogOpen}
+                    >
+                      {' '}
+                      Create new location{' '}
+                    </Box>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Department">
