@@ -371,8 +371,7 @@ function CreateUser({
                       className={classes.linkBox}
                       onClick={handleMuiDialogOpen}
                     >
-                      {' '}
-                      Create new location{' '}
+                      Create new location
                     </Box>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
