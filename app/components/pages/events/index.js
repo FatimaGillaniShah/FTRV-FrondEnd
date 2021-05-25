@@ -14,7 +14,7 @@ export function EventsPage({ eventList, isLoading }) {
           <H5> Events </H5>
         </Box>
         {!isLoading && (
-          <Box height="100vh" width={1}>
+          <Box height={['60vh', '70vh', '80vh']} width={1}>
             <EventCalendar eventList={eventList} />
           </Box>
         )}

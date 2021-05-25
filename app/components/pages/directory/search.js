@@ -2,23 +2,32 @@ import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import SearchIcon from '@material-ui/icons/Search';
 import { FormControlLabel, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { Form, Formik } from 'formik';
 import { Input } from '../../index';
 import { H5 } from '../../typography';
 
+const useStyles = makeStyles((theme) => ({
+  gridpadding: {
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(5, 0, 10, 0),
+    },
+  },
+}));
 export function Search({
   initialValues,
   onHandleSwitchChange,
   checked,
   onHandleSearch,
 }) {
+  const classes = useStyles();
   return (
-    <>
-      <Grid item xs={2} pl={0}>
+    <Grid container>
+      <Grid item xs={12} sm={3} md={2} className={classes.gridpadding}>
         <H5>Directory</H5>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={4}>
         <Formik initialValues={initialValues}>
           {({ handleChange, setFieldValue }) => (
             <Form>
@@ -41,8 +50,8 @@ export function Search({
           )}
         </Formik>
       </Grid>
-      <Grid item xs={2}>
-        <Box px={5}>
+      <Grid item xs={12} sm={4} md={3} lg={2}>
+        <Box px={[0, 5]}>
           <FormControlLabel
             label="Filter"
             control={
@@ -56,7 +65,7 @@ export function Search({
           />
         </Box>
       </Grid>
-    </>
+    </Grid>
   );
 }
 

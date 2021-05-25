@@ -1,4 +1,4 @@
-import { Box, Button, Tooltip } from '@material-ui/core';
+import { Box, Button, IconButton, Tooltip } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   MIN_UPLOADABLE_FILE_SIZE_IN_MBS,
@@ -17,6 +17,7 @@ export function MuiFileInput({
   BtnIcon,
   variant = 'contained',
   iconColor = 'secondary',
+  isIcon = 'false',
 }) {
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);
@@ -70,15 +71,21 @@ export function MuiFileInput({
         />
         <Tooltip title={toolTipTitle}>
           <label htmlFor={name}>
-            <Button
-              color={iconColor}
-              onClick={handleClick}
-              variant={variant}
-              startIcon={BtnIcon && <BtnIcon fontSize="small" />}
-              disabled={mutation?.isLoading}
-            >
-              {buttonText}
-            </Button>
+            {isIcon ? (
+              <IconButton onClick={handleClick} disabled={mutation?.isLoading}>
+                <BtnIcon color={iconColor} />
+              </IconButton>
+            ) : (
+              <Button
+                color={iconColor}
+                onClick={handleClick}
+                variant={variant}
+                startIcon={BtnIcon && <BtnIcon fontSize="small" />}
+                disabled={mutation?.isLoading}
+              >
+                {buttonText}
+              </Button>
+            )}
           </label>
         </Tooltip>
       </Box>

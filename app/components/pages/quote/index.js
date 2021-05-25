@@ -26,10 +26,15 @@ function Quote({ value, handleSubmit }) {
         onSubmit={(values) => handleSubmit(values)}
       >
         <Form>
-          <Box mt={4} width={1 / 2}>
+          <Box mt={4} width={[1, 1 / 1.3, 1 / 2]}>
             <TextArea name="quote" variant="outlined" />
           </Box>
-          <Box mt={4} width={1 / 2} display="flex" justifyContent="flex-end">
+          <Box
+            mt={4}
+            width={[1, 1 / 1.3, 1 / 2]}
+            display="flex"
+            justifyContent="flex-end"
+          >
             <Button color="secondary" variant="contained" type="submit">
               Publish
             </Button>
