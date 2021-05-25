@@ -15,7 +15,7 @@ import DataTable from '../../components/dataTable';
 import TableButtons from './tableButtons';
 import { Loading } from '../../components/loading';
 import { useAuthContext } from '../../context/authContext';
-import { ROLES } from '../../utils/constants';
+import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
 import { Modal, Toast } from '../../utils/helper';
@@ -24,7 +24,7 @@ import { useDeleteUser } from '../../hooks/user';
 function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
