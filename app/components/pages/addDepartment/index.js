@@ -32,38 +32,36 @@ export function AddDepartmentPage({ id, initialValues }) {
           >
             {() => (
               <Form>
-                <Box>
-                  <Box display="flex" flexDirection="column" pb={10}>
-                    <Box width={[1, 1, 1 / 2, 1 / 3]} my={5}>
-                      <Input
-                        variant="outlined"
-                        OutlinedInputPlaceholder="Department*"
-                        name="department"
-                        appendIcon
-                        Icon={BusinessIcon}
-                        IconClickable
-                      />
-                    </Box>
+                <Box display="flex" flexDirection="column" pb={10}>
+                  <Box width={[1, 1, 1 / 2, 1 / 3]} my={5}>
+                    <Input
+                      variant="outlined"
+                      OutlinedInputPlaceholder="Department*"
+                      name="department"
+                      appendIcon
+                      Icon={BusinessIcon}
+                      IconClickable
+                    />
                   </Box>
-                  <Box display="flex">
-                    <Box mb={5}>
-                      <Button
-                        type="submit"
-                        color="secondary"
-                        variant="contained"
-                        startIcon={<SaveIcon />}
-                      >
-                        {id ? 'Update' : 'Create'}
-                      </Button>
-                    </Box>
-                    <Box ml={2}>
-                      <Button
-                        startIcon={<ClearIcon />}
-                        onClick={() => history.goBack()}
-                      >
-                        Cancel
-                      </Button>
-                    </Box>
+                </Box>
+                <Box display="flex">
+                  <Box mb={5}>
+                    <Button
+                      type="submit"
+                      color="secondary"
+                      variant="contained"
+                      startIcon={<SaveIcon />}
+                    >
+                      {id ? 'Update' : 'Create'}
+                    </Button>
+                  </Box>
+                  <Box ml={2}>
+                    <Button
+                      startIcon={<ClearIcon />}
+                      onClick={() => history.goBack()}
+                    >
+                      Cancel
+                    </Button>
                   </Box>
                 </Box>
               </Form>
