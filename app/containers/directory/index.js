@@ -24,7 +24,7 @@ import { useDeleteUser } from '../../hooks/user';
 function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(10);
   const [filters, setFilters] = useState();
   const { state } = useLocation();
   const [checked, setChecked] = useState(false);
