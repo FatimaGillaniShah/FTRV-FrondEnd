@@ -6,7 +6,9 @@ import { BodyTextLarge } from '../typography';
 import {
   returnBreadCrumbKey,
   returnNoOfEntriesToSkip,
+  filterRouteArrayByKey,
 } from '../../routes/routeFuncs';
+import { routeArray } from '../../routes/routeArray';
 
 function toTitleCase(str) {
   return str.replace(
@@ -78,7 +80,20 @@ function BreadCrumbs() {
 
       {data.map((value, index) => {
         const last = index === lastIndex;
-        const to = `/${pathnames.slice(0, index + 1)}`;
+        const currentRoute =
+          filterRouteArrayByKey(routeArray, pathnames[0]) || [];
+        let sliceCount = 1;
+        if (
+          currentRoute.length > 0 &&
+          currentRoute[0]?.nestedRoutes[2]?.nestedRoutes
+        ) {
+          sliceCount =
+            currentRoute[0]?.nestedRoutes[2]?.nestedRoutes[0]
+              ?.thirdLvlNesting && index !== 0
+              ? 2
+              : 1;
+        }
+        const to = `/${pathnames.slice(0, index + sliceCount).join('/')}`;
         let result = <> </>;
         if (last) {
           result = (

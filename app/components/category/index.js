@@ -134,7 +134,7 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
             className={classes.menuCursor}
             onClick={() => navigateTo(`link-categories/useful-links/${id}`)}
           >
-            {`${linksCount} links`}
+            {`${linksCount} link(s)`}
           </BodyTextSmall>
         </Box>
       </Paper>
