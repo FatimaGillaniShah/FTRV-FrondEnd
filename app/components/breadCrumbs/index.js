@@ -85,6 +85,7 @@ function BreadCrumbs() {
         let sliceCount = 1;
         if (
           currentRoute.length > 0 &&
+          currentRoute[0]?.nestedRoutes &&
           currentRoute[0]?.nestedRoutes[2]?.nestedRoutes
         ) {
           sliceCount =
