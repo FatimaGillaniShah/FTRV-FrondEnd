@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
   linkBox: {
     // textDecoration: 'underline',
     cursor: 'pointer',
+    paddingTop: '3px',
   },
 }));
 
@@ -60,18 +61,27 @@ function CreateUser({
 }) {
   const classes = useStyles();
   const [showPassword, setshowPassword] = useState(false);
-  const [openMuiDialog, setOpenMuiDialog] = useState(false);
+  const [openLocDialog, setOpenLocDialog] = useState(false);
+  const [openDepDialog, setOpenDepDialog] = useState(false);
   const [imgFile, setImgFile] = useState(
     (initialData && initialData.avatar) || null
   );
   const history = useHistory();
   const formikRef = useRef();
-  const handleMuiDialogOpen = () => {
-    setOpenMuiDialog(true);
+  const handleLocDialogOpen = () => {
+    setOpenLocDialog(true);
   };
 
-  const handleMuiDialogClose = () => {
-    setOpenMuiDialog(false);
+  const handleLocDialogClose = () => {
+    setOpenLocDialog(false);
+  };
+
+  const handleDepDialogOpen = () => {
+    setOpenDepDialog(true);
+  };
+
+  const handleDepDialogClose = () => {
+    setOpenDepDialog(false);
   };
   const editProfileHeading = 'Edit Profile';
   const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
@@ -134,8 +144,8 @@ function CreateUser({
         {({ setFieldValue, values, handleChange }) => (
           <Form>
             <MuiDialog
-              open={openMuiDialog}
-              onClose={handleMuiDialogClose}
+              open={openLocDialog}
+              onClose={handleLocDialogClose}
               title="Create New Location"
             >
               <Box width={[1, 1, 1 / 2]} mt={5}>
@@ -148,6 +158,27 @@ function CreateUser({
                   IconClickable={
                     !(mutation.isLoading || isUserEditingHisProfile)
                   }
+                  isDisabled={mutation.isLoading || isUserEditingHisProfile}
+                />
+              </Box>
+            </MuiDialog>
+
+            <MuiDialog
+              open={openDepDialog}
+              onClose={handleDepDialogClose}
+              title="Create New Department"
+            >
+              <Box width={[1, 1, 1 / 2]} mt={5}>
+                <Input
+                  name="new-department"
+                  variant="outlined"
+                  OutlinedInputPlaceholder="*Department"
+                  Icon={BusinessIcon}
+                  appendIcon
+                  IconClickable={
+                    !(mutation.isLoading || isUserEditingHisProfile)
+                  }
+                  InputLabelProps={{ shrink: true }}
                   isDisabled={mutation.isLoading || isUserEditingHisProfile}
                 />
               </Box>
@@ -369,7 +400,7 @@ function CreateUser({
                     </Tooltip>
                     <Box
                       className={classes.linkBox}
-                      onClick={handleMuiDialogOpen}
+                      onClick={handleLocDialogOpen}
                     >
                       Create new location
                     </Box>
@@ -391,6 +422,12 @@ function CreateUser({
                         }
                       />
                     </Tooltip>
+                    <Box
+                      className={classes.linkBox}
+                      onClick={handleDepDialogOpen}
+                    >
+                      Create new department
+                    </Box>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Designation">
