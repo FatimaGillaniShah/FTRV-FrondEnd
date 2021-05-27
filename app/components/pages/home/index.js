@@ -93,7 +93,7 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
               </Box>
               <Box className={classes.editBox} width="100%">
                 <MuiFileInput
-                  BtnIcon={EditIcon}
+                  btnIcon={EditIcon}
                   acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
                   name="file"
                   buttonText="Update Banner Image"

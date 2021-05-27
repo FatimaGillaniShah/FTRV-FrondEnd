@@ -14,7 +14,7 @@ export function MuiFileInput({
   acceptTypes,
   toolTipTitle = 'Select File',
   buttonText = 'Upload',
-  BtnIcon,
+  btnIcon,
   variant = 'contained',
   iconColor = 'secondary',
   fullWidth,
@@ -78,7 +78,7 @@ export function MuiFileInput({
               color={iconColor}
               onClick={handleClick}
               variant={variant}
-              startIcon={BtnIcon && <BtnIcon fontSize="small" />}
+              startIcon={btnIcon && <btnIcon fontSize="small" />}
               disabled={mutation?.isLoading}
             >
               {buttonText}
