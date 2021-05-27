@@ -3,8 +3,8 @@ import Box from '@material-ui/core/Box';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-import { ROLES } from '../../../utils/constants';
-import { useAuthContext } from '../../../context/authContext';
+import { ROLES } from '../../utils/constants';
+import { useAuthContext } from '../../context/authContext';
 
 export function TableButtons({ numSelected, onDelete }) {
   const {

@@ -182,7 +182,7 @@ export const deleteLinkCategory = (id) => {
 };
 export const getCategories = () => http.get(GET_CATEGORIES);
 
-export const getLocations = () => http.get(`${LOCATIONS}?pageSize=1000&`);
+export const getLocations = () => http.get(`${LOCATIONS}`);
 
 export const deleteLocation = (payload) =>
   http.delete(LOCATIONS, { data: { ids: payload } });
