@@ -17,6 +17,8 @@ export function MuiFileInput({
   BtnIcon,
   variant = 'contained',
   iconColor = 'secondary',
+  fullWidth,
+  size,
 }) {
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);
@@ -59,7 +61,7 @@ export function MuiFileInput({
 
   return (
     <>
-      <Box mb={2}>
+      <Box>
         <input
           id={name}
           type="file"
@@ -71,6 +73,8 @@ export function MuiFileInput({
         <Tooltip title={toolTipTitle}>
           <label htmlFor={name}>
             <Button
+              size={size}
+              fullWidth={fullWidth}
               color={iconColor}
               onClick={handleClick}
               variant={variant}

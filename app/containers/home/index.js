@@ -20,6 +20,10 @@ function HomeContainer() {
   }, []);
   const { data, isLoading } = useQuery(keys.events, fetchEvents);
 
+  const defaultData = { file: undefined };
+
+  defaultData.isProfilePicAttached = true;
+
   return (
     <>
       <Helmet>
@@ -28,6 +32,7 @@ function HomeContainer() {
       </Helmet>
       {isLoading && <Loading />}
       <Home
+        initialData={defaultData}
         dailyQuote={dailyQuote}
         isLoading={isLoading}
         eventList={data?.data?.data?.rows}
