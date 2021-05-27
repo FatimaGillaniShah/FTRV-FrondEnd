@@ -24,6 +24,7 @@ import createPoll from '../containers/createPoll/loadable';
 import Polls from '../containers/polls/loadable';
 import CreateLinkCategory from '../containers/createLinkCategory/loadable';
 import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
+import Locations from '../containers/location/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -290,5 +291,33 @@ export const routeArray = [
         ],
       },
     ],
+  },
+  {
+    path: '/locations',
+    component: Locations,
+    exact: true,
+    breadCrumbKey: 'Locations',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN],
+    // nestedRoutes: [
+    //   {
+    //     path: '/add',
+    //     component: createPoll,
+    //     exact: true,
+    //     breadCrumbKey: 'Create New Location',
+    //     routeType: routeTypes.private,
+    //     roles: [ROLES.ADMIN],
+    //   },
+    //   {
+    //     path: '/edit/:id',
+    //     component: createPoll,
+    //     exact: true,
+    //     breadCrumbKey: 'Edit Location',
+    //     simplifiedPath: 'edit',
+    //     noOfEnteriesToSkipAfterThisEntry: 1,
+    //     routeType: routeTypes.private,
+    //     roles: [ROLES.ADMIN],
+    //   },
+    // ],
   },
 ];

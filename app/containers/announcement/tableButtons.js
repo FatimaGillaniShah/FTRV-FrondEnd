@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
-export function TableButtons({ onDelete, numSelected }) {
+export function TableButtons({ numSelected }) {
   const history = useHistory();
   const navigateTo = (url) => {
     history.push(url);
@@ -31,7 +31,6 @@ export function TableButtons({ onDelete, numSelected }) {
             variant="contained"
             fullWidth={false}
             startIcon={<DeleteIcon />}
-            onClick={onDelete}
             disabled={numSelected <= 0}
           >
             Delete

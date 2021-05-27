@@ -6,11 +6,18 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { TableButtons } from './tableButtons';
 
-function LocationPage({ selected, setSelected, data, headCells, isLoading }) {
+function LocationPage({
+  selected,
+  setSelected,
+  data,
+  onDelete,
+  headCells,
+  isLoading,
+}) {
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
-        <TableButtons numSelected={selected?.length} />
+        <TableButtons onDelete={onDelete} numSelected={selected?.length} />
         {selected?.length > 0 && (
           <Box my={4}>
             <Alert severity="info">
