@@ -38,6 +38,9 @@ const {
   DELETE_CATEGORY,
   GET_CATEGORIES,
   LOCATIONS,
+  CREATE_LOCATION,
+  GET_LOCATION,
+  UPDATE_LOCATION,
 } = APIS;
 
 // USER CRUD
@@ -186,3 +189,11 @@ export const getLocations = () => http.get(`${LOCATIONS}`);
 
 export const deleteLocation = (payload) =>
   http.delete(LOCATIONS, { data: { ids: payload } });
+
+export const createLocation = (payload) => http.post(CREATE_LOCATION, payload);
+
+export const getLocationById = ({ queryKey }) =>
+  http.get(`${GET_LOCATION}/${queryKey[1]}`);
+
+export const updateLocation = ({ id, ...payload }) =>
+  http.put(`${UPDATE_LOCATION}/${id}`, payload);

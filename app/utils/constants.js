@@ -59,4 +59,7 @@ export const APIS = {
   DELETE_CATEGORY: '/linkCategories',
   GET_CATEGORIES: '/linkCategories',
   LOCATIONS: '/locations',
+  CREATE_LOCATION: '/locations',
+  GET_LOCATION: '/locations',
+  UPDATE_LOCATION: '/locations',
 };

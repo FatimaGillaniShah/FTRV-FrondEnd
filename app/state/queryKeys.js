@@ -21,4 +21,5 @@ export const keys = {
   linkCategory: 'category',
   getCategories: 'categories',
   locations: 'locations',
+  getLocation: (payload) => ['location', payload],
 };
