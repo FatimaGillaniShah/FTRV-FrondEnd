@@ -165,7 +165,7 @@ export const deleteBlog = (payload) =>
 export const getLinkCategory = () => http.get(`${CATEGORY}`);
 
 export const getUsefulLinksByCategoryId = ({ queryKey }) =>
-  http.get(`${GET_USEFUL_LINKS}?categoryId=${queryKey[1]}`);
+  http.get(`${GET_USEFUL_LINKS}?pageSize=1000&categoryId=${queryKey[1]}`);
 // LINK CATEGORY CRUD
 export const createLinkCategory = (payload) =>
   http.post(CREATE_LINK_CATEGORY, payload);
