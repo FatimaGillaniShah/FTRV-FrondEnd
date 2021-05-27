@@ -14,7 +14,6 @@ function UsefulLinksPage({
   headCells,
   isLoading,
 }) {
-  console.log(data);
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
