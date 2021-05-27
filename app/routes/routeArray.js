@@ -299,25 +299,5 @@ export const routeArray = [
     breadCrumbKey: 'Locations',
     routeType: routeTypes.private,
     roles: [ROLES.ADMIN],
-    // nestedRoutes: [
-    //   {
-    //     path: '/add',
-    //     component: createPoll,
-    //     exact: true,
-    //     breadCrumbKey: 'Create New Location',
-    //     routeType: routeTypes.private,
-    //     roles: [ROLES.ADMIN],
-    //   },
-    //   {
-    //     path: '/edit/:id',
-    //     component: createPoll,
-    //     exact: true,
-    //     breadCrumbKey: 'Edit Location',
-    //     simplifiedPath: 'edit',
-    //     noOfEnteriesToSkipAfterThisEntry: 1,
-    //     routeType: routeTypes.private,
-    //     roles: [ROLES.ADMIN],
-    //   },
-    // ],
   },
 ];
