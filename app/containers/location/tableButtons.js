@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
 
-export function TableButtons({ numSelected, onDelete }) {
+export function TableButtons({ numSelected, handleDelete }) {
   const {
     user: {
       data: { role },
@@ -32,7 +32,7 @@ export function TableButtons({ numSelected, onDelete }) {
               variant="contained"
               fullWidth={false}
               startIcon={<DeleteIcon />}
-              onClick={onDelete}
+              onClick={handleDelete}
               disabled={numSelected <= 0}
             >
               Delete
