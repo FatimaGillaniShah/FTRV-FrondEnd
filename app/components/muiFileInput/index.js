@@ -33,24 +33,32 @@ export function MuiFileInput({
   }, [error]);
 
   const handleCapture = ({ target }) => {
-    if (target.files[0]) {
-      if (
-        target.files[0].size / 1024 / 1024 <=
-        MIN_UPLOADABLE_FILE_SIZE_IN_MBS
-      ) {
+    const file = target?.files[0];
+    if (file) {
+      if (file.size / 1024 / 1024 <= MIN_UPLOADABLE_FILE_SIZE_IN_MBS) {
         setError('Error: File is empty');
-      } else if (
-        target.files[0].size / 1024 / 1024 >=
-        MAX_UPLOADABLE_FILE_SIZE_IN_MBS
-      ) {
+      } else if (file.size / 1024 / 1024 >= MAX_UPLOADABLE_FILE_SIZE_IN_MBS) {
         setError('Error: File size too large');
       } else {
         const reader = new FileReader();
-        reader.readAsDataURL(target.files[0]);
+        reader.readAsDataURL(file);
+
         reader.onloadend = () => {
+          let fileObj = file;
+
+          const image = new Image();
+          image.src = window.URL.createObjectURL(file);
+          image.onload = () => {
+            fileObj = {
+              height: image.height,
+              width: image.width,
+              file,
+            };
+            setFieldValue(name, fileObj);
+          };
           setImgFile(reader.result);
         };
-        setFieldValue(name, target.files[0]);
+
         setError(null);
       }
     }

@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       '& $bannerImage': {
         opacity: 0.7,
-        padding: theme.spacing(6, 20),
       },
       '& $editBox': { opacity: 1 },
     },
@@ -37,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     marginBlock: '0.2rem',
   },
   bannerImage: {
-    padding: theme.spacing(6, 20),
     flex: 1,
     opacity: 1,
     display: 'block',

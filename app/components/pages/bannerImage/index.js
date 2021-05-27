@@ -10,7 +10,7 @@ const BannerImage = ({ imgFile }) => {
       backgroundRepeat: 'no-repeat',
       width: '100%',
       backgroundPosition: 'center',
-      height: '25vh',
+      height: '32vh',
     },
   });
 
