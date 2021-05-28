@@ -24,6 +24,8 @@ function EditAnnouncement() {
   );
   const mutation = useMutation(updateAnnouncement, {
     onSuccess: () => {
+      queryClient.invalidateQueries(keys.adminAnnouncements);
+      queryClient.invalidateQueries(keys.getAnnouncementById(id));
       history.push({
         pathname: '/announcement',
         state: {
@@ -32,8 +34,6 @@ function EditAnnouncement() {
           message: `Announcement Updated Successfully`,
         },
       });
-
-      queryClient.removeQueries(keys.getAnnouncementById(id));
     },
     onError: ({
       response: {
