@@ -37,6 +37,7 @@ const {
   UPDATE_LINK_CATEGORY,
   DELETE_CATEGORY,
   GET_CATEGORIES,
+  DEPARTMENTS,
 } = APIS;
 
 // USER CRUD
@@ -180,3 +181,5 @@ export const deleteLinkCategory = (id) => {
   http.delete(`${DELETE_CATEGORY}/${id}`);
 };
 export const getCategories = () => http.get(GET_CATEGORIES);
+
+export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
