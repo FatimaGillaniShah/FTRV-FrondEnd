@@ -15,7 +15,7 @@ import { Loading } from '../../components/loading';
 
 function AddUsefulLink() {
   const history = useHistory();
-  const { id } = useParams();
+  const { id, categoryId } = useParams();
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(
     keys.getLink(id),
@@ -31,12 +31,15 @@ function AddUsefulLink() {
 
   const mutation = useMutation(id ? updateLink : createLink, {
     onSuccess: () => {
-      history.push('/link-categories/useful-links');
+      history.push(`/link-categories/useful-links/${categoryId}`);
       Toast({
         icon: 'success',
         title: `Link ${id ? 'updated' : 'created'}  successfully`,
       });
-      queryClient.invalidateQueries(keys.links);
+      if (id) {
+        queryClient.invalidateQueries(keys.getLink(id));
+      }
+      queryClient.invalidateQueries(keys.getLink(categoryId));
     },
     onError: ({
       response: {
@@ -57,6 +60,7 @@ function AddUsefulLink() {
     value: val.id,
     label: val.name,
   }));
+  const initialValues = { name: '', url: '', categoryId };
 
   return (
     <>
@@ -67,7 +71,7 @@ function AddUsefulLink() {
       <AddUsefulLinkPage
         id={id}
         onHandleSubmit={handleSubmit}
-        initialValues={data?.data.data}
+        initialValues={id ? data?.data.data : initialValues}
         history={history}
         options={options}
       />

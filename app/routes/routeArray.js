@@ -269,12 +269,14 @@ export const routeArray = [
         exact: true,
         breadCrumbKey: 'Useful Links',
         simplifiedPath: 'useful-links',
+        noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
         nestedRoutes: [
           {
             path: '/add',
             component: addUsefulLink,
             exact: true,
+            thirdLvlNesting: true,
             breadCrumbKey: 'Add New Link',
             routeType: routeTypes.private,
           },
@@ -282,6 +284,7 @@ export const routeArray = [
             path: '/edit/:id',
             component: addUsefulLink,
             simplifiedPath: 'edit',
+            thirdLvlNesting: true,
             exact: true,
             noOfEnteriesToSkipAfterThisEntry: 1,
             breadCrumbKey: 'Edit Link',
