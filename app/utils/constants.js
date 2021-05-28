@@ -59,4 +59,5 @@ export const APIS = {
   DELETE_CATEGORY: '/linkCategories',
   GET_CATEGORIES: '/linkCategories',
   DEPARTMENTS: '/departments',
+  DELETE_DEPARTMENT: '/departments',
 };

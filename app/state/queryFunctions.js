@@ -38,6 +38,7 @@ const {
   DELETE_CATEGORY,
   GET_CATEGORIES,
   DEPARTMENTS,
+  DELETE_DEPARTMENT,
 } = APIS;
 
 // USER CRUD
@@ -183,3 +184,6 @@ export const deleteLinkCategory = (id) => {
 export const getCategories = () => http.get(GET_CATEGORIES);
 
 export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
+
+export const deleteDepartment = (payload) =>
+  http.delete(DELETE_DEPARTMENT, { data: { ids: payload } });
