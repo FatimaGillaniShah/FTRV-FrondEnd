@@ -1,6 +1,6 @@
 import { Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import { MuiFileInput } from 'components/muiFileInput';
 import { FILE_ACCEPT_TYPES } from 'utils/constants';
@@ -64,25 +64,18 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
   const Images = bannerImages?.avatar || bannerImage;
   const [imgFile, setImgFile] = useState(Images);
   const yupValidation = bannerImageSizeValidation;
-  const formikRef = useRef(null);
-  useEffect(() => {
-    if (formikRef?.current?.errors?.file) {
-      setImgFile(Images);
-      Toast({
-        icon: 'error',
-        title: formikRef.current.errors.file,
-      });
-    }
-  }, [formikRef.current]);
+  const handleShowError = (error) => {
+    setImgFile(Images);
+    Toast({
+      icon: 'error',
+      title: error,
+    });
+  };
 
   return (
     <>
-      <Formik
-        initialValues={initialData}
-        innerRef={formikRef}
-        validationSchema={yupValidation}
-      >
-        {({ setFieldValue }) => (
+      <Formik initialValues={initialData} validationSchema={yupValidation}>
+        {({ setFieldValue, errors }) => (
           <Grid xs={12} className={classes.root}>
             <Grid xs={12} className={classes.bannerGridSection}>
               <Box className={classes.bannerImage}>
@@ -103,6 +96,7 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
                   setFieldValue={setFieldValue}
                 />
               </Box>
+              {errors?.file && handleShowError(errors.file)}
             </Grid>
             <Grid xs={12} className={classes.statsSection}>
               <Box
