@@ -14,7 +14,7 @@ export function MuiFileInput({
   acceptTypes,
   toolTipTitle = 'Select File',
   buttonText = 'Upload',
-  BtnIcon,
+  btnIcon,
   variant = 'contained',
   iconColor = 'secondary',
   fullWidth,
@@ -35,10 +35,11 @@ export function MuiFileInput({
 
   const handleCapture = ({ target }) => {
     const file = target?.files[0];
+    const fileSizeInMB = file?.size / 1024 / 1024;
     if (file) {
-      if (file.size / 1024 / 1024 <= MIN_UPLOADABLE_FILE_SIZE_IN_MBS) {
+      if (fileSizeInMB <= MIN_UPLOADABLE_FILE_SIZE_IN_MBS) {
         setError('Error: File is empty');
-      } else if (file.size / 1024 / 1024 >= MAX_UPLOADABLE_FILE_SIZE_IN_MBS) {
+      } else if (fileSizeInMB >= MAX_UPLOADABLE_FILE_SIZE_IN_MBS) {
         setError('Error: File size too large');
       } else {
         const reader = new FileReader();
@@ -82,7 +83,7 @@ export function MuiFileInput({
           <label htmlFor={name}>
             {isIcon ? (
               <IconButton onClick={handleClick} disabled={mutation?.isLoading}>
-                <BtnIcon color={iconColor} />
+                {btnIcon && btnIcon}
               </IconButton>
             ) : (
               <Button
@@ -91,7 +92,7 @@ export function MuiFileInput({
                 color={iconColor}
                 onClick={handleClick}
                 variant={variant}
-                startIcon={BtnIcon && <BtnIcon fontSize="small" />}
+                startIcon={btnIcon && btnIcon}
                 disabled={mutation?.isLoading}
               >
                 {buttonText}

@@ -22,8 +22,6 @@ function HomeContainer() {
 
   const defaultData = { file: undefined };
 
-  defaultData.isProfilePicAttached = true;
-
   return (
     <>
       <Helmet>

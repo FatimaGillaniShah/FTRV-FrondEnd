@@ -64,17 +64,16 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
   const Images = bannerImages?.avatar || bannerImage;
   const [imgFile, setImgFile] = useState(Images);
   const yupValidation = bannerImageSizeValidation;
-  const formikRef = useRef();
-
+  const formikRef = useRef(null);
   useEffect(() => {
-    if (formikRef.current?.errors?.file) {
+    if (formikRef?.current?.errors?.file) {
       setImgFile(Images);
       Toast({
         icon: 'error',
         title: formikRef.current.errors.file,
       });
     }
-  }, [imgFile]);
+  }, [formikRef.current]);
 
   return (
     <>
@@ -91,7 +90,7 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
               </Box>
               <Box className={classes.editBox} width="100%">
                 <MuiFileInput
-                  BtnIcon={EditIcon}
+                  btnIcon={<EditIcon />}
                   acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
                   name="file"
                   buttonText="Update Banner Image"
