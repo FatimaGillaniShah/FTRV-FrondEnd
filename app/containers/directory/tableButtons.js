@@ -13,8 +13,8 @@ export function TableButtons({ onDelete, numSelected }) {
   };
   return (
     <Box display="flex" justifyContent="space-between" my={5}>
-      <Box display="flex">
-        <Box mr={2}>
+      <Box display="flex" flexWrap="wrap">
+        <Box mr={2} mt={[2, 0, 0, 0]}>
           <Button
             color="secondary"
             variant="contained"
@@ -25,7 +25,7 @@ export function TableButtons({ onDelete, numSelected }) {
             New
           </Button>
         </Box>
-        <Box mr={2}>
+        <Box mr={2} mt={[2, 0, 0, 0]}>
           <Button
             color="secondary"
             variant="contained"
@@ -36,7 +36,7 @@ export function TableButtons({ onDelete, numSelected }) {
             Import
           </Button>
         </Box>
-        <Box mr={2}>
+        <Box mr={2} mt={[2, 0, 0, 0]}>
           <Button
             color="secondary"
             variant="contained"

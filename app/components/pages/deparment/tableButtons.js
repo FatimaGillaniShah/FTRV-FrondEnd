@@ -3,16 +3,10 @@ import Box from '@material-ui/core/Box';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-import { useHistory, useParams } from 'react-router-dom';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
 
-export function TableButtons({ onDelete, numSelected }) {
-  const { categoryId } = useParams();
-  const history = useHistory();
-  const navigateTo = (url) => {
-    history.push(url);
-  };
+export function TableButtons({ numSelected }) {
   const {
     user: {
       data: { role },
@@ -28,9 +22,6 @@ export function TableButtons({ onDelete, numSelected }) {
               variant="contained"
               fullWidth={false}
               startIcon={<AddIcon />}
-              onClick={() =>
-                navigateTo(`/link-categories/useful-links/${categoryId}/add`)
-              }
             >
               New
             </Button>
@@ -41,7 +32,6 @@ export function TableButtons({ onDelete, numSelected }) {
               variant="contained"
               fullWidth={false}
               startIcon={<DeleteIcon />}
-              onClick={onDelete}
               disabled={numSelected <= 0}
             >
               Delete
