@@ -8,13 +8,9 @@ import { isFunction } from '../utils/helper';
 export function useDeleteDepartment({ callbackFn } = {}) {
   const queryClient = useQueryClient();
   return useMutation(deleteDepartment, {
-    onSuccess: ({
-      data: {
-        data: { count },
-      },
-    }) => {
+    onSuccess: ({ data: { data } }) => {
       if (isFunction(callbackFn)) callbackFn();
-      Swal.fire('Deleted!', `${count} department(s) deleted.`, 'success');
+      Swal.fire('Deleted!', `${data} department(s) deleted.`, 'success');
       queryClient.invalidateQueries(keys.departments);
     },
     onError: ({
