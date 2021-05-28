@@ -19,7 +19,7 @@ export function MuiFileInput({
   iconColor = 'secondary',
   fullWidth,
   size,
-  isIcon = 'false',
+  isIcon = false,
 }) {
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);

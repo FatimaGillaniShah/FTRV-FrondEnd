@@ -100,7 +100,6 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
                   setImgFile={setImgFile}
                   toolTipTitle="Update Image"
                   fullWidth
-                  isIcon
                   size="large"
                   setFieldValue={setFieldValue}
                 />
