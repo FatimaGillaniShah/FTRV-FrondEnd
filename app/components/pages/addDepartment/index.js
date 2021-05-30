@@ -12,7 +12,7 @@ import WrapInCard from '../../layout/wrapInCard';
 import { Input } from '../../index';
 import { H5 } from '../../typography';
 
-const DepartmentSchema = object().shape({
+const departmentSchema = object().shape({
   name: string().required('*Department Required'),
 });
 
@@ -28,7 +28,7 @@ export function AddDepartmentPage({ onHandleSubmit, id, initialValues }) {
           <Formik
             enableReinitialize
             initialValues={initialValues}
-            validationSchema={DepartmentSchema}
+            validationSchema={departmentSchema}
             onSubmit={(values) => {
               onHandleSubmit(values);
             }}
