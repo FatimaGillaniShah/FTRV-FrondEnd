@@ -21,4 +21,5 @@ export const keys = {
   linkCategory: 'category',
   getCategories: 'categories',
   departments: 'departments',
+  getDepartments: (id) => ['department', id],
 };

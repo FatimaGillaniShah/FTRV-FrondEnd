@@ -25,6 +25,7 @@ import Polls from '../containers/polls/loadable';
 import CreateLinkCategory from '../containers/createLinkCategory/loadable';
 import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 import Departments from '../containers/department/loadable';
+import CreateDepartment from '../containers/addDepartment/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -299,5 +300,23 @@ export const routeArray = [
     breadCrumbKey: 'Departments',
     routeType: routeTypes.private,
     roles: [ROLES.ADMIN, ROLES.USER],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: CreateDepartment,
+        exact: true,
+        breadCrumbKey: 'Add New Department',
+        routeType: routeTypes.private,
+      },
+      {
+        path: '/edit/:id',
+        component: CreateDepartment,
+        simplifiedPath: 'edit',
+        exact: true,
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        breadCrumbKey: 'Edit Department',
+        routeType: routeTypes.private,
+      },
+    ],
   },
 ];

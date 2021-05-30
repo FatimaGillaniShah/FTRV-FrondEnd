@@ -60,4 +60,7 @@ export const APIS = {
   GET_CATEGORIES: '/linkCategories',
   DEPARTMENTS: '/departments',
   DELETE_DEPARTMENT: '/departments',
+  CREATE_DEPARTMENT: '/departments',
+  GET_DEPARTMENT: '/departments',
+  UPDATE_DEPARTMENT: 'departments',
 };

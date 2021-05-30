@@ -12,11 +12,11 @@ import WrapInCard from '../../layout/wrapInCard';
 import { Input } from '../../index';
 import { H5 } from '../../typography';
 
-const departmentSchema = object().shape({
-  department: string().required('*Department Required'),
+const DepartmentSchema = object().shape({
+  name: string().required('*Department Required'),
 });
 
-export function AddDepartmentPage({ id, initialValues }) {
+export function AddDepartmentPage({ onHandleSubmit, id, initialValues }) {
   const history = useHistory();
   return (
     <WrapInBreadcrumbs>
@@ -28,7 +28,10 @@ export function AddDepartmentPage({ id, initialValues }) {
           <Formik
             enableReinitialize
             initialValues={initialValues}
-            validationSchema={departmentSchema}
+            validationSchema={DepartmentSchema}
+            onSubmit={(values) => {
+              onHandleSubmit(values);
+            }}
           >
             {() => (
               <Form>
@@ -37,7 +40,7 @@ export function AddDepartmentPage({ id, initialValues }) {
                     <Input
                       variant="outlined"
                       OutlinedInputPlaceholder="Department*"
-                      name="department"
+                      name="name"
                       appendIcon
                       Icon={BusinessIcon}
                       IconClickable
@@ -75,12 +78,12 @@ export function AddDepartmentPage({ id, initialValues }) {
 
 AddDepartmentPage.propTypes = {
   initialValues: PropTypes.shape({
-    department: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
   }),
 };
 AddDepartmentPage.defaultProps = {
   initialValues: {
-    department: '',
+    name: '',
   },
 };
 

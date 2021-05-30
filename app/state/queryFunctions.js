@@ -39,6 +39,9 @@ const {
   GET_CATEGORIES,
   DEPARTMENTS,
   DELETE_DEPARTMENT,
+  CREATE_DEPARTMENT,
+  GET_DEPARTMENT,
+  UPDATE_DEPARTMENT,
 } = APIS;
 
 // USER CRUD
@@ -187,3 +190,12 @@ export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
 
 export const deleteDepartment = (payload) =>
   http.delete(DELETE_DEPARTMENT, { data: { ids: payload } });
+
+export const createDepartment = (payload) =>
+  http.post(CREATE_DEPARTMENT, payload);
+
+export const getDepartmentById = ({ queryKey }) =>
+  http.get(`${GET_DEPARTMENT}/${queryKey[1]}`);
+
+export const updateDepartment = ({ id, ...payload }) =>
+  http.put(`${UPDATE_DEPARTMENT}/${id}`, payload);
