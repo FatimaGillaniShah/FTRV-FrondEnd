@@ -79,7 +79,7 @@ export const menuItems = [
       },
       {
         name: 'configuration',
-
+        link: '/',
         children: [
           { name: 'Location', link: '/locations' },
           { name: 'Department', link: '/departments' },
