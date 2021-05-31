@@ -69,8 +69,10 @@ export function MuiFileInput({
               width: image.width,
               file,
             };
-            if (!dimensionsValid) setFieldValue(name, fileObj);
-            if (!dimensionsValid) setImgFile(reader.result);
+            if (!dimensionsValid) {
+              setFieldValue(name, fileObj);
+              setImgFile(reader.result);
+            }
           };
         };
         setError(null);

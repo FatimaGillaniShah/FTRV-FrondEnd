@@ -59,4 +59,6 @@ export const APIS = {
   GET_USEFUL_LINKS: '/usefulLinks',
   DELETE_CATEGORY: '/linkCategories',
   GET_CATEGORIES: '/linkCategories',
+  GET_BANNER_IMAGE: 'bannerImage',
+  UPDATE_BANNER_IMAGE: 'bannerImage',
 };

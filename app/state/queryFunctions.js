@@ -37,6 +37,8 @@ const {
   UPDATE_LINK_CATEGORY,
   DELETE_CATEGORY,
   GET_CATEGORIES,
+  GET_BANNER_IMAGE,
+  UPDATE_BANNER_IMAGE,
 } = APIS;
 
 // USER CRUD
@@ -180,3 +182,8 @@ export const deleteLinkCategory = (id) => {
   http.delete(`${DELETE_CATEGORY}/${id}`);
 };
 export const getCategories = () => http.get(GET_CATEGORIES);
+
+export const getBannerImage = () => http.get(GET_BANNER_IMAGE);
+
+export const updateBannerImage = (payload) =>
+  http.put(UPDATE_BANNER_IMAGE, payload);

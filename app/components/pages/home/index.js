@@ -1,14 +1,14 @@
 import { Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import React from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import { MuiFileInput } from 'components/muiFileInput';
 import { FILE_ACCEPT_TYPES } from 'utils/constants';
 import { Formik } from 'formik';
-import bannerImage from '../../../images/group.png';
 import { EventCalendar } from '../events/calendar';
 import BannerImage from '../bannerImage/index';
 import { Poll } from '../../poll';
+import { Loading } from '../../loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,38 +57,51 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
 }));
-function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
+function Home({
+  eventList,
+  isEventsLoading,
+  isImageLoading,
+  pollData,
+  initialData,
+  imgFile,
+  setImgFile,
+  formikRef,
+}) {
   const classes = useStyles();
-  const Images = bannerImages?.avatar || bannerImage;
-  const [imgFile, setImgFile] = useState(Images);
-
   return (
     <>
-      <Formik initialValues={initialData}>
+      <Formik initialValues={initialData} innerRef={formikRef}>
         {({ setFieldValue }) => (
           <Grid xs={12} className={classes.root}>
             <Grid xs={12} className={classes.bannerGridSection}>
-              <Box className={classes.bannerImage}>
-                <BannerImage imgFile={imgFile} />
-              </Box>
-              <Box className={classes.editBox} width="100%">
-                <MuiFileInput
-                  btnIcon={<EditIcon />}
-                  acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                  name="file"
-                  buttonText="Update Banner Image"
-                  variant="text"
-                  iconColor="primary"
-                  setImgFile={setImgFile}
-                  toolTipTitle="Update Image"
-                  fullWidth
-                  size="large"
-                  setFieldValue={setFieldValue}
-                  dimensionValidation
-                  minimumDimensions={{ height: 200, width: 900 }}
-                />
-              </Box>
+              {isImageLoading ? (
+                <Loading />
+              ) : (
+                <>
+                  <Box className={classes.bannerImage}>
+                    <BannerImage imgFile={imgFile} />
+                  </Box>
+                  <Box className={classes.editBox} width="100%">
+                    <MuiFileInput
+                      btnIcon={<EditIcon />}
+                      acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
+                      name="file"
+                      buttonText="Update Banner Image"
+                      variant="text"
+                      iconColor="primary"
+                      setImgFile={setImgFile}
+                      toolTipTitle="Update Image"
+                      fullWidth
+                      size="large"
+                      setFieldValue={setFieldValue}
+                      dimensionValidation
+                      minimumDimensions={{ height: 200, width: 900 }}
+                    />
+                  </Box>
+                </>
+              )}
             </Grid>
+
             <Grid xs={12} className={classes.statsSection}>
               <Box
                 m={[2, 2, 2, 10]}
@@ -96,17 +109,17 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
                 flexDirection={['column', 'column', 'column', 'row']}
               >
                 <Box
-                  height={['45vh', '50vh', '50vh', '50vh']}
+                  height={['55vh', '60vh', '60vh', '60vh']}
                   p={2}
                   width={[1, 1, 1, 1 / 2]}
                   mr={[0, 0, 0, 8]}
                   ml={[0, 0, 0, 8]}
                 >
-                  <EventCalendar
-                    home
-                    eventList={eventList}
-                    isLoading={isLoading}
-                  />
+                  {isEventsLoading ? (
+                    <Loading />
+                  ) : (
+                    <EventCalendar home eventList={eventList} />
+                  )}
                 </Box>
                 {pollData && (
                   <Box
