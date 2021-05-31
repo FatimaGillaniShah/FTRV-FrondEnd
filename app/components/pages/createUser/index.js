@@ -19,6 +19,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
+import AddIcon from '@material-ui/icons/Add';
 import { Input, DatePicker } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
@@ -45,9 +46,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.dark,
   },
   linkBox: {
-    // textDecoration: 'underline',
     cursor: 'pointer',
     paddingTop: '3px',
+  },
+  modalOverflow: {
+    overflowY: 'hidden',
   },
 }));
 
@@ -68,21 +71,16 @@ function CreateUser({
   );
   const history = useHistory();
   const formikRef = useRef();
-  const handleLocDialogOpen = () => {
-    setOpenLocDialog(true);
-  };
 
-  const handleLocDialogClose = () => {
-    setOpenLocDialog(false);
+  const handleDialogState = (dialogType) => {
+    if (dialogType === 'loc') {
+      setOpenLocDialog(!openLocDialog);
+    } else if (dialogType === 'dep') {
+      setOpenDepDialog(!openDepDialog);
+    }
   };
+  // dialogType === 'loc' && (state === true ? setOpenLocDialog(true) : state === false)
 
-  const handleDepDialogOpen = () => {
-    setOpenDepDialog(true);
-  };
-
-  const handleDepDialogClose = () => {
-    setOpenDepDialog(false);
-  };
   const editProfileHeading = 'Edit Profile';
   const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
   const isUserEditingHisProfile = isThisMyProfile && editRole === ROLES.USER;
@@ -145,10 +143,14 @@ function CreateUser({
           <Form>
             <MuiDialog
               open={openLocDialog}
-              onClose={handleLocDialogClose}
+              onClose={() => handleDialogState('loc')}
               title="Create New Location"
             >
-              <Box width={[1, 1, 1 / 2]} mt={5}>
+              <Box
+                width={[1, 1, 1 / 2]}
+                py={5}
+                className={classes.modalOverflow}
+              >
                 <Input
                   name="Location"
                   variant="outlined"
@@ -165,10 +167,14 @@ function CreateUser({
 
             <MuiDialog
               open={openDepDialog}
-              onClose={handleDepDialogClose}
+              onClose={() => handleDialogState('dep')}
               title="Create New Department"
             >
-              <Box width={[1, 1, 1 / 2]} mt={5}>
+              <Box
+                width={[1, 1, 1 / 2]}
+                py={5}
+                className={classes.modalOverflow}
+              >
                 <Input
                   name="new-department"
                   variant="outlined"
@@ -400,9 +406,9 @@ function CreateUser({
                     </Tooltip>
                     <Box
                       className={classes.linkBox}
-                      onClick={handleLocDialogOpen}
+                      onClick={() => handleDialogState('loc')}
                     >
-                      Create new location
+                      <AddIcon fontSize="small" /> Create new location
                     </Box>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
@@ -424,9 +430,9 @@ function CreateUser({
                     </Tooltip>
                     <Box
                       className={classes.linkBox}
-                      onClick={handleDepDialogOpen}
+                      onClick={() => handleDialogState('dep')}
                     >
-                      Create new department
+                      <AddIcon fontSize="small" /> Create new department
                     </Box>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>

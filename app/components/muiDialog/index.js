@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
 
 export default function MuiDialog({
   onClose,
@@ -26,14 +27,16 @@ export default function MuiDialog({
     >
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={onClose} color="primary" variant="contained">
-          Create
-        </Button>
-      </DialogActions>
+      <Box display="flex" px={5}>
+        <DialogActions>
+          <Button onClick={onClose} color="primary" variant="contained">
+            Create
+          </Button>
+          <Button onClick={onClose} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Box>
     </Dialog>
   );
 }
