@@ -21,6 +21,7 @@ export function MuiFileInput({
   size,
   isIcon = false,
   dimensionValidation = false,
+  minimumDimensions,
 }) {
   const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
   const inputEl = useRef(null);
@@ -58,10 +59,10 @@ export function MuiFileInput({
           image.onload = () => {
             dimensionsValid =
               dimensionValidation &&
-              (image?.height < 200 || image?.width < 900);
+              (image?.height < minimumDimensions.height ||
+                image?.width < minimumDimensions.width);
             if (dimensionsValid) {
               setError('Error: File size too small');
-              return;
             }
             fileObj = {
               height: image.height,
@@ -69,9 +70,7 @@ export function MuiFileInput({
               file,
             };
             if (!dimensionsValid) setFieldValue(name, fileObj);
-            if (!dimensionsValid) {
-              setImgFile(reader.result);
-            }
+            if (!dimensionsValid) setImgFile(reader.result);
           };
         };
         setError(null);

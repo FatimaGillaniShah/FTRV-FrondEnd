@@ -85,6 +85,7 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
                   size="large"
                   setFieldValue={setFieldValue}
                   dimensionValidation
+                  minimumDimensions={{ height: 200, width: 900 }}
                 />
               </Box>
             </Grid>
