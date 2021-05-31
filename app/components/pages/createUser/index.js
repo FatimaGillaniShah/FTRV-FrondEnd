@@ -9,11 +9,9 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
-import BusinessIcon from '@material-ui/icons/Business';
 import ClearIcon from '@material-ui/icons/Clear';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -52,6 +50,8 @@ function CreateUser({
   formType = 'add',
   editRole = 'user',
   isThisMyProfile = false,
+  locationOptions,
+  departmentOptions,
 }) {
   const classes = useStyles();
   const [showPassword, setshowPassword] = useState(false);
@@ -319,39 +319,20 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
-                    <Tooltip title="Input your Location">
-                      <Input
-                        name="location"
-                        variant="outlined"
-                        OutlinedInputPlaceholder="*Location"
-                        Icon={LocationOnIcon}
-                        appendIcon
-                        IconClickable={
-                          !(mutation.isLoading || isUserEditingHisProfile)
-                        }
-                        isDisabled={
-                          mutation.isLoading || isUserEditingHisProfile
-                        }
-                      />
-                    </Tooltip>
+                    <Select
+                      name="locationId"
+                      label="Location"
+                      selectedValue={values.locationId}
+                      options={locationOptions}
+                    />
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
-                    <Tooltip title="Input your Department">
-                      <Input
-                        name="department"
-                        variant="outlined"
-                        OutlinedInputPlaceholder="*Department"
-                        Icon={BusinessIcon}
-                        appendIcon
-                        IconClickable={
-                          !(mutation.isLoading || isUserEditingHisProfile)
-                        }
-                        InputLabelProps={{ shrink: true }}
-                        isDisabled={
-                          mutation.isLoading || isUserEditingHisProfile
-                        }
-                      />
-                    </Tooltip>
+                    <Select
+                      name="departmentId"
+                      label="Department"
+                      selectedValue={values.departmentId}
+                      options={departmentOptions}
+                    />
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Designation">

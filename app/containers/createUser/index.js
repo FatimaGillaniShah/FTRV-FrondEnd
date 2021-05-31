@@ -8,13 +8,15 @@ import { WrapInCard } from 'components';
 import CreateNewUser from 'components/pages/createUser';
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { createUser } from 'state/queryFunctions';
+import { createUser, getLocations, getDepartments } from 'state/queryFunctions';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { Toast } from '../../utils/helper';
 import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
+import { keys } from '../../state/queryKeys';
+import { Loading } from '../../components/loading';
 
 function CreateUser() {
   const history = useHistory();
@@ -23,6 +25,14 @@ function CreateUser() {
       data: { role },
     },
   } = useAuthContext();
+  const { data: locations, isLocationLoading } = useQuery(
+    keys.getLocation,
+    getLocations
+  );
+  const { data: deparments, isDepartmentLoading } = useQuery(
+    keys.getDepartment,
+    getDepartments
+  );
   const mutation = useMutation(createUser, {
     onSuccess: () => {
       history.push({
@@ -46,6 +56,14 @@ function CreateUser() {
     },
   });
 
+  const locationOptions = locations?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
+  const departmentOptions = deparments?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
@@ -78,12 +96,15 @@ function CreateUser() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
+          {isLocationLoading && isDepartmentLoading && <Loading />}
           <CreateNewUser
             initialData={defaultData}
             mutation={mutation}
             onUpdateUser={handleSubmit}
             formType="add"
             editRole={role}
+            locationOptions={locationOptions}
+            departmentOptions={departmentOptions}
           />
         </WrapInCard>
       </WrapInBreadcrumbs>
