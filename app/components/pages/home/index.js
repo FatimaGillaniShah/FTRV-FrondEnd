@@ -9,8 +9,6 @@ import bannerImage from '../../../images/group.png';
 import { EventCalendar } from '../events/calendar';
 import BannerImage from '../bannerImage/index';
 import { Poll } from '../../poll';
-import { bannerImageSizeValidation } from './bannerImageSizeValidation';
-import { Toast } from '../../../utils/helper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,19 +61,11 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
   const classes = useStyles();
   const Images = bannerImages?.avatar || bannerImage;
   const [imgFile, setImgFile] = useState(Images);
-  const yupValidation = bannerImageSizeValidation;
-  const handleShowError = (error) => {
-    setImgFile(Images);
-    Toast({
-      icon: 'error',
-      title: error,
-    });
-  };
 
   return (
     <>
-      <Formik initialValues={initialData} validationSchema={yupValidation}>
-        {({ setFieldValue, errors }) => (
+      <Formik initialValues={initialData}>
+        {({ setFieldValue }) => (
           <Grid xs={12} className={classes.root}>
             <Grid xs={12} className={classes.bannerGridSection}>
               <Box className={classes.bannerImage}>
@@ -94,9 +84,9 @@ function Home({ eventList, isLoading, bannerImages, pollData, initialData }) {
                   fullWidth
                   size="large"
                   setFieldValue={setFieldValue}
+                  dimensionValidation
                 />
               </Box>
-              {errors?.file && handleShowError(errors.file)}
             </Grid>
             <Grid xs={12} className={classes.statsSection}>
               <Box

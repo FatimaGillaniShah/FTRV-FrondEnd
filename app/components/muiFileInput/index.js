@@ -20,7 +20,9 @@ export function MuiFileInput({
   fullWidth,
   size,
   isIcon = false,
+  dimensionValidation = false,
 }) {
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);
 
@@ -41,6 +43,8 @@ export function MuiFileInput({
         setError('Error: File is empty');
       } else if (fileSizeInMB >= MAX_UPLOADABLE_FILE_SIZE_IN_MBS) {
         setError('Error: File size too large');
+      } else if (!SUPPORTED_FORMATS.includes(file?.type)) {
+        setError('Error: Unsupported File Format');
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -50,15 +54,25 @@ export function MuiFileInput({
 
           const image = new Image();
           image.src = window.URL.createObjectURL(file);
+          let dimensionsValid = false;
           image.onload = () => {
+            dimensionsValid =
+              dimensionValidation &&
+              (image?.height < 200 || image?.width < 900);
+            if (dimensionsValid) {
+              setError('Error: File size too small');
+              return;
+            }
             fileObj = {
               height: image.height,
               width: image.width,
               file,
             };
-            setFieldValue(name, fileObj);
+            if (!dimensionsValid) setFieldValue(name, fileObj);
+            if (!dimensionsValid) {
+              setImgFile(reader.result);
+            }
           };
-          setImgFile(reader.result);
         };
         setError(null);
       }
