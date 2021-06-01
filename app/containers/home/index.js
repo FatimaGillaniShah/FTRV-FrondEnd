@@ -12,6 +12,7 @@ import {
 import { keys } from '../../state/queryKeys';
 import bannerImage from '../../images/group.png';
 import { Toast } from '../../utils/helper';
+import { Loading } from '../../components/loading';
 
 function HomeContainer() {
   const { user } = useAuthContext();
@@ -19,8 +20,7 @@ function HomeContainer() {
   const [imgFile, setImgFile] = useState(bannerImage);
   const queryClient = useQueryClient();
   const formikRef = useRef();
-  const dailyQuote =
-    '"lorem ipsum dolor sit amet consectetur adipisicing elitNemo lorem ipsum dolor sit amet consectetur adipisicing elit Nemo"';
+  const value = formikRef?.current?.values?.file?.file;
 
   const { data, isEventsLoading } = useQuery(keys.events, fetchEvents);
   const { data: image, isLoading: isImageLoading } = useQuery(
@@ -67,12 +67,12 @@ function HomeContainer() {
   }, [defaultData?.file]);
 
   useEffect(() => {
-    if (formikRef?.current?.values?.file) {
+    if (value) {
       const formData = new FormData();
-      formData.append('file', formikRef.current?.values?.file?.file);
+      formData.append('file', value);
       mutate(formData);
     }
-  }, [formikRef.current?.values?.file]);
+  }, [value]);
 
   return (
     <>
@@ -80,16 +80,17 @@ function HomeContainer() {
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
-      <Home
-        initialData={defaultData}
-        isImageLoading={isImageLoading || isUpdateImageLoading}
-        dailyQuote={dailyQuote}
-        isEventsLoading={isEventsLoading}
-        eventList={data?.data?.data?.rows}
-        setImgFile={setImgFile}
-        imgFile={imgFile}
-        formikRef={formikRef}
-      />
+      {isImageLoading || isEventsLoading || isUpdateImageLoading ? (
+        <Loading />
+      ) : (
+        <Home
+          initialData={defaultData}
+          eventList={data?.data?.data?.rows}
+          setImgFile={setImgFile}
+          imgFile={imgFile}
+          formikRef={formikRef}
+        />
+      )}
     </>
   );
 }

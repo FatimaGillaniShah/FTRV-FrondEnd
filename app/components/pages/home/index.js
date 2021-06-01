@@ -8,7 +8,6 @@ import { Formik } from 'formik';
 import { EventCalendar } from '../events/calendar';
 import BannerImage from '../bannerImage/index';
 import { Poll } from '../../poll';
-import { Loading } from '../../loading';
 import { useAuthContext } from '../../../context/authContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,8 +59,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Home({
   eventList,
-  isEventsLoading,
-  isImageLoading,
   pollData,
   initialData,
   imgFile,
@@ -80,33 +77,27 @@ function Home({
         {({ setFieldValue }) => (
           <Grid xs={12} className={classes.root}>
             <Grid xs={12} className={classes.bannerGridSection}>
-              {isImageLoading ? (
-                <Loading />
-              ) : (
-                <>
-                  <Box className={classes.bannerImage}>
-                    <BannerImage imgFile={imgFile} />
-                  </Box>
-                  {role === ROLES.ADMIN && (
-                    <Box className={classes.editBox} width="100%">
-                      <MuiFileInput
-                        btnIcon={<EditIcon />}
-                        acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                        name="file"
-                        buttonText="Update Banner Image"
-                        variant="text"
-                        iconColor="primary"
-                        setImgFile={setImgFile}
-                        toolTipTitle="Update Image"
-                        fullWidth
-                        size="large"
-                        setFieldValue={setFieldValue}
-                        dimensionValidation
-                        minimumDimensions={{ height: 200, width: 900 }}
-                      />
-                    </Box>
-                  )}
-                </>
+              <Box className={classes.bannerImage}>
+                <BannerImage imgFile={imgFile} />
+              </Box>
+              {role === ROLES.ADMIN && (
+                <Box className={classes.editBox} width="100%">
+                  <MuiFileInput
+                    btnIcon={<EditIcon />}
+                    acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
+                    name="file"
+                    buttonText="Update Banner Image"
+                    variant="text"
+                    iconColor="primary"
+                    setImgFile={setImgFile}
+                    toolTipTitle="Update Image"
+                    fullWidth
+                    size="large"
+                    setFieldValue={setFieldValue}
+                    dimensionValidation
+                    minimumDimensions={{ height: 200, width: 900 }}
+                  />
+                </Box>
               )}
             </Grid>
 
@@ -123,11 +114,7 @@ function Home({
                   mr={[0, 0, 0, 8]}
                   ml={[0, 0, 0, 8]}
                 >
-                  {isEventsLoading ? (
-                    <Loading />
-                  ) : (
-                    <EventCalendar home eventList={eventList} />
-                  )}
+                  <EventCalendar home eventList={eventList} />
                 </Box>
                 {pollData && (
                   <Box
