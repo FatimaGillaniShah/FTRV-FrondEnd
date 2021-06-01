@@ -3,12 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import { MuiFileInput } from 'components/muiFileInput';
-import { FILE_ACCEPT_TYPES } from 'utils/constants';
+import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
 import { Formik } from 'formik';
 import { EventCalendar } from '../events/calendar';
 import BannerImage from '../bannerImage/index';
 import { Poll } from '../../poll';
 import { Loading } from '../../loading';
+import { useAuthContext } from '../../../context/authContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +69,11 @@ function Home({
   formikRef,
 }) {
   const classes = useStyles();
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
   return (
     <>
       <Formik initialValues={initialData} innerRef={formikRef}>
@@ -81,23 +87,25 @@ function Home({
                   <Box className={classes.bannerImage}>
                     <BannerImage imgFile={imgFile} />
                   </Box>
-                  <Box className={classes.editBox} width="100%">
-                    <MuiFileInput
-                      btnIcon={<EditIcon />}
-                      acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                      name="file"
-                      buttonText="Update Banner Image"
-                      variant="text"
-                      iconColor="primary"
-                      setImgFile={setImgFile}
-                      toolTipTitle="Update Image"
-                      fullWidth
-                      size="large"
-                      setFieldValue={setFieldValue}
-                      dimensionValidation
-                      minimumDimensions={{ height: 200, width: 900 }}
-                    />
-                  </Box>
+                  {role === ROLES.ADMIN && (
+                    <Box className={classes.editBox} width="100%">
+                      <MuiFileInput
+                        btnIcon={<EditIcon />}
+                        acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
+                        name="file"
+                        buttonText="Update Banner Image"
+                        variant="text"
+                        iconColor="primary"
+                        setImgFile={setImgFile}
+                        toolTipTitle="Update Image"
+                        fullWidth
+                        size="large"
+                        setFieldValue={setFieldValue}
+                        dimensionValidation
+                        minimumDimensions={{ height: 200, width: 900 }}
+                      />
+                    </Box>
+                  )}
                 </>
               )}
             </Grid>

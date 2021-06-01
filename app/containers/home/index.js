@@ -27,6 +27,10 @@ function HomeContainer() {
     keys.getBannerImage,
     getBannerImage
   );
+  const defaultData = { file: image?.data?.data?.data?.fileName };
+  const initialBannerImage = defaultData?.file
+    ? process.env.API_ASSETS_URL + defaultData?.file
+    : bannerImage;
   const { mutate, isLoading: isUpdateImageLoading } = useMutation(
     updateBannerImage,
     {
@@ -41,14 +45,15 @@ function HomeContainer() {
         response: {
           data: { message },
         },
-      }) =>
+      }) => {
+        setImgFile(initialBannerImage);
         Toast({
           icon: 'error',
           title: message || 'Some error occurred',
-        }),
+        });
+      },
     }
   );
-  const defaultData = { file: image?.data?.data?.data?.fileName };
 
   useEffect(() => {
     if (!user || !user.isAuthenticated) {
