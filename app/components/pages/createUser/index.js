@@ -79,7 +79,6 @@ function CreateUser({
       setOpenDepDialog(!openDepDialog);
     }
   };
-  // dialogType === 'loc' && (state === true ? setOpenLocDialog(true) : state === false)
 
   const editProfileHeading = 'Edit Profile';
   const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
