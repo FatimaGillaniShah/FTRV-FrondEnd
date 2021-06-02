@@ -87,7 +87,7 @@ function CreateUser() {
   defaultData.isProfilePicAttached = false;
   defaultData.passwordRequired = true;
 
-  const handleLoading = () => {
+  const isLoading = () => {
     if (isLocationLoading || isDepartmentLoading) {
       return true;
     }
@@ -103,7 +103,7 @@ function CreateUser() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {handleLoading ? (
+          {isLoading ? (
             <CreateNewUser
               initialData={defaultData}
               mutation={mutation}

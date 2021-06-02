@@ -132,7 +132,7 @@ function EditUser() {
 
     formDefaultData.isProfilePicAttached = false;
   }
-  const handleLoading = () => {
+  const isLoading = () => {
     if (isLocationLoading || isDepartmentLoading) {
       return true;
     }
@@ -146,7 +146,7 @@ function EditUser() {
       </Helmet>
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {handleLoading ? (
+          {isLoading ? (
             <EditUserInfo
               mutation={mutation}
               initialData={initialData || formDefaultData}
