@@ -4,13 +4,24 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
+import { Modal } from '../../utils/helper';
+import { useDeleteDepartment } from '../../hooks/department';
 
-const ActionButtons = ({ disabled }) => {
+const ActionButtons = ({ data, setSelected, disabled }) => {
+  const mutation = useDeleteDepartment({ callbackFn: () => setSelected([]) });
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
+
+  const handleDeleteDepartments = () => {
+    Modal.fire().then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate([data.id]);
+      }
+    });
+  };
 
   return (
     <>
@@ -19,7 +30,10 @@ const ActionButtons = ({ disabled }) => {
           <IconButton disabled={disabled}>
             <EditIcon color="secondary" />
           </IconButton>
-          <IconButton disabled={disabled}>
+          <IconButton
+            disabled={disabled}
+            onClick={() => handleDeleteDepartments()}
+          >
             <DeleteIcon color="error" />
           </IconButton>
         </>

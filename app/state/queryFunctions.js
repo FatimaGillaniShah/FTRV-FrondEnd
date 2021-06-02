@@ -42,6 +42,7 @@ const {
   GET_LOCATION,
   UPDATE_LOCATION,
   DEPARTMENTS,
+  DELETE_DEPARTMENT,
 } = APIS;
 
 // USER CRUD
@@ -199,3 +200,6 @@ export const getLocationById = ({ queryKey }) =>
 export const updateLocation = ({ id, ...payload }) =>
   http.put(`${UPDATE_LOCATION}/${id}`, payload);
 export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
+
+export const deleteDepartment = (payload) =>
+  http.delete(DELETE_DEPARTMENT, { data: { ids: payload } });
