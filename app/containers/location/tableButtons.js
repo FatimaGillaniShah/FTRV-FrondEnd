@@ -3,10 +3,10 @@ import Box from '@material-ui/core/Box';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-import { ROLES } from '../../../utils/constants';
-import { useAuthContext } from '../../../context/authContext';
+import { ROLES } from '../../utils/constants';
+import { useAuthContext } from '../../context/authContext';
 
-export function TableButtons({ numSelected }) {
+export function TableButtons({ numSelected, handleDelete }) {
   const {
     user: {
       data: { role },
@@ -32,6 +32,7 @@ export function TableButtons({ numSelected }) {
               variant="contained"
               fullWidth={false}
               startIcon={<DeleteIcon />}
+              onClick={handleDelete}
               disabled={numSelected <= 0}
             >
               Delete
