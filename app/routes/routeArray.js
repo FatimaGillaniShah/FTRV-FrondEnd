@@ -1,4 +1,5 @@
 import addUsefulLink from '../containers/addUsefulLink/loadable';
+import addLocation from '../containers/addLocation/loadable';
 import addCeoMessage from '../containers/addCeoMessage/loadable';
 import CreateUser from '../containers/createUser/loadable';
 import Directory from '../containers/directory/loadable';
@@ -302,5 +303,23 @@ export const routeArray = [
     breadCrumbKey: 'Locations',
     routeType: routeTypes.private,
     roles: [ROLES.ADMIN],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: addLocation,
+        exact: true,
+        breadCrumbKey: 'Add New Location',
+        routeType: routeTypes.private,
+      },
+      {
+        path: '/edit/:id',
+        component: addLocation,
+        simplifiedPath: 'edit',
+        exact: true,
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        breadCrumbKey: 'Edit Location',
+        routeType: routeTypes.private,
+      },
+    ],
   },
 ];
