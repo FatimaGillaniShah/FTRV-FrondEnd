@@ -41,6 +41,7 @@ const {
   CREATE_LOCATION,
   GET_LOCATION,
   UPDATE_LOCATION,
+  DEPARTMENTS,
 } = APIS;
 
 // USER CRUD
@@ -197,3 +198,4 @@ export const getLocationById = ({ queryKey }) =>
 
 export const updateLocation = ({ id, ...payload }) =>
   http.put(`${UPDATE_LOCATION}/${id}`, payload);
+export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);

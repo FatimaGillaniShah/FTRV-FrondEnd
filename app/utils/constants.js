@@ -62,4 +62,5 @@ export const APIS = {
   CREATE_LOCATION: '/locations',
   GET_LOCATION: '/locations',
   UPDATE_LOCATION: '/locations',
+  DEPARTMENTS: '/departments',
 };

@@ -26,6 +26,7 @@ import Polls from '../containers/polls/loadable';
 import CreateLinkCategory from '../containers/createLinkCategory/loadable';
 import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 import Locations from '../containers/location/loadable';
+import Departments from '../containers/department/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -321,5 +322,13 @@ export const routeArray = [
         routeType: routeTypes.private,
       },
     ],
+  },
+  {
+    path: '/departments',
+    component: Departments,
+    exact: true,
+    breadCrumbKey: 'Departments',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN, ROLES.USER],
   },
 ];
