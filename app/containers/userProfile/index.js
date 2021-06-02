@@ -31,13 +31,13 @@ function EditUser() {
   const { user, setUser } = useAuthContext();
   const id = user && user.data && user.data.id;
   const userRole = user && user.data && user.data.role;
-  const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
+  const { data } = useQuery(keys.getUser(id), () => getUserById(id));
   const { data: locations, isLocationLoading } = useQuery(
-    keys.getLocation,
+    keys.location,
     getLocations
   );
   const { data: deparments, isDepartmentLoading } = useQuery(
-    keys.getDepartment,
+    keys.department,
     getDepartments
   );
   const mutation = useMutation(updateUser, {
@@ -132,6 +132,12 @@ function EditUser() {
 
     formDefaultData.isProfilePicAttached = false;
   }
+  const handleLoading = () => {
+    if (isLocationLoading || isDepartmentLoading) {
+      return true;
+    }
+    return false;
+  };
   return (
     <>
       <Helmet>
@@ -140,9 +146,7 @@ function EditUser() {
       </Helmet>
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading && isLocationLoading && isDepartmentLoading ? (
-            <Loading />
-          ) : (
+          {handleLoading ? (
             <EditUserInfo
               mutation={mutation}
               initialData={initialData || formDefaultData}
@@ -153,6 +157,8 @@ function EditUser() {
               locationOptions={locationOptions}
               departmentOptions={departmentOptions}
             />
+          ) : (
+            <Loading />
           )}
         </WrapInCard>
       </WrapInBreadcrumbs>

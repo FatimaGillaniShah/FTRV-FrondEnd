@@ -26,11 +26,11 @@ function CreateUser() {
     },
   } = useAuthContext();
   const { data: locations, isLocationLoading } = useQuery(
-    keys.getLocation,
+    keys.location,
     getLocations
   );
   const { data: deparments, isDepartmentLoading } = useQuery(
-    keys.getDepartment,
+    keys.department,
     getDepartments
   );
   const mutation = useMutation(createUser, {
@@ -87,6 +87,13 @@ function CreateUser() {
   defaultData.isProfilePicAttached = false;
   defaultData.passwordRequired = true;
 
+  const handleLoading = () => {
+    if (isLocationLoading || isDepartmentLoading) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       <Helmet>
@@ -96,16 +103,19 @@ function CreateUser() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLocationLoading && isDepartmentLoading && <Loading />}
-          <CreateNewUser
-            initialData={defaultData}
-            mutation={mutation}
-            onUpdateUser={handleSubmit}
-            formType="add"
-            editRole={role}
-            locationOptions={locationOptions}
-            departmentOptions={departmentOptions}
-          />
+          {handleLoading ? (
+            <CreateNewUser
+              initialData={defaultData}
+              mutation={mutation}
+              onUpdateUser={handleSubmit}
+              formType="add"
+              editRole={role}
+              locationOptions={locationOptions}
+              departmentOptions={departmentOptions}
+            />
+          ) : (
+            <Loading />
+          )}
         </WrapInCard>
       </WrapInBreadcrumbs>
     </>
