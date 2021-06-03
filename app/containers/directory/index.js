@@ -68,11 +68,11 @@ function DirectoryContainer() {
     }
   );
   const { data: locations, isLocationLoading } = useQuery(
-    keys.getLocation,
+    keys.locations,
     getLocations
   );
   const { data: deparments, isDepartmentLoading } = useQuery(
-    keys.getDepartment,
+    keys.departments,
     getDepartments
   );
   const tableData = data?.data?.data;

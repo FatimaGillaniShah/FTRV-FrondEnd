@@ -37,8 +37,11 @@ const {
   UPDATE_LINK_CATEGORY,
   DELETE_CATEGORY,
   GET_CATEGORIES,
-  GET_LOCATIONS,
-  GET_DEPARTMENTS,
+  LOCATIONS,
+  CREATE_LOCATION,
+  GET_LOCATION,
+  UPDATE_LOCATION,
+  DEPARTMENTS,
 } = APIS;
 
 // USER CRUD
@@ -183,6 +186,16 @@ export const deleteLinkCategory = (id) => {
 };
 export const getCategories = () => http.get(GET_CATEGORIES);
 
-export const getLocations = () => http.get(GET_LOCATIONS);
+export const getLocations = () => http.get(`${LOCATIONS}?pageSize=1000&`);
 
-export const getDepartments = () => http.get(GET_DEPARTMENTS);
+export const deleteLocation = (payload) =>
+  http.delete(LOCATIONS, { data: { ids: payload } });
+
+export const createLocation = (payload) => http.post(CREATE_LOCATION, payload);
+
+export const getLocationById = ({ queryKey }) =>
+  http.get(`${GET_LOCATION}/${queryKey[1]}`);
+
+export const updateLocation = ({ id, ...payload }) =>
+  http.put(`${UPDATE_LOCATION}/${id}`, payload);
+export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);

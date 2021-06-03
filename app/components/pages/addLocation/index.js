@@ -13,10 +13,10 @@ import { Input } from '../../index';
 import { H5 } from '../../typography';
 
 const LocationSchema = object().shape({
-  location: string().required('*Location Required'),
+  name: string().required('*Location Required'),
 });
 
-export function AddLocationPage({ id, initialValues }) {
+export function AddLocationPage({ onHandleSubmit, id, initialValues }) {
   const history = useHistory();
   return (
     <WrapInBreadcrumbs>
@@ -29,6 +29,9 @@ export function AddLocationPage({ id, initialValues }) {
             enableReinitialize
             initialValues={initialValues}
             validationSchema={LocationSchema}
+            onSubmit={(values) => {
+              onHandleSubmit(values);
+            }}
           >
             {() => (
               <Form>
@@ -37,7 +40,7 @@ export function AddLocationPage({ id, initialValues }) {
                     <Input
                       variant="outlined"
                       OutlinedInputPlaceholder="Location*"
-                      name="location"
+                      name="name"
                       appendIcon
                       Icon={LocationOnOutlinedIcon}
                       IconClickable
@@ -75,12 +78,12 @@ export function AddLocationPage({ id, initialValues }) {
 
 AddLocationPage.propTypes = {
   initialValues: PropTypes.shape({
-    location: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
   }),
 };
 AddLocationPage.defaultProps = {
   initialValues: {
-    location: '',
+    name: '',
   },
 };
 
