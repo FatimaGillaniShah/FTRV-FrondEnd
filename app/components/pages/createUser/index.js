@@ -9,9 +9,11 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import BusinessIcon from '@material-ui/icons/Business';
 import ClearIcon from '@material-ui/icons/Clear';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -24,8 +26,6 @@ import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
-import BusinessOutlinedIcon from '@material-ui/icons/BusinessOutlined';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
@@ -157,7 +157,7 @@ function CreateUser({
                   name="Location"
                   variant="outlined"
                   OutlinedInputPlaceholder="*Enter Location"
-                  Icon={LocationOnOutlinedIcon}
+                  Icon={LocationOnIcon}
                   appendIcon
                   IconClickable={
                     !(mutation.isLoading || isUserEditingHisProfile)
@@ -181,7 +181,7 @@ function CreateUser({
                   name="new-department"
                   variant="outlined"
                   OutlinedInputPlaceholder="*Department"
-                  Icon={BusinessOutlinedIcon}
+                  IIcon={BusinessIcon}
                   appendIcon
                   IconClickable={
                     !(mutation.isLoading || isUserEditingHisProfile)
