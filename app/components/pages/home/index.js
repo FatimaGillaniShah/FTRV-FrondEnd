@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     marginBlock: '0.2rem',
   },
   bannerImage: {
-    padding: theme.spacing(0, 20, 6, 20),
     flex: 1,
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0, 1, 6, 1),

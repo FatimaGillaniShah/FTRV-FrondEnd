@@ -17,7 +17,7 @@ export function MuiFileInput({
   BtnIcon,
   variant = 'contained',
   iconColor = 'secondary',
-  isIcon = 'false',
+  isIcon = false,
 }) {
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);

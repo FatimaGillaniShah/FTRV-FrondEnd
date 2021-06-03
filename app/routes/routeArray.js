@@ -123,7 +123,6 @@ export const routeArray = [
         component: CreateAnnouncement,
         exact: true,
         breadCrumbKey: 'Create Announcement',
-        noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
       },
