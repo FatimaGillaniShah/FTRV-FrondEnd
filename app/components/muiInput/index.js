@@ -219,6 +219,6 @@ export default memo(InputField);
   placeholderText="Email"
   appendIcon={true}
   prependIcon={false}
-  formControlProps={{ fullWidth: true }}   
+  formControlProps={{ fullWidth: true }}
   ...otherProps
 />; */

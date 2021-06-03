@@ -71,13 +71,14 @@ export const menuItems = [
     role: [ROLES.ADMIN],
     children: [
       { name: 'Quote', link: '/quote' },
-
       { name: 'events', link: '/events' },
       { name: 'polls', link: '/polls' },
       {
         name: 'Announcement',
         link: '/announcement',
       },
+      { name: 'Locations', link: '/locations' },
+      { name: 'Departments', link: '/departments' },
     ],
   },
 ];

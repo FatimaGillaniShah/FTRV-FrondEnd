@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import React from 'react';
 import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
 
 export default function MuiDialog({
   onClose,
@@ -14,7 +15,7 @@ export default function MuiDialog({
   title,
   fullWidth,
   maxWidth,
-  content,
+  children,
 }) {
   return (
     <Dialog
@@ -25,15 +26,17 @@ export default function MuiDialog({
       maxWidth={maxWidth}
     >
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-      <DialogContent>{content}</DialogContent>
-      <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={onClose} color="primary" variant="contained">
-          Create
-        </Button>
-      </DialogActions>
+      <DialogContent>{children}</DialogContent>
+      <Box display="flex" px={5}>
+        <DialogActions>
+          <Button onClick={onClose} color="primary" variant="contained">
+            Create
+          </Button>
+          <Button onClick={onClose} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Box>
     </Dialog>
   );
 }
@@ -44,7 +47,7 @@ MuiDialog.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
   title: PropTypes.string,
-  content: PropTypes.string,
+  children: PropTypes.element,
 };
 MuiDialog.defaultProps = {
   fullWidth: true,
