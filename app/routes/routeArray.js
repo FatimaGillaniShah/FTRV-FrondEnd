@@ -1,4 +1,5 @@
 import addUsefulLink from '../containers/addUsefulLink/loadable';
+import addLocation from '../containers/addLocation/loadable';
 import addCeoMessage from '../containers/addCeoMessage/loadable';
 import CreateUser from '../containers/createUser/loadable';
 import Directory from '../containers/directory/loadable';
@@ -24,6 +25,7 @@ import createPoll from '../containers/createPoll/loadable';
 import Polls from '../containers/polls/loadable';
 import CreateLinkCategory from '../containers/createLinkCategory/loadable';
 import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
+import Locations from '../containers/location/loadable';
 import Departments from '../containers/department/loadable';
 import CreateDepartment from '../containers/addDepartment/loadable';
 
@@ -122,7 +124,6 @@ export const routeArray = [
         component: CreateAnnouncement,
         exact: true,
         breadCrumbKey: 'Create Announcement',
-        noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
       },
@@ -271,12 +272,14 @@ export const routeArray = [
         exact: true,
         breadCrumbKey: 'Useful Links',
         simplifiedPath: 'useful-links',
+        noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
         nestedRoutes: [
           {
             path: '/add',
             component: addUsefulLink,
             exact: true,
+            thirdLvlNesting: true,
             breadCrumbKey: 'Add New Link',
             routeType: routeTypes.private,
           },
@@ -284,12 +287,39 @@ export const routeArray = [
             path: '/edit/:id',
             component: addUsefulLink,
             simplifiedPath: 'edit',
+            thirdLvlNesting: true,
             exact: true,
             noOfEnteriesToSkipAfterThisEntry: 1,
             breadCrumbKey: 'Edit Link',
             routeType: routeTypes.private,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: '/locations',
+    component: Locations,
+    exact: true,
+    breadCrumbKey: 'Locations',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: addLocation,
+        exact: true,
+        breadCrumbKey: 'Add New Location',
+        routeType: routeTypes.private,
+      },
+      {
+        path: '/edit/:id',
+        component: addLocation,
+        simplifiedPath: 'edit',
+        exact: true,
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        breadCrumbKey: 'Edit Location',
+        routeType: routeTypes.private,
       },
     ],
   },

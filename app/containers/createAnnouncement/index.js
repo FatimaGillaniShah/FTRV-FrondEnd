@@ -2,12 +2,13 @@ import { WrapInCard } from 'components';
 import CreateAnnouncementInfo from 'components/pages/createAnnouncement';
 import { useHistory } from 'react-router-dom';
 import React, { memo } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Helmet } from 'react-helmet';
 import { createAnnouncement } from '../../state/queryFunctions';
 import { Toast } from '../../utils/helper';
 
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
+import { keys } from '../../state/queryKeys';
 
 function CreateAnnouncement() {
   const defaultData = {
@@ -19,6 +20,7 @@ function CreateAnnouncement() {
     priority: '',
   };
   const history = useHistory();
+  const queryClient = useQueryClient();
   const mutation = useMutation(createAnnouncement, {
     onSuccess: () => {
       history.push({
@@ -29,6 +31,7 @@ function CreateAnnouncement() {
           message: `Announcement Created Successfully`,
         },
       });
+      queryClient.invalidateQueries(keys.adminAnnouncements);
     },
     onError: ({
       response: {

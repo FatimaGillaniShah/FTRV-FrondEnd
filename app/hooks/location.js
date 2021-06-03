@@ -1,23 +1,21 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { useParams } from 'react-router';
 import Swal from 'sweetalert2';
 import { Toast } from '../components';
-import { deleteLink } from '../state/queryFunctions';
+import { deleteLocation } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
 import { isFunction } from '../utils/helper';
 
-export function useDeleteLink({ callbackFn } = {}) {
+export function useDeleteLocation({ callbackFn } = {}) {
   const queryClient = useQueryClient();
-  const { categoryId } = useParams();
-  return useMutation(deleteLink, {
+  return useMutation(deleteLocation, {
     onSuccess: ({
       data: {
         data: { count },
       },
     }) => {
       if (isFunction(callbackFn)) callbackFn();
-      Swal.fire('Deleted!', `${count} link(s) deleted.`, 'success');
-      queryClient.invalidateQueries(keys.getLink(categoryId));
+      Swal.fire('Deleted!', `${count} location(s) deleted.`, 'success');
+      queryClient.invalidateQueries(keys.locations);
     },
     onError: ({
       response: {

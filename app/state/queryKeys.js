@@ -20,6 +20,8 @@ export const keys = {
   getLinkCategory: (id) => ['link-category', id],
   linkCategory: 'category',
   getCategories: 'categories',
+  locations: 'locations',
+  getLocation: (payload) => ['location', payload],
   departments: 'departments',
   getDepartments: (id) => ['department', id],
 };

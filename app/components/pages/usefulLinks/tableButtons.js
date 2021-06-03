@@ -8,7 +8,7 @@ import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
 
 export function TableButtons({ onDelete, numSelected }) {
-  const { id } = useParams();
+  const { categoryId } = useParams();
   const history = useHistory();
   const navigateTo = (url) => {
     history.push(url);
@@ -29,7 +29,7 @@ export function TableButtons({ onDelete, numSelected }) {
               fullWidth={false}
               startIcon={<AddIcon />}
               onClick={() =>
-                navigateTo(`/link-categories/useful-links/${id}/add`)
+                navigateTo(`/link-categories/useful-links/${categoryId}/add`)
               }
             >
               New

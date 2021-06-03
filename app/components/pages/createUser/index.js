@@ -19,6 +19,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
+import AddIcon from '@material-ui/icons/Add';
 import { Input, DatePicker } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
@@ -31,6 +32,7 @@ import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
 import { parseDate } from '../../../utils/functions';
 import Select from '../../muiSelect';
+import MuiDialog from '../../muiDialog';
 
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
@@ -42,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
   },
   dateColor: {
     color: theme.palette.text.dark,
+  },
+  linkBox: {
+    cursor: 'pointer',
+    paddingTop: '3px',
+  },
+  modalOverflow: {
+    overflowY: 'hidden',
   },
 }));
 
@@ -55,11 +64,22 @@ function CreateUser({
 }) {
   const classes = useStyles();
   const [showPassword, setshowPassword] = useState(false);
+  const [openLocDialog, setOpenLocDialog] = useState(false);
+  const [openDepDialog, setOpenDepDialog] = useState(false);
   const [imgFile, setImgFile] = useState(
     (initialData && initialData.avatar) || null
   );
   const history = useHistory();
   const formikRef = useRef();
+
+  const handleDialogState = (dialogType) => {
+    if (dialogType === 'loc') {
+      setOpenLocDialog(!openLocDialog);
+    } else if (dialogType === 'dep') {
+      setOpenDepDialog(!openDepDialog);
+    }
+  };
+
   const editProfileHeading = 'Edit Profile';
   const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
   const isUserEditingHisProfile = isThisMyProfile && editRole === ROLES.USER;
@@ -73,6 +93,7 @@ function CreateUser({
       }
     }
   }, [mutation.isSuccess]);
+
   return (
     <>
       <Formik
@@ -119,6 +140,54 @@ function CreateUser({
       >
         {({ setFieldValue, values, handleChange }) => (
           <Form>
+            <MuiDialog
+              open={openLocDialog}
+              onClose={() => handleDialogState('loc')}
+              title="Create New Location"
+            >
+              <Box
+                width={[1, 1, 1 / 2]}
+                py={5}
+                className={classes.modalOverflow}
+              >
+                <Input
+                  name="Location"
+                  variant="outlined"
+                  OutlinedInputPlaceholder="*Enter Location"
+                  Icon={LocationOnIcon}
+                  appendIcon
+                  IconClickable={
+                    !(mutation.isLoading || isUserEditingHisProfile)
+                  }
+                  isDisabled={mutation.isLoading || isUserEditingHisProfile}
+                />
+              </Box>
+            </MuiDialog>
+
+            <MuiDialog
+              open={openDepDialog}
+              onClose={() => handleDialogState('dep')}
+              title="Create New Department"
+            >
+              <Box
+                width={[1, 1, 1 / 2]}
+                py={5}
+                className={classes.modalOverflow}
+              >
+                <Input
+                  name="new-department"
+                  variant="outlined"
+                  OutlinedInputPlaceholder="*Department"
+                  Icon={BusinessIcon}
+                  appendIcon
+                  IconClickable={
+                    !(mutation.isLoading || isUserEditingHisProfile)
+                  }
+                  InputLabelProps={{ shrink: true }}
+                  isDisabled={mutation.isLoading || isUserEditingHisProfile}
+                />
+              </Box>
+            </MuiDialog>
             <Box
               flexWrap="wrap"
               flexDirection="row"
@@ -334,6 +403,12 @@ function CreateUser({
                         }
                       />
                     </Tooltip>
+                    <Box
+                      className={classes.linkBox}
+                      onClick={() => handleDialogState('loc')}
+                    >
+                      <AddIcon fontSize="small" /> Create new location
+                    </Box>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Department">
@@ -352,6 +427,12 @@ function CreateUser({
                         }
                       />
                     </Tooltip>
+                    <Box
+                      className={classes.linkBox}
+                      onClick={() => handleDialogState('dep')}
+                    >
+                      <AddIcon fontSize="small" /> Create new department
+                    </Box>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Designation">

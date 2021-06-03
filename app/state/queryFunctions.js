@@ -37,6 +37,10 @@ const {
   UPDATE_LINK_CATEGORY,
   DELETE_CATEGORY,
   GET_CATEGORIES,
+  LOCATIONS,
+  CREATE_LOCATION,
+  GET_LOCATION,
+  UPDATE_LOCATION,
   DEPARTMENTS,
   DELETE_DEPARTMENT,
   CREATE_DEPARTMENT,
@@ -170,7 +174,7 @@ export const deleteBlog = (payload) =>
 export const getLinkCategory = () => http.get(`${CATEGORY}`);
 
 export const getUsefulLinksByCategoryId = ({ queryKey }) =>
-  http.get(`${GET_USEFUL_LINKS}?categoryId=${queryKey[1]}`);
+  http.get(`${GET_USEFUL_LINKS}?pageSize=1000&categoryId=${queryKey[1]}`);
 // LINK CATEGORY CRUD
 export const createLinkCategory = (payload) =>
   http.post(CREATE_LINK_CATEGORY, payload);
@@ -186,6 +190,18 @@ export const deleteLinkCategory = (id) => {
 };
 export const getCategories = () => http.get(GET_CATEGORIES);
 
+export const getLocations = () => http.get(`${LOCATIONS}?pageSize=1000&`);
+
+export const deleteLocation = (payload) =>
+  http.delete(LOCATIONS, { data: { ids: payload } });
+
+export const createLocation = (payload) => http.post(CREATE_LOCATION, payload);
+
+export const getLocationById = ({ queryKey }) =>
+  http.get(`${GET_LOCATION}/${queryKey[1]}`);
+
+export const updateLocation = ({ id, ...payload }) =>
+  http.put(`${UPDATE_LOCATION}/${id}`, payload);
 export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
 
 export const deleteDepartment = (payload) =>
