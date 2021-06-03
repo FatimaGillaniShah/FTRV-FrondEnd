@@ -20,11 +20,11 @@ function HomeContainer() {
   const [imgFile, setImgFile] = useState(bannerImage);
   const queryClient = useQueryClient();
   const formikRef = useRef();
-  const value = formikRef?.current?.values?.file?.file;
+  const imageUrl = formikRef?.current?.values?.file?.file;
 
   const { data, isEventsLoading } = useQuery(keys.events, fetchEvents);
   const { data: image, isLoading: isImageLoading } = useQuery(
-    keys.getBannerImage,
+    keys.bannerImage,
     getBannerImage
   );
   const defaultData = { file: image?.data?.data?.data?.fileName };
@@ -39,7 +39,7 @@ function HomeContainer() {
           icon: 'success',
           title: `Image Updated Successfully`,
         });
-        queryClient.invalidateQueries(keys.getBannerImage);
+        queryClient.invalidateQueries(keys.bannerImage);
       },
       onError: ({
         response: {
@@ -67,12 +67,12 @@ function HomeContainer() {
   }, [defaultData?.file]);
 
   useEffect(() => {
-    if (value) {
+    if (imageUrl) {
       const formData = new FormData();
-      formData.append('file', value);
+      formData.append('file', imageUrl);
       mutate(formData);
     }
-  }, [value]);
+  }, [imageUrl]);
 
   return (
     <>

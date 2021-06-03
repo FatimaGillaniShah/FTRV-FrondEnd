@@ -20,5 +20,5 @@ export const keys = {
   getLinkCategory: (id) => ['link-category', id],
   linkCategory: 'category',
   getCategories: 'categories',
-  getBannerImage: 'banner-image',
+  bannerImage: 'banner-image',
 };
