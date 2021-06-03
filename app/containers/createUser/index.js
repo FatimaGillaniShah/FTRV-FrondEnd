@@ -103,7 +103,9 @@ function CreateUser() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading ? (
+          {isLoading() ? (
+            <Loading />
+          ) : (
             <CreateNewUser
               initialData={defaultData}
               mutation={mutation}
@@ -113,8 +115,6 @@ function CreateUser() {
               locationOptions={locationOptions}
               departmentOptions={departmentOptions}
             />
-          ) : (
-            <Loading />
           )}
         </WrapInCard>
       </WrapInBreadcrumbs>

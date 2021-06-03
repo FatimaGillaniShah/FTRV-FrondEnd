@@ -146,7 +146,9 @@ function EditUser() {
       </Helmet>
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading ? (
+          {isLoading() ? (
+            <Loading />
+          ) : (
             <EditUserInfo
               mutation={mutation}
               initialData={initialData || formDefaultData}
@@ -157,8 +159,6 @@ function EditUser() {
               locationOptions={locationOptions}
               departmentOptions={departmentOptions}
             />
-          ) : (
-            <Loading />
           )}
         </WrapInCard>
       </WrapInBreadcrumbs>
