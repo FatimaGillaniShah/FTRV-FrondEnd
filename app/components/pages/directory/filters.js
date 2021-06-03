@@ -21,10 +21,10 @@ function Filters({
       <Formik
         initialValues={{
           name: '',
-          department: '',
+          departmentId: '',
           title: '',
           extension: '',
-          location: '',
+          locationId: '',
         }}
         onSubmit={(values) => {
           onHandleFilterSearch(values);
@@ -46,6 +46,7 @@ function Filters({
                   label="Department"
                   variant="standard"
                   options={departmentOptions}
+                  emptyItem
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
@@ -57,6 +58,7 @@ function Filters({
                   label="Location"
                   variant="standard"
                   options={locationOptions}
+                  emptyItem
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
@@ -68,7 +70,6 @@ function Filters({
                 <Button
                   variant="contained"
                   color="secondary"
-                  fullWidth={false}
                   startIcon={<SearchIcon />}
                   type="submit"
                 >
