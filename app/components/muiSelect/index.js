@@ -39,6 +39,7 @@ export default function SelectInput({
   selectedValue,
   selectName,
   formControlProps,
+  variant,
   ...props
 }) {
   const [field, meta] = useField(props);
@@ -47,7 +48,7 @@ export default function SelectInput({
     <>
       <FormControl
         fullWidth={fullWidth}
-        variant="outlined"
+        variant={variant}
         {...formControlProps}
         error={meta.touched && meta.error}
       >
@@ -101,10 +102,12 @@ SelectInput.propTypes = {
   selectedValue: PropTypes.string,
   selectName: PropTypes.string,
   formControlProps: PropTypes.object,
+  variant: PropTypes.string,
 };
 
 SelectInput.defaultProps = {
   fullWidth: true,
+  variant: 'outlined',
 };
 
 // Usage

@@ -54,7 +54,7 @@ export const headCells = [
     type: 'label',
   },
   {
-    id: 'department',
+    id: 'departmentObj.name',
     numeric: false,
     disablePadding: false,
     label: 'Department',
@@ -68,7 +68,7 @@ export const headCells = [
     type: 'label',
   },
   {
-    id: 'location',
+    id: 'locationObj["name"]',
     numeric: false,
     disablePadding: false,
     label: 'Location',
