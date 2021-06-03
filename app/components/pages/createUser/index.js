@@ -181,7 +181,7 @@ function CreateUser({
                   name="new-department"
                   variant="outlined"
                   OutlinedInputPlaceholder="*Department"
-                  IIcon={BusinessIcon}
+                  Icon={BusinessIcon}
                   appendIcon
                   IconClickable={
                     !(mutation.isLoading || isUserEditingHisProfile)
