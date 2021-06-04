@@ -14,11 +14,16 @@ export function MuiFileInput({
   acceptTypes,
   toolTipTitle = 'Select File',
   buttonText = 'Upload',
-  BtnIcon,
+  btnIcon,
   variant = 'contained',
   iconColor = 'secondary',
-  isIcon = 'false',
+  fullWidth,
+  size,
+  isIcon = false,
+  dimensionValidation = false,
+  minimumDimensions,
 }) {
+  const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);
 
@@ -32,24 +37,44 @@ export function MuiFileInput({
   }, [error]);
 
   const handleCapture = ({ target }) => {
-    if (target.files[0]) {
-      if (
-        target.files[0].size / 1024 / 1024 <=
-        MIN_UPLOADABLE_FILE_SIZE_IN_MBS
-      ) {
+    const file = target?.files[0];
+    const fileSizeInMB = file?.size / 1024 / 1024;
+    if (file) {
+      if (fileSizeInMB <= MIN_UPLOADABLE_FILE_SIZE_IN_MBS) {
         setError('Error: File is empty');
-      } else if (
-        target.files[0].size / 1024 / 1024 >=
-        MAX_UPLOADABLE_FILE_SIZE_IN_MBS
-      ) {
+      } else if (fileSizeInMB >= MAX_UPLOADABLE_FILE_SIZE_IN_MBS) {
         setError('Error: File size too large');
+      } else if (!SUPPORTED_FORMATS.includes(file?.type)) {
+        setError('Error: Unsupported File Format');
       } else {
         const reader = new FileReader();
-        reader.readAsDataURL(target.files[0]);
+        reader.readAsDataURL(file);
+
         reader.onloadend = () => {
-          setImgFile(reader.result);
+          let fileObj = file;
+
+          const image = new Image();
+          image.src = window.URL.createObjectURL(file);
+          let dimensionsValid = false;
+          image.onload = () => {
+            dimensionsValid =
+              dimensionValidation &&
+              (image?.height < minimumDimensions.height ||
+                image?.width < minimumDimensions.width);
+            if (dimensionsValid) {
+              setError('Error: File size too small');
+            }
+            fileObj = {
+              height: image.height,
+              width: image.width,
+              file,
+            };
+            if (!dimensionsValid) {
+              setFieldValue(name, fileObj);
+              setImgFile(reader.result);
+            }
+          };
         };
-        setFieldValue(name, target.files[0]);
         setError(null);
       }
     }
@@ -60,7 +85,7 @@ export function MuiFileInput({
 
   return (
     <>
-      <Box mb={2}>
+      <Box>
         <input
           id={name}
           type="file"
@@ -73,14 +98,16 @@ export function MuiFileInput({
           <label htmlFor={name}>
             {isIcon ? (
               <IconButton onClick={handleClick} disabled={mutation?.isLoading}>
-                <BtnIcon color={iconColor} />
+                {btnIcon && btnIcon}
               </IconButton>
             ) : (
               <Button
+                size={size}
+                fullWidth={fullWidth}
                 color={iconColor}
                 onClick={handleClick}
                 variant={variant}
-                startIcon={BtnIcon && <BtnIcon fontSize="small" />}
+                startIcon={btnIcon && btnIcon}
                 disabled={mutation?.isLoading}
               >
                 {buttonText}

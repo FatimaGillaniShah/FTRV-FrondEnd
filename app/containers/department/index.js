@@ -13,6 +13,8 @@ import TableButtons from './tableButtons';
 import { useAuthContext } from '../../context/authContext';
 import { Loading } from '../../components/loading';
 import { ROLES } from '../../utils/constants';
+import { Modal } from '../../utils/helper';
+import { useDeleteDepartment } from '../../hooks/department';
 
 function Departments() {
   const {
@@ -22,8 +24,19 @@ function Departments() {
   } = useAuthContext();
 
   const [selected, setSelected] = useState([]);
+  const mutation = useDeleteDepartment({ callbackFn: () => setSelected([]) });
   const { data, isLoading } = useQuery(keys.departments, getDepartments);
   const departments = data?.data?.data?.rows;
+  const handleDelete = () => {
+    if (!selected.length) {
+      return;
+    }
+    Modal.fire().then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate(selected);
+      }
+    });
+  };
 
   return (
     <>
@@ -32,11 +45,14 @@ function Departments() {
       </Helmet>
 
       <WrapInBreadcrumbs>
-        {isLoading && <Loading />}
+        {(isLoading || mutation.isLoading) && <Loading />}
         <WrapInCard mb={8}>
           {role === ROLES.ADMIN && (
             <Box mt={4}>
-              <TableButtons numSelected={selected.length} />
+              <TableButtons
+                handleDelete={handleDelete}
+                numSelected={selected.length}
+              />
               {selected?.length > 0 && (
                 <Box my={4}>
                   <Alert severity="info">
@@ -46,7 +62,7 @@ function Departments() {
               )}
             </Box>
           )}
-          {!isLoading && (
+          {!isLoading && !mutation.isLoading && (
             <DataTable
               data={departments}
               headCells={headCells}

@@ -23,4 +23,5 @@ export const keys = {
   locations: 'locations',
   getLocation: (payload) => ['location', payload],
   departments: 'departments',
+  getDepartments: (id) => ['department', id],
 };
