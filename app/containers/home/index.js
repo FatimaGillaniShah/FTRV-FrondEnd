@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/loading';
 import Home from '../../components/pages/home';
@@ -11,70 +11,57 @@ import {
   updateBannerImage,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import bannerImage from '../../images/group.png';
 import { Toast } from '../../utils/helper';
 
 function HomeContainer() {
   const { user } = useAuthContext();
   const history = useHistory();
-  const [imgFile, setImgFile] = useState(bannerImage);
-  const queryClient = useQueryClient();
-  const formikRef = useRef();
-  const imageUrl = formikRef?.current?.values?.file?.file;
-
   const { data, isEventsLoading } = useQuery(keys.events, fetchEvents);
-  const { data: image, isLoading: isImageLoading } = useQuery(
-    keys.bannerImage,
-    getBannerImage
-  );
-  const defaultData = { file: image?.data?.data?.data?.fileName };
-  const initialBannerImage = defaultData?.file
-    ? process.env.API_ASSETS_URL + defaultData?.file
-    : bannerImage;
+
+  const {
+    data: image,
+    isLoading: isImageLoading,
+    refetch: refetchBannerImage,
+  } = useQuery(keys.bannerImage, getBannerImage);
+
   const { mutate, isLoading: isUpdateImageLoading } = useMutation(
     updateBannerImage,
     {
-      onSuccess: () => {
-        Toast({
-          icon: 'success',
-          title: `Image Updated Successfully`,
-        });
-        queryClient.invalidateQueries(keys.bannerImage);
-      },
-      onError: ({
-        response: {
-          data: { message },
-        },
-      }) => {
-        setImgFile(initialBannerImage);
-        Toast({
-          icon: 'error',
-          title: message || 'Some error occurred',
-        });
-      },
+      onSuccess: () => onUpdateImageSuccess(),
+      onError: () => onUpdateImageError,
     }
   );
 
+  const onUpdateImageSuccess = () => {
+    Toast({
+      icon: 'success',
+      title: `Image Updated Successfully`,
+    });
+    refetchBannerImage();
+  };
+  const onUpdateImageError = ({
+    response: {
+      data: { message },
+    },
+  }) => {
+    Toast({
+      icon: 'error',
+      title: message || 'Some error occurred',
+    });
+  };
   useEffect(() => {
     if (!user || !user.isAuthenticated) {
       history.push('/');
     }
   }, []);
 
-  useEffect(() => {
-    if (defaultData?.file) {
-      const encodeImageName = encodeURIComponent(defaultData.file);
-      setImgFile(process.env.API_ASSETS_URL + encodeImageName);
-    }
-  }, [defaultData?.file]);
-
-  useEffect(() => {
-    if (imageUrl) {
+  const handleImageChange = (fileObj) => {
+    if (fileObj?.file) {
       const formData = new FormData();
-      formData.append('file', imageUrl);
+      formData.append('file', fileObj?.file);
       mutate(formData);
     }
-  }, [imageUrl]);
+  };
 
   return (
     <>
@@ -82,16 +69,14 @@ function HomeContainer() {
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
-      {isImageLoading || isEventsLoading ? (
+      {isEventsLoading ? (
         <Loading />
       ) : (
         <Home
-          initialData={defaultData}
-          isUpdateImageLoading={isUpdateImageLoading}
+          isImageLoading={isUpdateImageLoading || isImageLoading}
           eventList={data?.data?.data?.rows}
-          setImgFile={setImgFile}
-          imgFile={imgFile}
-          formikRef={formikRef}
+          fileName={image?.data?.data?.data?.fileName}
+          onHandleImageChange={handleImageChange}
         />
       )}
     </>

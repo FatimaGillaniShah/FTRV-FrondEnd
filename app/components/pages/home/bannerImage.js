@@ -7,27 +7,26 @@ import { MuiFileInput } from '../../muiFileInput';
 import BannerImage from '../bannerImage';
 import { useStyles } from './style';
 import { Loading } from '../../loading';
+import bannerImagePlaceholder from '../../../images/group.png';
 
-function BannerImageHome({
-  imgFile,
-  setImgFile,
-  setFieldValue,
-  isUpdateImageLoading,
-}) {
+function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
+  const classes = useStyles();
+  const bannerImageURL = fileName
+    ? process.env.API_ASSETS_URL + encodeURIComponent(fileName)
+    : bannerImagePlaceholder;
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
-  const classes = useStyles();
   return (
     <Grid xs={12} className={classes.bannerGridSection}>
-      {isUpdateImageLoading ? (
+      {isImageLoading ? (
         <Loading />
       ) : (
         <>
           <Box className={classes.bannerImage}>
-            <BannerImage imgFile={imgFile} />
+            <BannerImage bannerImageURL={bannerImageURL} />
           </Box>
           {role === ROLES.ADMIN && (
             <Box className={classes.editBox} width="100%">
@@ -37,14 +36,12 @@ function BannerImageHome({
                 name="file"
                 buttonText="Update Banner Image"
                 variant="text"
-                iconColor="primary"
-                setImgFile={setImgFile}
                 toolTipTitle="Update Image"
                 fullWidth
                 size="large"
-                setFieldValue={setFieldValue}
                 dimensionValidation
                 minimumDimensions={{ height: 200, width: 900 }}
+                onFilechange={onHandleImageChange}
               />
             </Box>
           )}
