@@ -80,11 +80,12 @@ function HomeContainer() {
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
-      {isImageLoading || isEventsLoading || isUpdateImageLoading ? (
+      {isImageLoading || isEventsLoading ? (
         <Loading />
       ) : (
         <Home
           initialData={defaultData}
+          isUpdateImageLoading={isUpdateImageLoading}
           eventList={data?.data?.data?.rows}
           setImgFile={setImgFile}
           imgFile={imgFile}

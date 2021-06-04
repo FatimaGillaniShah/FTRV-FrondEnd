@@ -13,6 +13,7 @@ function Home({
   imgFile,
   setImgFile,
   formikRef,
+  isUpdateImageLoading,
 }) {
   const classes = useStyles();
   return (
@@ -24,7 +25,9 @@ function Home({
               setFieldValue={setFieldValue}
               imgFile={imgFile}
               setImgFile={setImgFile}
+              isUpdateImageLoading={isUpdateImageLoading}
             />
+
             <Grid xs={12} className={classes.statsSection}>
               <Box
                 m={[2, 2, 2, 10]}
