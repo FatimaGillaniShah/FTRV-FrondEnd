@@ -115,8 +115,8 @@ function CreateUser({
             if (data.title) dataFile.append('title', data.title);
             if (data.location) dataFile.append('location', data.location);
             if (data.department) dataFile.append('department', data.department);
-            if (data.file && data.file.size) {
-              dataFile.append('file', data.file);
+            if (data?.file?.file) {
+              dataFile.append('file', data.file.file);
             }
             if (formType === 'add') dataFile.append('email', data.email);
             if (data.password) {
