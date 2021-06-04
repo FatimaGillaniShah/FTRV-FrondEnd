@@ -151,7 +151,7 @@ export function DataTable({
               {header.type === 'link' ? (
                 <a
                   href={
-                    cellValue.includes('http')
+                    cellValue?.includes('http')
                       ? cellValue
                       : `http://${cellValue}`
                   }

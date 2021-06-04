@@ -192,7 +192,7 @@ function DirectoryContainer() {
 
             {!isLoading && !mutation.isLoading && (
               <DataTable
-                data={tableData.rows}
+                data={tableData?.rows}
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
