@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
   logoStyle: {
     width: 150,
+    marginTop: theme.spacing(3.3),
   },
   profileBox: {
     display: 'flex',

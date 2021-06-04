@@ -6,6 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import ReactHtmlParser from 'html-react-parser';
 import { H5, BodyTextLarge } from '../../typography';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
@@ -83,8 +84,7 @@ function Blog({
         </Box>
         <Box>
           <BodyTextLarge color="grey">
-            {' '}
-            {`${shortText}${' '}${'....'}`}
+            {ReactHtmlParser(shortText)}...
           </BodyTextLarge>
         </Box>
         <Box display="flex" flexDirection="column" mt={8}>

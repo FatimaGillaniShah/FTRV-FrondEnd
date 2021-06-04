@@ -1,4 +1,5 @@
 import addUsefulLink from '../containers/addUsefulLink/loadable';
+import addLocation from '../containers/addLocation/loadable';
 import addCeoMessage from '../containers/addCeoMessage/loadable';
 import CreateUser from '../containers/createUser/loadable';
 import Directory from '../containers/directory/loadable';
@@ -24,6 +25,8 @@ import createPoll from '../containers/createPoll/loadable';
 import Polls from '../containers/polls/loadable';
 import CreateLinkCategory from '../containers/createLinkCategory/loadable';
 import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
+import Locations from '../containers/location/loadable';
+import Departments from '../containers/department/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -120,7 +123,6 @@ export const routeArray = [
         component: CreateAnnouncement,
         exact: true,
         breadCrumbKey: 'Create Announcement',
-        noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
       },
@@ -293,5 +295,39 @@ export const routeArray = [
         ],
       },
     ],
+  },
+  {
+    path: '/locations',
+    component: Locations,
+    exact: true,
+    breadCrumbKey: 'Locations',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: addLocation,
+        exact: true,
+        breadCrumbKey: 'Add New Location',
+        routeType: routeTypes.private,
+      },
+      {
+        path: '/edit/:id',
+        component: addLocation,
+        simplifiedPath: 'edit',
+        exact: true,
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        breadCrumbKey: 'Edit Location',
+        routeType: routeTypes.private,
+      },
+    ],
+  },
+  {
+    path: '/departments',
+    component: Departments,
+    exact: true,
+    breadCrumbKey: 'Departments',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN, ROLES.USER],
   },
 ];

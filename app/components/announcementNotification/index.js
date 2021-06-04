@@ -31,7 +31,11 @@ export function AnnouncementNotification({ item }) {
   }, [item]);
   return (
     <>
-      <Collapse in={isNotificationClosed} onExited={onClose}>
+      <Collapse
+        in={isNotificationClosed}
+        onExited={onClose}
+        timeout={{ exit: 500 }}
+      >
         <Box
           width={1}
           height={1}

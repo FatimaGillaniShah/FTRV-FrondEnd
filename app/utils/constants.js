@@ -59,6 +59,11 @@ export const APIS = {
   GET_USEFUL_LINKS: '/usefulLinks',
   DELETE_CATEGORY: '/linkCategories',
   GET_CATEGORIES: '/linkCategories',
+  LOCATIONS: '/locations',
+  CREATE_LOCATION: '/locations',
+  GET_LOCATION: '/locations',
+  UPDATE_LOCATION: '/locations',
+  DEPARTMENTS: '/departments',
   GET_BANNER_IMAGE: 'bannerImage',
   UPDATE_BANNER_IMAGE: 'bannerImage',
 };

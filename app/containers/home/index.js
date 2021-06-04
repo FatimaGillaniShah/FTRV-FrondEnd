@@ -2,6 +2,7 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
+import { Loading } from '../../components/loading';
 import Home from '../../components/pages/home/loadable';
 import { useAuthContext } from '../../context/authContext';
 import {
@@ -12,7 +13,6 @@ import {
 import { keys } from '../../state/queryKeys';
 import bannerImage from '../../images/group.png';
 import { Toast } from '../../utils/helper';
-import { Loading } from '../../components/loading';
 
 function HomeContainer() {
   const { user } = useAuthContext();
