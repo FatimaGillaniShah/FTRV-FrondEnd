@@ -236,7 +236,7 @@ function CreateUser({
                         acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
                         toolTipTitle="Select profile image"
                         buttonText="Upload Image"
-                        BtnIcon={Add}
+                        btnIcon={<Add />}
                         {...props}
                       />
                     )}

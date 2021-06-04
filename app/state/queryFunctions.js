@@ -221,4 +221,3 @@ export const getDepartmentById = ({ queryKey }) =>
 
 export const updateDepartment = ({ id, ...payload }) =>
   http.put(`${UPDATE_DEPARTMENT}/${id}`, payload);
-
