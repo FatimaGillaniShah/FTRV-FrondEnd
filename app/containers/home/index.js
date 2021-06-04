@@ -62,8 +62,10 @@ function HomeContainer() {
   }, []);
 
   useEffect(() => {
-    if (defaultData?.file)
-      setImgFile(process.env.API_ASSETS_URL + defaultData.file);
+    if (defaultData?.file) {
+      const encodeImageName = encodeURIComponent(defaultData.file);
+      setImgFile(process.env.API_ASSETS_URL + encodeImageName);
+    }
   }, [defaultData?.file]);
 
   useEffect(() => {
