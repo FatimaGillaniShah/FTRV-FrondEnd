@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/loading';
-import Home from '../../components/pages/home/loadable';
+import Home from '../../components/pages/home';
 import { useAuthContext } from '../../context/authContext';
 import {
   fetchEvents,
