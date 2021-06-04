@@ -52,8 +52,14 @@ export const menuItems = [
         name: 'Announcement',
         link: '/announcement',
       },
-      { name: 'Locations', link: '/locations' },
-      { name: 'Departments', link: '/departments' },
+      {
+        name: 'configuration',
+        link: '/',
+        children: [
+          { name: 'Location', link: '/locations' },
+          { name: 'Department', link: '/departments' },
+        ],
+      },
     ],
   },
 ];

@@ -66,4 +66,8 @@ export const APIS = {
   DEPARTMENTS: '/departments',
   GET_BANNER_IMAGE: 'bannerImage',
   UPDATE_BANNER_IMAGE: 'bannerImage',
+  DELETE_DEPARTMENT: '/departments',
+  CREATE_DEPARTMENT: '/departments',
+  GET_DEPARTMENT: '/departments',
+  UPDATE_DEPARTMENT: 'departments',
 };

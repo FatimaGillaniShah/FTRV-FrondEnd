@@ -24,4 +24,5 @@ export const keys = {
   getLocation: (payload) => ['location', payload],
   departments: 'departments',
   bannerImage: 'banner-image',
+  getDepartments: (id) => ['department', id],
 };

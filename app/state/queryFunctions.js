@@ -44,6 +44,10 @@ const {
   DEPARTMENTS,
   GET_BANNER_IMAGE,
   UPDATE_BANNER_IMAGE,
+  DELETE_DEPARTMENT,
+  CREATE_DEPARTMENT,
+  GET_DEPARTMENT,
+  UPDATE_DEPARTMENT,
 } = APIS;
 
 // USER CRUD
@@ -206,3 +210,15 @@ export const getBannerImage = () => http.get(GET_BANNER_IMAGE);
 
 export const updateBannerImage = (payload) =>
   http.put(UPDATE_BANNER_IMAGE, payload);
+export const deleteDepartment = (payload) =>
+  http.delete(DELETE_DEPARTMENT, { data: { ids: payload } });
+
+export const createDepartment = (payload) =>
+  http.post(CREATE_DEPARTMENT, payload);
+
+export const getDepartmentById = ({ queryKey }) =>
+  http.get(`${GET_DEPARTMENT}/${queryKey[1]}`);
+
+export const updateDepartment = ({ id, ...payload }) =>
+  http.put(`${UPDATE_DEPARTMENT}/${id}`, payload);
+
