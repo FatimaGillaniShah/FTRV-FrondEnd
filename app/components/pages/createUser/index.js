@@ -32,6 +32,7 @@ import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
 import { parseDate } from '../../../utils/functions';
 import Select from '../../muiSelect';
+
 import MuiDialog from '../../muiDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +62,8 @@ function CreateUser({
   formType = 'add',
   editRole = 'user',
   isThisMyProfile = false,
+  locationOptions,
+  departmentOptions,
 }) {
   const classes = useStyles();
   const [showPassword, setshowPassword] = useState(false);
@@ -388,21 +391,12 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
-                    <Tooltip title="Input your Location">
-                      <Input
-                        name="location"
-                        variant="outlined"
-                        OutlinedInputPlaceholder="*Location"
-                        Icon={LocationOnIcon}
-                        appendIcon
-                        IconClickable={
-                          !(mutation.isLoading || isUserEditingHisProfile)
-                        }
-                        isDisabled={
-                          mutation.isLoading || isUserEditingHisProfile
-                        }
-                      />
-                    </Tooltip>
+                    <Select
+                      name="locationId"
+                      label="Location"
+                      selectedValue={values.locationId}
+                      options={locationOptions}
+                    />
                     <Box
                       className={classes.linkBox}
                       onClick={() => handleDialogState('loc')}
@@ -411,22 +405,12 @@ function CreateUser({
                     </Box>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
-                    <Tooltip title="Input your Department">
-                      <Input
-                        name="department"
-                        variant="outlined"
-                        OutlinedInputPlaceholder="*Department"
-                        Icon={BusinessIcon}
-                        appendIcon
-                        IconClickable={
-                          !(mutation.isLoading || isUserEditingHisProfile)
-                        }
-                        InputLabelProps={{ shrink: true }}
-                        isDisabled={
-                          mutation.isLoading || isUserEditingHisProfile
-                        }
-                      />
-                    </Tooltip>
+                    <Select
+                      name="departmentId"
+                      label="Department"
+                      selectedValue={values.departmentId}
+                      options={departmentOptions}
+                    />
                     <Box
                       className={classes.linkBox}
                       onClick={() => handleDialogState('dep')}

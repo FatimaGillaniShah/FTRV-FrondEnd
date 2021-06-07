@@ -9,7 +9,12 @@ import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { getUserById, updateUser } from 'state/queryFunctions';
+import {
+  getUserById,
+  updateUser,
+  getLocations,
+  getDepartments,
+} from 'state/queryFunctions';
 import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
@@ -17,6 +22,7 @@ import EditUserInfo from '../../components/pages/createUser';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
+
 import { Toast } from '../../utils/helper';
 
 function EditUser() {
@@ -25,7 +31,15 @@ function EditUser() {
   const { user, setUser } = useAuthContext();
   const id = user && user.data && user.data.id;
   const userRole = user && user.data && user.data.role;
-  const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
+  const { data } = useQuery(keys.getUser(id), () => getUserById(id));
+  const { data: locations, isLocationLoading } = useQuery(
+    keys.location,
+    getLocations
+  );
+  const { data: deparments, isDepartmentLoading } = useQuery(
+    keys.department,
+    getDepartments
+  );
   const mutation = useMutation(updateUser, {
     onSuccess: ({
       data: {
@@ -65,7 +79,14 @@ function EditUser() {
       });
     },
   });
-
+  const locationOptions = locations?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
+  const departmentOptions = deparments?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
   const initialData = data?.data?.data || null;
   const handleSubmit = (updatedData) => {
     const payload = { id, updatedData };
@@ -111,6 +132,12 @@ function EditUser() {
 
     formDefaultData.isProfilePicAttached = false;
   }
+  const isLoading = () => {
+    if (isLocationLoading || isDepartmentLoading) {
+      return true;
+    }
+    return false;
+  };
   return (
     <>
       <Helmet>
@@ -119,7 +146,7 @@ function EditUser() {
       </Helmet>
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading ? (
+          {isLoading() ? (
             <Loading />
           ) : (
             <EditUserInfo
@@ -129,6 +156,8 @@ function EditUser() {
               formType="edit"
               editRole={userRole}
               isThisMyProfile
+              locationOptions={locationOptions}
+              departmentOptions={departmentOptions}
             />
           )}
         </WrapInCard>
