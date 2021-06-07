@@ -41,11 +41,9 @@ function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
               <MuiFileInput
                 btnIcon={<EditIcon />}
                 acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                name="file"
                 buttonText="Update Banner Image"
                 variant="text"
-                toolTipTitle="Update Image"
-                fullWidth
+                toolTipTitle="Update Banner Image"
                 size="large"
                 dimensionValidation
                 minimumDimensions={{ height: 200, width: 900 }}
