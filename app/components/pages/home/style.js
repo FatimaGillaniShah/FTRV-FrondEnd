@@ -11,6 +11,12 @@ export const useStyles = makeStyles((theme) => ({
     flex: '0.3',
     marginBlock: '0.2rem',
     position: 'relative',
+  },
+  bannerGridSectionWHover: {
+    backgroundColor: theme.palette.bgColor.secondary,
+    flex: '0.3',
+    marginBlock: '0.2rem',
+    position: 'relative',
     '&:hover': {
       '& $bannerImage': {
         opacity: 0.7,

@@ -1,6 +1,7 @@
 import { Box, Grid } from '@material-ui/core';
 import React from 'react';
 import EditIcon from '@material-ui/icons/Edit';
+import clsx from 'clsx';
 import { useAuthContext } from '../../../context/authContext';
 import { FILE_ACCEPT_TYPES, ROLES } from '../../../utils/constants';
 import { MuiFileInput } from '../../muiFileInput';
@@ -19,8 +20,15 @@ function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
       data: { role },
     },
   } = useAuthContext();
+
   return (
-    <Grid xs={12} className={classes.bannerGridSection}>
+    <Grid
+      xs={12}
+      className={clsx({
+        [classes.bannerGridSectionWHover]: role === ROLES.ADMIN,
+        [classes.bannerGridSection]: role === ROLES.USER,
+      })}
+    >
       {isImageLoading ? (
         <Loading />
       ) : (
