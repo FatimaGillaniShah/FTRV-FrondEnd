@@ -24,8 +24,9 @@ import { Input, DatePicker } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
+import { useHistory } from 'react-router-dom';
+import { NavigateTo } from '../../../utils/helper';
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
@@ -63,6 +64,7 @@ function CreateUser({
   isThisMyProfile = false,
 }) {
   const classes = useStyles();
+
   const [showPassword, setshowPassword] = useState(false);
   const [openLocDialog, setOpenLocDialog] = useState(false);
   const [openDepDialog, setOpenDepDialog] = useState(false);
@@ -523,7 +525,7 @@ function CreateUser({
                     <Box mx={1}>
                       <Button
                         onClick={() => {
-                          history.push('/directory');
+                          NavigateTo(history, '/directory');
                         }}
                         startIcon={<ClearIcon fontSize="small" />}
                       >
