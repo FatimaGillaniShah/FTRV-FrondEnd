@@ -24,14 +24,6 @@ function HomeContainer() {
     refetch: refetchBannerImage,
   } = useQuery(keys.bannerImage, getBannerImage);
 
-  const { mutate, isLoading: isUpdateImageLoading } = useMutation(
-    updateBannerImage,
-    {
-      onSuccess: () => onUpdateImageSuccess(),
-      onError: () => onUpdateImageError,
-    }
-  );
-
   const onUpdateImageSuccess = () => {
     Toast({
       icon: 'success',
@@ -49,6 +41,15 @@ function HomeContainer() {
       title: message || 'Some error occurred',
     });
   };
+
+  const { mutate, isLoading: isUpdateImageLoading } = useMutation(
+    updateBannerImage,
+    {
+      onSuccess: onUpdateImageSuccess,
+      onError: onUpdateImageError,
+    }
+  );
+
   useEffect(() => {
     if (!user || !user.isAuthenticated) {
       history.push('/');
