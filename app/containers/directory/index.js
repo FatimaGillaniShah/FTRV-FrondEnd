@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Alert } from 'components';
 import { fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
@@ -18,7 +18,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
-import { Modal, Toast } from '../../utils/helper';
+import { Modal } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
@@ -26,9 +26,7 @@ function DirectoryContainer() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [filters, setFilters] = useState();
-  const { state } = useLocation();
   const [checked, setChecked] = useState(false);
-  const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortColumn, setSortColumn] = useState('firstName');
@@ -93,18 +91,8 @@ function DirectoryContainer() {
   };
 
   useEffect(() => {
-    const temp = { ...state };
-    settoastValue(temp);
     history.replace({}, '');
   }, []);
-  useEffect(() => {
-    if (toastValue && toastValue.toastType) {
-      Toast({
-        icon: toastValue.toastType,
-        title: toastValue.message || 'Some error occured',
-      });
-    }
-  }, [toastValue]);
 
   const handleDelete = () => {
     if (!selected.length) {

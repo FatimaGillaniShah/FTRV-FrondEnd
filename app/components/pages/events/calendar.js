@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { CustomToolbar } from './customToolbar';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
-import { formatDate } from '../../../utils/helper';
+import { formatDate, navigateTo } from '../../../utils/helper';
 
 export function EventCalendar({ eventList, home }) {
   const history = useHistory();
@@ -21,8 +21,10 @@ export function EventCalendar({ eventList, home }) {
   } = useAuthContext();
 
   const handleSelectEvent = (event) => {
-    if (data.role === ROLES.ADMIN) history.push(`/events/edit/${event.id}`);
-    else if (data.role === ROLES.USER) history.push(`/events/view/${event.id}`);
+    if (data.role === ROLES.ADMIN)
+      navigateTo(history, `/events/edit/${event.id}`);
+    else if (data.role === ROLES.USER)
+      navigateTo(history, `/events/view/${event.id}`);
   };
   const dayFormat = () => {
     if (home || matches) {

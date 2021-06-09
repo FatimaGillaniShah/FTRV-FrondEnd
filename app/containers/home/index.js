@@ -7,6 +7,7 @@ import Home from '../../components/pages/home/loadable';
 import { useAuthContext } from '../../context/authContext';
 import { fetchEvents } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { navigateTo } from '../../utils/helper';
 
 function HomeContainer() {
   const { user } = useAuthContext();
@@ -15,7 +16,7 @@ function HomeContainer() {
     '"lorem ipsum dolor sit amet consectetur adipisicing elitNemo lorem ipsum dolor sit amet consectetur adipisicing elit Nemo"';
   useEffect(() => {
     if (!user || !user.isAuthenticated) {
-      history.push('/');
+      navigateTo(history, '/');
     }
   }, []);
   const { data, isLoading } = useQuery(keys.events, fetchEvents);

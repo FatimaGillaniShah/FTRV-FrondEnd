@@ -16,6 +16,7 @@ import Select from '../../muiSelect';
 import { useAuthContext } from '../../../context/authContext';
 import { DatePicker, Input } from '../../index';
 import { parseDate } from '../../../utils/functions';
+import { navigateTo } from '../../../utils/helper';
 
 const announcementSchema = object().shape({
   title: string()
@@ -54,9 +55,6 @@ function CreateAnnouncement({
   const formHeadings = {
     add: 'Create New Announcement',
     edit: 'Update Announcement Data',
-  };
-  const navigateTo = () => {
-    history.push('/announcement');
   };
 
   return (
@@ -173,7 +171,7 @@ function CreateAnnouncement({
                     </Box>
                     <Box mx={1}>
                       <Button
-                        onClick={() => navigateTo()}
+                        onClick={() => navigateTo(history, '/announcement')}
                         startIcon={<ClearIcon fontSize="small" />}
                       >
                         Cancel

@@ -26,7 +26,7 @@ import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
 import { useHistory } from 'react-router-dom';
-import { NavigateTo } from '../../../utils/helper';
+import { navigateTo } from '../../../utils/helper';
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
@@ -525,7 +525,7 @@ function CreateUser({
                     <Box mx={1}>
                       <Button
                         onClick={() => {
-                          NavigateTo(history, '/directory');
+                          navigateTo(history, '/directory');
                         }}
                         startIcon={<ClearIcon fontSize="small" />}
                       >

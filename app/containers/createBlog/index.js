@@ -10,7 +10,7 @@ import {
   updateBlog,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 function CreateBlog() {
   const { id } = useParams();
@@ -40,7 +40,7 @@ function CreateBlog() {
         icon: 'success',
         title: `Blog ${id ? 'Updated' : 'Created'}  Successfully`,
       });
-      history.push('/blogs');
+      navigateTo(history, '/blogs');
       queryClient.invalidateQueries(keys.blog);
     },
     onError: ({

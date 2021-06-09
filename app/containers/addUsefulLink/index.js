@@ -10,7 +10,7 @@ import {
   getCategories,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 import { Loading } from '../../components/loading';
 
 function AddUsefulLink() {
@@ -31,7 +31,7 @@ function AddUsefulLink() {
 
   const mutation = useMutation(id ? updateLink : createLink, {
     onSuccess: () => {
-      history.push(`/link-categories/useful-links/${categoryId}`);
+      navigateTo(history, `/link-categories/useful-links/${categoryId}`);
       Toast({
         icon: 'success',
         title: `Link ${id ? 'updated' : 'created'}  successfully`,

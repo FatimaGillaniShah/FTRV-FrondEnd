@@ -10,6 +10,7 @@ import {
 import Menu from 'material-ui-popup-state/HoverMenu';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { navigateTo } from '../../../utils/helper';
 
 const ParentPopupState = React.createContext(null);
 
@@ -68,7 +69,7 @@ const SideMenu = ({ item }) => {
         onClick={() => {
           if (item?.externalLink) {
             window.open(item.link, '_blank');
-          } else history.push(item.link);
+          } else navigateTo(history, item.link);
         }}
       >
         <IconButton aria-label="delete" className={classes.iconStyle}>

@@ -82,8 +82,7 @@ export function isFunction(possibleFunction) {
   return typeof possibleFunction === typeof Function;
 }
 
-export function NavigateTo(history, url) {
-  console.log(url, 'url');
+export function navigateTo(history, url) {
   history.push(url);
 }
 

@@ -15,6 +15,7 @@ import { DatePicker, Input, Select, WrapInCard } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { BodyTextLarge, H4 } from '../../typography';
 import { POLL_OPTIONS_LIMIT } from '../../../utils/constants';
+import { navigateTo } from '../../../utils/helper';
 
 const pollSchema = object().shape({
   name: string()
@@ -200,7 +201,7 @@ export const CreatePollPage = ({ onHandleSubmit, id, initialValues }) => {
                           >
                             <Button
                               startIcon={<ClearIcon />}
-                              onClick={() => history.push('/polls')}
+                              onClick={() => navigateTo(history, '/polls')}
                             >
                               Cancel
                             </Button>
