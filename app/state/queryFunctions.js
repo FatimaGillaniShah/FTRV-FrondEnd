@@ -42,6 +42,8 @@ const {
   GET_LOCATION,
   UPDATE_LOCATION,
   DEPARTMENTS,
+  GET_BANNER_IMAGE,
+  UPDATE_BANNER_IMAGE,
   DELETE_DEPARTMENT,
   CREATE_DEPARTMENT,
   GET_DEPARTMENT,
@@ -204,6 +206,10 @@ export const updateLocation = ({ id, ...payload }) =>
   http.put(`${UPDATE_LOCATION}/${id}`, payload);
 export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
 
+export const getBannerImage = () => http.get(GET_BANNER_IMAGE);
+
+export const updateBannerImage = (payload) =>
+  http.put(UPDATE_BANNER_IMAGE, payload);
 export const deleteDepartment = (payload) =>
   http.delete(DELETE_DEPARTMENT, { data: { ids: payload } });
 

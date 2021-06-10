@@ -13,8 +13,11 @@ function Events() {
       <Helmet>
         <title>Company Events</title>
       </Helmet>
-      {isLoading && <Loading />}
-      <EventsPage isLoading={isLoading} eventList={data?.data?.data?.rows} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <EventsPage isLoading={isLoading} eventList={data?.data?.data?.rows} />
+      )}
     </>
   );
 }
