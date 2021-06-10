@@ -9,14 +9,20 @@ import {
   createEvent,
   getEventById,
   updateEvent,
+  getLocations,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Modal, Toast } from '../../utils/helper';
 
 function CreateEvent() {
+  const { data: locationData, isLoading: isLocationLoading } = useQuery(
+    keys.locations,
+    getLocations
+  );
   const history = useHistory();
   const { id } = useParams();
   const queryClient = useQueryClient();
+
   const { data, isLoading } = useQuery(keys.getEvent(id), getEventById, {
     enabled: !!id,
     refetchOnWindowFocus: false,
@@ -69,13 +75,20 @@ function CreateEvent() {
     startDate: new Date(),
     endDate: new Date(),
     description: '',
+    location: '',
+  };
+  const onLoading = () => {
+    if (isLoading || isLocationLoading || loading || mutation.isLoading) {
+      return true;
+    }
+    return false;
   };
   return (
     <>
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Event</title>
       </Helmet>
-      {isLoading || loading || mutation.isLoading ? (
+      {onLoading() ? (
         <Loading />
       ) : (
         <CreateEventPage
@@ -84,6 +97,7 @@ function CreateEvent() {
           initialValues={id ? data?.data?.data : initialValues}
           pageTitle={id ? 'Update' : 'Create New'}
           onHandleDeleteEvent={handleDeleteEvent}
+          locationData={locationData?.data?.data}
         />
       )}
     </>
