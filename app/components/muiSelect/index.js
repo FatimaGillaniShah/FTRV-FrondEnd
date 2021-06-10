@@ -39,6 +39,8 @@ export default function SelectInput({
   selectedValue,
   selectName,
   formControlProps,
+  variant,
+  emptyItem,
   ...props
 }) {
   const [field, meta] = useField(props);
@@ -47,7 +49,7 @@ export default function SelectInput({
     <>
       <FormControl
         fullWidth={fullWidth}
-        variant="outlined"
+        variant={variant}
         {...formControlProps}
         error={meta.touched && meta.error}
       >
@@ -65,9 +67,12 @@ export default function SelectInput({
           {...field}
           {...props}
         >
-          {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem> */}
+          {emptyItem && (
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+          )}
+
           {options &&
             options.map((val) =>
               val.value !== undefined ? (
@@ -101,10 +106,14 @@ SelectInput.propTypes = {
   selectedValue: PropTypes.string,
   selectName: PropTypes.string,
   formControlProps: PropTypes.object,
+  variant: PropTypes.string,
+  emptyItem: PropTypes.bool,
 };
 
 SelectInput.defaultProps = {
   fullWidth: true,
+  variant: 'outlined',
+  emptyItem: false,
 };
 
 // Usage

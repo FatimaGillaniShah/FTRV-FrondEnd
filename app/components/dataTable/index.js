@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { get } from 'lodash';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import { getComparator, stableSort } from '../../utils/helper';
 import { CheckBox } from '../index';
@@ -132,6 +133,7 @@ export function DataTable({
 
       {headCells.map((header) => {
         const Buttons = header.buttons || null;
+        const cellValue = get(row, header.id.toString());
         return header.type === 'action' ? (
           <TableCell align="right">
             <Buttons
@@ -149,16 +151,16 @@ export function DataTable({
               {header.type === 'link' ? (
                 <a
                   href={
-                    row[header.id].includes('http')
-                      ? row[header.id]
-                      : `http://${row[header.id]}`
+                    cellValue?.includes('http')
+                      ? cellValue
+                      : `http://${cellValue}`
                   }
                   target="_blank"
                 >
-                  {row[header.id]}
+                  {cellValue}
                 </a>
               ) : (
-                row[header.id]
+                cellValue
               )}
             </BodyTextSmall>
           </TableCell>

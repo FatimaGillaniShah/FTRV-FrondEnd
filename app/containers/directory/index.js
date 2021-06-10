@@ -5,7 +5,11 @@ import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
 import { useLocation, useHistory } from 'react-router-dom';
 import { Alert } from 'components';
-import { fetchUsers } from '../../state/queryFunctions';
+import {
+  fetchUsers,
+  getDepartments,
+  getLocations,
+} from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
@@ -62,6 +66,14 @@ function DirectoryContainer() {
     {
       keepPreviousData: true,
     }
+  );
+  const { data: locations, isLocationLoading } = useQuery(
+    keys.locations,
+    getLocations
+  );
+  const { data: deparments, isDepartmentLoading } = useQuery(
+    keys.departments,
+    getDepartments
   );
   const tableData = data?.data?.data;
 
@@ -122,13 +134,24 @@ function DirectoryContainer() {
   const handleServerPageSize = (value) => {
     setPageSize(value.rowPerPage);
   };
+  const locationOptions = locations?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
+  const departmentOptions = deparments?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
   return (
     <>
       <Helmet>
         <title>Directory Listing</title>
       </Helmet>
       <WrapInBreadcrumbs>
-        {(isLoading || mutation.isLoading) && <Loading />}
+        {(isLoading ||
+          mutation.isLoading ||
+          isLocationLoading ||
+          isDepartmentLoading) && <Loading />}
         <Box width={1}>
           <WrapInCard mb={8}>
             <Box display="flex">
@@ -139,11 +162,13 @@ function DirectoryContainer() {
                 onHandleSearch={handleSearch}
               />
             </Box>
-            <Box mt={8}>
+            <Box mt={2}>
               {checked && (
                 <Filters
                   onHandleFilterSearch={handleFilterSearch}
                   onClear={onClear}
+                  locationOptions={locationOptions}
+                  departmentOptions={departmentOptions}
                 />
               )}
             </Box>
@@ -167,7 +192,7 @@ function DirectoryContainer() {
 
             {!isLoading && !mutation.isLoading && (
               <DataTable
-                data={tableData.rows}
+                data={tableData?.rows}
                 headCells={headCells}
                 setSelected={setSelected}
                 selected={selected}
