@@ -35,7 +35,7 @@ function EditUser() {
   const departmentMutation = useCreateDepartment();
   const id = user && user.data && user.data.id;
   const userRole = user && user.data && user.data.role;
-  const { data } = useQuery(keys.getUser(id), () => getUserById(id));
+  const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
   const { data: locations, isLocationLoading } = useQuery(
     keys.location,
     getLocations
@@ -147,8 +147,8 @@ function EditUser() {
     department: '',
   };
 
-  const isLoading = () => {
-    if (isLocationLoading || isDepartmentLoading) {
+  const onLoading = () => {
+    if (isLoading || isLocationLoading || isDepartmentLoading) {
       return true;
     }
     return false;
@@ -161,7 +161,7 @@ function EditUser() {
       </Helmet>
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading() ? (
+          {onLoading() ? (
             <Loading />
           ) : (
             <EditUserInfo
