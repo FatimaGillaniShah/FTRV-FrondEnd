@@ -24,11 +24,15 @@ import { ROLES } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
 
 import { Toast } from '../../utils/helper';
+import { useCreateDepartment } from '../../hooks/departmentMutation';
+import { useCreateLocation } from '../../hooks/locationMutation';
 
 function EditUser() {
   const queryClient = useQueryClient();
   const history = useHistory();
   const { user, setUser } = useAuthContext();
+  const locationMutation = useCreateLocation();
+  const departmentMutation = useCreateDepartment();
   const id = user && user.data && user.data.id;
   const userRole = user && user.data && user.data.role;
   const { data } = useQuery(keys.getUser(id), () => getUserById(id));
@@ -79,6 +83,13 @@ function EditUser() {
       });
     },
   });
+  const handleCreateLocation = (payload) => {
+    locationMutation.mutate(payload);
+  };
+  const handleCreateDepartment = (payload) => {
+    departmentMutation.mutate(payload);
+  };
+
   const locationOptions = locations?.data.data.rows.map((val) => ({
     value: val.id,
     label: val.name,
@@ -88,8 +99,7 @@ function EditUser() {
     label: val.name,
   }));
   const initialData = data?.data?.data || null;
-  const handleSubmit = (updatedData) => {
-    const payload = { id, updatedData };
+  const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
   let formDefaultData = {};
@@ -132,6 +142,11 @@ function EditUser() {
 
     formDefaultData.isProfilePicAttached = false;
   }
+  const defaultDialogData = {
+    location: '',
+    department: '',
+  };
+
   const isLoading = () => {
     if (isLocationLoading || isDepartmentLoading) {
       return true;
@@ -152,8 +167,11 @@ function EditUser() {
             <EditUserInfo
               mutation={mutation}
               initialData={initialData || formDefaultData}
-              onUpdateUser={handleSubmit}
+              onHandleSubmit={handleSubmit}
+              onCreateLocation={handleCreateLocation}
+              onCreateDepartment={handleCreateDepartment}
               formType="edit"
+              initialDialogData={defaultDialogData}
               editRole={userRole}
               isThisMyProfile
               locationOptions={locationOptions}

@@ -15,8 +15,10 @@ import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { Toast } from '../../utils/helper';
 import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
-import { keys } from '../../state/queryKeys';
+import { useCreateDepartment } from '../../hooks/departmentMutation';
+import { useCreateLocation } from '../../hooks/locationMutation';
 import { Loading } from '../../components/loading';
+import { keys } from '../../state/queryKeys';
 
 function CreateUser() {
   const history = useHistory();
@@ -67,6 +69,14 @@ function CreateUser() {
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
+  const locationMutation = useCreateLocation();
+  const departmentMutation = useCreateDepartment();
+  const handleCreateLocation = (payload) => {
+    locationMutation.mutate(payload);
+  };
+  const handleCreateDepartment = (payload) => {
+    departmentMutation.mutate(payload);
+  };
   const defaultData = {
     firstName: '',
     lastName: '',
@@ -82,6 +92,10 @@ function CreateUser() {
     dob: null,
     file: undefined,
     role: ROLES.USER,
+  };
+  const defaultDialogData = {
+    location: '',
+    department: '',
   };
 
   defaultData.isProfilePicAttached = false;
@@ -108,12 +122,15 @@ function CreateUser() {
           ) : (
             <CreateNewUser
               initialData={defaultData}
+              initialDialogData={defaultDialogData}
               mutation={mutation}
               onUpdateUser={handleSubmit}
               formType="add"
               editRole={role}
               locationOptions={locationOptions}
               departmentOptions={departmentOptions}
+              onCreateLocation={handleCreateLocation}
+              onCreateDepartment={handleCreateDepartment}
             />
           )}
         </WrapInCard>

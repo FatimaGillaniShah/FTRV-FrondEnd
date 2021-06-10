@@ -26,11 +26,11 @@ import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
+import { string, object } from 'yup';
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
-import { parseDate } from '../../../utils/functions';
 import Select from '../../muiSelect';
 
 import MuiDialog from '../../muiDialog';
@@ -57,14 +57,30 @@ const useStyles = makeStyles((theme) => ({
 
 function CreateUser({
   initialData,
+  initialDialogData,
   mutation,
-  onUpdateUser,
+  onHandleSubmit,
+  onCreateLocation,
+  onCreateDepartment,
   formType = 'add',
   editRole = 'user',
   isThisMyProfile = false,
   locationOptions,
   departmentOptions,
 }) {
+  const locationSchema = object().shape({
+    location: string()
+      .required('*Location Required')
+      .noWhitespace()
+      .typeError('* This field cannot contain only blankspaces'),
+  });
+
+  const departmentSchema = object().shape({
+    department: string('*Department Required')
+      .required()
+      .noWhitespace()
+      .typeError('* This field cannot contain only blankspaces'),
+  });
   const classes = useStyles();
   const [showPassword, setshowPassword] = useState(false);
   const [openLocDialog, setOpenLocDialog] = useState(false);
@@ -74,7 +90,6 @@ function CreateUser({
   );
   const history = useHistory();
   const formikRef = useRef();
-
   const handleDialogState = (dialogType) => {
     if (dialogType === 'loc') {
       setOpenLocDialog(!openLocDialog);
@@ -82,7 +97,17 @@ function CreateUser({
       setOpenDepDialog(!openDepDialog);
     }
   };
-
+  const handleDialogSubmit = (values, resetForm) => {
+    if (values.location) {
+      handleDialogState('loc');
+      onCreateLocation({ name: values.location });
+      resetForm();
+    } else {
+      handleDialogState('dep');
+      onCreateDepartment({ name: values.department });
+      resetForm();
+    }
+  };
   const editProfileHeading = 'Edit Profile';
   const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
   const isUserEditingHisProfile = isThisMyProfile && editRole === ROLES.USER;
@@ -100,53 +125,19 @@ function CreateUser({
   return (
     <>
       <Formik
-        initialValues={initialData}
-        innerRef={formikRef}
-        onSubmit={async (values) => {
-          try {
-            const data = values;
-
-            if (data.contactNo)
-              data.contactNo = data.contactNo.replace(/[{()}]| |-|_/g, '');
-
-            const dataFile = new FormData();
-
-            if (data.firstName) dataFile.append('firstName', data.firstName);
-            if (data.lastName) dataFile.append('lastName', data.lastName);
-            if (data.contactNo) dataFile.append('contactNo', data.contactNo);
-            if (data.extension) dataFile.append('extension', data.extension);
-            if (data.title) dataFile.append('title', data.title);
-            if (data.location) dataFile.append('location', data.location);
-            if (data.department) dataFile.append('department', data.department);
-            if (data?.file?.file) {
-              dataFile.append('file', data.file.file);
-            }
-            if (formType === 'add') dataFile.append('email', data.email);
-            if (data.password) {
-              dataFile.append('password', data.password);
-            }
-            if (data.joiningDate) {
-              dataFile.append('joiningDate', parseDate(data.joiningDate));
-            }
-            if (data.dob) {
-              dataFile.append('dob', parseDate(data.dob));
-            }
-            if (data.role) {
-              dataFile.append('role', data.role);
-            }
-            await onUpdateUser(dataFile);
-          } catch (err) {
-            // ...
-          }
-        }}
-        validationSchema={yupValidation}
+        initialValues={initialDialogData}
+        onSubmit={(values, { resetForm }) =>
+          handleDialogSubmit(values, resetForm)
+        }
+        validationSchema={openLocDialog ? locationSchema : departmentSchema}
       >
-        {({ setFieldValue, values, handleChange }) => (
+        {({ submitForm }) => (
           <Form>
             <MuiDialog
               open={openLocDialog}
               onClose={() => handleDialogState('loc')}
               title="Create New Location"
+              handleSubmitForm={submitForm}
             >
               <Box
                 width={[1, 1, 1 / 2]}
@@ -154,9 +145,9 @@ function CreateUser({
                 className={classes.modalOverflow}
               >
                 <Input
-                  name="Location"
+                  name="location"
                   variant="outlined"
-                  OutlinedInputPlaceholder="*Enter Location"
+                  OutlinedInputPlaceholder="*Location"
                   Icon={LocationOnIcon}
                   appendIcon
                   IconClickable={
@@ -166,11 +157,11 @@ function CreateUser({
                 />
               </Box>
             </MuiDialog>
-
             <MuiDialog
               open={openDepDialog}
               onClose={() => handleDialogState('dep')}
               title="Create New Department"
+              handleSubmitForm={submitForm}
             >
               <Box
                 width={[1, 1, 1 / 2]}
@@ -178,7 +169,7 @@ function CreateUser({
                 className={classes.modalOverflow}
               >
                 <Input
-                  name="new-department"
+                  name="department"
                   variant="outlined"
                   OutlinedInputPlaceholder="*Department"
                   Icon={BusinessIcon}
@@ -191,6 +182,18 @@ function CreateUser({
                 />
               </Box>
             </MuiDialog>
+          </Form>
+        )}
+      </Formik>
+
+      <Formik
+        initialValues={initialData}
+        innerRef={formikRef}
+        onSubmit={onHandleSubmit}
+        validationSchema={yupValidation}
+      >
+        {({ setFieldValue, values, handleChange }) => (
+          <Form>
             <Box
               flexWrap="wrap"
               flexDirection="row"
