@@ -4,9 +4,14 @@ import { Form, Formik } from 'formik';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-import { Input } from '../../index';
+import { Input, Select } from '../../index';
 
-function Filters({ onHandleFilterSearch, onClear }) {
+function Filters({
+  onHandleFilterSearch,
+  onClear,
+  locationOptions,
+  departmentOptions,
+}) {
   const clearFilteringSearch = (resetForm) => {
     resetForm();
     onClear();
@@ -16,10 +21,10 @@ function Filters({ onHandleFilterSearch, onClear }) {
       <Formik
         initialValues={{
           name: '',
-          department: '',
+          departmentId: '',
           title: '',
           extension: '',
-          location: '',
+          locationId: '',
         }}
         onSubmit={(values) => {
           onHandleFilterSearch(values);
@@ -32,48 +37,39 @@ function Filters({ onHandleFilterSearch, onClear }) {
               justifyContent="space-between"
               flexDirection={['column', 'column', 'row']}
             >
-              <Box width={[1, 1, 1 / 6]} mb={5} mt={[1, 2, 5]}>
-                <Input
-                  name="name"
-                  OutlinedInputPlaceholder="Name"
-                  variant="outlined"
+              <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
+                <Input name="name" placeholderText="Name" />
+              </Box>
+              <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
+                <Select
+                  name="departmentId"
+                  label="Department"
+                  variant="standard"
+                  options={departmentOptions}
+                  emptyItem
                 />
               </Box>
-              <Box width={[1, 1, 1 / 6]} my={5}>
-                <Input
-                  name="department"
-                  OutlinedInputPlaceholder="Department"
-                  variant="outlined"
+              <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
+                <Input name="title" placeholderText="Designation" />
+              </Box>
+              <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
+                <Select
+                  name="locationId"
+                  label="Location"
+                  variant="standard"
+                  options={locationOptions}
+                  emptyItem
                 />
               </Box>
-              <Box width={[1, 1, 1 / 6]} my={5}>
-                <Input
-                  name="title"
-                  OutlinedInputPlaceholder="Designation"
-                  variant="outlined"
-                />
-              </Box>
-              <Box width={[1, 1, 1 / 6]} my={5}>
-                <Input
-                  name="location"
-                  OutlinedInputPlaceholder="Location"
-                  variant="outlined"
-                />
-              </Box>
-              <Box width={[1, 1, 1 / 6]} my={5}>
-                <Input
-                  name="extension"
-                  OutlinedInputPlaceholder="Extension"
-                  variant="outlined"
-                />
+              <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
+                <Input name="extension" placeholderText="Extension" />
               </Box>
             </Box>
-            <Box display="flex" my={12} flexDirection={['column', 'row']}>
+            <Box display="flex" my={8} flexDirection={['column', 'row']}>
               <Box mr={2}>
                 <Button
                   variant="contained"
                   color="secondary"
-                  fullWidth={false}
                   startIcon={<SearchIcon />}
                   type="submit"
                 >

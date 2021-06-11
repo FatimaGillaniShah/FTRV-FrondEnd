@@ -13,6 +13,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router';
+
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input, TextArea } from '../../index';
@@ -20,6 +21,7 @@ import { BodyTextLarge, H5 } from '../../typography';
 import { useStyles } from './style';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import MuiAutoComplete from '../../muiAutoComplete';
 
 const eventSchema = object().shape({
   title: string()
@@ -53,6 +55,7 @@ export function CreateEventPage({
   initialValues,
   pageTitle,
   onHandleDeleteEvent,
+  locationData,
 }) {
   const classes = useStyles();
   const history = useHistory();
@@ -61,29 +64,10 @@ export function CreateEventPage({
       data: { role },
     },
   } = useAuthContext();
-
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
         <Box ml={3}>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            width={[1, 1, 1 / 2, 1 / 3]}
-          >
-            <Box my={7}>
-              <H5> {pageTitle} Event </H5>
-            </Box>
-            {role === ROLES.ADMIN && (
-              <Box mr={3}>
-                <IconButton onClick={onHandleDeleteEvent}>
-                  <DeleteIcon color="error" />
-                </IconButton>
-              </Box>
-            )}
-          </Box>
-
           <Formik
             enableReinitialize
             initialValues={initialValues}
@@ -94,101 +78,160 @@ export function CreateEventPage({
           >
             {({ setFieldValue, values, errors, handleBlur, touched }) => (
               <Form>
-                <Box>
-                  <Box display="flex" flexDirection="column" pb={10}>
-                    <Box width={[1, 1, 1 / 2, 1 / 3]} my={5}>
-                      <Input
-                        variant="outlined"
-                        OutlinedInputPlaceholder="Title*"
-                        name="title"
-                        appendIcon
-                        Icon={TitleOutlinedIcon}
-                        IconClickable
-                      />
-                    </Box>
-                    <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDateTimePicker
-                          id="startDate"
-                          name="startDate"
-                          label={
-                            <BodyTextLarge className={classes.label}>
-                              Start Date*
-                            </BodyTextLarge>
-                          }
-                          disablePast
-                          inputVariant="outlined"
-                          format="MM/dd/yyyy hh:mm  a"
-                          fullWidth
-                          showTodayButton
-                          value={values.startDate}
-                          InputProps={{ className: classes.dateColor }}
-                          onBlur={handleBlur}
-                          onChange={(value) => {
-                            setFieldValue('startDate', value);
-                          }}
-                          minDateMessage=""
-                          KeyboardButtonProps={{ tabIndex: -1 }}
-                        />
-                      </MuiPickersUtilsProvider>
-                      {errors.startDate && touched.startDate && (
-                        <FormHelperText error>
-                          {errors.startDate}
-                        </FormHelperText>
-                      )}
-                    </Box>
-                    <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDateTimePicker
-                          id="endDate"
-                          name="endDate"
-                          label={
-                            <BodyTextLarge className={classes.label}>
-                              End Date*
-                            </BodyTextLarge>
-                          }
-                          disablePast
-                          inputVariant="outlined"
-                          format="MM/dd/yyyy hh:mm  a"
-                          fullWidth
-                          showTodayButton
-                          value={values.endDate}
-                          onBlur={handleBlur}
-                          InputProps={{ className: classes.dateColor }}
-                          minDateMessage=""
-                          onChange={(value) => {
-                            setFieldValue('endDate', value);
-                          }}
-                          KeyboardButtonProps={{ tabIndex: -1 }}
-                        />
-                      </MuiPickersUtilsProvider>
-                      {errors.endDate && touched.endDate && (
-                        <FormHelperText error>{errors.endDate}</FormHelperText>
-                      )}
-                    </Box>
-                    <Box width={[1, 1, 1 / 2, 1 / 3]} mb={5}>
-                      <TextArea name="description" />
-                    </Box>
-                  </Box>
-                  <Box display="flex">
-                    <Box mb={5}>
-                      <Button
-                        type="submit"
-                        color="secondary"
-                        variant="contained"
-                        startIcon={<SaveIcon />}
+                <Box
+                  flexWrap="wrap"
+                  flexDirection="row"
+                  p={4}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Box width={[1, '70%']}>
+                    <Box width={1} pt={5} flexWrap="wrap" display="flex" px={2}>
+                      <Box
+                        width={1}
+                        pt={5}
+                        flexWrap="wrap"
+                        display="flex"
+                        px={2}
                       >
-                        {id ? 'Update' : 'Create'}
-                      </Button>
-                    </Box>
-                    <Box ml={2}>
-                      <Button
-                        variant="text"
-                        startIcon={<ClearIcon />}
-                        onClick={() => history.goBack()}
+                        <Box width={[1, '94%']} mt={10} px={3}>
+                          <Box width={1} textAlign="center">
+                            <H5> {pageTitle} Event </H5>
+                          </Box>
+                        </Box>
+                        <Box
+                          width={[1, '6%']}
+                          mt={5}
+                          px={3}
+                          justifyContent="flex-end"
+                        >
+                          {role === ROLES.ADMIN && (
+                            <Box mr={3}>
+                              <IconButton onClick={onHandleDeleteEvent}>
+                                <DeleteIcon color="error" />
+                              </IconButton>
+                            </Box>
+                          )}
+                        </Box>
+
+                        <Box width={[1, 1 / 2]} mt={10} px={3}>
+                          <Input
+                            variant="outlined"
+                            OutlinedInputPlaceholder="Title*"
+                            name="title"
+                            appendIcon
+                            Icon={TitleOutlinedIcon}
+                            IconClickable
+                          />
+                        </Box>
+                        <Box width={[1, 1 / 2]} mt={10} px={3}>
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDateTimePicker
+                              id="startDate"
+                              name="startDate"
+                              label={
+                                <BodyTextLarge className={classes.label}>
+                                  Start Date*
+                                </BodyTextLarge>
+                              }
+                              disablePast
+                              inputVariant="outlined"
+                              format="MM/dd/yyyy hh:mm  a"
+                              fullWidth
+                              showTodayButton
+                              value={values.startDate}
+                              InputProps={{ className: classes.dateColor }}
+                              onBlur={handleBlur}
+                              onChange={(value) => {
+                                setFieldValue('startDate', value);
+                              }}
+                              minDateMessage=""
+                              KeyboardButtonProps={{ tabIndex: -1 }}
+                            />
+                          </MuiPickersUtilsProvider>
+                          {errors.startDate && touched.startDate && (
+                            <FormHelperText error>
+                              {errors.startDate}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                        <Box width={[1, 1 / 2]} mt={10} px={3}>
+                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDateTimePicker
+                              id="endDate"
+                              name="endDate"
+                              label={
+                                <BodyTextLarge className={classes.label}>
+                                  End Date*
+                                </BodyTextLarge>
+                              }
+                              disablePast
+                              inputVariant="outlined"
+                              format="MM/dd/yyyy hh:mm  a"
+                              fullWidth
+                              showTodayButton
+                              value={values.endDate}
+                              onBlur={handleBlur}
+                              InputProps={{ className: classes.dateColor }}
+                              minDateMessage=""
+                              onChange={(value) => {
+                                setFieldValue('endDate', value);
+                              }}
+                              KeyboardButtonProps={{ tabIndex: -1 }}
+                            />
+                          </MuiPickersUtilsProvider>
+                          {errors.endDate && touched.endDate && (
+                            <FormHelperText error>
+                              {errors.endDate}
+                            </FormHelperText>
+                          )}
+                        </Box>
+                        <Box width={[1, 1 / 2]} mt={10} px={3}>
+                          <MuiAutoComplete
+                            id="location"
+                            limitTags={3}
+                            options={locationData?.rows.map(
+                              (option) => option.name
+                            )}
+                            filterSelectedOptions
+                            variant="outlined"
+                            name="location"
+                            label="Location"
+                            placeholder="Select Locations"
+                          />
+                        </Box>
+                        <Box width={[1, 1 / 2]} mt={10} px={3}>
+                          <TextArea name="description" />
+                        </Box>
+                      </Box>
+                      <Box
+                        display="flex"
+                        flexWrap="wrap"
+                        justifyContent="center"
+                        width={1}
+                        mt={10}
                       >
-                        Cancel
-                      </Button>
+                        <Box mb={7}>
+                          <Button
+                            type="submit"
+                            color="secondary"
+                            variant="contained"
+                            startIcon={<SaveIcon />}
+                          >
+                            {id ? 'Update' : 'Create'}
+                          </Button>
+                        </Box>
+                        <Box mx={1}>
+                          <Button
+                            variant="text"
+                            startIcon={<ClearIcon />}
+                            onClick={() => history.goBack()}
+                          >
+                            Cancel
+                          </Button>
+                        </Box>
+                      </Box>
                     </Box>
                   </Box>
                 </Box>
@@ -211,6 +254,7 @@ CreateEventPage.defaultProps = {
     startDate: new Date(),
     endDate: new Date(),
     description: '',
+    location: '',
   },
 };
 
