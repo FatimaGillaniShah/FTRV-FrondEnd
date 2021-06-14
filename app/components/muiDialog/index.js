@@ -16,6 +16,7 @@ export default function MuiDialog({
   fullWidth,
   maxWidth,
   children,
+  handleSubmitForm,
 }) {
   return (
     <Dialog
@@ -29,7 +30,12 @@ export default function MuiDialog({
       <DialogContent>{children}</DialogContent>
       <Box display="flex" px={5}>
         <DialogActions>
-          <Button onClick={onClose} color="primary" variant="contained">
+          <Button
+            onClick={handleSubmitForm}
+            type="submit"
+            color="primary"
+            variant="contained"
+          >
             Create
           </Button>
           <Button onClick={onClose} color="primary">
@@ -45,6 +51,7 @@ MuiDialog.propTypes = {
   fullWidth: PropTypes.bool,
   maxWidth: PropTypes.string,
   onClose: PropTypes.func,
+  handleSubmitForm: PropTypes.func,
   open: PropTypes.bool,
   title: PropTypes.string,
   children: PropTypes.element,

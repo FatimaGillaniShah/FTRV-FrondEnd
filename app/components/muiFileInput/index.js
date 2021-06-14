@@ -1,10 +1,12 @@
 import { Box, Button, IconButton, Tooltip } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   MIN_UPLOADABLE_FILE_SIZE_IN_MBS,
   MAX_UPLOADABLE_FILE_SIZE_IN_MBS,
+  SUPPORTED_FORMATS,
 } from '../../utils/constants';
-import { Toast } from '../../utils/helper';
+import { isFunction, Toast } from '../../utils/helper';
 
 export function MuiFileInput({
   setImgFile,
@@ -12,18 +14,18 @@ export function MuiFileInput({
   setFieldValue,
   name,
   acceptTypes,
-  toolTipTitle = 'Select File',
-  buttonText = 'Upload',
+  toolTipTitle,
+  buttonText,
   btnIcon,
-  variant = 'contained',
-  iconColor = 'secondary',
+  variant,
+  iconColor,
   fullWidth,
   size,
-  isIcon = false,
-  dimensionValidation = false,
+  isIcon,
+  dimensionValidation,
   minimumDimensions,
+  onFilechange,
 }) {
-  const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
   const inputEl = useRef(null);
   const [error, setError] = useState(undefined);
 
@@ -62,7 +64,7 @@ export function MuiFileInput({
               (image?.height < minimumDimensions.height ||
                 image?.width < minimumDimensions.width);
             if (dimensionsValid) {
-              setError('Error: File size too small');
+              setError('Error: Minimum dimensions are 900 x 200');
             }
             fileObj = {
               height: image.height,
@@ -70,8 +72,9 @@ export function MuiFileInput({
               file,
             };
             if (!dimensionsValid) {
-              setFieldValue(name, fileObj);
-              setImgFile(reader.result);
+              if (isFunction(setFieldValue)) setFieldValue(name, fileObj);
+              if (isFunction(onFilechange)) onFilechange(fileObj);
+              if (isFunction(setImgFile)) setImgFile(reader.result);
             }
           };
         };
@@ -119,3 +122,32 @@ export function MuiFileInput({
     </>
   );
 }
+
+MuiFileInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  fullWidth: PropTypes.bool,
+  variant: PropTypes.string,
+  setImgFile: PropTypes.func,
+  setFieldValue: PropTypes.func,
+  acceptTypes: PropTypes.string,
+  toolTipTitle: PropTypes.string,
+  buttonText: PropTypes.string,
+  size: PropTypes.string,
+  dimensionValidation: PropTypes.bool,
+  onFilechange: PropTypes.func,
+  isIcon: PropTypes.bool,
+  minimumDimensions: PropTypes.shape({
+    height: PropTypes.number,
+    width: PropTypes.number,
+  }),
+  iconColor: PropTypes.string,
+};
+MuiFileInput.defaultProps = {
+  fullWidth: true,
+  toolTipTitle: 'Select File',
+  buttonText: 'Upload',
+  variant: 'contained',
+  iconColor: 'secondary',
+  isIcon: false,
+  dimensionValidation: false,
+};

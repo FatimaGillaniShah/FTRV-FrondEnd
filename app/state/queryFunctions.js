@@ -21,6 +21,8 @@ const {
   CATEGORY,
   LOCATIONS,
   DEPARTMENTS,
+  GET_BANNER_IMAGE,
+  UPDATE_BANNER_IMAGE,
 } = APIS;
 
 // USER CRUD
@@ -177,6 +179,10 @@ export const updateLocation = ({ id, ...payload }) =>
   http.put(`${LOCATIONS}/${id}`, payload);
 export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
 
+export const getBannerImage = () => http.get(GET_BANNER_IMAGE);
+
+export const updateBannerImage = (payload) =>
+  http.put(UPDATE_BANNER_IMAGE, payload);
 export const deleteDepartment = (payload) =>
   http.delete(DEPARTMENTS, { data: { ids: payload } });
 

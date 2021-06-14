@@ -115,7 +115,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                         buttonText={
                           id ? 'Update thumbnail' : 'Upload thumbnail'
                         }
-                        BtnIcon={Add}
+                        btnIcon={<Add />}
                       />
                     </Box>
                   </Box>

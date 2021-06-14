@@ -4,6 +4,7 @@ module.exports = {
       '@babel/preset-env',
       {
         modules: false,
+        targets: { node: 12 },
       },
     ],
     '@babel/preset-react',
@@ -13,6 +14,7 @@ module.exports = {
     'styled-components',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
+    'lodash',
     [
       'babel-plugin-import',
       {
@@ -43,6 +45,10 @@ module.exports = {
         '@babel/plugin-transform-react-inline-elements',
         '@babel/plugin-transform-react-constant-elements',
       ],
+    },
+    development: {
+      only: ['app'],
+      plugins: ['lodash'],
     },
     test: {
       plugins: [

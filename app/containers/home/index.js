@@ -1,27 +1,68 @@
 import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/loading';
-import Home from '../../components/pages/home/loadable';
+import Home from '../../components/pages/home';
 import { useAuthContext } from '../../context/authContext';
-import { fetchEvents } from '../../state/queryFunctions';
+import {
+  fetchEvents,
+  getBannerImage,
+  updateBannerImage,
+} from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { navigateTo } from '../../utils/helper';
+import { Toast, navigateTo } from '../../utils/helper';
 
 function HomeContainer() {
   const { user } = useAuthContext();
   const history = useHistory();
-  const dailyQuote =
-    '"lorem ipsum dolor sit amet consectetur adipisicing elitNemo lorem ipsum dolor sit amet consectetur adipisicing elit Nemo"';
+  const { data, isEventsLoading } = useQuery(keys.events, fetchEvents);
+
+  const {
+    data: image,
+    isLoading: isImageLoading,
+    refetch: refetchBannerImage,
+  } = useQuery(keys.bannerImage, getBannerImage);
+
+  const onUpdateImageSuccess = () => {
+    Toast({
+      icon: 'success',
+      title: `Image Updated Successfully`,
+    });
+    refetchBannerImage();
+  };
+  const onUpdateImageError = ({
+    response: {
+      data: { message },
+    },
+  }) => {
+    Toast({
+      icon: 'error',
+      title: message || 'Some error occurred',
+    });
+  };
+
+  const { mutate, isLoading: isUpdateImageLoading } = useMutation(
+    updateBannerImage,
+    {
+      onSuccess: onUpdateImageSuccess,
+      onError: onUpdateImageError,
+    }
+  );
+
   useEffect(() => {
     if (!user || !user.isAuthenticated) {
       navigateTo(history, '/');
     }
   }, []);
-  const { data, isLoading } = useQuery(keys.events, fetchEvents);
 
-  const defaultData = { file: undefined };
+  const handleImageChange = (fileObj) => {
+    if (fileObj?.file) {
+      const formData = new FormData();
+      formData.append('file', fileObj?.file);
+      mutate(formData);
+    }
+  };
 
   return (
     <>
@@ -29,13 +70,16 @@ function HomeContainer() {
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
-      {isLoading && <Loading />}
-      <Home
-        initialData={defaultData}
-        dailyQuote={dailyQuote}
-        isLoading={isLoading}
-        eventList={data?.data?.data?.rows}
-      />
+      {isEventsLoading ? (
+        <Loading />
+      ) : (
+        <Home
+          isImageLoading={isUpdateImageLoading || isImageLoading}
+          eventList={data?.data?.data?.rows}
+          fileName={image?.data?.data?.data?.fileName}
+          onHandleImageChange={handleImageChange}
+        />
+      )}
     </>
   );
 }

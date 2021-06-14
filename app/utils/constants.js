@@ -12,7 +12,14 @@ export const LOCAL_STORAGE_ENTRIES = { user: 'user' };
 export const MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS = 10; // Mb
 export const MIN_UPLOADABLE_IMAGE_SIZE_IN_MBS = 0.1; // Mb
 export const MIN_UPLOADABLE_FILE_SIZE_IN_MBS = 0; // Mb
-export const MAX_UPLOADABLE_FILE_SIZE_IN_MBS = 10; // Mb
+export const MAX_UPLOADABLE_FILE_SIZE_IN_MBS = 100; // Mb
+export const SUPPORTED_FORMATS = [
+  'image/jpg',
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+];
+
 export const ROLES = {
   ADMIN: 'admin',
   USER: 'user',
@@ -43,4 +50,10 @@ export const APIS = {
   CATEGORY: '/linkCategories',
   LOCATIONS: '/locations',
   DEPARTMENTS: '/departments',
+  GET_BANNER_IMAGE: 'bannerImage',
+  UPDATE_BANNER_IMAGE: 'bannerImage',
+  DELETE_DEPARTMENT: '/departments',
+  CREATE_DEPARTMENT: '/departments',
+  GET_DEPARTMENT: '/departments',
+  UPDATE_DEPARTMENT: 'departments',
 };
