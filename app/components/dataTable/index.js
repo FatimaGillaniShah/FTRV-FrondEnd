@@ -9,11 +9,12 @@ import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { get } from 'lodash';
+import { DataGrid } from '@material-ui/data-grid';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import { getComparator, stableSort } from '../../utils/helper';
 import { CheckBox } from '../index';
 import { BodyTextSmall } from '../typography';
-import { useStyles } from './styles';
+import { useStyles, useStyles2 } from './styles';
 import EnhancedTableHead from './tableHead';
 import { useAuthContext } from '../../context/authContext';
 
@@ -131,6 +132,7 @@ export function DataTable({
         </TableCell>
       )}
 
+      {console.log(headCells)}
       {headCells.map((header) => {
         const Buttons = header.buttons || null;
         const cellValue = get(row, header.id.toString());
@@ -232,6 +234,28 @@ export function DataTable({
         page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </Box>
+  );
+}
+
+export function DataTable2({ rows, columns, ...props }) {
+  const customColumn = columns?.map((val) => {
+    const column = val;
+    column.sortable = false;
+    column.disableColumnMenu = true;
+    return column;
+  });
+
+  const classes2 = useStyles2();
+  return (
+    <Box className={classes2.root}>
+      <DataGrid
+        columns={customColumn}
+        rows={rows}
+        autoHeight
+        paginationMode="server"
+        {...props}
       />
     </Box>
   );

@@ -5,6 +5,7 @@ import {
   withStyles,
 } from '@material-ui/core/styles';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
+import { colors } from '../../theme/colors';
 
 // TABLE STYLES
 
@@ -48,6 +49,53 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Grid Styles
+
+const useStyles2 = makeStyles((theme) => ({
+  root: {
+    '& .MuiDataGrid-columnsContainer': {
+      backgroundColor: theme.palette.primary.light,
+      lineHeight: '52px !important',
+      maxHeight: '52px !important',
+      minHeight: '52px !important',
+    },
+    '& .MuiDataGrid-window': {
+      backgroundColor: colors.bgColor.secondary,
+    },
+    '& .MuiDataGrid-columnSeparator': { display: 'none' },
+    '& .super-app.paid': {
+      color: colors.green,
+    },
+    '& .super-app.open': {
+      color: colors.green,
+    },
+    '& .super-app.redeemed': {
+      color: colors.green,
+    },
+    '& .super-app.sold': {
+      color: colors.red,
+    },
+    '& .super-app.adjudicated': {
+      color: colors.red,
+    },
+    '& .super-app.closed': {
+      color: colors.red,
+    },
+    '& .super-app.unpaid': {
+      color: colors.grey,
+    },
+    '& .super-app.pending': {
+      color: colors.grey,
+    },
+    '& .super-app.reviewed': {
+      color: colors.orange,
+    },
+    '& .MuiDataGrid-footer': {
+      justifyContent: 'center',
+    },
+  },
+}));
+
 // TableSortLabel CUSTOM STYLING
 
 const StyledTableSortLabel = withStyles(() =>
@@ -68,4 +116,4 @@ const StyledTableSortLabel = withStyles(() =>
   })
 )(TableSortLabel);
 
-export { useStyles, StyledTableSortLabel };
+export { useStyles, useStyles2, StyledTableSortLabel };
