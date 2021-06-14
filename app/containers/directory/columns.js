@@ -32,7 +32,7 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
         <>
           <IconButton
             disabled={disabled}
-            onClick={() => navigateTo(history, `directory/edit/${data.id}`)}
+            onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
           >
             <EditIcon color="secondary" />
           </IconButton>

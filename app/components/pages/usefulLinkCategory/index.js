@@ -33,7 +33,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
               variant="contained"
               color="secondary"
               startIcon={<AddIcon />}
-              onClick={() => navigateTo(history, 'link-categories/add')}
+              onClick={() => navigateTo(history, '/link-categories/add')}
             >
               New Category
             </Button>

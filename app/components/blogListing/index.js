@@ -51,7 +51,7 @@ export function BlogListing({
               variant="contained"
               color="secondary"
               startIcon={<AddIcon />}
-              onClick={() => navigateTo(history, 'blogs/add')}
+              onClick={() => navigateTo(history, '/blogs/add')}
             >
               New Blog
             </Button>
