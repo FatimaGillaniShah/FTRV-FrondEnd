@@ -117,7 +117,12 @@ function EditUser() {
     if (initialData.dob) {
       initialData.dob = parseDate(initialData.dob);
     }
-
+    if (initialData.locationObj) {
+      initialData.locationId = initialData.locationObj.id;
+    }
+    if (initialData.departmentObj) {
+      initialData.departmentId = initialData.departmentObj.id;
+    }
     if (!initialData.role) {
       initialData.role = userRole;
     }
