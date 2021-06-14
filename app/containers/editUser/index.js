@@ -10,7 +10,12 @@ import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import { getUserById, updateUser } from 'state/queryFunctions';
+import {
+  getUserById,
+  updateUser,
+  getLocations,
+  getDepartments,
+} from 'state/queryFunctions';
 import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
@@ -18,18 +23,29 @@ import EditUserInfo from '../../components/pages/createUser';
 import { parseDate } from '../../utils/functions';
 import { Toast } from '../../utils/helper';
 import { ROLES } from '../../utils/constants';
+import { useCreateDepartment } from '../../hooks/departmentMutation';
+import { useCreateLocation } from '../../hooks/locationMutation';
 import { useAuthContext } from '../../context/authContext';
 
 function EditUser() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const history = useHistory();
+  const locationMutation = useCreateLocation();
+  const departmentMutation = useCreateDepartment();
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
-
+  const { data: locations, isLocationLoading } = useQuery(
+    keys.location,
+    getLocations
+  );
+  const { data: deparments, isDepartmentLoading } = useQuery(
+    keys.department,
+    getDepartments
+  );
   const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
 
   const mutation = useMutation(updateUser, {
@@ -56,11 +72,28 @@ function EditUser() {
       });
     },
   });
-
+  const locationOptions = locations?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
+  const departmentOptions = deparments?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
   const initialData = data?.data?.data || null;
   const handleSubmit = (updatedData) => {
     const payload = { id, updatedData };
     mutation.mutate(payload);
+  };
+  const handleCreateLocation = (payload) => {
+    locationMutation.mutate(payload);
+  };
+  const handleCreateDepartment = (payload) => {
+    departmentMutation.mutate(payload);
+  };
+  const defaultDialogData = {
+    location: '',
+    department: '',
   };
 
   const defaultData = {
@@ -68,8 +101,8 @@ function EditUser() {
     lastName: '',
     password: '',
     contactNo: '',
-    department: '',
-    location: '',
+    locationId: '',
+    departmentId: '',
     title: '',
     email: '',
     extension: '',
@@ -99,6 +132,13 @@ function EditUser() {
       initialData.role = ROLES.USER;
     }
   }
+  const onLoading = () => {
+    if (isLoading || isLocationLoading || isDepartmentLoading) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       <Helmet>
@@ -108,14 +148,19 @@ function EditUser() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading ? (
+          {onLoading() ? (
             <Loading />
           ) : (
             <EditUserInfo
               mutation={mutation}
               initialData={initialData || defaultData}
+              initialDialogData={defaultDialogData}
               onHandleSubmit={handleSubmit}
               formType="edit"
+              locationOptions={locationOptions}
+              departmentOptions={departmentOptions}
+              onCreateLocation={handleCreateLocation}
+              onCreateDepartment={handleCreateDepartment}
               editRole={role}
             />
           )}

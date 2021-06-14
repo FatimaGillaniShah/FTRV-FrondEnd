@@ -34,6 +34,8 @@ export const yupUserFormValidaton = object().shape({
     .required('*Last Name Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
+  locationId: string().required('*Location Required'),
+  departmentId: string().required('*Department Required'),
   title: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')

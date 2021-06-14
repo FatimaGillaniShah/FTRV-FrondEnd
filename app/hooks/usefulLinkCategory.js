@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
-import { Toast } from '../components';
+import { Toast } from '../utils/helper';
 import { deleteLinkCategory } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
 
