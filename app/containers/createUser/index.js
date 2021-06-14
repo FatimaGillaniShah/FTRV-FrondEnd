@@ -124,7 +124,7 @@ function CreateUser() {
               initialData={defaultData}
               initialDialogData={defaultDialogData}
               mutation={mutation}
-              onUpdateUser={handleSubmit}
+              onHandleSubmit={handleSubmit}
               formType="add"
               editRole={role}
               locationOptions={locationOptions}

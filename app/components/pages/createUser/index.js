@@ -34,6 +34,7 @@ import { yupUserFormValidaton } from './yupUserFormValidation';
 import Select from '../../muiSelect';
 
 import MuiDialog from '../../muiDialog';
+import { parseDate } from '../../../utils/functions';
 
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
@@ -122,6 +123,42 @@ function CreateUser({
     }
   }, [mutation.isSuccess]);
 
+  const handleSubmitUser = async (values) => {
+    const data = values;
+
+    if (data.contactNo)
+      data.contactNo = data.contactNo.replace(/[{()}]| |-|_/g, '');
+
+    const dataFile = new FormData();
+
+    if (data.firstName) dataFile.append('firstName', data.firstName);
+    if (data.lastName) dataFile.append('lastName', data.lastName);
+    if (data.contactNo) dataFile.append('contactNo', data.contactNo);
+    if (data.extension) dataFile.append('extension', data.extension);
+    if (data.title) dataFile.append('title', data.title);
+    if (data.location) dataFile.append('location', data.location);
+    if (data.department) dataFile.append('department', data.department);
+    if (data?.file?.file) {
+      dataFile.append('file', data.file.file);
+    }
+    if (formType === 'add') dataFile.append('email', data.email);
+    if (data.password) {
+      dataFile.append('password', data.password);
+    }
+    if (data.joiningDate) {
+      dataFile.append('joiningDate', parseDate(data.joiningDate));
+    }
+    if (data.dob) {
+      dataFile.append('dob', parseDate(data.dob));
+    }
+    if (data.role) {
+      dataFile.append('role', data.role);
+    }
+    if (data.locationId) dataFile.append('locationId', data.locationId);
+    if (data.departmentId) dataFile.append('departmentId', data.departmentId);
+    await onHandleSubmit(dataFile);
+  };
+
   return (
     <>
       <Formik
@@ -189,7 +226,7 @@ function CreateUser({
       <Formik
         initialValues={initialData}
         innerRef={formikRef}
-        onSubmit={onHandleSubmit}
+        onSubmit={handleSubmitUser}
         validationSchema={yupValidation}
       >
         {({ setFieldValue, values, handleChange }) => (

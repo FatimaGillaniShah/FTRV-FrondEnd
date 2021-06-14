@@ -34,23 +34,6 @@ export const yupUserFormValidaton = object().shape({
     .required('*Last Name Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
-  location: string()
-    .min(1, 'Too Short!')
-    .max(200, 'Too Long!')
-    // .matches(
-    //   /^[#,-/ a-zA-Z0-9]*$/,
-    //   'Location can only include alphabets, numerics,whitespaces and [#,-./]'
-    // )
-    .required('*Location Required')
-    .noWhitespace()
-    .typeError('* This field cannot contain only blankspaces'),
-  department: string()
-    .required('*Department Required')
-    .min(1, 'Too Short!')
-    .max(200, 'Too Long!')
-    .matches(/^[a-zA-Z ]*$/, 'Department can only include alphabets ')
-    .noWhitespace()
-    .typeError('* This field cannot contain only blankspaces'),
   title: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')

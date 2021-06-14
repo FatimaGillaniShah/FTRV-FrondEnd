@@ -99,7 +99,8 @@ function EditUser() {
     label: val.name,
   }));
   const initialData = data?.data?.data || null;
-  const handleSubmit = (payload) => {
+  const handleSubmit = (updatedData) => {
+    const payload = { id, updatedData };
     mutation.mutate(payload);
   };
   let formDefaultData = {};

@@ -114,7 +114,7 @@ function EditUser() {
             <EditUserInfo
               mutation={mutation}
               initialData={initialData || defaultData}
-              onUpdateUser={handleSubmit}
+              onHandleSubmit={handleSubmit}
               formType="edit"
               editRole={role}
             />
