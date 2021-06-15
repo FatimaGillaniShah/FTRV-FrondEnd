@@ -9,7 +9,7 @@ import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { get } from 'lodash';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import { getComparator, stableSort } from '../../utils/helper';
 import { CheckBox } from '../index';
@@ -132,7 +132,6 @@ export function DataTable({
         </TableCell>
       )}
 
-      {console.log(headCells)}
       {headCells.map((header) => {
         const Buttons = header.buttons || null;
         const cellValue = get(row, header.id.toString());
@@ -239,11 +238,23 @@ export function DataTable({
   );
 }
 
+const changeHeaderArray = (arr) =>
+  arr.map((val) => ({
+    field: val.id,
+    headerName: val.label,
+    editable: true,
+    description: val.label,
+    type: val.numeric && 'number',
+    sortable: !val.numeric,
+  }));
+
 export function DataTable2({ rows, columns, ...props }) {
-  const customColumn = columns?.map((val) => {
+  const res = changeHeaderArray(columns);
+  console.log('columns', columns);
+
+  const customColumn = res?.map((val) => {
     const column = val;
-    column.sortable = false;
-    column.disableColumnMenu = true;
+    column.disableColumnMenu = false;
     return column;
   });
 
@@ -254,8 +265,11 @@ export function DataTable2({ rows, columns, ...props }) {
         columns={customColumn}
         rows={rows}
         autoHeight
+        pageSize={PAGE_SIZE}
         paginationMode="server"
         {...props}
+        checkboxSelection
+        components={{ Toolbar: GridToolbar }}
       />
     </Box>
   );

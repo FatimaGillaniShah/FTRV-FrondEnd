@@ -15,7 +15,7 @@ import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
 import Search from '../../components/pages/directory/search';
 import Filters from '../../components/pages/directory/filters';
-import DataTable from '../../components/dataTable';
+import DataTable, { DataTable2 } from '../../components/dataTable';
 import TableButtons from './tableButtons';
 import { Loading } from '../../components/loading';
 import { useAuthContext } from '../../context/authContext';
@@ -179,20 +179,23 @@ function DirectoryContainer() {
             )}
 
             {!isLoading && !mutation.isLoading && (
-              <DataTable
-                data={tableData?.rows}
-                headCells={headCells}
-                setSelected={setSelected}
-                selected={selected}
-                sortOrder={sortOrder}
-                sortColumn={sortColumn}
-                onChangeSort={onChangeSort}
-                isServerSide={isServerSide}
-                matchUserIdWithIDS
-                count={tableData?.count || 0}
-                handleServerPageNumber={handleServerPageNumber}
-                handleServerPageSize={handleServerPageSize}
-              />
+              <>
+                <DataTable
+                  data={tableData?.rows}
+                  headCells={headCells}
+                  setSelected={setSelected}
+                  selected={selected}
+                  sortOrder={sortOrder}
+                  sortColumn={sortColumn}
+                  onChangeSort={onChangeSort}
+                  isServerSide={isServerSide}
+                  matchUserIdWithIDS
+                  count={tableData?.count || 0}
+                  handleServerPageNumber={handleServerPageNumber}
+                  handleServerPageSize={handleServerPageSize}
+                />
+                <DataTable2 rows={tableData?.rows} columns={headCells} />
+              </>
             )}
           </WrapInCard>
         </Box>
