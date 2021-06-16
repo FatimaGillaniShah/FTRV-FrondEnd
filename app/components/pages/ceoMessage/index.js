@@ -33,7 +33,7 @@ export default function CeoMessage({ ceoMessageData }) {
         >
           <Avatar
             className={classes.ceoImage}
-            src={`${process.env.API_ASSETS_URL}${ceoMessageData.avatar}`}
+            src={ceoMessageData.avatar}
             alt="person"
           ></Avatar>
         </Box>

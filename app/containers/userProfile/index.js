@@ -108,8 +108,6 @@ function EditUser() {
   if (initialData) {
     initialData.password = '';
     initialData.confirmPassword = '';
-    if (initialData.avatar && !initialData.avatar.includes('http'))
-      initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);

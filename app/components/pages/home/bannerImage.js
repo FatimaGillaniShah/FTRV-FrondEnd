@@ -12,9 +12,7 @@ import bannerImagePlaceholder from '../../../images/group.png';
 
 function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
   const classes = useStyles();
-  const bannerImageURL = fileName
-    ? process.env.API_ASSETS_URL + encodeURIComponent(fileName)
-    : bannerImagePlaceholder;
+  const bannerImageURL = fileName || bannerImagePlaceholder;
   const {
     user: {
       data: { role },

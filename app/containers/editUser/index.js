@@ -115,9 +115,6 @@ function EditUser() {
     initialData.password = '';
     initialData.confirmPassword = '';
 
-    if (initialData.avatar)
-      initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
-
     if (initialData.location) {
       initialData.locationId = initialData.location.id;
     }
