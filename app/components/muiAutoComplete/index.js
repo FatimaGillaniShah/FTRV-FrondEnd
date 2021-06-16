@@ -1,26 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+import { Field } from 'formik';
 
 export default function MuiAutoComplete({
   id,
   options,
   name,
   label,
+  value,
+  getOptionLabel,
   variant,
   placeholder,
   limitTags,
+  component,
+  onHandleChange,
 }) {
   return (
     <Autocomplete
+      id={id}
+      name={name}
       limitTags={limitTags}
       multiple
-      id={id}
       options={options}
+      value={value}
+      getOptionLabel={getOptionLabel}
+      onChange={onHandleChange}
       renderInput={(params) => (
-        <TextField
-          name={name}
+        <Field
+          component={component}
           {...params}
           variant={variant}
           label={label}

@@ -75,7 +75,7 @@ function CreateEvent() {
     startDate: new Date(),
     endDate: new Date(),
     description: '',
-    location: '',
+    locationIds: [],
   };
   const onLoading = () => {
     if (isLoading || isLocationLoading || loading || mutation.isLoading) {
