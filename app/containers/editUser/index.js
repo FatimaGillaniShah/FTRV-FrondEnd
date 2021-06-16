@@ -118,11 +118,11 @@ function EditUser() {
     if (initialData.avatar)
       initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
-    if (initialData.locationObj) {
-      initialData.locationId = initialData.locationObj.id;
+    if (initialData.location) {
+      initialData.locationId = initialData.location.id;
     }
-    if (initialData.departmentObj) {
-      initialData.departmentId = initialData.departmentObj.id;
+    if (initialData.department) {
+      initialData.departmentId = initialData.department.id;
     }
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
