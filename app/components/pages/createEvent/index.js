@@ -47,7 +47,6 @@ const eventSchema = object().shape({
     .required('*Description Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
-  locationIds: string().required('*Location Required'),
 });
 
 export function CreateEventPage({
@@ -65,7 +64,6 @@ export function CreateEventPage({
       data: { role },
     },
   } = useAuthContext();
-  const locationRows = locationData.rows;
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -200,7 +198,7 @@ export function CreateEventPage({
                             name="locationIds"
                             multiple
                             limitTags={2}
-                            options={locationRows}
+                            options={locationData}
                             value={values.locationIds}
                             getOptionLabel={(location) => location.name}
                             onHandleChange={(event, value) => {

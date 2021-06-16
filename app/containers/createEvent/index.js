@@ -97,7 +97,7 @@ function CreateEvent() {
           initialValues={id ? data?.data?.data : initialValues}
           pageTitle={id ? 'Update' : 'Create New'}
           onHandleDeleteEvent={handleDeleteEvent}
-          locationData={locationData?.data?.data}
+          locationData={locationData?.data?.data?.rows}
         />
       )}
     </>
