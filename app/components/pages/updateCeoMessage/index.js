@@ -1,5 +1,5 @@
 import { Avatar, Box, Button } from '@material-ui/core';
-import { TextArea, Input } from 'components';
+import { TextArea } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -77,24 +77,15 @@ function AddCeoMessage({ mutation, onHandleSubmit, value }) {
                       minWidth: '118px',
                     }}
                   >
-                    <Input
+                    <MuiFileInput
                       name="file"
-                      inputID="file"
-                      inputType="file"
-                      disableUnderline
-                      inputComponent={(props) => (
-                        <MuiFileInput
-                          name="file"
-                          mutation={mutation}
-                          setImgFile={setImgFile}
-                          setFieldValue={setFieldValue}
-                          acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                          toolTipTitle="Select profile image"
-                          buttonText="Upload Image"
-                          btnIcon={<Add />}
-                          {...props}
-                        />
-                      )}
+                      mutation={mutation}
+                      setImgFile={setImgFile}
+                      setFieldValue={setFieldValue}
+                      acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
+                      toolTipTitle="Select profile image"
+                      buttonText="Upload Image"
+                      btnIcon={<Add />}
                     />
                   </Box>
                 </Box>

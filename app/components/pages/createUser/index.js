@@ -69,7 +69,6 @@ function CreateUser({
   locationOptions,
   departmentOptions,
 }) {
-  console.log('-------here', initialData);
   const locationSchema = object().shape({
     location: string()
       .required('*Location Required')
@@ -266,24 +265,15 @@ function CreateUser({
                     minWidth: '118px',
                   }}
                 >
-                  <Input
+                  <MuiFileInput
                     name="file"
-                    inputID="file"
-                    inputType="file"
-                    disableUnderline
-                    inputComponent={(props) => (
-                      <MuiFileInput
-                        name="file"
-                        mutation={mutation}
-                        setImgFile={setImgFile}
-                        setFieldValue={setFieldValue}
-                        acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                        toolTipTitle="Select profile image"
-                        buttonText="Upload Image"
-                        btnIcon={<Add />}
-                        {...props}
-                      />
-                    )}
+                    mutation={mutation}
+                    setImgFile={setImgFile}
+                    setFieldValue={setFieldValue}
+                    acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
+                    toolTipTitle="Select profile image"
+                    buttonText="Upload Image"
+                    btnIcon={<Add />}
                   />
                 </Box>
               </Box>
