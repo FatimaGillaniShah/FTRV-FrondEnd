@@ -9,7 +9,7 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { H5 } from '../../typography';
 import { Poll } from '../../poll';
-import { Modal } from '../../../utils/helper';
+import { Modal, navigateTo } from '../../../utils/helper';
 import NotExist from '../notExist/index';
 
 export function PollsPage({ data }) {
@@ -31,7 +31,7 @@ export function PollsPage({ data }) {
               variant="contained"
               color="secondary"
               type="button"
-              onClick={() => history.push('/polls/add')}
+              onClick={() => navigateTo(history, '/polls/add')}
             >
               New Poll
             </Button>
@@ -47,7 +47,7 @@ export function PollsPage({ data }) {
               <Box mr={6}>
                 <Box display="flex" justifyContent="flex-end">
                   <IconButton
-                    onClick={() => history.push(`/polls/edit/${val.id}`)}
+                    onClick={() => navigateTo(history, `/polls/edit/${val.id}`)}
                   >
                     <EditIcon color="secondary" />
                   </IconButton>

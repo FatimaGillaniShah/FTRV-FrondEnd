@@ -21,7 +21,7 @@ import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 import { parseDate } from '../../utils/functions';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
 import { useCreateDepartment } from '../../hooks/departmentMutation';
@@ -49,14 +49,12 @@ function EditUser() {
   const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
   const mutation = useMutation(updateUser, {
     onSuccess: () => {
-      history.push({
-        pathname: '/directory',
-        state: {
-          showToast: true,
-          toastType: 'success',
-          message: `User Updated Successfully`,
-        },
+      Toast({
+        icon: 'success',
+        title: `User Updated Successfully`,
       });
+
+      navigateTo(history, '/directory');
 
       queryClient.removeQueries(keys.getUser(id));
     },

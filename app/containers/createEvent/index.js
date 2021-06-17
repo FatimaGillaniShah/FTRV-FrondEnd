@@ -12,7 +12,7 @@ import {
   getLocations,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Modal, Toast } from '../../utils/helper';
+import { Modal, navigateTo, Toast } from '../../utils/helper';
 
 function CreateEvent() {
   const { data: locationData, isLoading: isLocationLoading } = useQuery(
@@ -46,7 +46,7 @@ function CreateEvent() {
           title: `Event ${id ? 'Updated' : 'Created'}  Successfully`,
         });
         queryClient.invalidateQueries(keys.getEvent(id));
-        history.push('/events');
+        navigateTo(history, '/events');
       },
       onError: ({
         response: {

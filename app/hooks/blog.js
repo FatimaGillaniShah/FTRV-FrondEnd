@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { Toast } from '../components';
 import { deleteBlog } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
+import { navigateTo } from '../utils/helper';
 
 export function useDeleteBlog() {
   const queryClient = useQueryClient();
@@ -16,7 +17,7 @@ export function useDeleteBlog() {
     }) => {
       Swal.fire('Deleted!', `${count} blog deleted.`, 'success');
       queryClient.invalidateQueries(keys.blog);
-      history.push('/blogs');
+      navigateTo(history, '/blogs');
     },
     onError: ({
       response: {

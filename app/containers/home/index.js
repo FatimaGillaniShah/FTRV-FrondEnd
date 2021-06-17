@@ -11,7 +11,7 @@ import {
   updateBannerImage,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Toast } from '../../utils/helper';
+import { Toast, navigateTo } from '../../utils/helper';
 
 function HomeContainer() {
   const { user } = useAuthContext();
@@ -52,7 +52,7 @@ function HomeContainer() {
 
   useEffect(() => {
     if (!user || !user.isAuthenticated) {
-      history.push('/');
+      navigateTo(history, '/');
     }
   }, []);
 

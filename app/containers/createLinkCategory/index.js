@@ -10,7 +10,7 @@ import {
   updateLinkCategory,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 function CreateLinkCategory() {
   const { id } = useParams();
@@ -43,7 +43,7 @@ function CreateLinkCategory() {
           icon: 'success',
           title: `Category ${id ? 'Updated' : 'Created'}  Successfully`,
         });
-        history.push('/link-categories');
+        navigateTo(history, '/link-categories');
         queryClient.invalidateQueries(keys.linkCategory);
       },
       onError: ({

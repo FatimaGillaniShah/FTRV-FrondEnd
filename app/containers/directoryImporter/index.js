@@ -13,7 +13,7 @@ import { WrapInCard } from 'components';
 import { Box } from '@material-ui/core';
 import EmployeeFileUploader from '../../components/pages/directoryImporter';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 function DirectoryUploader() {
   const history = useHistory();
@@ -32,15 +32,13 @@ function DirectoryUploader() {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-      setSelectedFile(null);
-      history.push({
-        pathname: '/directory',
-        state: {
-          showToast: true,
-          toastType: 'success',
-          message: message || 'File Uploaded Successfully',
-        },
+      Toast({
+        icon: 'success',
+        title: message || 'File Uploaded Successfully',
       });
+
+      setSelectedFile(null);
+      navigateTo(history, '/directory');
     }
   }, [mutation.isSuccess]);
   const { data: { data: { data: { message } = {} } = {} } = {} } = mutation;

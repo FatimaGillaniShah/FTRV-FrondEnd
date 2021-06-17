@@ -5,7 +5,7 @@ import React, { memo } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { Helmet } from 'react-helmet';
 import { createAnnouncement } from '../../state/queryFunctions';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { keys } from '../../state/queryKeys';
@@ -23,14 +23,13 @@ function CreateAnnouncement() {
   const queryClient = useQueryClient();
   const mutation = useMutation(createAnnouncement, {
     onSuccess: () => {
-      history.push({
-        pathname: '/announcement',
-        state: {
-          showToast: true,
-          toastType: 'success',
-          message: `Announcement Created Successfully`,
-        },
+      Toast({
+        icon: 'success',
+        title: `Announcement Created Successfully`,
       });
+
+      navigateTo(history, '/announcement');
+
       queryClient.invalidateQueries(keys.adminAnnouncements);
     },
     onError: ({

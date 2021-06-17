@@ -18,6 +18,7 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { H4 } from '../../typography';
 import { blogSchema } from './blogSchema';
 import { useStyles } from './style';
+import { navigateTo } from '../../../utils/helper';
 
 function CreateBlog({ onHandleSubmit, id, initialValues }) {
   const imgURL =
@@ -184,7 +185,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                         <Box ml={2}>
                           <Button
                             onClick={() => {
-                              history.push('/blogs');
+                              navigateTo(history, '/blogs');
                             }}
                             startIcon={<ClearIcon fontSize="small" />}
                           >

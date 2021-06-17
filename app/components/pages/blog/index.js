@@ -11,6 +11,7 @@ import { H5, BodyTextLarge } from '../../typography';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import BlogCreatorInfo from './blogCreatorInfo';
+import { navigateTo } from '../../../utils/helper';
 
 const useStyles = makeStyles(() => ({
   imageView: {
@@ -40,9 +41,6 @@ function Blog({
   const classes = useStyles();
   const history = useHistory();
 
-  const navigateTo = (url) => {
-    history.push(url);
-  };
   return (
     <Box
       display="flex"
@@ -63,7 +61,7 @@ function Blog({
           <Box width={[1, 1 / 2]} mt={2}>
             <H5
               className={classes.title}
-              onClick={() => navigateTo(`blogs/detail/${id}`)}
+              onClick={() => navigateTo(history, `/blogs/detail/${id}`)}
             >
               {title}
             </H5>
@@ -73,7 +71,7 @@ function Blog({
               <IconButton>
                 <EditIcon
                   color="secondary"
-                  onClick={() => navigateTo(`blogs/edit/${id}`)}
+                  onClick={() => navigateTo(history, `/blogs/edit/${id}`)}
                 />
               </IconButton>
               <IconButton onClick={() => onHandleDeleteBlog(id)}>

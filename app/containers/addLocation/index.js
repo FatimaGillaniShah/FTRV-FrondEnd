@@ -10,7 +10,7 @@ import {
   updateLocation,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 function AddLocation() {
   const history = useHistory();
@@ -39,7 +39,7 @@ function AddLocation() {
           title: `Location ${id ? 'Updated' : 'Created'}  Successfully`,
         });
         queryClient.invalidateQueries(keys.locations);
-        history.push('/locations');
+        navigateTo(history, '/locations');
       },
       onError: ({
         response: {

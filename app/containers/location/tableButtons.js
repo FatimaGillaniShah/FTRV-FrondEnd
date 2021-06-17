@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
+import { navigateTo } from '../../utils/helper';
 
 export function TableButtons({ numSelected, handleDelete }) {
   const {
@@ -14,9 +15,6 @@ export function TableButtons({ numSelected, handleDelete }) {
     },
   } = useAuthContext();
   const history = useHistory();
-  const navigateTo = (url) => {
-    history.push(url);
-  };
   return (
     <>
       {role === ROLES.ADMIN && (
@@ -27,7 +25,7 @@ export function TableButtons({ numSelected, handleDelete }) {
               variant="contained"
               fullWidth={false}
               startIcon={<AddIcon />}
-              onClick={() => navigateTo('/locations/add')}
+              onClick={() => navigateTo(history, '/locations/add')}
             >
               New
             </Button>

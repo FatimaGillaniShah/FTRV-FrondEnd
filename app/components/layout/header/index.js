@@ -19,6 +19,7 @@ import { H5, H6 } from 'components';
 import { useGoogleLogout } from 'react-google-login';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
+import { navigateTo } from '../../../utils/helper';
 
 const StyledMenuItem = styled(MenuItem)`
   &&& {
@@ -134,7 +135,9 @@ export default function Header() {
                     horizontal: 'center',
                   }}
                 >
-                  <StyledMenuItem onClick={() => history.push('/profile')}>
+                  <StyledMenuItem
+                    onClick={() => navigateTo(history, '/profile')}
+                  >
                     <StyledListItemIcon>
                       <AccountCircle />
                     </StyledListItemIcon>

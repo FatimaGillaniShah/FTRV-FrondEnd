@@ -6,13 +6,11 @@ import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
+import { navigateTo } from '../../../utils/helper';
 
 export function TableButtons({ onDelete, numSelected }) {
   const { categoryId } = useParams();
   const history = useHistory();
-  const navigateTo = (url) => {
-    history.push(url);
-  };
   const {
     user: {
       data: { role },
@@ -29,7 +27,10 @@ export function TableButtons({ onDelete, numSelected }) {
               fullWidth={false}
               startIcon={<AddIcon />}
               onClick={() =>
-                navigateTo(`/link-categories/useful-links/${categoryId}/add`)
+                navigateTo(
+                  history,
+                  `/link-categories/useful-links/${categoryId}/add`
+                )
               }
             >
               New

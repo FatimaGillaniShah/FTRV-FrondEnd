@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
-import { Modal } from '../../utils/helper';
+import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteLocation } from '../../hooks/location';
 
 const ActionButtons = ({ data, setSelected, disabled }) => {
@@ -31,7 +31,7 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
           <IconButton disabled={disabled}>
             <EditIcon
               color="secondary"
-              onClick={() => history.push(`locations/edit/${data.id}`)}
+              onClick={() => navigateTo(history, `/locations/edit/${data.id}`)}
             />
           </IconButton>
           <IconButton

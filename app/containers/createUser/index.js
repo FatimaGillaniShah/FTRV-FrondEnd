@@ -12,7 +12,7 @@ import { useMutation, useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { createUser, getLocations, getDepartments } from 'state/queryFunctions';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
 import { useCreateDepartment } from '../../hooks/departmentMutation';
@@ -37,14 +37,12 @@ function CreateUser() {
   );
   const mutation = useMutation(createUser, {
     onSuccess: () => {
-      history.push({
-        pathname: '/directory',
-        state: {
-          showToast: true,
-          toastType: 'success',
-          message: `User Created Successfully`,
-        },
+      Toast({
+        icon: 'success',
+        title: `User Created Successfully`,
       });
+
+      navigateTo(history, '/directory');
     },
     onError: ({
       response: {

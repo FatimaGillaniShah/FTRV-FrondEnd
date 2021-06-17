@@ -12,6 +12,7 @@ import WrapInCard from '../../layout/wrapInCard';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import { H4 } from '../../typography';
 import { formValidaton } from './formValidation';
+import { navigateTo } from '../../../utils/helper';
 
 const useStyles = makeStyles(() => ({
   imageStyle: {
@@ -134,7 +135,7 @@ function AddCeoMessage({ mutation, onHandleSubmit, value }) {
                       <Box mx={1}>
                         <Button
                           onClick={() => {
-                            history.push('/ceo-message');
+                            navigateTo(history, '/ceo-message');
                           }}
                           startIcon={<ClearIcon fontSize="small" />}
                         >

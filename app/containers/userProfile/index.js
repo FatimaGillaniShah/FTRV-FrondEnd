@@ -22,8 +22,8 @@ import EditUserInfo from '../../components/pages/createUser';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
+import { navigateTo, Toast } from '../../utils/helper';
 
-import { Toast } from '../../utils/helper';
 import { useCreateDepartment } from '../../hooks/departmentMutation';
 import { useCreateLocation } from '../../hooks/locationMutation';
 
@@ -61,14 +61,11 @@ function EditUser() {
         }
       }
 
-      history.push({
-        pathname: '/directory',
-        state: {
-          showToast: true,
-          toastType: 'success',
-          message: `User Updated Successfully`,
-        },
+      Toast({
+        icon: 'success',
+        title: `User Updated Successfully`,
       });
+      navigateTo(history, '/directory');
 
       queryClient.removeQueries(keys.getUser(id));
     },

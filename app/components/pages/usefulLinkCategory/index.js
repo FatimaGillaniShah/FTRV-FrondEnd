@@ -9,6 +9,7 @@ import { Category } from '../../category';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import NotExist from '../notExist';
+import { navigateTo } from '../../../utils/helper';
 
 function UsefulLinkCategory({ categories, handleDeleteCategory }) {
   const history = useHistory();
@@ -18,9 +19,6 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
     },
   } = useAuthContext();
 
-  const navigateTo = (url) => {
-    history.push(url);
-  };
   return (
     <Box
       width={1}
@@ -35,7 +33,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
               variant="contained"
               color="secondary"
               startIcon={<AddIcon />}
-              onClick={() => navigateTo('link-categories/add')}
+              onClick={() => navigateTo(history, '/link-categories/add')}
             >
               New Category
             </Button>

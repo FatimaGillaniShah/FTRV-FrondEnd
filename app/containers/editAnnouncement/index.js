@@ -12,7 +12,7 @@ import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditAnnouncementInfo from '../../components/pages/createAnnouncement';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 function EditAnnouncement() {
   const { id } = useParams();
@@ -26,14 +26,13 @@ function EditAnnouncement() {
     onSuccess: () => {
       queryClient.invalidateQueries(keys.adminAnnouncements);
       queryClient.invalidateQueries(keys.getAnnouncementById(id));
-      history.push({
-        pathname: '/announcement',
-        state: {
-          showToast: true,
-          toastType: 'success',
-          message: `Announcement Updated Successfully`,
-        },
+
+      Toast({
+        icon: 'success',
+        title: `Announcement Updated Successfully`,
       });
+
+      navigateTo(history, '/announcement');
     },
     onError: ({
       response: {

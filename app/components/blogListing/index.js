@@ -10,6 +10,7 @@ import { H5 } from '../typography';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import NotExist from '../pages/notExist/index';
+import { navigateTo } from '../../utils/helper';
 
 const useStyles = makeStyles((theme) => ({
   paginator: {
@@ -38,9 +39,6 @@ export function BlogListing({
   } = useAuthContext();
   const defaultPage = 1;
   const noOfPages = Math.ceil(count / PAGE_SIZE);
-  const navigateTo = (url) => {
-    history.push(url);
-  };
   return (
     <>
       <Box m={4}>
@@ -53,7 +51,7 @@ export function BlogListing({
               variant="contained"
               color="secondary"
               startIcon={<AddIcon />}
-              onClick={() => navigateTo('blogs/add')}
+              onClick={() => navigateTo(history, '/blogs/add')}
             >
               New Blog
             </Button>

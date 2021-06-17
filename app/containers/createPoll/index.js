@@ -8,7 +8,7 @@ import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useHistory, useParams } from 'react-router-dom';
 import CreatePollPage from '../../components/pages/createPoll';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 function CreatePoll() {
   const { id } = useParams();
@@ -19,7 +19,7 @@ function CreatePoll() {
         icon: 'success',
         title: `Poll ${id ? 'Updated' : 'Created'}  Successfully`,
       });
-      history.push('/polls');
+      navigateTo(history, '/polls');
     }
   };
   const initialValues = {
