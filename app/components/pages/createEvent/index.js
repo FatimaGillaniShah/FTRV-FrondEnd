@@ -196,7 +196,6 @@ export function CreateEventPage({
                             name="locationIds"
                             limitTags={2}
                             options={locationData}
-                            value={values.locationIds}
                             getOptionLabel={(location) => location.name}
                             onHandleChange={(event, value) => {
                               setFieldValue('locationIds', value);
