@@ -158,7 +158,6 @@ function CreateUser({
     if (data.departmentId) dataFile.append('departmentId', data.departmentId);
     await onHandleSubmit(dataFile);
   };
-  console.log(initialData, 'initialData');
   return (
     <>
       <Formik
