@@ -61,7 +61,10 @@ function CreateEvent() {
   );
   const mutation = useDeleteEvent();
   const handleSubmit = (values) => {
-    mutate(values);
+    const dataValues = { ...values };
+    const locationIds = values.locationIds.map((location) => location.id);
+    dataValues.locationIds = locationIds;
+    mutate(dataValues);
   };
   const handleDeleteEvent = () => {
     Modal.fire().then(({ isConfirmed }) => {

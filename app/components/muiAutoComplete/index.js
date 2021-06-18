@@ -7,12 +7,12 @@ import { useField } from 'formik';
 export default function MuiAutoComplete({
   options,
   label,
-  value,
   getOptionLabel,
   variant,
   placeholder,
   limitTags,
   fullWidth,
+  defaultValue,
   onHandleChange,
   ...props
 }) {
@@ -22,7 +22,7 @@ export default function MuiAutoComplete({
       <Autocomplete
         limitTags={limitTags}
         options={options}
-        value={value}
+        defaultValue={defaultValue}
         multiple
         getOptionLabel={getOptionLabel}
         onChange={onHandleChange}
@@ -52,6 +52,7 @@ MuiAutoComplete.propTypes = {
   placeholder: PropTypes.string,
   limitTags: PropTypes.number,
   getOptionLabel: PropTypes.func,
+  defaultValue: PropTypes.array,
   onHandleChange: PropTypes.func,
 };
 MuiAutoComplete.defaultProps = {

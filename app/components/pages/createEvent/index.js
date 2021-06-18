@@ -72,12 +72,7 @@ export function CreateEventPage({
             initialValues={initialValues}
             validationSchema={eventSchema}
             onSubmit={(values) => {
-              const data = { ...values };
-              const locationIds = values.locationIds.map(
-                (location) => location.id
-              );
-              data.locationIds = locationIds;
-              onHandleSubmit(data);
+              onHandleSubmit(values);
             }}
           >
             {({ setFieldValue, values, errors, handleBlur, touched }) => (
@@ -196,7 +191,7 @@ export function CreateEventPage({
                             name="locationIds"
                             limitTags={2}
                             options={locationData}
-                            value={values.locationIds}
+                            defaultValue={initialValues.locationIds}
                             getOptionLabel={(location) => location.name}
                             onHandleChange={(event, value) => {
                               setFieldValue('locationIds', value);
