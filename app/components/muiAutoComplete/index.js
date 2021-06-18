@@ -7,6 +7,7 @@ import { useField } from 'formik';
 export default function MuiAutoComplete({
   options,
   label,
+  value,
   getOptionLabel,
   variant,
   placeholder,
@@ -21,6 +22,7 @@ export default function MuiAutoComplete({
       <Autocomplete
         limitTags={limitTags}
         options={options}
+        value={value}
         multiple
         getOptionLabel={getOptionLabel}
         onChange={onHandleChange}
