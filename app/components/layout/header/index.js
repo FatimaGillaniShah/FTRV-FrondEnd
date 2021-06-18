@@ -63,10 +63,8 @@ export default function Header() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
-  const avatarPrefix = !user.data.avatar?.includes('http')
-    ? process.env.API_ASSETS_URL
-    : '';
-  const userAvatar = `${avatarPrefix}${user.data.avatar}`;
+
+  const userAvatar = user.data.avatar;
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const handleClick = (event) => {
     event.preventDefault();

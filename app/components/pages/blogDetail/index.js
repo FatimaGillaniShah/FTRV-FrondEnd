@@ -45,7 +45,7 @@ function BlogDetail({ title, createdAt, content, thumbnail, user }) {
               {' '}
               <Avatar
                 variant="square"
-                src={`${process.env.API_ASSETS_URL}${thumbnail}`}
+                src={thumbnail}
                 className={classes.imageView}
               />
             </Box>

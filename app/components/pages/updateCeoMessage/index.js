@@ -28,7 +28,7 @@ function AddCeoMessage({ mutation, onHandleSubmit, value }) {
 
   useEffect(() => {
     if (value) {
-      setImgFile(process.env.API_ASSETS_URL + imgFile);
+      setImgFile(imgFile);
     }
   }, []);
 

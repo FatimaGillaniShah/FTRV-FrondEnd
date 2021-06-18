@@ -105,8 +105,6 @@ function EditUser() {
   if (initialData) {
     initialData.password = '';
     initialData.confirmPassword = '';
-    if (initialData.avatar && !initialData.avatar.includes('http'))
-      initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
@@ -114,11 +112,11 @@ function EditUser() {
     if (initialData.dob) {
       initialData.dob = parseDate(initialData.dob);
     }
-    if (initialData.locationObj) {
-      initialData.locationId = initialData.locationObj.id;
+    if (initialData.location) {
+      initialData.locationId = initialData.location.id;
     }
-    if (initialData.departmentObj) {
-      initialData.departmentId = initialData.departmentObj.id;
+    if (initialData.department) {
+      initialData.departmentId = initialData.department.id;
     }
     if (!initialData.role) {
       initialData.role = userRole;

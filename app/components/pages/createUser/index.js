@@ -70,7 +70,6 @@ function CreateUser({
   locationOptions,
   departmentOptions,
 }) {
-  console.log('-------here', initialData);
   const locationSchema = object().shape({
     location: string()
       .required('*Location Required')
