@@ -1,49 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Field } from 'formik';
+import { FormHelperText, TextField } from '@material-ui/core';
+import { useField } from 'formik';
 
 export default function MuiAutoComplete({
-  id,
   options,
-  name,
   label,
   value,
   getOptionLabel,
   variant,
   placeholder,
   limitTags,
-  component,
+  fullWidth,
   onHandleChange,
+  ...props
 }) {
+  const [field, meta] = useField(props);
   return (
-    <Autocomplete
-      id={id}
-      name={name}
-      limitTags={limitTags}
-      multiple
-      options={options}
-      value={value}
-      getOptionLabel={getOptionLabel}
-      onChange={onHandleChange}
-      renderInput={(params) => (
-        <Field
-          component={component}
-          {...params}
-          variant={variant}
-          label={label}
-          placeholder={placeholder}
-        />
-      )}
-    />
+    <>
+      <Autocomplete
+        limitTags={limitTags}
+        options={options}
+        value={value}
+        multiple
+        getOptionLabel={getOptionLabel}
+        onChange={onHandleChange}
+        renderInput={(params) => (
+          <TextField
+            variant={variant}
+            label={label}
+            placeholder={placeholder}
+            {...params}
+            {...field}
+            {...props}
+          />
+        )}
+      />
+      {meta.touched && meta.error ? (
+        <FormHelperText error>{meta.error}</FormHelperText>
+      ) : null}
+    </>
   );
 }
 
 MuiAutoComplete.propTypes = {
-  id: PropTypes.string,
+  fullWidth: PropTypes.bool,
   options: PropTypes.array,
-  name: PropTypes.string,
   label: PropTypes.string,
   variant: PropTypes.string,
   placeholder: PropTypes.string,
+  limitTags: PropTypes.number,
+  getOptionLabel: PropTypes.func,
+  onHandleChange: PropTypes.func,
+};
+MuiAutoComplete.defaultProps = {
+  fullWidth: true,
+  variant: 'outlined',
 };

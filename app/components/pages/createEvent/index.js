@@ -2,11 +2,10 @@ import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
-import { string, object, date } from 'yup';
+import { string, object, date, array } from 'yup';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
 import {
   KeyboardDateTimePicker,
   MuiPickersUtilsProvider,
@@ -16,12 +15,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input, TextArea } from '../../index';
+import { Input, TextArea, AutoComplete } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
 import { useStyles } from './style';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
-import MuiAutoComplete from '../../muiAutoComplete';
 
 const eventSchema = object().shape({
   title: string()
@@ -47,6 +45,7 @@ const eventSchema = object().shape({
     .required('*Description Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
+  locationIds: array().required('*Location Required'),
 });
 
 export function CreateEventPage({
@@ -73,7 +72,7 @@ export function CreateEventPage({
             initialValues={initialValues}
             validationSchema={eventSchema}
             onSubmit={(values) => {
-              const data = values;
+              const data = { ...values };
               const locationIds = values.locationIds.map(
                 (location) => location.id
               );
@@ -193,10 +192,8 @@ export function CreateEventPage({
                           )}
                         </Box>
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
-                          <MuiAutoComplete
-                            id="locationIds"
+                          <AutoComplete
                             name="locationIds"
-                            multiple
                             limitTags={2}
                             options={locationData}
                             value={values.locationIds}
@@ -204,10 +201,8 @@ export function CreateEventPage({
                             onHandleChange={(event, value) => {
                               setFieldValue('locationIds', value);
                             }}
-                            component={TextField}
                             label="Location"
                             placeholder="Select Locations"
-                            variant="outlined"
                           />
                         </Box>
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
