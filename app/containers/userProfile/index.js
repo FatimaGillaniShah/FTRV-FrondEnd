@@ -112,12 +112,9 @@ function EditUser() {
     if (initialData.dob) {
       initialData.dob = parseDate(initialData.dob);
     }
-    if (initialData.location) {
-      initialData.locationId = initialData.location.id;
-    }
-    if (initialData.department) {
-      initialData.departmentId = initialData.department.id;
-    }
+    initialData.locationId = initialData?.location?.id;
+    initialData.departmentId = initialData?.department?.id;
+
     if (!initialData.role) {
       initialData.role = userRole;
     }
@@ -129,8 +126,8 @@ function EditUser() {
       lastName: '',
       password: '',
       contactNo: '',
-      department: '',
-      location: '',
+      locationId: '',
+      departmentId: '',
       title: '',
       email: '',
       extension: '',
