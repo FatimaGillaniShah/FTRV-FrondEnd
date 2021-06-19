@@ -7,13 +7,11 @@ import { H5, BodyTextLarge } from '../../typography';
 import { useStyles } from './styles';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import { navigateTo } from '../../../utils/helper';
 
 export default function CeoMessage({ ceoMessageData }) {
   const classes = useStyles();
   const history = useHistory();
-  const navigateTo = (url) => {
-    history.push(url);
-  };
   const {
     user: {
       data: { role },
@@ -33,7 +31,7 @@ export default function CeoMessage({ ceoMessageData }) {
         >
           <Avatar
             className={classes.ceoImage}
-            src={`${process.env.API_ASSETS_URL}${ceoMessageData.avatar}`}
+            src={ceoMessageData.avatar}
             alt="person"
           ></Avatar>
         </Box>
@@ -46,7 +44,7 @@ export default function CeoMessage({ ceoMessageData }) {
           <Box width={1 / 2} display="flex" justifyContent="flex-end">
             <EditIcon
               className={classes.editIcon}
-              onClick={() => navigateTo('/ceo-message/edit')}
+              onClick={() => navigateTo(history, '/ceo-message/edit')}
             />{' '}
           </Box>
         )}

@@ -6,12 +6,8 @@ const {
   LOGIN,
   FILE_UPLOAD,
   USERS,
-  USERS_LIST,
   USERS_DELETE,
-  RETRIEVE_LINKS,
-  CREATE_LINK,
-  GET_LINK,
-  UPDATE_LINK,
+  LINKS,
   DELETE_LINK,
   QUOTE,
   BIRTHDAYS,
@@ -19,35 +15,13 @@ const {
   GET_ANNOUNCEMENTS,
   ANNOUNCEMENT_DELETE,
   CEO_MESSAGE,
-  CREATE_EVENT,
   EVENTS,
-  DELETE_EVENTS,
-  GET_EVENT,
-  UPDATE_EVENTS,
   BLOG,
-  GET_BLOG,
-  DELETE_BLOG,
-  CREATE_BLOG,
-  UPDATE_BLOG,
   GOOGLE_LOGIN,
   CATEGORY,
-  GET_USEFUL_LINKS,
-  CREATE_LINK_CATEGORY,
-  GET_LINK_CATEGORY,
-  UPDATE_LINK_CATEGORY,
-  DELETE_CATEGORY,
-  GET_CATEGORIES,
   LOCATIONS,
-  CREATE_LOCATION,
-  GET_LOCATION,
-  UPDATE_LOCATION,
   DEPARTMENTS,
-  GET_BANNER_IMAGE,
-  UPDATE_BANNER_IMAGE,
-  DELETE_DEPARTMENT,
-  CREATE_DEPARTMENT,
-  GET_DEPARTMENT,
-  UPDATE_DEPARTMENT,
+  BANNER_IMAGE,
 } = APIS;
 
 // USER CRUD
@@ -63,15 +37,15 @@ export const fetchUsers = ({ queryKey }) => {
     filters,
   } = queryKey[1];
   if (query.searchString) {
-    url = `${USERS_LIST}?${insertParams(
+    url = `${USERS}?${insertParams(
       query
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   } else if (filters) {
-    url = `${USERS_LIST}?${insertParams(
+    url = `${USERS}?${insertParams(
       filters
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   } else {
-    url = `${USERS_LIST}?sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    url = `${USERS}?sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   }
   return http.get(url);
 };
@@ -106,14 +80,14 @@ export const googleLogin = (payload) => http.post(GOOGLE_LOGIN, payload);
 
 // USEFUL LINKS CRUD
 
-export const fetchLinks = () => http.get(`${RETRIEVE_LINKS}?pageSize=1000&`);
+export const fetchLinks = () => http.get(`${LINKS}?pageSize=1000&`);
 
-export const createLink = (payload) => http.post(CREATE_LINK, payload);
+export const createLink = (payload) => http.post(LINKS, payload);
 
-export const getLinkById = (id) => http.get(`${GET_LINK}/${id}`);
+export const getLinkById = (id) => http.get(`${LINKS}/${id}`);
 
 export const updateLink = ({ id, ...payload }) =>
-  http.put(`${UPDATE_LINK}/${id}`, payload);
+  http.put(`${LINKS}/${id}`, payload);
 
 export const deleteLink = (payload) =>
   http.delete(DELETE_LINK, { data: { ids: payload } });
@@ -141,83 +115,79 @@ export const getCeoMessage = () => http.get(`${CEO_MESSAGE}`);
 export const saveCeoMessage = (payload) => http.put(`${CEO_MESSAGE}`, payload);
 // EVENTS CRUD
 
-export const createEvent = (payload) => http.post(CREATE_EVENT, payload);
+export const createEvent = (payload) => http.post(EVENTS, payload);
 
 export const fetchEvents = () => http.get(`${EVENTS}?pageSize=1000&`);
 
 export const deleteEvents = (payload) =>
-  http.delete(DELETE_EVENTS, { data: { ids: payload } });
+  http.delete(EVENTS, { data: { ids: payload } });
 
 export const getEventById = ({ queryKey }) =>
-  http.get(`${GET_EVENT}/${queryKey[1]}`);
+  http.get(`${EVENTS}/${queryKey[1]}`);
 
 export const updateEvent = ({ id, ...payload }) =>
-  http.put(`${UPDATE_EVENTS}/${id}`, payload);
+  http.put(`${EVENTS}/${id}`, payload);
 
 // BLOG CRUD
 export const getBlogs = ({ queryKey }) => {
   const url = `${BLOG}?sortColumn=updatedAt&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
   return http.get(url);
 };
-export const createBlog = (payload) => http.post(CREATE_BLOG, payload);
+export const createBlog = (payload) => http.post(BLOG, payload);
 
 export const updateBlog = (payload) => {
   const id = payload.get('id');
   payload.delete('id');
-  return http.put(`${UPDATE_BLOG}/${id}`, payload);
+  return http.put(`${BLOG}/${id}`, payload);
 };
 
-export const getBlogById = ({ queryKey }) =>
-  http.get(`${GET_BLOG}/${queryKey[1]}`);
+export const getBlogById = ({ queryKey }) => http.get(`${BLOG}/${queryKey[1]}`);
 
 export const deleteBlog = (payload) =>
-  http.delete(DELETE_BLOG, { data: { id: payload } });
+  http.delete(BLOG, { data: { id: payload } });
 
 export const getLinkCategory = () => http.get(`${CATEGORY}`);
 
 export const getUsefulLinksByCategoryId = ({ queryKey }) =>
-  http.get(`${GET_USEFUL_LINKS}?pageSize=1000&categoryId=${queryKey[1]}`);
+  http.get(`${LINKS}?pageSize=1000&categoryId=${queryKey[1]}`);
 // LINK CATEGORY CRUD
-export const createLinkCategory = (payload) =>
-  http.post(CREATE_LINK_CATEGORY, payload);
+export const createLinkCategory = (payload) => http.post(CATEGORY, payload);
 
 export const getLinkCategoryById = ({ queryKey }) =>
-  http.get(`${GET_LINK_CATEGORY}/${queryKey[1]}`);
+  http.get(`${CATEGORY}/${queryKey[1]}`);
 
 export const updateLinkCategory = ({ id, ...payload }) =>
-  http.put(`${UPDATE_LINK_CATEGORY}/${id}`, payload);
+  http.put(`${CATEGORY}/${id}`, payload);
 
 export const deleteLinkCategory = (id) => {
-  http.delete(`${DELETE_CATEGORY}/${id}`);
+  http.delete(`${CATEGORY}/${id}`);
 };
-export const getCategories = () => http.get(GET_CATEGORIES);
+export const getCategories = () => http.get(CATEGORY);
 
 export const getLocations = () => http.get(`${LOCATIONS}?pageSize=1000&`);
 
 export const deleteLocation = (payload) =>
   http.delete(LOCATIONS, { data: { ids: payload } });
 
-export const createLocation = (payload) => http.post(CREATE_LOCATION, payload);
+export const createLocation = (payload) => http.post(LOCATIONS, payload);
 
 export const getLocationById = ({ queryKey }) =>
-  http.get(`${GET_LOCATION}/${queryKey[1]}`);
+  http.get(`${LOCATIONS}/${queryKey[1]}`);
 
 export const updateLocation = ({ id, ...payload }) =>
-  http.put(`${UPDATE_LOCATION}/${id}`, payload);
+  http.put(`${LOCATIONS}/${id}`, payload);
 export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
 
-export const getBannerImage = () => http.get(GET_BANNER_IMAGE);
+export const getBannerImage = () => http.get(BANNER_IMAGE);
 
-export const updateBannerImage = (payload) =>
-  http.put(UPDATE_BANNER_IMAGE, payload);
+export const updateBannerImage = (payload) => http.put(BANNER_IMAGE, payload);
 export const deleteDepartment = (payload) =>
-  http.delete(DELETE_DEPARTMENT, { data: { ids: payload } });
+  http.delete(DEPARTMENTS, { data: { ids: payload } });
 
-export const createDepartment = (payload) =>
-  http.post(CREATE_DEPARTMENT, payload);
+export const createDepartment = (payload) => http.post(DEPARTMENTS, payload);
 
 export const getDepartmentById = ({ queryKey }) =>
-  http.get(`${GET_DEPARTMENT}/${queryKey[1]}`);
+  http.get(`${DEPARTMENTS}/${queryKey[1]}`);
 
 export const updateDepartment = ({ id, ...payload }) =>
-  http.put(`${UPDATE_DEPARTMENT}/${id}`, payload);
+  http.put(`${DEPARTMENTS}/${id}`, payload);

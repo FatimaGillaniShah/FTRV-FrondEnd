@@ -12,6 +12,7 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input, Select } from '../../index';
 import { H5 } from '../../typography';
+import { navigateTo } from '../../../utils/helper';
 
 const useFulLinksSchema = object().shape({
   name: string()
@@ -100,7 +101,8 @@ export function AddUsefulLinkPage({
                         fullWidth={false}
                         startIcon={<ClearIcon />}
                         onClick={() => {
-                          history.push(
+                          navigateTo(
+                            history,
                             `/link-categories/useful-links/${categoryId}`
                           );
                         }}

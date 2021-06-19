@@ -6,7 +6,7 @@ import AddCeoMessageInfo from '../../components/pages/updateCeoMessage';
 import { getCeoMessage, saveCeoMessage } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Loading } from '../../components/loading';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 function AddCeoMessage() {
   const history = useHistory();
@@ -14,7 +14,7 @@ function AddCeoMessage() {
   const { data, isLoading } = useQuery(keys.ceoMessage, getCeoMessage);
   const mutation = useMutation(saveCeoMessage, {
     onSuccess: () => {
-      history.push('/ceo-message');
+      navigateTo(history, '/ceo-message');
       Toast({
         icon: 'success',
         title: 'Message updated successfully',

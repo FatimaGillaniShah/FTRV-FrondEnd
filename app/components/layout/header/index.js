@@ -20,6 +20,7 @@ import { useGoogleLogout } from 'react-google-login';
 import { useQueryClient } from 'react-query';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
+import { navigateTo } from '../../../utils/helper';
 
 const StyledMenuItem = styled(MenuItem)`
   &&& {
@@ -64,10 +65,7 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
   const queryClient = useQueryClient();
-  const avatarPrefix = !user.data.avatar?.includes('http')
-    ? process.env.API_ASSETS_URL
-    : '';
-  const userAvatar = `${avatarPrefix}${user.data.avatar}`;
+  const userAvatar = user.data.avatar;
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const handleClick = (event) => {
     event.preventDefault();
@@ -137,7 +135,9 @@ export default function Header() {
                     horizontal: 'center',
                   }}
                 >
-                  <StyledMenuItem onClick={() => history.push('/profile')}>
+                  <StyledMenuItem
+                    onClick={() => navigateTo(history, '/profile')}
+                  >
                     <StyledListItemIcon>
                       <AccountCircle />
                     </StyledListItemIcon>

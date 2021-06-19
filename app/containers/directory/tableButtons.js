@@ -5,12 +5,10 @@ import AddIcon from '@material-ui/icons/Add';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
+import { navigateTo } from '../../utils/helper';
 
 export function TableButtons({ onDelete, numSelected }) {
   const history = useHistory();
-  const navigateTo = (url) => {
-    history.push(url);
-  };
   return (
     <Box display="flex" justifyContent="space-between" my={5}>
       <Box display="flex" flexWrap="wrap">
@@ -20,7 +18,7 @@ export function TableButtons({ onDelete, numSelected }) {
             variant="contained"
             fullWidth={false}
             startIcon={<AddIcon />}
-            onClick={() => navigateTo('/directory/add')}
+            onClick={() => navigateTo(history, '/directory/add')}
           >
             New
           </Button>
@@ -31,7 +29,7 @@ export function TableButtons({ onDelete, numSelected }) {
             variant="contained"
             fullWidth={false}
             startIcon={<CloudDownloadIcon />}
-            onClick={() => navigateTo('/directory/upload')}
+            onClick={() => navigateTo(history, '/directory/upload')}
           >
             Import
           </Button>

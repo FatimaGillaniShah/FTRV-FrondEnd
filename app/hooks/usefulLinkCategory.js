@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { Toast } from '../components';
 import { deleteLinkCategory } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
+import { navigateTo } from '../utils/helper';
 
 export function useDeleteCategory() {
   const queryClient = useQueryClient();
@@ -12,7 +13,7 @@ export function useDeleteCategory() {
     onSuccess: () => {
       Swal.fire('Deleted!', `Category deleted.`, 'success');
       queryClient.invalidateQueries(keys.linkCategory);
-      history.push('/link-categories');
+      navigateTo(history, '/link-categories');
     },
     onError: ({
       response: {

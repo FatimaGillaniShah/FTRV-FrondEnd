@@ -10,7 +10,7 @@ import {
   updateDepartment,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 
 function AddDepartment() {
   const history = useHistory();
@@ -43,7 +43,7 @@ function AddDepartment() {
           title: `Department ${id ? 'Updated' : 'Created'}  Successfully`,
         });
         queryClient.invalidateQueries(keys.departments);
-        history.push('/departments');
+        navigateTo(history, '/departments');
       },
       onError: ({
         response: {

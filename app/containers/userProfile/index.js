@@ -22,8 +22,8 @@ import EditUserInfo from '../../components/pages/createUser';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
+import { navigateTo, Toast } from '../../utils/helper';
 
-import { Toast } from '../../utils/helper';
 import { useCreateDepartment } from '../../hooks/departmentMutation';
 import { useCreateLocation } from '../../hooks/locationMutation';
 
@@ -61,14 +61,11 @@ function EditUser() {
         }
       }
 
-      history.push({
-        pathname: '/directory',
-        state: {
-          showToast: true,
-          toastType: 'success',
-          message: `User Updated Successfully`,
-        },
+      Toast({
+        icon: 'success',
+        title: `User Updated Successfully`,
       });
+      navigateTo(history, '/directory');
 
       queryClient.removeQueries(keys.getUser(id));
     },
@@ -108,8 +105,6 @@ function EditUser() {
   if (initialData) {
     initialData.password = '';
     initialData.confirmPassword = '';
-    if (initialData.avatar && !initialData.avatar.includes('http'))
-      initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
@@ -117,11 +112,11 @@ function EditUser() {
     if (initialData.dob) {
       initialData.dob = parseDate(initialData.dob);
     }
-    if (initialData.locationObj) {
-      initialData.locationId = initialData.locationObj.id;
+    if (initialData.location) {
+      initialData.locationId = initialData.location.id;
     }
-    if (initialData.departmentObj) {
-      initialData.departmentId = initialData.departmentObj.id;
+    if (initialData.department) {
+      initialData.departmentId = initialData.department.id;
     }
     if (!initialData.role) {
       initialData.role = userRole;
