@@ -8,7 +8,7 @@ import WrapInCard from '../../layout/wrapInCard';
 import { H5, H6 } from '../../typography';
 
 export function ViewEventPage({
-  eventDetails: { title, startDate, endDate, description },
+  eventDetails: { title, startDate, endDate, description, locationIds },
 }) {
   const history = useHistory();
 
@@ -34,6 +34,12 @@ export function ViewEventPage({
           <Box pt={2}>
             <H6>Description:</H6>
             {description}
+          </Box>
+          <Box pt={2}>
+            <H6>Locations:</H6>
+            {locationIds?.map((location) => (
+              <Box>- {location.name}</Box>
+            ))}
           </Box>
           <Box mt={10}>
             <Button
