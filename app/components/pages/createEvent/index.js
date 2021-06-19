@@ -68,7 +68,6 @@ export function CreateEventPage({
       <WrapInCard mb={8}>
         <Box ml={3}>
           <Formik
-            enableReinitialize
             initialValues={initialValues}
             validationSchema={eventSchema}
             onSubmit={(values) => {
@@ -145,6 +144,7 @@ export function CreateEventPage({
                               onChange={(value) => {
                                 setFieldValue('startDate', value);
                               }}
+                              error={errors.startDate && touched.startDate}
                               minDateMessage=""
                               KeyboardButtonProps={{ tabIndex: -1 }}
                             />
@@ -174,6 +174,7 @@ export function CreateEventPage({
                               onBlur={handleBlur}
                               InputProps={{ className: classes.dateColor }}
                               minDateMessage=""
+                              error={errors.endDate && touched.endDate}
                               onChange={(value) => {
                                 setFieldValue('endDate', value);
                               }}
@@ -188,13 +189,14 @@ export function CreateEventPage({
                         </Box>
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
                           <AutoComplete
+                            id="locationIds"
                             name="locationIds"
                             limitTags={2}
                             options={locationData}
                             defaultValue={values.locationIds}
-                            getOptionLabel={(location) => location.name}
-                            onHandleChange={(event, value) => {
-                              setFieldValue('locationIds', value);
+                            getOptionLabel={(location) => location.name || ''}
+                            onHandleChange={(e, value) => {
+                              if (value) setFieldValue('locationIds', value);
                             }}
                             label="Location"
                             placeholder="Select Locations"

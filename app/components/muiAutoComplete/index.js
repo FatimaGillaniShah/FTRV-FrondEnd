@@ -14,12 +14,15 @@ export default function MuiAutoComplete({
   fullWidth,
   defaultValue,
   onHandleChange,
+  id,
   ...props
 }) {
   const [field, meta] = useField(props);
+  delete field.onChange;
   return (
     <>
       <Autocomplete
+        id={id}
         limitTags={limitTags}
         options={options}
         defaultValue={defaultValue}
@@ -31,10 +34,9 @@ export default function MuiAutoComplete({
             variant={variant}
             label={label}
             placeholder={placeholder}
-            error={meta.error}
+            error={meta.touched && meta.error}
             {...params}
             {...field}
-            {...props}
           />
         )}
       />
@@ -46,15 +48,16 @@ export default function MuiAutoComplete({
 }
 
 MuiAutoComplete.propTypes = {
+  id: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
+  getOptionLabel: PropTypes.func.isRequired,
+  onHandleChange: PropTypes.func,
   fullWidth: PropTypes.bool,
-  options: PropTypes.array,
   label: PropTypes.string,
   variant: PropTypes.string,
   placeholder: PropTypes.string,
   limitTags: PropTypes.number,
-  getOptionLabel: PropTypes.func,
   defaultValue: PropTypes.array,
-  onHandleChange: PropTypes.func,
 };
 MuiAutoComplete.defaultProps = {
   fullWidth: true,
