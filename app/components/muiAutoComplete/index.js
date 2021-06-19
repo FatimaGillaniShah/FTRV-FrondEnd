@@ -31,6 +31,7 @@ export default function MuiAutoComplete({
             variant={variant}
             label={label}
             placeholder={placeholder}
+            error={meta.error}
             {...params}
             {...field}
             {...props}
