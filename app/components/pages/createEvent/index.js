@@ -42,7 +42,6 @@ const eventSchema = object().shape({
     })
     .required('*End Date Required'),
   description: string()
-    .required('*Description Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
   locationIds: array().required('*Location Required'),
