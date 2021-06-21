@@ -1,5 +1,5 @@
 import { Avatar, Box, Button } from '@material-ui/core';
-import { TextArea, Input } from 'components';
+import { TextArea } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -12,6 +12,7 @@ import WrapInCard from '../../layout/wrapInCard';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import { H4 } from '../../typography';
 import { formValidaton } from './formValidation';
+import { navigateTo } from '../../../utils/helper';
 
 const useStyles = makeStyles(() => ({
   imageStyle: {
@@ -27,7 +28,7 @@ function AddCeoMessage({ mutation, onHandleSubmit, value }) {
 
   useEffect(() => {
     if (value) {
-      setImgFile(process.env.API_ASSETS_URL + imgFile);
+      setImgFile(imgFile);
     }
   }, []);
 
@@ -77,24 +78,15 @@ function AddCeoMessage({ mutation, onHandleSubmit, value }) {
                       minWidth: '118px',
                     }}
                   >
-                    <Input
+                    <MuiFileInput
                       name="file"
-                      inputID="file"
-                      inputType="file"
-                      disableUnderline
-                      inputComponent={(props) => (
-                        <MuiFileInput
-                          name="file"
-                          mutation={mutation}
-                          setImgFile={setImgFile}
-                          setFieldValue={setFieldValue}
-                          acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                          toolTipTitle="Select profile image"
-                          buttonText="Upload Image"
-                          btnIcon={<Add />}
-                          {...props}
-                        />
-                      )}
+                      mutation={mutation}
+                      setImgFile={setImgFile}
+                      setFieldValue={setFieldValue}
+                      acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
+                      toolTipTitle="Select profile image"
+                      buttonText="Upload Image"
+                      btnIcon={<Add />}
                     />
                   </Box>
                 </Box>
@@ -134,7 +126,7 @@ function AddCeoMessage({ mutation, onHandleSubmit, value }) {
                       <Box mx={1}>
                         <Button
                           onClick={() => {
-                            history.push('/ceo-message');
+                            navigateTo(history, '/ceo-message');
                           }}
                           startIcon={<ClearIcon fontSize="small" />}
                         >

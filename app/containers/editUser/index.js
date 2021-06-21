@@ -21,23 +21,23 @@ import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 import { parseDate } from '../../utils/functions';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 import { ROLES } from '../../utils/constants';
+import { useAuthContext } from '../../context/authContext';
 import { useCreateDepartment } from '../../hooks/departmentMutation';
 import { useCreateLocation } from '../../hooks/locationMutation';
-import { useAuthContext } from '../../context/authContext';
 
 function EditUser() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const history = useHistory();
-  const locationMutation = useCreateLocation();
-  const departmentMutation = useCreateDepartment();
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
+  const locationMutation = useCreateLocation();
+  const departmentMutation = useCreateDepartment();
   const { data: locations, isLocationLoading } = useQuery(
     keys.location,
     getLocations
@@ -47,17 +47,14 @@ function EditUser() {
     getDepartments
   );
   const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
-
   const mutation = useMutation(updateUser, {
     onSuccess: () => {
-      history.push({
-        pathname: '/directory',
-        state: {
-          showToast: true,
-          toastType: 'success',
-          message: `User Updated Successfully`,
-        },
+      Toast({
+        icon: 'success',
+        title: `User Updated Successfully`,
       });
+
+      navigateTo(history, '/directory');
 
       queryClient.removeQueries(keys.getUser(id));
     },
@@ -72,6 +69,14 @@ function EditUser() {
       });
     },
   });
+
+  const handleCreateLocation = (payload) => {
+    locationMutation.mutate(payload);
+  };
+  const handleCreateDepartment = (payload) => {
+    departmentMutation.mutate(payload);
+  };
+
   const locationOptions = locations?.data.data.rows.map((val) => ({
     value: val.id,
     label: val.name,
@@ -84,16 +89,6 @@ function EditUser() {
   const handleSubmit = (updatedData) => {
     const payload = { id, updatedData };
     mutation.mutate(payload);
-  };
-  const handleCreateLocation = (payload) => {
-    locationMutation.mutate(payload);
-  };
-  const handleCreateDepartment = (payload) => {
-    departmentMutation.mutate(payload);
-  };
-  const defaultDialogData = {
-    location: '',
-    department: '',
   };
 
   const defaultData = {
@@ -118,8 +113,8 @@ function EditUser() {
     initialData.password = '';
     initialData.confirmPassword = '';
 
-    if (initialData.avatar)
-      initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
+    initialData.locationId = initialData?.location?.id;
+    initialData.departmentId = initialData?.department?.id;
 
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
@@ -132,13 +127,17 @@ function EditUser() {
       initialData.role = ROLES.USER;
     }
   }
+  const defaultDialogData = {
+    location: '',
+    department: '',
+  };
+
   const onLoading = () => {
     if (isLoading || isLocationLoading || isDepartmentLoading) {
       return true;
     }
     return false;
   };
-
   return (
     <>
       <Helmet>
@@ -154,14 +153,15 @@ function EditUser() {
             <EditUserInfo
               mutation={mutation}
               initialData={initialData || defaultData}
-              initialDialogData={defaultDialogData}
               onHandleSubmit={handleSubmit}
-              formType="edit"
-              locationOptions={locationOptions}
-              departmentOptions={departmentOptions}
               onCreateLocation={handleCreateLocation}
               onCreateDepartment={handleCreateDepartment}
+              formType="edit"
+              initialDialogData={defaultDialogData}
               editRole={role}
+              isThisMyProfile
+              locationOptions={locationOptions}
+              departmentOptions={departmentOptions}
             />
           )}
         </WrapInCard>

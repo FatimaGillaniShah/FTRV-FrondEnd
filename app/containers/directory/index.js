@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Alert } from 'components';
 import {
   fetchUsers,
@@ -22,7 +22,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
-import { Modal, Toast } from '../../utils/helper';
+import { Modal } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
@@ -30,9 +30,7 @@ function DirectoryContainer() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [filters, setFilters] = useState();
-  const { state } = useLocation();
   const [checked, setChecked] = useState(false);
-  const [toastValue, settoastValue] = useState(null);
   const [selected, setSelected] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortColumn, setSortColumn] = useState('firstName');
@@ -105,18 +103,8 @@ function DirectoryContainer() {
   };
 
   useEffect(() => {
-    const temp = { ...state };
-    settoastValue(temp);
     history.replace({}, '');
   }, []);
-  useEffect(() => {
-    if (toastValue && toastValue.toastType) {
-      Toast({
-        icon: toastValue.toastType,
-        title: toastValue.message || 'Some error occured',
-      });
-    }
-  }, [toastValue]);
 
   const handleDelete = () => {
     if (!selected.length) {
@@ -147,50 +135,51 @@ function DirectoryContainer() {
       <Helmet>
         <title>Directory Listing</title>
       </Helmet>
-      <WrapInBreadcrumbs>
-        {(isLoading ||
-          mutation.isLoading ||
-          isLocationLoading ||
-          isDepartmentLoading) && <Loading />}
-        <Box width={1}>
-          <WrapInCard mb={8}>
-            <Box display="flex">
-              <Search
-                initialValues={query}
-                onHandleSwitchChange={handleSwitchChange}
-                checked={checked}
-                onHandleSearch={handleSearch}
-              />
-            </Box>
-            <Box mt={2}>
-              {checked && (
-                <Filters
-                  onHandleFilterSearch={handleFilterSearch}
-                  onClear={onClear}
-                  locationOptions={locationOptions}
-                  departmentOptions={departmentOptions}
+      {isLoading ||
+      mutation.isLoading ||
+      isLocationLoading ||
+      isDepartmentLoading ? (
+        <Loading />
+      ) : (
+        <WrapInBreadcrumbs>
+          <Box width={1}>
+            <WrapInCard mb={8}>
+              <Box display="flex">
+                <Search
+                  initialValues={query}
+                  onHandleSwitchChange={handleSwitchChange}
+                  checked={checked}
+                  onHandleSearch={handleSearch}
                 />
+              </Box>
+              <Box mt={2}>
+                {checked && (
+                  <Filters
+                    onHandleFilterSearch={handleFilterSearch}
+                    onClear={onClear}
+                    locationOptions={locationOptions}
+                    departmentOptions={departmentOptions}
+                  />
+                )}
+              </Box>
+            </WrapInCard>
+            <WrapInCard>
+              {role === ROLES.ADMIN && (
+                <Box mt={4}>
+                  <TableButtons
+                    onDelete={handleDelete}
+                    numSelected={selected.length}
+                  />
+                </Box>
               )}
-            </Box>
-          </WrapInCard>
-          <WrapInCard>
-            {role === ROLES.ADMIN && (
-              <Box mt={4}>
-                <TableButtons
-                  onDelete={handleDelete}
-                  numSelected={selected.length}
-                />
-              </Box>
-            )}
-            {selected.length > 0 && (
-              <Box my={4}>
-                <Alert severity="info" className={classes.alertPadding}>
-                  <strong>{selected.length}</strong> User(s) Selected
-                </Alert>
-              </Box>
-            )}
+              {selected.length > 0 && (
+                <Box my={4}>
+                  <Alert severity="info" className={classes.alertPadding}>
+                    <strong>{selected.length}</strong> User(s) Selected
+                  </Alert>
+                </Box>
+              )}
 
-            {!isLoading && !mutation.isLoading && (
               <DataTable
                 data={tableData?.rows}
                 headCells={headCells}
@@ -205,10 +194,10 @@ function DirectoryContainer() {
                 handleServerPageNumber={handleServerPageNumber}
                 handleServerPageSize={handleServerPageSize}
               />
-            )}
-          </WrapInCard>
-        </Box>
-      </WrapInBreadcrumbs>
+            </WrapInCard>
+          </Box>
+        </WrapInBreadcrumbs>
+      )}
     </>
   );
 }

@@ -10,7 +10,7 @@ import {
   getCategories,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Toast } from '../../utils/helper';
+import { navigateTo, Toast } from '../../utils/helper';
 import { Loading } from '../../components/loading';
 
 function AddUsefulLink() {
@@ -31,7 +31,7 @@ function AddUsefulLink() {
 
   const mutation = useMutation(id ? updateLink : createLink, {
     onSuccess: () => {
-      history.push(`/link-categories/useful-links/${categoryId}`);
+      navigateTo(history, `/link-categories/useful-links/${categoryId}`);
       Toast({
         icon: 'success',
         title: `Link ${id ? 'updated' : 'created'}  successfully`,
@@ -67,14 +67,17 @@ function AddUsefulLink() {
       <Helmet>
         <title>Useful Links</title>
       </Helmet>
-      {isLoading && isCategoryLoading && <Loading />}
-      <AddUsefulLinkPage
-        id={id}
-        onHandleSubmit={handleSubmit}
-        initialValues={id ? data?.data.data : initialValues}
-        history={history}
-        options={options}
-      />
+      {isLoading || isCategoryLoading ? (
+        <Loading />
+      ) : (
+        <AddUsefulLinkPage
+          id={id}
+          onHandleSubmit={handleSubmit}
+          initialValues={id ? data?.data.data : initialValues}
+          history={history}
+          options={options}
+        />
+      )}
     </>
   );
 }

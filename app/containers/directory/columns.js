@@ -5,7 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
-import { Modal } from '../../utils/helper';
+import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
 const ActionButtons = ({ data, disabled, setSelected }) => {
@@ -32,7 +32,7 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
         <>
           <IconButton
             disabled={disabled}
-            onClick={() => history.push(`directory/edit/${data.id}`)}
+            onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
           >
             <EditIcon color="secondary" />
           </IconButton>
@@ -54,7 +54,7 @@ export const headCells = [
     type: 'label',
   },
   {
-    id: 'departmentObj.name',
+    id: 'department.name',
     numeric: false,
     disablePadding: false,
     label: 'Department',
@@ -68,7 +68,7 @@ export const headCells = [
     type: 'label',
   },
   {
-    id: 'locationObj.name',
+    id: 'location.name',
     numeric: false,
     disablePadding: false,
     label: 'Location',

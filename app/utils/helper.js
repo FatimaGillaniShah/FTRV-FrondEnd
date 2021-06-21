@@ -82,6 +82,10 @@ export function isFunction(possibleFunction) {
   return typeof possibleFunction === typeof Function;
 }
 
+export function navigateTo(history, url) {
+  history.push(url);
+}
+
 export function formatDate(date) {
   return new Date(date).toLocaleString('en-US', {
     year: 'numeric',

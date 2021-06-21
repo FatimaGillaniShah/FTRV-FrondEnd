@@ -20,11 +20,7 @@ export function BirdthdayCard({ item }) {
         flexDirection="column"
       >
         <Box className={classes.backgroundgrid}>
-          <Avatar
-            alt=""
-            className={classes.imgStyle}
-            src={`${process.env.API_ASSETS_URL}${item.avatar}`}
-          />
+          <Avatar alt="" className={classes.imgStyle} src={item.avatar} />
         </Box>
         <Box justifyContent="center" display="flex" textAlign="center">
           <H6 color="light">{item.fullName}</H6>

@@ -43,25 +43,26 @@ function Locations() {
         <title>Locations</title>
       </Helmet>
 
-      <WrapInBreadcrumbs>
-        {(isLoading || mutation.isLoading) && <Loading />}
-        <WrapInCard mb={8}>
-          {role === ROLES.ADMIN && (
-            <Box mt={4}>
-              <TableButtons
-                handleDelete={handleDelete}
-                numSelected={selected?.length}
-              />
-              {selected?.length > 0 && (
-                <Box my={4}>
-                  <Alert severity="info">
-                    <strong>{selected?.length}</strong> Location(s) Selected
-                  </Alert>
-                </Box>
-              )}
-            </Box>
-          )}
-          {!isLoading && !mutation.isLoading && (
+      {isLoading || mutation.isLoading ? (
+        <Loading />
+      ) : (
+        <WrapInBreadcrumbs>
+          <WrapInCard mb={8}>
+            {role === ROLES.ADMIN && (
+              <Box mt={4}>
+                <TableButtons
+                  handleDelete={handleDelete}
+                  numSelected={selected?.length}
+                />
+                {selected?.length > 0 && (
+                  <Box my={4}>
+                    <Alert severity="info">
+                      <strong>{selected?.length}</strong> Location(s) Selected
+                    </Alert>
+                  </Box>
+                )}
+              </Box>
+            )}
             <DataTable
               data={locations}
               headCells={headCells}
@@ -70,9 +71,9 @@ function Locations() {
               count={locations?.length || 0}
               sortColumn="name"
             />
-          )}
-        </WrapInCard>
-      </WrapInBreadcrumbs>
+          </WrapInCard>
+        </WrapInBreadcrumbs>
+      )}
     </>
   );
 }

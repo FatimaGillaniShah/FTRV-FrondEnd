@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
-import { Toast } from '../utils/helper';
+import { Toast, navigateTo } from '../utils/helper';
 import { deleteBlog } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
 
@@ -16,7 +16,7 @@ export function useDeleteBlog() {
     }) => {
       Swal.fire('Deleted!', `${count} blog deleted.`, 'success');
       queryClient.invalidateQueries(keys.blog);
-      history.push('/blogs');
+      navigateTo(history, '/blogs');
     },
     onError: ({
       response: {

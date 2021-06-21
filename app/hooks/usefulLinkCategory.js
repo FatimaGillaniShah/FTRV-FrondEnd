@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
-import { Toast } from '../utils/helper';
+import { Toast, navigateTo } from '../utils/helper';
 import { deleteLinkCategory } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
 
@@ -12,7 +12,7 @@ export function useDeleteCategory() {
     onSuccess: () => {
       Swal.fire('Deleted!', `Category deleted.`, 'success');
       queryClient.invalidateQueries(keys.linkCategory);
-      history.push('/link-categories');
+      navigateTo(history, '/link-categories');
     },
     onError: ({
       response: {

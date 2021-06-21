@@ -24,9 +24,10 @@ import { Input, DatePicker } from 'components';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
+import { useHistory } from 'react-router-dom';
 import { string, object } from 'yup';
+import { navigateTo } from '../../../utils/helper';
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
@@ -77,12 +78,13 @@ function CreateUser({
   });
 
   const departmentSchema = object().shape({
-    department: string('*Department Required')
-      .required()
+    department: string()
+      .required('*Department Required')
       .noWhitespace()
       .typeError('* This field cannot contain only blankspaces'),
   });
   const classes = useStyles();
+
   const [showPassword, setshowPassword] = useState(false);
   const [openLocDialog, setOpenLocDialog] = useState(false);
   const [openDepDialog, setOpenDepDialog] = useState(false);
@@ -136,8 +138,6 @@ function CreateUser({
     if (data.contactNo) dataFile.append('contactNo', data.contactNo);
     if (data.extension) dataFile.append('extension', data.extension);
     if (data.title) dataFile.append('title', data.title);
-    if (data.location) dataFile.append('location', data.location);
-    if (data.department) dataFile.append('department', data.department);
     if (data?.file?.file) {
       dataFile.append('file', data.file.file);
     }
@@ -158,7 +158,6 @@ function CreateUser({
     if (data.departmentId) dataFile.append('departmentId', data.departmentId);
     await onHandleSubmit(dataFile);
   };
-
   return (
     <>
       <Formik
@@ -265,24 +264,15 @@ function CreateUser({
                     minWidth: '118px',
                   }}
                 >
-                  <Input
+                  <MuiFileInput
                     name="file"
-                    inputID="file"
-                    inputType="file"
-                    disableUnderline
-                    inputComponent={(props) => (
-                      <MuiFileInput
-                        name="file"
-                        mutation={mutation}
-                        setImgFile={setImgFile}
-                        setFieldValue={setFieldValue}
-                        acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
-                        toolTipTitle="Select profile image"
-                        buttonText="Upload Image"
-                        btnIcon={<Add />}
-                        {...props}
-                      />
-                    )}
+                    mutation={mutation}
+                    setImgFile={setImgFile}
+                    setFieldValue={setFieldValue}
+                    acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
+                    toolTipTitle="Select profile image"
+                    buttonText="Upload Image"
+                    btnIcon={<Add />}
                   />
                 </Box>
               </Box>
@@ -547,7 +537,7 @@ function CreateUser({
                     <Box mx={1}>
                       <Button
                         onClick={() => {
-                          history.push('/directory');
+                          navigateTo(history, '/directory');
                         }}
                         startIcon={<ClearIcon fontSize="small" />}
                       >

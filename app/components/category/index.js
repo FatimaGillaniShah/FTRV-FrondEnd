@@ -18,6 +18,7 @@ import { BodyTextSmall, BodyTextLarge } from '../typography';
 import { colors } from '../../theme/colors';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
+import { navigateTo } from '../../utils/helper';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -73,9 +74,6 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
       {...props}
     />
   ));
-  const navigateTo = (url) => {
-    history.push(url);
-  };
 
   return (
     <Box width={1}>
@@ -96,7 +94,9 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
               onClose={handleClose}
             >
               <MenuItem
-                onClick={() => navigateTo(`/link-categories/edit/${id}`)}
+                onClick={() =>
+                  navigateTo(history, `/link-categories/edit/${id}`)
+                }
               >
                 <ListItemIcon>
                   <EditOutlinedIcon />
@@ -116,14 +116,18 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
         )}
         <FolderOpenOutlinedIcon
           className={classes.folderIcon}
-          onClick={() => navigateTo(`link-categories/useful-links/${id}`)}
+          onClick={() =>
+            navigateTo(history, `/link-categories/useful-links/${id}`)
+          }
         />
         <Box mt={2}>
           <BodyTextLarge
             color="secondary"
             fontWeight="fontWeightMedium"
             className={classes.menuCursor}
-            onClick={() => navigateTo(`link-categories/useful-links/${id}`)}
+            onClick={() =>
+              navigateTo(history, `/link-categories/useful-links/${id}`)
+            }
           >
             {name}
           </BodyTextLarge>
@@ -132,7 +136,9 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
           <BodyTextSmall
             color="secondary"
             className={classes.menuCursor}
-            onClick={() => navigateTo(`link-categories/useful-links/${id}`)}
+            onClick={() =>
+              navigateTo(history, `/link-categories/useful-links/${id}`)
+            }
           >
             {`${linksCount} link(s)`}
           </BodyTextSmall>

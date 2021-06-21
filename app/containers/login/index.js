@@ -11,6 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { Login } from '../../components/pages/login';
 import { googleLogin, login } from '../../state/queryFunctions';
 import { useAuthContext } from '../../context/authContext';
+import { navigateTo } from '../../utils/helper';
 
 function LoginContainer() {
   const mutation = useMutation((values) => login(values));
@@ -42,7 +43,7 @@ function LoginContainer() {
   }
   useEffect(() => {
     if (user.isAuthenticated) {
-      history.push('/home');
+      navigateTo(history, '/home');
     }
   }, [user.isAuthenticated]);
 
