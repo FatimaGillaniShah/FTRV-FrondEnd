@@ -33,7 +33,7 @@ function DirectoryContainer() {
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
-  const [sortColumn, setSortColumn] = useState('firstName');
+  const [sortColumn, setSortColumn] = useState('email');
   const history = useHistory();
   const isServerSide = true;
   const classes = useStyles();
@@ -194,7 +194,13 @@ function DirectoryContainer() {
                   handleServerPageNumber={handleServerPageNumber}
                   handleServerPageSize={handleServerPageSize}
                 />
-                <DataTable2 rows={tableData?.rows} columns={headCells} />
+                <DataTable2
+                  rows={tableData?.rows}
+                  columns={headCells}
+                  onChangeSort={onChangeSort}
+                  sortOrder={sortOrder}
+                  sortColumn={sortColumn}
+                />
               </>
             )}
           </WrapInCard>

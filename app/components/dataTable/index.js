@@ -9,7 +9,7 @@ import Alert from '@material-ui/lab/Alert';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { get } from 'lodash';
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import { DataGrid } from '@material-ui/data-grid';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import { getComparator, stableSort } from '../../utils/helper';
 import { CheckBox } from '../index';
@@ -246,30 +246,34 @@ const changeHeaderArray = (arr) =>
     description: val.label,
     type: val.numeric && 'number',
     sortable: !val.numeric,
+    flex: 1,
   }));
 
-export function DataTable2({ rows, columns, ...props }) {
-  const res = changeHeaderArray(columns);
-  console.log('columns', columns);
-
-  const customColumn = res?.map((val) => {
-    const column = val;
-    column.disableColumnMenu = false;
-    return column;
-  });
+export function DataTable2({
+  rows,
+  columns,
+  onChangeSort,
+  sortColumn,
+  sortOrder,
+  ...props
+}) {
+  const result = changeHeaderArray(columns);
 
   const classes2 = useStyles2();
   return (
     <Box className={classes2.root}>
       <DataGrid
-        columns={customColumn}
+        columns={result}
         rows={rows}
         autoHeight
         pageSize={PAGE_SIZE}
         paginationMode="server"
+        sortingMode="server"
         {...props}
         checkboxSelection
-        components={{ Toolbar: GridToolbar }}
+        disableColumnMenu
+        sortingOrder={['asc', 'desc']}
+        onSortModelChange={onChangeSort}
       />
     </Box>
   );
