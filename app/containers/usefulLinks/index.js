@@ -49,15 +49,18 @@ function UsefulLinks() {
       <Helmet>
         <title>Useful Links</title>
       </Helmet>
-      {isLoading && <Loading />}
-      <UsefulLinksPage
-        data={data?.data?.data?.rows}
-        selected={selected}
-        setSelected={setSelected}
-        onDelete={handleDeleteLinks}
-        headCells={headCells}
-        isLoading={isLoading}
-      />
+      {isLoading || mutation.isLoading ? (
+        <Loading />
+      ) : (
+        <UsefulLinksPage
+          data={data?.data?.data?.rows}
+          selected={selected}
+          setSelected={setSelected}
+          onDelete={handleDeleteLinks}
+          headCells={headCells}
+          isLoading={isLoading}
+        />
+      )}
     </>
   );
 }

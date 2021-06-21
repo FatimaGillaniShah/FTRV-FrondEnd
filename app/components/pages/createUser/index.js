@@ -78,8 +78,8 @@ function CreateUser({
   });
 
   const departmentSchema = object().shape({
-    department: string('*Department Required')
-      .required()
+    department: string()
+      .required('*Department Required')
       .noWhitespace()
       .typeError('* This field cannot contain only blankspaces'),
   });

@@ -67,14 +67,17 @@ function AddUsefulLink() {
       <Helmet>
         <title>Useful Links</title>
       </Helmet>
-      {isLoading && isCategoryLoading && <Loading />}
-      <AddUsefulLinkPage
-        id={id}
-        onHandleSubmit={handleSubmit}
-        initialValues={id ? data?.data.data : initialValues}
-        history={history}
-        options={options}
-      />
+      {isLoading || isCategoryLoading ? (
+        <Loading />
+      ) : (
+        <AddUsefulLinkPage
+          id={id}
+          onHandleSubmit={handleSubmit}
+          initialValues={id ? data?.data.data : initialValues}
+          history={history}
+          options={options}
+        />
+      )}
     </>
   );
 }
