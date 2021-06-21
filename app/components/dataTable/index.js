@@ -271,7 +271,6 @@ export function DataTable2({
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
 
   const handleSortModelChange = (params) => {
-    console.log(params);
     if (params.sortModel !== sortModel) {
       setSortModel(params.sortModel);
       onChangeSort(params.sortModel[0].sort, params.sortModel[0].field)
@@ -279,7 +278,6 @@ export function DataTable2({
   };
 
   const handleChangeRowsPerPage = (params) => {
-    console.log(params);
     setRowsPerPage(parseInt(params.pageSize, 10));
     setPage(0);
     if (isServerSide) {
