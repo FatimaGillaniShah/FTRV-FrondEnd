@@ -200,6 +200,9 @@ function DirectoryContainer() {
                   onChangeSort={onChangeSort}
                   sortOrder={sortOrder}
                   sortColumn={sortColumn}
+                  isServerSide={isServerSide}
+                  handleServerPageNumber={handleServerPageNumber}
+                  handleServerPageSize={handleServerPageSize}
                 />
               </>
             )}

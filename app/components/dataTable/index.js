@@ -96,6 +96,7 @@ export function DataTable({
     }
     return rows;
   };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     if (isServerSide) {
@@ -255,9 +256,47 @@ export function DataTable2({
   onChangeSort,
   sortColumn,
   sortOrder,
+  isServerSide,
+  tableRowsPerPage,
+  handleServerPageSize,
+  handleServerPageNumber,
+
   ...props
 }) {
   const result = changeHeaderArray(columns);
+  const [sortModel, setSortModel] = useState([
+    { field: sortColumn || '', sort: sortOrder || 'asc' },
+  ]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
+
+  const handleSortModelChange = (params) => {
+    console.log(params);
+    if (params.sortModel !== sortModel) {
+      setSortModel(params.sortModel);
+      onChangeSort(params.sortModel[0].sort, params.sortModel[0].field)
+    }
+  };
+
+  const handleChangeRowsPerPage = (params) => {
+    console.log(params);
+    setRowsPerPage(parseInt(params.pageSize, 10));
+    setPage(0);
+    if (isServerSide) {
+      const rowPerPage = parseInt(params.pageSize, 10);
+      handleServerPageSize({ rowPerPage });
+    }
+  };
+
+  const handleChangePage = (params) => {
+    setPage(params.page);
+    if (isServerSide) {
+      const currentPage = params.page + 1;
+      handleServerPageNumber({
+        currentPage,
+      });
+    }
+  };
 
   const classes2 = useStyles2();
   return (
@@ -272,8 +311,13 @@ export function DataTable2({
         {...props}
         checkboxSelection
         disableColumnMenu
+        sortModel={sortModel}
         sortingOrder={['asc', 'desc']}
-        onSortModelChange={onChangeSort}
+        onSortModelChange={handleSortModelChange}
+        onPageSizeChange={handleChangeRowsPerPage}
+        onPageChange={handleChangePage}
+        rowsPerPageOptions={[5, 10, 20]}
+        pagination
       />
     </Box>
   );
@@ -292,6 +336,13 @@ DataTable.propTypes = {
   count: PropTypes.number.isRequired,
 };
 DataTable.defaultProps = {
+  tableRowsPerPage: PAGE_SIZE,
+  selected: [],
+  matchUserIdWithIDS: false,
+  isServerSide: false,
+};
+
+DataTable2.defaultProps = {
   tableRowsPerPage: PAGE_SIZE,
   selected: [],
   matchUserIdWithIDS: false,
