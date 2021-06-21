@@ -96,8 +96,8 @@ function EditUser() {
     lastName: '',
     password: '',
     contactNo: '',
-    department: '',
-    location: '',
+    locationId: '',
+    departmentId: '',
     title: '',
     email: '',
     extension: '',
@@ -113,12 +113,9 @@ function EditUser() {
     initialData.password = '';
     initialData.confirmPassword = '';
 
-    if (initialData.location) {
-      initialData.locationId = initialData.location.id;
-    }
-    if (initialData.department) {
-      initialData.departmentId = initialData.department.id;
-    }
+    initialData.locationId = initialData?.location?.id;
+    initialData.departmentId = initialData?.department?.id;
+
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
     }
