@@ -33,7 +33,7 @@ function DirectoryContainer() {
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
-  const [sortColumn, setSortColumn] = useState('email');
+  const [sortColumn, setSortColumn] = useState('firstName');
   const history = useHistory();
   const isServerSide = true;
   const classes = useStyles();
@@ -135,48 +135,50 @@ function DirectoryContainer() {
       <Helmet>
         <title>Directory Listing</title>
       </Helmet>
-      <WrapInBreadcrumbs>
-        {(isLoading ||
-          mutation.isLoading ||
-          isLocationLoading ||
-          isDepartmentLoading) && <Loading />}
-        <Box width={1}>
-          <WrapInCard mb={8}>
-            <Box display="flex">
-              <Search
-                initialValues={query}
-                onHandleSwitchChange={handleSwitchChange}
-                checked={checked}
-                onHandleSearch={handleSearch}
-              />
-            </Box>
-            <Box mt={2}>
-              {checked && (
-                <Filters
-                  onHandleFilterSearch={handleFilterSearch}
-                  onClear={onClear}
-                  locationOptions={locationOptions}
-                  departmentOptions={departmentOptions}
+      {isLoading ||
+      mutation.isLoading ||
+      isLocationLoading ||
+      isDepartmentLoading ? (
+        <Loading />
+      ) : (
+        <WrapInBreadcrumbs>
+          <Box width={1}>
+            <WrapInCard mb={8}>
+              <Box display="flex">
+                <Search
+                  initialValues={query}
+                  onHandleSwitchChange={handleSwitchChange}
+                  checked={checked}
+                  onHandleSearch={handleSearch}
                 />
+              </Box>
+              <Box mt={2}>
+                {checked && (
+                  <Filters
+                    onHandleFilterSearch={handleFilterSearch}
+                    onClear={onClear}
+                    locationOptions={locationOptions}
+                    departmentOptions={departmentOptions}
+                  />
+                )}
+              </Box>
+            </WrapInCard>
+            <WrapInCard>
+              {role === ROLES.ADMIN && (
+                <Box mt={4}>
+                  <TableButtons
+                    onDelete={handleDelete}
+                    numSelected={selected.length}
+                  />
+                </Box>
               )}
-            </Box>
-          </WrapInCard>
-          <WrapInCard>
-            {role === ROLES.ADMIN && (
-              <Box mt={4}>
-                <TableButtons
-                  onDelete={handleDelete}
-                  numSelected={selected.length}
-                />
-              </Box>
-            )}
-            {selected.length > 0 && (
-              <Box my={4}>
-                <Alert severity="info" className={classes.alertPadding}>
-                  <strong>{selected.length}</strong> User(s) Selected
-                </Alert>
-              </Box>
-            )}
+              {selected.length > 0 && (
+                <Box my={4}>
+                  <Alert severity="info" className={classes.alertPadding}>
+                    <strong>{selected.length}</strong> User(s) Selected
+                  </Alert>
+                </Box>
+              )}
 
             {!isLoading && !mutation.isLoading && (
               <>
@@ -209,6 +211,7 @@ function DirectoryContainer() {
           </WrapInCard>
         </Box>
       </WrapInBreadcrumbs>
+        )}
     </>
   );
 }

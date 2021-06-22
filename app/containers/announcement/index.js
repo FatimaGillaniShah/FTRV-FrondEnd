@@ -70,27 +70,28 @@ function AnnouncementContainer() {
       <Helmet>
         <title>Announcement</title>
       </Helmet>
-      <WrapInBreadcrumbs>
-        {(isLoading || mutation.isLoading) && <Loading />}
-        <Box width={1}>
-          <WrapInCard>
-            {role === ROLES.ADMIN && (
-              <Box mt={4}>
-                <TableButtons
-                  onDelete={handleDelete}
-                  numSelected={selected.length}
-                />
-                {selected.length > 0 && (
-                  <Box my={4}>
-                    <Alert severity="info">
-                      <strong>{selected.length}</strong> Announcement(s)
-                      Selected
-                    </Alert>
-                  </Box>
-                )}
-              </Box>
-            )}
-            {!isLoading && !mutation.isLoading && (
+      {isLoading || mutation.isLoading ? (
+        <Loading />
+      ) : (
+        <WrapInBreadcrumbs>
+          <Box width={1}>
+            <WrapInCard>
+              {role === ROLES.ADMIN && (
+                <Box mt={4}>
+                  <TableButtons
+                    onDelete={handleDelete}
+                    numSelected={selected.length}
+                  />
+                  {selected.length > 0 && (
+                    <Box my={4}>
+                      <Alert severity="info">
+                        <strong>{selected.length}</strong> Announcement(s)
+                        Selected
+                      </Alert>
+                    </Box>
+                  )}
+                </Box>
+              )}
               <DataTable
                 data={formatData}
                 headCells={headCells}
@@ -99,10 +100,10 @@ function AnnouncementContainer() {
                 count={formatData?.length || 0}
                 sortColumn="title"
               />
-            )}
-          </WrapInCard>
-        </Box>
-      </WrapInBreadcrumbs>
+            </WrapInCard>
+          </Box>
+        </WrapInBreadcrumbs>
+      )}
     </>
   );
 }

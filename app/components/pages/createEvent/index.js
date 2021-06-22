@@ -2,7 +2,7 @@ import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
-import { string, object, date } from 'yup';
+import { string, object, date, array } from 'yup';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
@@ -13,15 +13,13 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router';
-
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input, TextArea } from '../../index';
+import { Input, TextArea, AutoComplete } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
 import { useStyles } from './style';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
-import MuiAutoComplete from '../../muiAutoComplete';
 
 const eventSchema = object().shape({
   title: string()
@@ -44,9 +42,9 @@ const eventSchema = object().shape({
     })
     .required('*End Date Required'),
   description: string()
-    .required('*Description Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
+  locationIds: array().required('*Location Required'),
 });
 
 export function CreateEventPage({
@@ -69,7 +67,6 @@ export function CreateEventPage({
       <WrapInCard mb={8}>
         <Box ml={3}>
           <Formik
-            enableReinitialize
             initialValues={initialValues}
             validationSchema={eventSchema}
             onSubmit={(values) => {
@@ -146,6 +143,7 @@ export function CreateEventPage({
                               onChange={(value) => {
                                 setFieldValue('startDate', value);
                               }}
+                              error={errors.startDate && touched.startDate}
                               minDateMessage=""
                               KeyboardButtonProps={{ tabIndex: -1 }}
                             />
@@ -175,6 +173,7 @@ export function CreateEventPage({
                               onBlur={handleBlur}
                               InputProps={{ className: classes.dateColor }}
                               minDateMessage=""
+                              error={errors.endDate && touched.endDate}
                               onChange={(value) => {
                                 setFieldValue('endDate', value);
                               }}
@@ -188,15 +187,16 @@ export function CreateEventPage({
                           )}
                         </Box>
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
-                          <MuiAutoComplete
-                            id="location"
-                            limitTags={3}
-                            options={locationData?.rows.map(
-                              (option) => option.name
-                            )}
-                            filterSelectedOptions
-                            variant="outlined"
-                            name="location"
+                          <AutoComplete
+                            id="locationIds"
+                            name="locationIds"
+                            limitTags={2}
+                            options={locationData}
+                            defaultValue={values.locationIds}
+                            getOptionLabel={(location) => location.name || ''}
+                            onHandleChange={(e, value) => {
+                              if (value) setFieldValue('locationIds', value);
+                            }}
                             label="Location"
                             placeholder="Select Locations"
                           />

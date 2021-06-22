@@ -69,7 +69,7 @@ function DirectoryUploader() {
 
   const handleTemplateDownload = () => {
     const response = {
-      file: 'http://35.175.221.135/assets/employee-list-template.xlsx',
+      file: `${process.env.API_ASSETS_URL}employee-list-template.xlsx`,
     };
     window.open(response.file, '_self');
   };

@@ -52,7 +52,7 @@ function Blog({
         {' '}
         <Avatar
           variant="square"
-          src={`${process.env.API_ASSETS_URL}${thumbnail}`}
+          src={thumbnail}
           className={classes.imageView}
         />
       </Box>
@@ -61,7 +61,7 @@ function Blog({
           <Box width={[1, 1 / 2]} mt={2}>
             <H5
               className={classes.title}
-              onClick={() => navigateTo(history, `blogs/detail/${id}`)}
+              onClick={() => navigateTo(history, `/blogs/detail/${id}`)}
             >
               {title}
             </H5>
@@ -71,7 +71,7 @@ function Blog({
               <IconButton>
                 <EditIcon
                   color="secondary"
-                  onClick={() => navigateTo(history, `blogs/edit/${id}`)}
+                  onClick={() => navigateTo(history, `/blogs/edit/${id}`)}
                 />
               </IconButton>
               <IconButton onClick={() => onHandleDeleteBlog(id)}>

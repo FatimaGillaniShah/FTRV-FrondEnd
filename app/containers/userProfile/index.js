@@ -96,7 +96,8 @@ function EditUser() {
     label: val.name,
   }));
   const initialData = data?.data?.data || null;
-  const handleSubmit = (payload) => {
+  const handleSubmit = (updatedData) => {
+    const payload = { id, updatedData };
     mutation.mutate(payload);
   };
   let formDefaultData = {};
@@ -104,8 +105,6 @@ function EditUser() {
   if (initialData) {
     initialData.password = '';
     initialData.confirmPassword = '';
-    if (initialData.avatar && !initialData.avatar.includes('http'))
-      initialData.avatar = process.env.API_ASSETS_URL + initialData.avatar;
 
     if (initialData.joiningDate) {
       initialData.joiningDate = parseDate(initialData.joiningDate);
@@ -113,6 +112,8 @@ function EditUser() {
     if (initialData.dob) {
       initialData.dob = parseDate(initialData.dob);
     }
+    initialData.locationId = initialData?.location?.id;
+    initialData.departmentId = initialData?.department?.id;
 
     if (!initialData.role) {
       initialData.role = userRole;
@@ -125,8 +126,8 @@ function EditUser() {
       lastName: '',
       password: '',
       contactNo: '',
-      department: '',
-      location: '',
+      locationId: '',
+      departmentId: '',
       title: '',
       email: '',
       extension: '',

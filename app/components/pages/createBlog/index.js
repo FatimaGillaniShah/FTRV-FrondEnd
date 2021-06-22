@@ -21,8 +21,7 @@ import { useStyles } from './style';
 import { navigateTo } from '../../../utils/helper';
 
 function CreateBlog({ onHandleSubmit, id, initialValues }) {
-  const imgURL =
-    initialValues?.file && process.env.API_ASSETS_URL + initialValues?.file;
+  const imgURL = initialValues?.file;
   const [imgFile, setImgFile] = useState(imgURL);
   const history = useHistory();
   const classes = useStyles();

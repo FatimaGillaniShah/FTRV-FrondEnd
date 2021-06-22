@@ -61,7 +61,10 @@ function CreateEvent() {
   );
   const mutation = useDeleteEvent();
   const handleSubmit = (values) => {
-    mutate(values);
+    const dataValues = { ...values };
+    const locationIds = dataValues.locationIds.map((location) => location.id);
+    dataValues.locationIds = locationIds;
+    mutate(dataValues);
   };
   const handleDeleteEvent = () => {
     Modal.fire().then(({ isConfirmed }) => {
@@ -75,7 +78,7 @@ function CreateEvent() {
     startDate: new Date(),
     endDate: new Date(),
     description: '',
-    location: '',
+    locationIds: [],
   };
   const onLoading = () => {
     if (isLoading || isLocationLoading || loading || mutation.isLoading) {
@@ -97,7 +100,7 @@ function CreateEvent() {
           initialValues={id ? data?.data?.data : initialValues}
           pageTitle={id ? 'Update' : 'Create New'}
           onHandleDeleteEvent={handleDeleteEvent}
-          locationData={locationData?.data?.data}
+          locationData={locationData?.data?.data?.rows}
         />
       )}
     </>

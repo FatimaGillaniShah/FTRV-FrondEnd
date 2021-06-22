@@ -76,7 +76,7 @@ function HomeContainer() {
         <Home
           isImageLoading={isUpdateImageLoading || isImageLoading}
           eventList={data?.data?.data?.rows}
-          fileName={image?.data?.data?.data?.fileName}
+          fileName={image?.data?.data?.fileName}
           onHandleImageChange={handleImageChange}
         />
       )}

@@ -117,7 +117,7 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
         <FolderOpenOutlinedIcon
           className={classes.folderIcon}
           onClick={() =>
-            navigateTo(history, `link-categories/useful-links/${id}`)
+            navigateTo(history, `/link-categories/useful-links/${id}`)
           }
         />
         <Box mt={2}>
@@ -126,7 +126,7 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
             fontWeight="fontWeightMedium"
             className={classes.menuCursor}
             onClick={() =>
-              navigateTo(history, `link-categories/useful-links/${id}`)
+              navigateTo(history, `/link-categories/useful-links/${id}`)
             }
           >
             {name}
@@ -137,7 +137,7 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
             color="secondary"
             className={classes.menuCursor}
             onClick={() =>
-              navigateTo(history, `link-categories/useful-links/${id}`)
+              navigateTo(history, `/link-categories/useful-links/${id}`)
             }
           >
             {`${linksCount} link(s)`}

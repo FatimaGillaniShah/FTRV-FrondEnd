@@ -17,6 +17,7 @@ import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { H5, H6 } from 'components';
 import { useGoogleLogout } from 'react-google-login';
+import { useQueryClient } from 'react-query';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 import { navigateTo } from '../../../utils/helper';
@@ -63,10 +64,8 @@ export default function Header() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
-  const avatarPrefix = !user.data.avatar?.includes('http')
-    ? process.env.API_ASSETS_URL
-    : '';
-  const userAvatar = `${avatarPrefix}${user.data.avatar}`;
+  const queryClient = useQueryClient();
+  const userAvatar = user.data.avatar;
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const handleClick = (event) => {
     event.preventDefault();
@@ -96,6 +95,7 @@ export default function Header() {
       isAuthenticated: false,
       token: null,
     });
+    queryClient.invalidateQueries();
   };
   return (
     <>

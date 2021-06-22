@@ -7,6 +7,7 @@ export { default as TextArea } from './muiTextAreaInput';
 export { default as Alert } from './muiAlert';
 export { default as Dailogue } from './muiDialog';
 export { default as DatePicker } from './muiDatePicker';
+export { default as AutoComplete } from './muiAutoComplete';
 
 export {
   H1,
