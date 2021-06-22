@@ -73,10 +73,13 @@ function CreateEvent() {
       }
     });
   };
+  const addHourToDate = (date, hours) =>
+    new Date(new Date(date).setHours(date.getHours() + hours));
+
   const initialValues = {
     title: '',
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date().set,
+    endDate: addHourToDate(new Date(), 1),
     description: '',
     locationIds: [],
   };

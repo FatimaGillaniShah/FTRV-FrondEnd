@@ -82,7 +82,7 @@ function Blog({
         </Box>
         <Box>
           <BodyTextLarge color="grey">
-            {ReactHtmlParser(shortText)}...
+            {`${ReactHtmlParser(shortText)}  . . .`}
           </BodyTextLarge>
         </Box>
         <Box display="flex" flexDirection="column" mt={8}>

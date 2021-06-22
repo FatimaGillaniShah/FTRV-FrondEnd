@@ -152,6 +152,13 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                                   editor.editing.view.document.getRoot()
                                 );
                               });
+                              editor.editing.view.change((writer) => {
+                                writer.setStyle(
+                                  'color',
+                                  'black',
+                                  editor.editing.view.document.getRoot()
+                                );
+                              });
                             }}
                             onChange={(event, editor) => {
                               setFieldValue('content', editor.getData());
