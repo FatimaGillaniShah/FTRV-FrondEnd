@@ -33,7 +33,7 @@ function DirectoryContainer() {
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
-  const [sortColumn, setSortColumn] = useState('firstName');
+  const [sortColumn, setSortColumn] = useState('email');
   const history = useHistory();
   const isServerSide = true;
   const classes = useStyles();
@@ -65,6 +65,7 @@ function DirectoryContainer() {
       keepPreviousData: true,
     }
   );
+
   const { data: locations, isLocationLoading } = useQuery(
     keys.locations,
     getLocations
@@ -180,38 +181,39 @@ function DirectoryContainer() {
                 </Box>
               )}
 
-            {!isLoading && !mutation.isLoading && (
-              <>
-                <DataTable
-                  data={tableData?.rows}
-                  headCells={headCells}
-                  setSelected={setSelected}
-                  selected={selected}
-                  sortOrder={sortOrder}
-                  sortColumn={sortColumn}
-                  onChangeSort={onChangeSort}
-                  isServerSide={isServerSide}
-                  matchUserIdWithIDS
-                  count={tableData?.count || 0}
-                  handleServerPageNumber={handleServerPageNumber}
-                  handleServerPageSize={handleServerPageSize}
-                />
-                <DataTable2
-                  rows={tableData?.rows}
-                  columns={headCells}
-                  onChangeSort={onChangeSort}
-                  sortOrder={sortOrder}
-                  sortColumn={sortColumn}
-                  isServerSide={isServerSide}
-                  handleServerPageNumber={handleServerPageNumber}
-                  handleServerPageSize={handleServerPageSize}
-                />
-              </>
-            )}
-          </WrapInCard>
-        </Box>
-      </WrapInBreadcrumbs>
-        )}
+              {!isLoading && !mutation.isLoading && (
+                <>
+                  <DataTable
+                    data={tableData?.rows}
+                    headCells={headCells}
+                    setSelected={setSelected}
+                    selected={selected}
+                    sortOrder={sortOrder}
+                    sortColumn={sortColumn}
+                    onChangeSort={onChangeSort}
+                    isServerSide={isServerSide}
+                    matchUserIdWithIDS
+                    count={tableData?.count || 0}
+                    handleServerPageNumber={handleServerPageNumber}
+                    handleServerPageSize={handleServerPageSize}
+                  />
+                  <DataTable2
+                    rows={tableData?.rows}
+                    columns={headCells}
+                    onChangeSort={onChangeSort}
+                    sortOrder={sortOrder}
+                    sortColumn={sortColumn}
+                    count={tableData?.count || 0}
+                    isServerSide={isServerSide}
+                    handleServerPageNumber={handleServerPageNumber}
+                    handleServerPageSize={handleServerPageSize}
+                  />
+                </>
+              )}
+            </WrapInCard>
+          </Box>
+        </WrapInBreadcrumbs>
+      )}
     </>
   );
 }

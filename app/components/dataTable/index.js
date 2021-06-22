@@ -109,6 +109,10 @@ export function DataTable({
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+    const currentPage = 1;
+    handleServerPageNumber({
+      currentPage,
+    });
     if (isServerSide) {
       const rowPerPage = parseInt(event.target.value, 10);
       handleServerPageSize({ rowPerPage });
@@ -256,6 +260,7 @@ export function DataTable2({
   onChangeSort,
   sortColumn,
   sortOrder,
+  count,
   isServerSide,
   tableRowsPerPage,
   handleServerPageSize,
@@ -264,6 +269,10 @@ export function DataTable2({
   ...props
 }) {
   const result = changeHeaderArray(columns);
+  console.log('columns', columns);
+  console.log('result', result);
+  console.log('rows', rows);
+
   const [sortModel, setSortModel] = useState([
     { field: sortColumn || '', sort: sortOrder || 'asc' },
   ]);
@@ -273,15 +282,19 @@ export function DataTable2({
   const handleSortModelChange = (params) => {
     if (params.sortModel !== sortModel) {
       setSortModel(params.sortModel);
-      onChangeSort(params.sortModel[0].sort, params.sortModel[0].field)
+      onChangeSort(params.sortModel[0].sort, params.sortModel[0].field);
     }
   };
 
   const handleChangeRowsPerPage = (params) => {
-    setRowsPerPage(parseInt(params.pageSize, 10));
+    setRowsPerPage(params.pageSize);
     setPage(0);
+    const currentPage = 1;
+    handleServerPageNumber({
+      currentPage,
+    });
     if (isServerSide) {
-      const rowPerPage = parseInt(params.pageSize, 10);
+      const rowPerPage = params.pageSize;
       handleServerPageSize({ rowPerPage });
     }
   };
@@ -303,7 +316,7 @@ export function DataTable2({
         columns={result}
         rows={rows}
         autoHeight
-        pageSize={PAGE_SIZE}
+        pageSize={rowsPerPage}
         paginationMode="server"
         sortingMode="server"
         {...props}
@@ -314,6 +327,8 @@ export function DataTable2({
         onSortModelChange={handleSortModelChange}
         onPageSizeChange={handleChangeRowsPerPage}
         onPageChange={handleChangePage}
+        page={page}
+        rowCount={count}
         rowsPerPageOptions={[5, 10, 20]}
         pagination
       />
