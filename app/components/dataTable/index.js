@@ -109,10 +109,6 @@ export function DataTable({
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-    const currentPage = 1;
-    handleServerPageNumber({
-      currentPage,
-    });
     if (isServerSide) {
       const rowPerPage = parseInt(event.target.value, 10);
       handleServerPageSize({ rowPerPage });
@@ -269,9 +265,6 @@ export function DataTable2({
   ...props
 }) {
   const result = changeHeaderArray(columns);
-  console.log('columns', columns);
-  console.log('result', result);
-  console.log('rows', rows);
 
   const [sortModel, setSortModel] = useState([
     { field: sortColumn || '', sort: sortOrder || 'asc' },
@@ -289,10 +282,6 @@ export function DataTable2({
   const handleChangeRowsPerPage = (params) => {
     setRowsPerPage(params.pageSize);
     setPage(0);
-    const currentPage = 1;
-    handleServerPageNumber({
-      currentPage,
-    });
     if (isServerSide) {
       const rowPerPage = params.pageSize;
       handleServerPageSize({ rowPerPage });
