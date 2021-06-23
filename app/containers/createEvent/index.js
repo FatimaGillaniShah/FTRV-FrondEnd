@@ -78,7 +78,7 @@ function CreateEvent() {
 
   const initialValues = {
     title: '',
-    startDate: new Date().set,
+    startDate: new Date(),
     endDate: addHourToDate(new Date(), 1),
     description: '',
     locationIds: [],
