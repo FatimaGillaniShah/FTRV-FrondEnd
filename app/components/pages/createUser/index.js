@@ -426,6 +426,7 @@ function CreateUser({
                       label="Location"
                       selectedValue={values.locationId}
                       options={locationOptions}
+                      disabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                     <Box
                       className={classes.linkBox}
@@ -440,6 +441,7 @@ function CreateUser({
                       label="Department"
                       selectedValue={values.departmentId}
                       options={departmentOptions}
+                      disabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                     <Box
                       className={classes.linkBox}
