@@ -22,7 +22,7 @@ function CreateEvent() {
   const history = useHistory();
   const { id } = useParams();
   const queryClient = useQueryClient();
-
+  const currentDate = new Date();
   const { data, isLoading } = useQuery(keys.getEvent(id), getEventById, {
     enabled: !!id,
     refetchOnWindowFocus: false,
@@ -78,8 +78,8 @@ function CreateEvent() {
 
   const initialValues = {
     title: '',
-    startDate: new Date(),
-    endDate: addHourToDate(new Date(), 1),
+    startDate: currentDate,
+    endDate: addHourToDate(currentDate, 1),
     description: '',
     locationIds: [],
   };
