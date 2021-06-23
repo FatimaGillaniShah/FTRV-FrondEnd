@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from 'react-query';
 import Swal from 'sweetalert2';
-import { Toast } from '../components';
 import { deleteAnnouncement } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
-import { isFunction } from '../utils/helper';
+import { Toast, isFunction } from '../utils/helper';
 
 export function useDeleteAnnouncement({ callbackFn } = {}) {
   const queryClient = useQueryClient();
