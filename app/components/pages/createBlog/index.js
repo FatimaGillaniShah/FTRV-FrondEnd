@@ -151,11 +151,13 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                                   '30vh',
                                   editor.editing.view.document.getRoot()
                                 );
-                                // writer.setStyle(
-                                //   'color',
-                                //   'black',
-                                //   editor.editing.view.document.getRoot()
-                                // );
+                              });
+                              editor.editing.view.change((writer) => {
+                                writer.setStyle(
+                                  'color',
+                                  'black',
+                                  editor.editing.view.document.getRoot()
+                                );
                               });
                             }}
                             onChange={(event, editor) => {
