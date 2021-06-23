@@ -428,12 +428,14 @@ function CreateUser({
                       options={locationOptions}
                       disabled={mutation.isLoading || isUserEditingHisProfile}
                     />
-                    <Box
-                      className={classes.linkBox}
-                      onClick={() => handleDialogState('loc')}
-                    >
-                      <AddIcon fontSize="small" /> Create new location
-                    </Box>
+                    {editRole === ROLES.ADMIN && (
+                      <Box
+                        className={classes.linkBox}
+                        onClick={() => handleDialogState('loc')}
+                      >
+                        <AddIcon fontSize="small" /> Create new location
+                      </Box>
+                    )}
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Select
@@ -443,12 +445,14 @@ function CreateUser({
                       options={departmentOptions}
                       disabled={mutation.isLoading || isUserEditingHisProfile}
                     />
-                    <Box
-                      className={classes.linkBox}
-                      onClick={() => handleDialogState('dep')}
-                    >
-                      <AddIcon fontSize="small" /> Create new department
-                    </Box>
+                    {editRole === ROLES.ADMIN && (
+                      <Box
+                        className={classes.linkBox}
+                        onClick={() => handleDialogState('dep')}
+                      >
+                        <AddIcon fontSize="small" /> Create new department
+                      </Box>
+                    )}
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Designation">
