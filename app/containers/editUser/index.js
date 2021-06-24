@@ -159,7 +159,6 @@ function EditUser() {
               formType="edit"
               initialDialogData={defaultDialogData}
               editRole={role}
-              isThisMyProfile
               locationOptions={locationOptions}
               departmentOptions={departmentOptions}
             />

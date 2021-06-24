@@ -41,6 +41,7 @@ export default function SelectInput({
   formControlProps,
   variant,
   emptyItem,
+  disabled,
   ...props
 }) {
   const [field, meta] = useField(props);
@@ -52,6 +53,7 @@ export default function SelectInput({
         variant={variant}
         {...formControlProps}
         error={meta.touched && meta.error}
+        disabled={disabled}
       >
         <InputLabel className={classes.label} id={selectId}>
           {label}
@@ -108,6 +110,7 @@ SelectInput.propTypes = {
   formControlProps: PropTypes.object,
   variant: PropTypes.string,
   emptyItem: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 SelectInput.defaultProps = {

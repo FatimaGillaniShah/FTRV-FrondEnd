@@ -41,7 +41,6 @@ export const menuItems = [
   },
   {
     name: 'settings',
-    link: '/',
     icon: BorderColorIcon,
     role: [ROLES.ADMIN],
     children: [
