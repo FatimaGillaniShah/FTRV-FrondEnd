@@ -13,6 +13,7 @@ import {
 } from '../../../state/queryFunctions';
 import BoxWithBg from '../../boxWithBg';
 import { H6 } from '../../typography';
+import WorkAnniversaryCard from '../../workAnniversaryCard';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -72,6 +73,12 @@ function Index() {
             <BirthdayCarousel items={birthdays} />
           </Grid>
         )}
+
+        {/* {birthdays.length > 0 && ( */}
+        <Grid xs={12}>
+          <WorkAnniversaryCard items={birthdays} />
+        </Grid>
+        {/* )} */}
 
         <Grid xs={12}>
           {quote && (

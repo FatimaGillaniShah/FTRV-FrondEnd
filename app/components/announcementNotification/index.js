@@ -40,6 +40,7 @@ export function AnnouncementNotification({ item }) {
           width={1}
           height={1}
           p={2}
+          mt={1}
           justifyContent="center"
           display="flex"
           className={classes.mainBox}
