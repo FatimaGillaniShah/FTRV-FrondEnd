@@ -31,6 +31,7 @@ export function DataTable({
   count,
   handleServerPageNumber,
   handleServerPageSize,
+  pageNumber,
 }) {
   const classes = useStyles();
   const [order, setOrder] = useState(sortOrder || 'asc');
@@ -96,12 +97,13 @@ export function DataTable({
     return rows;
   };
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
     if (isServerSide) {
       const currentPage = newPage + 1;
       handleServerPageNumber({
         currentPage,
       });
+    } else {
+      setPage(newPage);
     }
   };
   const handleChangeRowsPerPage = (event) => {
@@ -229,7 +231,7 @@ export function DataTable({
         component="div"
         count={count}
         rowsPerPage={rowsPerPage}
-        page={page}
+        page={isServerSide ? pageNumber - 1 : page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />

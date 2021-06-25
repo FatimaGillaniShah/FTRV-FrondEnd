@@ -80,6 +80,7 @@ function DirectoryContainer() {
     setChecked(target.checked);
   };
   const handleSearch = debounce((e, setFieldValue) => {
+    setPageNumber(1);
     setFieldFunc({ setFormikField: setFieldValue });
     setQuery({ searchString: e.target.value });
   }, 500);
@@ -193,6 +194,7 @@ function DirectoryContainer() {
                 count={tableData?.count || 0}
                 handleServerPageNumber={handleServerPageNumber}
                 handleServerPageSize={handleServerPageSize}
+                pageNumber={pageNumber}
               />
             </WrapInCard>
           </Box>
