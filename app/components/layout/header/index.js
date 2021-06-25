@@ -75,6 +75,10 @@ export default function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleClickProfile = () => {
+    navigateTo(history, '/profile');
+    setAnchorEl(null);
+  };
 
   // INITIALIZING
   useGoogleLogout({
@@ -135,9 +139,7 @@ export default function Header() {
                     horizontal: 'center',
                   }}
                 >
-                  <StyledMenuItem
-                    onClick={() => navigateTo(history, '/profile')}
-                  >
+                  <StyledMenuItem onClick={handleClickProfile}>
                     <StyledListItemIcon>
                       <AccountCircle />
                     </StyledListItemIcon>
