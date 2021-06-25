@@ -39,6 +39,7 @@ function AddLocation() {
           title: `Location ${id ? 'Updated' : 'Created'}  Successfully`,
         });
         queryClient.invalidateQueries(keys.locations);
+        queryClient.invalidateQueries(keys.getLocation);
         navigateTo(history, '/locations');
       },
       onError: ({
