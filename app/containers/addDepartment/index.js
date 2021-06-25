@@ -43,6 +43,7 @@ function AddDepartment() {
           title: `Department ${id ? 'Updated' : 'Created'}  Successfully`,
         });
         queryClient.invalidateQueries(keys.departments);
+        queryClient.invalidateQueries(keys.getDepartments);
         navigateTo(history, '/departments');
       },
       onError: ({
