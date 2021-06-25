@@ -24,7 +24,7 @@ export default function BoxWithBg({
       )}
       <Box
         className={styles}
-        bgcolor={bgColor}
+        bg={bgColor}
         color={color}
         textAlign={textAlignment}
         borderRadius="5px"

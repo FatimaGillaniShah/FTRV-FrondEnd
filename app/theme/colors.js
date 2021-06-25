@@ -12,6 +12,7 @@ export const colors = {
   red,
   green,
   grey,
+  darkBlue: 'linear-gradient(to right bottom, #031337, #1b578d)',
   bgColor: {
     main: '#F0F2F5',
     secondary: 'white',
