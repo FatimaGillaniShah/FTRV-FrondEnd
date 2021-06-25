@@ -5,7 +5,7 @@ export const parseDate = (date) => {
   if (parseMonth < 10) {
     parseMonth = `0${parseMonth}`;
   }
-  return `${parseMonth}-${parsedDate.getDate()}-${parsedDate.getFullYear()}`;
+  return `${parsedDate.getFullYear()}-${parseMonth}-${parsedDate.getDate()}`;
 };
 
 export function noWhitespace() {
