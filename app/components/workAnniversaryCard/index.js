@@ -10,7 +10,7 @@ export function WorkAnniversaryCarousel({ items }) {
     <>
       {items?.length >= 1 && (
         <Box>
-          <BoxWithBg title="Work Anniversary" bgColor={colors.secondary}>
+          <BoxWithBg title="Work Anniversary" bgColor={colors.greenBlue}>
             <Carousel
               autoPlay
               animation="fade"

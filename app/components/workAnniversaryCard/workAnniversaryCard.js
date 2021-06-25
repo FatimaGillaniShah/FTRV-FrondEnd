@@ -26,7 +26,6 @@ export function WorkAnniversaryCard({ item }) {
           <H6 color="light">{item.fullName}</H6>
         </Box>
       </Box>
-
       <Box
         width={[1, 1, 1, '60%']}
         textAlign="center"
@@ -43,7 +42,7 @@ export function WorkAnniversaryCard({ item }) {
               &nbsp;{`${item.firstName}`}
             </H6>
           </Box>
-          on completing 2 year(s) with FTRV.
+          on completing {item.years} year(s) with FTRV.
         </H6>
       </Box>
     </Box>

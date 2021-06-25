@@ -8,6 +8,7 @@ export const colors = {
   secondary: lightblue,
   light: 'white',
   orange: '#FF9200',
+  greenBlue: '#1875c0',
   red,
   green,
   grey,

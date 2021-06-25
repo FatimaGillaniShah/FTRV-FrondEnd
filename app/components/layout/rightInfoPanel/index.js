@@ -10,6 +10,7 @@ import {
   getBirthdays,
   getQuote,
   retrieveActiveAnnouncements,
+  getWorkAnniversaries,
 } from '../../../state/queryFunctions';
 import BoxWithBg from '../../boxWithBg';
 import { H6 } from '../../typography';
@@ -34,6 +35,10 @@ function Index() {
   const { data } = useQuery(keys.birthday, getBirthdays, {
     refetchOnWindowFocus: true,
   });
+  const { data: workAnniversaryData } = useQuery(
+    keys.workAnniversary,
+    getWorkAnniversaries
+  );
   const { data: quoteData } = useQuery(keys.quote, getQuote);
   const { data: announcementData } = useQuery(
     keys.announcements,
@@ -42,6 +47,7 @@ function Index() {
   );
 
   const birthdays = data?.data?.data || [];
+  const workAnniversary = workAnniversaryData?.data?.data || [];
   const quote = quoteData?.data?.data;
   let activeAnnouncements = [];
   const { user } = useAuthContext();
@@ -74,11 +80,11 @@ function Index() {
           </Grid>
         )}
 
-        {/* {birthdays.length > 0 && ( */}
-        <Grid xs={12}>
-          <WorkAnniversaryCard items={birthdays} />
-        </Grid>
-        {/* )} */}
+        {workAnniversary.length > 0 && (
+          <Grid xs={12}>
+            <WorkAnniversaryCard items={workAnniversary} />
+          </Grid>
+        )}
 
         <Grid xs={12}>
           {quote && (
