@@ -86,6 +86,7 @@ function DirectoryContainer() {
   }, 500);
 
   const handleFilterSearch = (values) => {
+    setPageNumber(1);
     setFilters(values);
   };
   const onClear = () => {
