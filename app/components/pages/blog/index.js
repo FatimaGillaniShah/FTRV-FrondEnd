@@ -84,7 +84,7 @@ function Blog({
         </Box>
         <Box>
           <BodyTextLarge color="grey">
-            {truncate(ReactHtmlParser(shortText), 150)}
+            {truncate(ReactHtmlParser(shortText), 200)}
           </BodyTextLarge>
         </Box>
         <Box display="flex" flexDirection="column" mt={8}>
