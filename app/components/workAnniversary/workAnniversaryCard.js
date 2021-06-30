@@ -39,7 +39,7 @@ export function WorkAnniversaryCard({ item }) {
           Congratulations
           <Box display={['inline', 'inline', 'inline', 'block']}>
             <H6 bold color="light" className={classes.inline}>
-              {`${item.firstName}`}
+              {item.firstName}
             </H6>
           </Box>
           on completing {item.years} year(s) with FTRV.
