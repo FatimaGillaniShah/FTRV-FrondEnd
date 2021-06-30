@@ -14,7 +14,7 @@ import {
 } from '../../../state/queryFunctions';
 import BoxWithBg from '../../boxWithBg';
 import { H6 } from '../../typography';
-import WorkAnniversaryCard from '../../workAnniversaryCard';
+import WorkAnniversaryCard from '../../workAnniversary';
 
 const useStyles = makeStyles(() => ({
   root: {
