@@ -16,19 +16,16 @@ export default function MuiAutoComplete({
   label,
   variant,
   placeholder,
-  limitTags,
-  fullWidth,
   defaultValue,
   onHandleChange,
-  id,
-  getOptionSelected,
   ...props
 }) {
-  const useStyles = makeStyles({
+  const useStyles = makeStyles((theme) => ({
     checkbox: {
-      marginRight: 8,
+      marginRight: theme.spacing(3),
     },
-  });
+  }));
+
   const classes = useStyles();
   const [field, meta] = useField(props);
   delete field.onChange;
@@ -44,14 +41,11 @@ export default function MuiAutoComplete({
   return (
     <>
       <Autocomplete
-        id={id}
-        limitTags={limitTags}
         options={options}
         defaultValue={defaultValue}
         multiple
         disableCloseOnSelect
-        getOptionLabel={props.getOptionLabel}
-        getOptionSelected={getOptionSelected}
+        {...props}
         renderOption={(option, state) => {
           const selectedState = { ...state };
           if (props.selectedLocation) {

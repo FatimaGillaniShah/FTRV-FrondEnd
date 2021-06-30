@@ -63,6 +63,19 @@ export function CreateEventPage({
     },
   } = useAuthContext();
   const [selectLocationAll, setSelectLocationAll] = useState(false);
+  const onSelectLocations = (value, setFieldValue) => {
+    const searchString = 'All';
+    const results = value.filter(
+      (location) => location.name === `${searchString}`
+    );
+    if (results.length > 0) {
+      setSelectLocationAll(true);
+      setFieldValue('locationIds', locationData);
+    } else if (value) {
+      setSelectLocationAll(false);
+      setFieldValue('locationIds', value);
+    }
+  };
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -200,18 +213,7 @@ export function CreateEventPage({
                               option.id === value.id
                             }
                             onHandleChange={(e, value) => {
-                              const searchString = 'All';
-                              const results = value.filter(
-                                (location) =>
-                                  location.name === `${searchString}`
-                              );
-                              if (results.length > 0) {
-                                setSelectLocationAll(true);
-                                setFieldValue('locationIds', locationData);
-                              } else if (value) {
-                                setSelectLocationAll(false);
-                                setFieldValue('locationIds', value);
-                              }
+                              onSelectLocations(value, setFieldValue);
                             }}
                             label="Location"
                             placeholder="Select Locations"
