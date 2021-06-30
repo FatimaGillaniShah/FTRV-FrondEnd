@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   imgStyle: {
     border: '5px solid ',
-    borderColor: colors.l,
+    borderColor: colors.light,
     borderRadius: '50%',
     width: '76px',
     height: '76px',
