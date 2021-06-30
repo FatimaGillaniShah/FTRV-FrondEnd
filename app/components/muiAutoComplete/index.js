@@ -14,7 +14,6 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 export default function MuiAutoComplete({
   options,
   label,
-  getOptionLabel,
   variant,
   placeholder,
   limitTags,
@@ -22,7 +21,6 @@ export default function MuiAutoComplete({
   defaultValue,
   onHandleChange,
   id,
-  selectedLocation,
   getOptionSelected,
   ...props
 }) {
@@ -52,11 +50,11 @@ export default function MuiAutoComplete({
         defaultValue={defaultValue}
         multiple
         disableCloseOnSelect
-        getOptionLabel={getOptionLabel}
+        getOptionLabel={props.getOptionLabel}
         getOptionSelected={getOptionSelected}
         renderOption={(option, state) => {
           const selectedState = { ...state };
-          if (selectedLocation) {
+          if (props.selectedLocation) {
             selectedState.selected = true;
           } else if (
             defaultValue.find((location) => location.id === option.id)
@@ -97,7 +95,6 @@ export default function MuiAutoComplete({
 MuiAutoComplete.propTypes = {
   id: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
-  getOptionLabel: PropTypes.func.isRequired,
   onHandleChange: PropTypes.func,
   fullWidth: PropTypes.bool,
   label: PropTypes.string,
