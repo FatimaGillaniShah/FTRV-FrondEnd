@@ -194,6 +194,9 @@ export function CreateEventPage({
                             options={locationData}
                             defaultValue={values.locationIds}
                             getOptionLabel={(location) => location.name || ''}
+                            getOptionSelected={(option, value) =>
+                              option.id === value.id
+                            }
                             onHandleChange={(e, value) => {
                               if (value) setFieldValue('locationIds', value);
                             }}
