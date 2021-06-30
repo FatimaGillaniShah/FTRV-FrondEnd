@@ -8,9 +8,11 @@ export const colors = {
   secondary: lightblue,
   light: 'white',
   orange: '#FF9200',
+  greenBlue: '#1875c0',
   red,
   green,
   grey,
+  darkBlue: 'linear-gradient(to right bottom, #031337, #1b578d)',
   bgColor: {
     main: '#F0F2F5',
     secondary: 'white',

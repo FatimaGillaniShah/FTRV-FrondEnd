@@ -22,6 +22,7 @@ const {
   LOCATIONS,
   DEPARTMENTS,
   BANNER_IMAGE,
+  WORK_ANNIVERSARY,
 } = APIS;
 
 // USER CRUD
@@ -191,3 +192,5 @@ export const getDepartmentById = ({ queryKey }) =>
 
 export const updateDepartment = ({ id, ...payload }) =>
   http.put(`${DEPARTMENTS}/${id}`, payload);
+
+export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
