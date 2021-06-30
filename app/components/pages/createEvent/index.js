@@ -63,7 +63,7 @@ export function CreateEventPage({
     },
   } = useAuthContext();
   const [selectLocationAll, setSelectLocationAll] = useState(false);
-  const onSelectLocations = (value, setFieldValue) => {
+  const selectLocations = (value, setFieldValue) => {
     const searchString = 'All';
     const results = value.filter(
       (location) => location.name === `${searchString}`
@@ -213,7 +213,7 @@ export function CreateEventPage({
                               option.id === value.id
                             }
                             onHandleChange={(e, value) => {
-                              onSelectLocations(value, setFieldValue);
+                              selectLocations(value, setFieldValue);
                             }}
                             label="Location"
                             placeholder="Select Locations"
