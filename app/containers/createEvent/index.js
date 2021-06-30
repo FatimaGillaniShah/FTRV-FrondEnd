@@ -62,7 +62,15 @@ function CreateEvent() {
   const mutation = useDeleteEvent();
   const handleSubmit = (values) => {
     const dataValues = { ...values };
-    const locationIds = dataValues.locationIds.map((location) => location.id);
+    let filteredlocations;
+    if (dataValues.locationIds[0].name === 'All') {
+      filteredlocations = dataValues.locationIds.filter(
+        (item) => item.name !== 'All'
+      );
+    } else {
+      filteredlocations = dataValues.locationIds;
+    }
+    const locationIds = filteredlocations.map((location) => location.id);
     dataValues.locationIds = locationIds;
     mutate(dataValues);
   };
