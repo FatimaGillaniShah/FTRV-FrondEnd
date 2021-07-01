@@ -40,6 +40,8 @@ function Blog({
 
   const classes = useStyles();
   const history = useHistory();
+  const truncate = (source, size) =>
+    source.length > size ? `${source.slice(0, size - 1)} . . .` : source;
 
   return (
     <Box
@@ -82,7 +84,7 @@ function Blog({
         </Box>
         <Box>
           <BodyTextLarge color="grey">
-            {ReactHtmlParser(shortText)}...
+            {truncate(ReactHtmlParser(shortText), 200)}
           </BodyTextLarge>
         </Box>
         <Box display="flex" flexDirection="column" mt={8}>
