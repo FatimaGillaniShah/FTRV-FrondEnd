@@ -29,6 +29,7 @@ export default function MuiAutoComplete({
         multiple
         getOptionLabel={getOptionLabel}
         onChange={onHandleChange}
+        {...props}
         renderInput={(params) => (
           <TextField
             variant={variant}
