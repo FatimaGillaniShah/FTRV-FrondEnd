@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.light,
   },
   headCells: {
+    width: '100px',
     color: theme.palette.text.main,
     '&:hover': {
       color: theme.palette.text.main,
