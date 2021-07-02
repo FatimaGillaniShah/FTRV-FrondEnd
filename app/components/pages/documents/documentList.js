@@ -13,14 +13,13 @@ export default function DocumentList({
   const classes = useStyles();
   const [departmentDocuments, updateDepartmentDocuments] = useState(documents);
 
-  const handleOnDragEnd = (result) => {
+  const OnDragEnd = (result) => {
     if (!result.destination) return;
+    const documentsOrder = Array.from(departmentDocuments);
+    const [reorderedItem] = documentsOrder.splice(result.source.index, 1);
+    documentsOrder.splice(result.destination.index, 0, reorderedItem);
 
-    const items = Array.from(departmentDocuments);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    updateDepartmentDocuments(items);
+    updateDepartmentDocuments(documentsOrder);
   };
   const getStyle = (isDragging, draggableStyle) => {
     const { transform } = draggableStyle;
@@ -49,7 +48,7 @@ export default function DocumentList({
             </H5>
           </Box>
         </Paper>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
+        <DragDropContext onDragEnd={OnDragEnd}>
           <Droppable droppableId="document">
             {(provided) => (
               <Box
