@@ -10,7 +10,7 @@ import { ListItemIcon, MenuItem } from '../..';
 import { navigateTo } from '../../../utils/helper';
 import { useStyles } from './style';
 
-export function Document({ document, onHandleDelete }) {
+export function Document({ document: { name, description }, onHandleDelete }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const classes = useStyles();
@@ -26,8 +26,8 @@ export function Document({ document, onHandleDelete }) {
   return (
     <Box display="flex" justifyContent="space-between" pb={3}>
       <Box width="90%">
-        <BodyTextLarge medium>{document.name}</BodyTextLarge>
-        <BodyTextSmall>{document.description}</BodyTextSmall>
+        <BodyTextLarge medium>{name}</BodyTextLarge>
+        <BodyTextSmall>{description}</BodyTextSmall>
       </Box>
       <Box display="flex" flexDirection="column">
         <IconButton onClick={handleClick} className={classes.documentAction}>
