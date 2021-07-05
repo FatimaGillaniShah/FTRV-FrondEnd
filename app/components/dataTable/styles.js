@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDataGrid-sortIcon': {
       color: theme.palette.iconColor.default,
     },
+    '& .MuiCheckbox-colorPrimary.Mui-disabled': {
+      color: 'rgba(0, 0, 0, 0.26)',
+    },
   },
 }));
 
