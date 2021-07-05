@@ -1,13 +1,6 @@
-export const parseDate = (date) => {
-  const parsedDate = new Date(date);
-  let parseMonth = parsedDate.getMonth();
-  parseMonth += 1;
-  if (parseMonth < 10) {
-    parseMonth = `0${parseMonth}`;
-  }
-  return `${parsedDate.getFullYear()}-${parseMonth}-${parsedDate.getDate()}`;
-};
+import moment from 'moment';
 
+export const parseDate = (date) => moment(date).format('MM/DD/YYYY');
 export function noWhitespace() {
   return this.transform((value, originalValue) =>
     /^[ ]*$/.test(originalValue) ? NaN : value
