@@ -67,8 +67,8 @@ export default function DocumentList({
                 >
                   {departmentDocuments.map((item, index) => (
                     <Draggable
-                      key={item.id}
-                      draggableId={item.id}
+                      key={item.id.toString()}
+                      draggableId={item.id.toString()}
                       index={index}
                     >
                       {(providedDragabble, snapshotDragabble) => (
