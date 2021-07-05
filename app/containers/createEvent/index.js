@@ -62,6 +62,9 @@ function CreateEvent() {
   const mutation = useDeleteEvent();
   const handleSubmit = (values) => {
     const dataValues = { ...values };
+    if (dataValues.locationIds[0].name === 'All') {
+      dataValues.locationIds = dataValues.locationIds.shift();
+    }
     const locationIds = dataValues.locationIds.map((location) => location.id);
     dataValues.locationIds = locationIds;
     mutate(dataValues);
