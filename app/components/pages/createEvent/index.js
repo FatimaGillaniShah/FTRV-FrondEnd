@@ -1,5 +1,5 @@
 import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
 import { string, object, date, array } from 'yup';
@@ -62,20 +62,6 @@ export function CreateEventPage({
       data: { role },
     },
   } = useAuthContext();
-  const [selectLocationAll, setSelectLocationAll] = useState(false);
-  const selectLocations = (value, setFieldValue) => {
-    const searchString = 'All';
-    const results = value.filter(
-      (location) => location.name === `${searchString}`
-    );
-    if (results.length > 0) {
-      setSelectLocationAll(true);
-      setFieldValue('locationIds', locationData);
-    } else if (value) {
-      setSelectLocationAll(false);
-      setFieldValue('locationIds', value);
-    }
-  };
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -208,12 +194,11 @@ export function CreateEventPage({
                             options={locationData}
                             defaultValue={values.locationIds}
                             getOptionLabel={(location) => location.name || ''}
-                            selectedLocation={selectLocationAll}
                             getOptionSelected={(option, value) =>
                               option.id === value.id
                             }
                             onHandleChange={(e, value) => {
-                              selectLocations(value, setFieldValue);
+                              if (value) setFieldValue('locationIds', value);
                             }}
                             label="Location"
                             placeholder="Select Locations"
