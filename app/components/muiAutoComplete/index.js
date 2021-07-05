@@ -68,6 +68,7 @@ export default function MuiAutoComplete({
           );
         }}
         onChange={onHandleChange}
+        {...props}
         renderInput={(params) => (
           <TextField
             variant={variant}

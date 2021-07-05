@@ -12,7 +12,7 @@ import {
   getLocations,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { Modal, navigateTo, Toast } from '../../utils/helper';
+import { Modal, navigateTo, Toast, addHourToDate } from '../../utils/helper';
 
 function CreateEvent() {
   const { data: locationData, isLoading: isLocationLoading } = useQuery(
@@ -22,7 +22,7 @@ function CreateEvent() {
   const history = useHistory();
   const { id } = useParams();
   const queryClient = useQueryClient();
-
+  const today = new Date();
   const { data, isLoading } = useQuery(keys.getEvent(id), getEventById, {
     enabled: !!id,
     refetchOnWindowFocus: false,
@@ -76,10 +76,12 @@ function CreateEvent() {
       }
     });
   };
+  const endDate = addHourToDate(new Date(), 1);
+
   const initialValues = {
     title: '',
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: today,
+    endDate,
     description: '',
     locationIds: [],
   };

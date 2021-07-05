@@ -85,7 +85,10 @@ export function isFunction(possibleFunction) {
 export function navigateTo(history, url) {
   history.push(url);
 }
-
+export function addHourToDate(date, hours) {
+  date.setHours(date.getHours() + hours);
+  return date;
+}
 export function formatDate(date) {
   return new Date(date).toLocaleString('en-US', {
     year: 'numeric',

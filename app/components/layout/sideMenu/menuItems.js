@@ -46,7 +46,7 @@ export const menuItems = [
     children: [
       { name: 'Quote', link: '/quote' },
       { name: 'events', link: '/events' },
-      { name: 'polls', link: '/polls' },
+      // { name: 'polls', link: '/polls' },
       {
         name: 'Announcement',
         link: '/announcement',
