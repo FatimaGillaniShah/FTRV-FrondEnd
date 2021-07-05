@@ -21,7 +21,7 @@ export default function DocumentList({
 
     updateDepartmentDocuments(documentsOrder);
   };
-  const getStyle = (isDragging, draggableStyle) => {
+  const getItemStyle = (isDragging, draggableStyle) => {
     const { transform } = draggableStyle;
     let activeTransform = {};
     if (transform) {
@@ -34,10 +34,18 @@ export default function DocumentList({
     }
     return {
       userSelect: 'none',
+      padding: '20px',
+      margin: `0 0 ${6}px 0`,
       ...draggableStyle,
       ...activeTransform,
     };
   };
+
+  const getListStyle = () => ({
+    padding: 6,
+    width: '100%',
+  });
+
   return (
     <Paper>
       <Box width={1}>
@@ -48,42 +56,45 @@ export default function DocumentList({
             </H5>
           </Box>
         </Paper>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="document">
-            {(provided) => (
-              <Box
-                className="document"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {departmentDocuments.map(({ id, name, description }, index) => (
-                  <Draggable key={id} draggableId={id} index={index}>
-                    {(providedDraggable, snapshot) => (
-                      <Box
-                        className={classes.documentList}
-                        ref={providedDraggable.innerRef}
-                        {...providedDraggable.draggableProps}
-                        {...providedDraggable.dragHandleProps}
-                        style={getStyle(
-                          snapshot.isDragging,
-                          providedDraggable.draggableProps.style
-                        )}
-                      >
-                        <Document
-                          document={document}
-                          onHandleDelete={onHandleDelete}
-                          name={name}
-                          description={description}
-                        />
-                      </Box>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </Box>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <Box className={classes.documentList}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <Box
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  style={getListStyle(snapshot.isDraggingOver)}
+                >
+                  {departmentDocuments.map((item, index) => (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
+                      {(providedDragabble, snapshotDragabble) => (
+                        <Paper
+                          ref={providedDragabble.innerRef}
+                          {...providedDragabble.draggableProps}
+                          {...providedDragabble.dragHandleProps}
+                          style={getItemStyle(
+                            snapshotDragabble.isDragging,
+                            providedDragabble.draggableProps.style
+                          )}
+                        >
+                          <Document
+                            document={item}
+                            onHandleDelete={onHandleDelete}
+                          />
+                        </Paper>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </Box>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </Box>
       </Box>
     </Paper>
   );
