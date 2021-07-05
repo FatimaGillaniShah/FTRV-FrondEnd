@@ -7,10 +7,14 @@ import { colors } from '../../theme/colors';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiDataGrid-columnsContainer': {
-      backgroundColor: theme.palette.primary.light,
-      lineHeight: '52px !important',
-      maxHeight: '52px !important',
-      minHeight: '52px !important',
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.text.light,
+      lineHeight: '62px !important',
+      maxHeight: '62px !important',
+      minHeight: '62px !important',
+      '& .MuiCheckbox-root': {
+        color: theme.palette.checkbox.secondary,
+      },
     },
     '& .MuiDataGrid-window': {
       backgroundColor: colors.bgColor.secondary,
@@ -42,6 +46,15 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .super-app.reviewed': {
       color: colors.orange,
+    },
+  },
+
+  cell: {
+    '& .MuiCheckbox-root': {
+      color: theme.palette.checkbox.main,
+    },
+    '& .MuiDataGrid-sortIcon': {
+      color: theme.palette.iconColor.default,
     },
   },
 }));

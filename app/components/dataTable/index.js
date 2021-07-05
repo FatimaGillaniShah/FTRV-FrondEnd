@@ -62,7 +62,7 @@ export function DataTable({
     }
   };
   return (
-    <Box className={classes.root}>
+    <Box className={`${classes.root} ${classes.cell}`}>
       <DataGrid
         onSelectionModelChange={(newSelection) => {
           setSelected(newSelection.selectionModel);
