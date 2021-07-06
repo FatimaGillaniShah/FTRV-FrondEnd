@@ -51,7 +51,7 @@ export function CreateDocumentPage({
                     <DepartmentWithModel
                       name="departmentId"
                       label="Department"
-                      selectedValue={values.departmentId}
+                      //  selectedValue={values.departmentId}
                       options={options}
                       initialDialogData={initialDialogData}
                     />
