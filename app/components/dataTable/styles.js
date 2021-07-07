@@ -60,6 +60,14 @@ const useStyles = makeStyles((theme) => ({
       color: 'rgba(0, 0, 0, 0.26)',
     },
   },
+
+  gridOverlay: {
+    zIndex: 100,
+  },
+  label: {
+    marginTop: theme.spacing(1),
+    width: '100%',
+  },
 }));
 
 // TableSortLabel CUSTOM STYLING

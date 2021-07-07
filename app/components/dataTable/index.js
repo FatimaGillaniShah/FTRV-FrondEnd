@@ -1,11 +1,22 @@
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, GridOverlay } from '@material-ui/data-grid';
+import Alert from '@material-ui/lab/Alert';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import { useStyles } from './styles';
 import { useAuthContext } from '../../context/authContext';
 
+function CustomNoRowsOverlay() {
+  const classes = useStyles();
+  return (
+    <GridOverlay className={classes.gridOverlay}>
+      <Alert severity="error" className={classes.label}>
+        No data found
+      </Alert>
+    </GridOverlay>
+  );
+}
 export function DataTable({
   rows,
   columns,
@@ -36,6 +47,12 @@ export function DataTable({
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
+
+  function currentlySelected(selections) {
+    if (selected !== selections.selectionModel) {
+      setSelected(selections.selectionModel);
+    }
+  }
   const handleSortModelChange = (params) => {
     if (params.sortModel !== sortModel) {
       if (isServerSide) {
@@ -64,10 +81,11 @@ export function DataTable({
   return (
     <Box className={`${classes.root} ${classes.cell}`}>
       <DataGrid
-        onSelectionModelChange={(newSelection) => {
-          setSelected(newSelection.selectionModel);
+        components={{
+          NoRowsOverlay: CustomNoRowsOverlay,
         }}
-        selectionModel={selected}
+        onSelectionModelChange={currentlySelected}
+        selectionModel={[...selected]}
         columns={columns}
         rows={rows}
         autoHeight
