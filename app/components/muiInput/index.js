@@ -45,6 +45,7 @@ function InputField({
   helperText,
   showInputLabel,
   tabIndex,
+  onClick,
   ...props
 }) {
   const [field, meta] = useField(props);
@@ -52,6 +53,7 @@ function InputField({
   return (
     <FormControl
       fullWidth={fullWidth}
+      onClick={onClick}
       error={meta.touched && meta.error}
       {...formControlProps}
       variant={variant}

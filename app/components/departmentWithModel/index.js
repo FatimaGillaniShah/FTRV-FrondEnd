@@ -1,74 +1,78 @@
 import { Box, Button } from '@material-ui/core';
 import React, { memo, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import { Input } from 'components';
 import { Form, Formik } from 'formik';
-import { string, object } from 'yup';
 import BusinessIcon from '@material-ui/icons/Business';
 import PropTypes from 'prop-types';
+import { useQuery } from 'react-query';
 import Select from '../muiSelect';
 import MuiDialog from '../muiDialog';
+import { useCreateDepartment } from '../../hooks/departmentMutation';
+import { keys } from '../../state/queryKeys';
+import { getDepartments } from '../../state/queryFunctions';
+import { useStyles } from './style';
+import { validationSchema } from './schema';
 
-const useStyles = makeStyles((theme) => ({
-  modelLink: {
-    cursor: 'pointer',
-    paddingTop: theme.spacing(1),
-  },
-}));
+function DepartmentWithModel({ selectedValue, initialValues, ...props }) {
+  const { mutate } = useCreateDepartment();
+  const { data: deparments } = useQuery(keys.department, getDepartments);
 
-function DepartmentWithModel({
-  selectedValue,
-  options,
-  initialDialogData,
-  variant,
-}) {
-  const departmentSchema = object().shape({
-    department: string()
-      .required('*Department Required')
-      .noWhitespace()
-      .typeError('* This field cannot contain only blankspaces'),
-  });
-
-  const [openDepDialog, setOpenDepDialog] = useState(false);
-  const handleDialogState = () => {
-    setOpenDepDialog(!openDepDialog);
+  const [open, setOpen] = useState(false);
+  const handleDialogue = () => {
+    setOpen(!open);
   };
+  const handleSubmit = (values, { resetForm }) => {
+    mutate(values);
+    resetForm();
+    setOpen(!open);
+  };
+  const options = deparments?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
 
   const classes = useStyles();
   return (
     <>
       <Formik
-        initialValues={initialDialogData}
-        validationSchema={departmentSchema}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
       >
-        <Form>
-          <MuiDialog
-            open={openDepDialog}
-            onClose={() => handleDialogState()}
-            title="Create New Department"
-          >
-            <Box width={[1, 1, 1 / 2]} py={5}>
-              <Input
-                name="department"
-                variant={variant}
-                OutlinedInputPlaceholder="*Department"
-                Icon={BusinessIcon}
-                appendIcon
-              />
-            </Box>
-          </MuiDialog>
-        </Form>
+        {({ submitForm }) => (
+          <Form>
+            <MuiDialog
+              open={open}
+              onClose={() => handleDialogue()}
+              title="Create New Department"
+              onSubmit={submitForm}
+            >
+              <Box
+                width={[1, 1, 1 / 2]}
+                py={5}
+                className={classes.modalOverflow}
+              >
+                <Input
+                  name="name"
+                  OutlinedInputPlaceholder="*Department"
+                  Icon={BusinessIcon}
+                  appendIcon
+                />
+              </Box>
+            </MuiDialog>
+          </Form>
+        )}
       </Formik>
       <Box mt={6}>
         <Select
-          name="locationId"
           selectedValue={selectedValue}
           label="Department"
           options={options}
+          {...props}
         />
         <Box className={classes.modelLink}>
-          <Button startIcon={<AddIcon />} onClick={handleDialogState}>
+          <Button startIcon={<AddIcon />} onClick={handleDialogue}>
             Create new department
           </Button>
         </Box>
@@ -78,13 +82,11 @@ function DepartmentWithModel({
 }
 
 DepartmentWithModel.propTypes = {
-  options: PropTypes.array,
-  initialDialogData: PropTypes.object,
+  initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
-  variant: PropTypes.string,
 };
 DepartmentWithModel.defaultProps = {
-  variant: 'outlined',
+  initialValues: { name: '' },
 };
 
 export default memo(DepartmentWithModel);
