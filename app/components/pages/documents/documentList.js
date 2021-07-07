@@ -7,12 +7,19 @@ import { H5 } from '../../typography';
 import { getDocuments } from '../../../state/queryFunctions';
 import { keys } from '../../../state/queryKeys';
 import { useStyles } from './style';
+import { ROLES } from '../../../utils/constants';
+import { useAuthContext } from '../../../context/authContext';
 
 export default function DocumentList({
   departmentName,
   onHandleDelete,
   departments,
 }) {
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
   const selectedDepartment = departments.find(
     (department) => department.name === departmentName
   );
@@ -22,12 +29,12 @@ export default function DocumentList({
     getDocuments(departmentId)
   );
   const documentData = data?.data?.data;
-  const array = documentData?.rows[0];
+  const documentList = documentData?.rows[0];
   const [departmentDocuments, updateDepartmentDocuments] = useState([]);
 
   useEffect(() => {
-    updateDepartmentDocuments(array?.documents);
-  }, [array]);
+    updateDepartmentDocuments(documentList?.documents);
+  }, [documentList]);
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -74,43 +81,56 @@ export default function DocumentList({
         </Paper>
 
         <Box className={classes.documentList}>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="droppable">
-              {(provided, snapshot) => (
-                <Box
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  style={getListStyle(snapshot.isDraggingOver)}
-                >
-                  {documentData?.rows[0].documents?.map((item, index) => (
-                    <Draggable
-                      key={item.id.toString()}
-                      draggableId={item.id.toString()}
-                      index={index}
-                    >
-                      {(providedDragabble, snapshotDragabble) => (
-                        <Paper
-                          ref={providedDragabble.innerRef}
-                          {...providedDragabble.draggableProps}
-                          {...providedDragabble.dragHandleProps}
-                          style={getItemStyle(
-                            snapshotDragabble.isDragging,
-                            providedDragabble.draggableProps.style
-                          )}
-                        >
-                          <Document
-                            document={item}
-                            onHandleDelete={onHandleDelete}
-                          />
-                        </Paper>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
+          {role === ROLES.ADMIN ? (
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Droppable droppableId="droppable">
+                {(provided, snapshot) => (
+                  <Box
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={getListStyle(snapshot.isDraggingOver)}
+                  >
+                    {departmentDocuments?.map((item, index) => (
+                      <Draggable
+                        key={item.id.toString()}
+                        draggableId={item.id.toString()}
+                        index={index}
+                      >
+                        {(providedDragabble, snapshotDragabble) => (
+                          <Paper
+                            ref={providedDragabble.innerRef}
+                            {...providedDragabble.draggableProps}
+                            {...providedDragabble.dragHandleProps}
+                            style={getItemStyle(
+                              snapshotDragabble.isDragging,
+                              providedDragabble.draggableProps.style
+                            )}
+                          >
+                            <Document
+                              document={item}
+                              onHandleDelete={onHandleDelete}
+                            />
+                          </Paper>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </Box>
+                )}
+              </Droppable>
+            </DragDropContext>
+          ) : (
+            <>
+              {' '}
+              {departmentDocuments?.map((item) => (
+                <Box p={4}>
+                  <Paper className={classes.documentPaper}>
+                    <Document document={item} onHandleDelete={onHandleDelete} />
+                  </Paper>
                 </Box>
-              )}
-            </Droppable>
-          </DragDropContext>
+              ))}
+            </>
+          )}
         </Box>
       </Box>
     </Paper>

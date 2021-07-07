@@ -11,7 +11,6 @@ import { navigateTo } from '../../../utils/helper';
 import { useStyles } from './style';
 
 export function Document({ document: { name, description }, onHandleDelete }) {
-  console.log();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const classes = useStyles();
@@ -25,7 +24,7 @@ export function Document({ document: { name, description }, onHandleDelete }) {
     setAnchorEl(null);
   };
   return (
-    <Box display="flex" justifyContent="space-between" pb={3}>
+    <Box display="flex" justifyContent="space-between" pb={2}>
       <Box width="90%">
         <BodyTextLarge medium>{name}</BodyTextLarge>
         <BodyTextSmall>{description}</BodyTextSmall>
