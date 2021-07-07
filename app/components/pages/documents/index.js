@@ -30,8 +30,8 @@ export function Documents({ data }) {
         </Box>
         <Box my={8}>
           <DocumentTabs
-            documents={data?.documents}
-            departments={data?.departments}
+            // documents={data?.documents}
+            departments={data}
             onHandleDelete={handleDelete}
           />
         </Box>

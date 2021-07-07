@@ -48,6 +48,7 @@ export default function DocumentTabs({
         <TabPanel value={selected} index={index}>
           <DocumentList
             documents={documents}
+            departments={departments}
             departmentName={department.name}
             onHandleDelete={onHandleDelete}
           />
