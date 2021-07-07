@@ -24,6 +24,7 @@ const {
   BANNER_IMAGE,
   WORK_ANNIVERSARY,
   DOCUMENTS,
+  DOCUMENT_DEPARTMENTS,
 } = APIS;
 
 // USER CRUD
@@ -195,5 +196,7 @@ export const updateDepartment = ({ id, ...payload }) =>
   http.put(`${DEPARTMENTS}/${id}`, payload);
 
 export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
+
+export const getDepartmentDocuments = () => http.get(`${DOCUMENT_DEPARTMENTS}`);
 
 export const getDocuments = (id) => http.get(`${DOCUMENTS}?departmentId=${id}`);

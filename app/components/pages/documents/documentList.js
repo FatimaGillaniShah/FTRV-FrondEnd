@@ -8,7 +8,6 @@ import { keys } from '../../../state/queryKeys';
 import { useStyles } from './style';
 
 export default function DocumentList({
-  documents,
   departmentName,
   onHandleDelete,
   departments,
@@ -16,35 +15,12 @@ export default function DocumentList({
   const selectedDepartment = departments.find(
     (department) => department.name === departmentName
   );
-  const documentId = selectedDepartment.id;
-  // const { data, isLoading } = useQuery(
-  //   keys.documents,
-  //   getDocuments(documentId)
-  // );
-
-  const data = {
-    documents: [
-      {
-        id: 5,
-        name: 'test1534543',
-        description: 'description',
-        url: 'hamza-document-file/1-1625478146996-bc180408870.docx',
-        departmentId: 1,
-        sortOrder: 1,
-      },
-      {
-        id: 4,
-        name: 'test1534543',
-        description: 'description',
-        url: 'hamza-document-file/1-1625487981150-cost of packages.PNG',
-        departmentId: 1,
-        sortOrder: 1,
-      },
-    ],
-  };
-
   const classes = useStyles();
-
+  const departmentId = selectedDepartment.id;
+  const { data } = useQuery(keys.getdocuments(departmentId), () =>
+    getDocuments(departmentId)
+  );
+  const documentData = data?.data?.data.rows;
   return (
     <Paper>
       <Box width={1}>
@@ -55,10 +31,13 @@ export default function DocumentList({
             </H5>
           </Box>
         </Paper>
+
         <Box className={classes.documentList}>
-          {data?.documents?.map((document) => (
-            <Document document={document} onHandleDelete={onHandleDelete} />
-          ))}
+          {documentData?.map((department) =>
+            department?.documents.map((document) => (
+              <Document document={document} onHandleDelete={onHandleDelete} />
+            ))
+          )}
         </Box>
       </Box>
     </Paper>

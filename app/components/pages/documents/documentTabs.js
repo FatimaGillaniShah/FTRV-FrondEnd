@@ -12,11 +12,7 @@ function tabProps(index) {
   };
 }
 
-export default function DocumentTabs({
-  documents,
-  departments,
-  onHandleDelete,
-}) {
+export default function DocumentTabs({ departments, onHandleDelete }) {
   const classes = useStyles();
   const [selected, setSelected] = useState(0);
   const theme = useTheme();
@@ -47,7 +43,6 @@ export default function DocumentTabs({
       {departments?.map((department, index) => (
         <TabPanel value={selected} index={index}>
           <DocumentList
-            documents={documents}
             departments={departments}
             departmentName={department.name}
             onHandleDelete={onHandleDelete}

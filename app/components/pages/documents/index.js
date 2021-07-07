@@ -1,42 +1,39 @@
 import { Box, Button, Link } from '@material-ui/core';
 import React, { memo } from 'react';
 import AddIcon from '@material-ui/icons/Add';
-import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
-import WrapInCard from '../../layout/wrapInCard';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import { H5 } from '../../typography';
 import DocumentTabs from './documentTabs';
 import { Modal } from '../../../utils/helper';
+import NotExist from '../notExist/index';
 
-export function Documents({ data }) {
+export function Documents({ data, count }) {
   const handleDelete = () => {
     Modal.fire();
   };
   return (
-    <WrapInBreadcrumbs>
-      <WrapInCard mb={8}>
-        <Box pb={8} pt={3}>
-          <H5> Documents </H5>
-        </Box>
-        <Box>
-          <Link href="/documents/add" underline="none">
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<AddIcon />}
-            >
-              New Document
-            </Button>
-          </Link>
-        </Box>
+    <>
+      <Box pb={8} pt={3}>
+        <H5> Documents </H5>
+      </Box>
+      <Box>
+        <Link href="/documents/add" underline="none">
+          <Button variant="contained" color="secondary" startIcon={<AddIcon />}>
+            New Document
+          </Button>
+        </Link>
+      </Box>
+      {count > 0 ? (
         <Box my={8}>
-          <DocumentTabs
-            // documents={data?.documents}
-            departments={data}
-            onHandleDelete={handleDelete}
-          />
+          <DocumentTabs departments={data} onHandleDelete={handleDelete} />
         </Box>
-      </WrapInCard>
-    </WrapInBreadcrumbs>
+      ) : (
+        <NotExist
+          Icon={FileCopyOutlinedIcon}
+          description=" No Documents To Show"
+        />
+      )}
+    </>
   );
 }
 
