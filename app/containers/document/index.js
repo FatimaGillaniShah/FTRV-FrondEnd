@@ -10,6 +10,7 @@ import DocumentPage from '../../components/pages/documents';
 
 function Document() {
   const { data, isLoading } = useQuery(keys.department, getDepartmentDocuments);
+  const departmentData = data?.data?.data;
   return (
     <>
       <Helmet>
@@ -23,8 +24,8 @@ function Document() {
             <Loading />
           ) : (
             <DocumentPage
-              data={data?.data?.data?.rows}
-              count={data?.data?.data?.count}
+              data={departmentData?.rows}
+              count={departmentData?.count}
             />
           )}
         </WrapInCard>
