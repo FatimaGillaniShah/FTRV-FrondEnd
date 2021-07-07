@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Paper } from '@material-ui/core';
 import { useQuery } from 'react-query';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -21,45 +21,46 @@ export default function DocumentList({
   const { data } = useQuery(keys.getdocuments(departmentId), () =>
     getDocuments(departmentId)
   );
-  const documentData = data?.data?.data.rows;
-  const stateDocuments = documentData?.map((dep) => dep.documents);
+  const documentData = data?.data?.data;
+  const array = documentData?.rows[0];
+  const [departmentDocuments, updateDepartmentDocuments] = useState([]);
 
-  const [departmentDocuments, updateDepartmentDocuments] = useState(
-    stateDocuments
-  );
+  useEffect(() => {
+    updateDepartmentDocuments(array?.documents);
+  }, [array]);
 
-  // const onDragEnd = (result) => {
-  //   if (!result.destination) return;
-  //   const documentsOrder = Array.from(departmentDocuments);
-  //   const [reorderedItem] = documentsOrder.splice(result.source.index, 1);
-  //   documentsOrder.splice(result.destination.index, 0, reorderedItem);
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+    const documentsOrder = Array.from(departmentDocuments);
+    const [reorderedItem] = documentsOrder.splice(result.source.index, 1);
+    documentsOrder.splice(result.destination.index, 0, reorderedItem);
 
-  //   updateDepartmentDocuments(documentsOrder);
-  // };
-  // const getItemStyle = (isDragging, draggableStyle) => {
-  //   const { transform } = draggableStyle;
-  //   let activeTransform = {};
-  //   if (transform) {
-  //     activeTransform = {
-  //       transform: `translate(0, ${transform.substring(
-  //         transform.indexOf(',') + 1,
-  //         transform.indexOf(')')
-  //       )})`,
-  //     };
-  //   }
-  //   return {
-  //     userSelect: 'none',
-  //     padding: '20px',
-  //     margin: `0 0 ${6}px 0`,
-  //     ...draggableStyle,
-  //     ...activeTransform,
-  //   };
-  // };
+    updateDepartmentDocuments(documentsOrder);
+  };
+  const getItemStyle = (isDragging, draggableStyle) => {
+    const { transform } = draggableStyle;
+    let activeTransform = {};
+    if (transform) {
+      activeTransform = {
+        transform: `translate(0, ${transform.substring(
+          transform.indexOf(',') + 1,
+          transform.indexOf(')')
+        )})`,
+      };
+    }
+    return {
+      userSelect: 'none',
+      padding: '20px',
+      margin: `0 0 ${6}px 0`,
+      ...draggableStyle,
+      ...activeTransform,
+    };
+  };
 
-  // const getListStyle = () => ({
-  //   padding: 6,
-  //   width: '100%',
-  // });
+  const getListStyle = () => ({
+    padding: 6,
+    width: '100%',
+  });
 
   return (
     <Paper>
@@ -73,7 +74,7 @@ export default function DocumentList({
         </Paper>
 
         <Box className={classes.documentList}>
-          {/* <DragDropContext onDragEnd={onDragEnd}>
+          <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
               {(provided, snapshot) => (
                 <Box
@@ -81,7 +82,7 @@ export default function DocumentList({
                   ref={provided.innerRef}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  {departmentDocuments.map((item, index) => (
+                  {documentData?.rows[0].documents?.map((item, index) => (
                     <Draggable
                       key={item.id.toString()}
                       draggableId={item.id.toString()}
@@ -96,13 +97,12 @@ export default function DocumentList({
                             snapshotDragabble.isDragging,
                             providedDragabble.draggableProps.style
                           )}
-                        > */}
-          {documentData?.map((department) =>
-            department?.documents.map((document) => (
-              <Document document={document} onHandleDelete={onHandleDelete} />
-            ))
-          )}
-          {/* </Paper>
+                        >
+                          <Document
+                            document={item}
+                            onHandleDelete={onHandleDelete}
+                          />
+                        </Paper>
                       )}
                     </Draggable>
                   ))}
@@ -110,7 +110,7 @@ export default function DocumentList({
                 </Box>
               )}
             </Droppable>
-          </DragDropContext> */}
+          </DragDropContext>
         </Box>
       </Box>
     </Paper>
