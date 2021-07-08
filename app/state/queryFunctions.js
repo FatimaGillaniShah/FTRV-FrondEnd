@@ -202,7 +202,7 @@ export const updateDocument = (payload) => {
   const id = payload.get('id');
   payload.delete('id');
   payload.delete('file');
-  http.put(`${DOCUMENT}/${id}`, payload);
+  return http.put(`${DOCUMENT}/${id}`, payload);
 };
 
 export const getDocumentById = ({ queryKey }) =>

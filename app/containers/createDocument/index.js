@@ -31,7 +31,6 @@ function AddDocument() {
     description: document?.description || '',
     file: document?.url,
   };
-  document.description = document?.description || '';
   const { mutate, isLoading } = useMutation(
     id ? updateDocument : createDocument,
     {
@@ -78,7 +77,7 @@ function AddDocument() {
       ) : (
         <CreateDocumentPage
           id={id}
-          initialValues={document || initialValues}
+          initialValues={id ? document : initialValues}
           onHandleSubmit={handleSubmit}
         />
       )}

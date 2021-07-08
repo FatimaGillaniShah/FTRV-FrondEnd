@@ -55,6 +55,7 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
               >
                 <Input
                   name="name"
+                  variant="outlined"
                   OutlinedInputPlaceholder="*Department"
                   Icon={BusinessIcon}
                   appendIcon
