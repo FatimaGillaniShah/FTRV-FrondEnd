@@ -12,7 +12,7 @@ import { Modal } from '../../utils/helper';
 
 function Document() {
   const { data, isLoading } = useQuery(keys.department, getDepartmentDocuments);
-  const departmentData = data?.data?.data;
+  const department = data?.data?.data;
   const mutation = useDeleteDocument();
   const handleDelete = (id) => {
     Modal.fire().then(({ isConfirmed }) => {
@@ -26,7 +26,6 @@ function Document() {
     <>
       <Helmet>
         <title>Document</title>
-        <meta name="ftrv blog listing" content="ftrv blog listing screen" />
       </Helmet>
 
       <WrapInBreadcrumbs>
@@ -35,9 +34,9 @@ function Document() {
             <Loading />
           ) : (
             <DocumentPage
-              data={departmentData?.rows}
-              count={departmentData?.count}
-              handleDelete={handleDelete}
+              data={department?.rows}
+              count={department?.count}
+              onHandleDelete={handleDelete}
             />
           )}
         </WrapInCard>

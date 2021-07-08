@@ -12,8 +12,8 @@ export function useDeleteDocument() {
         data: { count },
       },
     }) => {
-      Swal.fire('Deleted!', `${count} document deleted.`, 'success');
-      queryClient.invalidateQueries(keys.getdocuments);
+      Swal.fire('Deleted!', `${count}  document(s) deleted.`, 'success');
+      queryClient.invalidateQueries(keys.getDocument);
     },
     onError: ({
       response: {
