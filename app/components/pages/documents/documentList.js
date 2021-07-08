@@ -116,6 +116,7 @@ export default function DocumentList({
     return {
       userSelect: 'none',
       padding: '20px',
+      cursor: 'pointer',
       margin: `0 0 ${6}px 0`,
       ...draggableStyle,
       ...activeTransform,
