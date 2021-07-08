@@ -7,10 +7,21 @@ import { getDepartmentDocuments } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Loading } from '../../components/loading';
 import DocumentPage from '../../components/pages/documents';
+import { useDeleteDocument } from '../../hooks/document';
+import { Modal } from '../../utils/helper';
 
 function Document() {
   const { data, isLoading } = useQuery(keys.department, getDepartmentDocuments);
   const departmentData = data?.data?.data;
+  const mutation = useDeleteDocument();
+  const handleDelete = (id) => {
+    Modal.fire().then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        mutation.mutate([id]);
+      }
+    });
+  };
+
   return (
     <>
       <Helmet>
@@ -26,6 +37,7 @@ function Document() {
             <DocumentPage
               data={departmentData?.rows}
               count={departmentData?.count}
+              handleDelete={handleDelete}
             />
           )}
         </WrapInCard>

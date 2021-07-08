@@ -4,13 +4,9 @@ import AddIcon from '@material-ui/icons/Add';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import { H5 } from '../../typography';
 import DocumentTabs from './documentTabs';
-import { Modal } from '../../../utils/helper';
 import NotExist from '../notExist/index';
 
-export function Documents({ data, count }) {
-  const handleDelete = () => {
-    Modal.fire();
-  };
+export function Documents({ data, count, handleDelete }) {
   return (
     <>
       <Box pb={8} pt={3}>

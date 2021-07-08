@@ -10,7 +10,10 @@ import { ListItemIcon, MenuItem } from '../..';
 import { navigateTo } from '../../../utils/helper';
 import { useStyles } from './style';
 
-export function Document({ document: { name, description }, onHandleDelete }) {
+export function Document({
+  document: { id, name, description },
+  onHandleDelete,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const classes = useStyles();
@@ -53,7 +56,7 @@ export function Document({ document: { name, description }, onHandleDelete }) {
           <MenuItem
             onClick={() => {
               handleClose();
-              onHandleDelete();
+              onHandleDelete(id);
             }}
           >
             <ListItemIcon>
