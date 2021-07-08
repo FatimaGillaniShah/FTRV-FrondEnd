@@ -7,7 +7,7 @@ import DocumentTabs from './documentTabs';
 import { Modal } from '../../../utils/helper';
 import NotExist from '../notExist/index';
 
-export function Documents({ data, count }) {
+export function Documents({ data }) {
   const handleDelete = () => {
     Modal.fire();
   };
@@ -23,7 +23,7 @@ export function Documents({ data, count }) {
           </Button>
         </Link>
       </Box>
-      {count > 0 ? (
+      {data.length > 0 ? (
         <Box my={8}>
           <DocumentTabs departments={data} onHandleDelete={handleDelete} />
         </Box>

@@ -13,7 +13,7 @@ function Document() {
     keys.documentDepartment,
     getDepartmentDocuments
   );
-  const department = data?.data?.data;
+  const department = data?.data?.data?.rows;
   return (
     <>
       <Helmet>
@@ -22,11 +22,7 @@ function Document() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <DocumentPage data={department?.rows} count={department?.count} />
-          )}
+          {isLoading ? <Loading /> : <DocumentPage data={department} />}
         </WrapInCard>
       </WrapInBreadcrumbs>
     </>
