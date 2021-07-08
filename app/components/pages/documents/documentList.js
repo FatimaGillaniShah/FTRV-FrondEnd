@@ -90,10 +90,10 @@ export default function DocumentList({
                     ref={provided.innerRef}
                     style={getListStyle(snapshot.isDraggingOver)}
                   >
-                    {departmentDocuments?.map((item, index) => (
+                    {departmentDocuments?.map((document, index) => (
                       <Draggable
-                        key={item.id.toString()}
-                        draggableId={item.id.toString()}
+                        key={document.id.toString()}
+                        draggableId={document.id.toString()}
                         index={index}
                       >
                         {(providedDragabble, snapshotDragabble) => (
@@ -107,7 +107,7 @@ export default function DocumentList({
                             )}
                           >
                             <Document
-                              document={item}
+                              document={document}
                               onHandleDelete={onHandleDelete}
                             />
                           </Paper>
@@ -122,10 +122,13 @@ export default function DocumentList({
           ) : (
             <>
               {' '}
-              {departmentDocuments?.map((item) => (
+              {departmentDocuments?.map((document) => (
                 <Box p={4}>
                   <Paper className={classes.documentPaper}>
-                    <Document document={item} onHandleDelete={onHandleDelete} />
+                    <Document
+                      document={document}
+                      onHandleDelete={onHandleDelete}
+                    />
                   </Paper>
                 </Box>
               ))}
