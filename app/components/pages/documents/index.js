@@ -4,13 +4,9 @@ import AddIcon from '@material-ui/icons/Add';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import { H5 } from '../../typography';
 import DocumentTabs from './documentTabs';
-import { Modal } from '../../../utils/helper';
 import NotExist from '../notExist/index';
 
 export function Documents({ data }) {
-  const handleDelete = () => {
-    Modal.fire();
-  };
   return (
     <>
       <Box pb={8} pt={3}>
@@ -25,7 +21,7 @@ export function Documents({ data }) {
       </Box>
       {data.length > 0 ? (
         <Box my={8}>
-          <DocumentTabs departments={data} onHandleDelete={handleDelete} />
+          <DocumentTabs departments={data} />
         </Box>
       ) : (
         <NotExist
