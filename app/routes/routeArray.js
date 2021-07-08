@@ -355,6 +355,7 @@ export const routeArray = [
     exact: true,
     breadCrumbKey: 'Documents',
     routeType: routeTypes.private,
+    roles: [ROLES.ADMIN, ROLES.USER],
     nestedRoutes: [
       {
         path: '/add',
@@ -362,6 +363,17 @@ export const routeArray = [
         exact: true,
         breadCrumbKey: 'Add New Document',
         routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: AddDocument,
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        exact: true,
+        breadCrumbKey: 'Edit Document',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
       },
     ],
   },

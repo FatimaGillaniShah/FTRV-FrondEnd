@@ -29,4 +29,5 @@ export const keys = {
   getDepartments: (id) => ['department', id],
   workAnniversary: 'work-anniversary',
   documents: 'documents',
+  getDocument: (id) => ['document', id],
 };

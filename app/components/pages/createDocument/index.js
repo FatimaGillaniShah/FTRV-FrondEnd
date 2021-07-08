@@ -6,7 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import AttachFileOutlinedIcon from '@material-ui/icons/AttachFileOutlined';
 import SaveIcon from '@material-ui/icons/Save';
 import PropTypes from 'prop-types';
-import { Tooltip } from '@material-ui/core';
+import { FormHelperText, Tooltip } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import { Input, WrapInCard, TextArea } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
@@ -14,6 +14,7 @@ import { BodyTextLarge, H4, ButtonText } from '../../typography';
 import DepartmentWithModel from '../../departmentWithModal';
 import { useStyles } from './style';
 import { validationSchema } from './validationSchema';
+import { colors } from '../../../theme/colors';
 
 export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
   const documentFile = useRef(null);
@@ -34,7 +35,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
           validationSchema={validationSchema}
           onSubmit={onHandleSubmit}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, errors, touched }) => (
             <Form>
               <Box display="flex" ml={5}>
                 <Box pt={15} width={[1, '65%', '50%', '33.9%']}>
@@ -47,7 +48,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                       label="Department"
                     />
                   </Box>
-                  <Box mt={10}>
+                  <Box mt={8}>
                     <input
                       type="file"
                       ref={documentFile}
@@ -56,17 +57,25 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                       }
                       hidden
                     />
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      flexDirection={['column', 'row']}
-                      className={classes.documentUpload}
-                      onClick={handleUploadDocument}
-                      border="1px solid black"
-                      px={4}
-                      py={3}
+                    <Tooltip
+                      title={
+                        values.file?.name || values.url || `Select Document`
+                      }
                     >
-                      <Tooltip title="Select Document">
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        flexDirection={['column', 'row']}
+                        className={classes.documentUpload}
+                        onClick={handleUploadDocument}
+                        border={`1px solid ${
+                          errors.file && touched.file
+                            ? colors.red
+                            : colors.silver
+                        }`}
+                        px={4}
+                        py={3}
+                      >
                         <Button
                           color="secondary"
                           variant="contained"
@@ -74,19 +83,23 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                         >
                           <ButtonText>Upload Document</ButtonText>
                         </Button>
-                      </Tooltip>
-                      <Tooltip title={values.file.name || 'Select Document'}>
+
                         <Box mx={4} width={[1, '30%', '45%']}>
                           <BodyTextLarge
                             fontWeight="fontWeightMedium"
                             color="grey"
                             className={classes.fileName}
                           >
-                            {values.file.name || 'No file chosen'}
+                            {values.file?.name ||
+                              values.url ||
+                              'No file chosen'}
                           </BodyTextLarge>
                         </Box>
-                      </Tooltip>
-                    </Box>
+                      </Box>
+                    </Tooltip>
+                    {errors.file && touched.file ? (
+                      <FormHelperText error>{errors.file}</FormHelperText>
+                    ) : null}
                   </Box>
                   <Box mt={10}>
                     <Input
