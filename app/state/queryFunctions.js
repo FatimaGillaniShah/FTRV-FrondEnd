@@ -199,9 +199,6 @@ export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
 
 export const getDepartmentDocuments = () => http.get(`${DOCUMENTS}`);
 
-export const deleteDocument = (payload) =>
-  http.delete(DOCUMENTS, { data: { ids: payload } });
-
 export const updateDocumentOrder = (payload) => {
   const { updatedData } = payload;
   return http.put(`${DOCUMENT_SORT_ORDER}`, updatedData);
