@@ -12,7 +12,11 @@ function tabProps(id) {
   };
 }
 
-export default function DocumentTabs({ departments, onHandleDelete }) {
+export default function DocumentTabs({
+  departments,
+  onHandleDelete,
+  onHandleSortOrder,
+}) {
   const classes = useStyles();
   const [selected, setSelected] = useState(0);
   const theme = useTheme();
@@ -46,6 +50,7 @@ export default function DocumentTabs({ departments, onHandleDelete }) {
             departments={departments}
             departmentName={department.name}
             onHandleDelete={onHandleDelete}
+            onHandleSortOrder={onHandleSortOrder}
           />
         </TabPanel>
       ))}

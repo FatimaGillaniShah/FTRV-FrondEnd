@@ -6,7 +6,7 @@ import { H5 } from '../../typography';
 import DocumentTabs from './documentTabs';
 import NotExist from '../notExist/index';
 
-export function Documents({ data, count, onHandleDelete }) {
+export function Documents({ data, count, onHandleDelete, onHandleSortOrder }) {
   return (
     <>
       <Box pb={8} pt={3}>
@@ -21,7 +21,11 @@ export function Documents({ data, count, onHandleDelete }) {
       </Box>
       {count > 0 ? (
         <Box my={8}>
-          <DocumentTabs departments={data} onHandleDelete={onHandleDelete} />
+          <DocumentTabs
+            departments={data}
+            onHandleDelete={onHandleDelete}
+            onHandleSortOrder={onHandleSortOrder}
+          />
         </Box>
       ) : (
         <NotExist

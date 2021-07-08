@@ -24,6 +24,7 @@ const {
   BANNER_IMAGE,
   WORK_ANNIVERSARY,
   DOCUMENTS,
+  DOCUMENT_SORT_ORDER,
 } = APIS;
 
 // USER CRUD
@@ -202,3 +203,8 @@ export const getDocuments = (id) => http.get(`${DOCUMENTS}?departmentId=${id}`);
 
 export const deleteDocument = (payload) =>
   http.delete(DOCUMENTS, { data: { ids: payload } });
+
+export const updateDocumentOrder = (payload) => {
+  const { updatedData } = payload;
+  return http.put(`${DOCUMENT_SORT_ORDER}`, updatedData);
+};
