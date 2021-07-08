@@ -11,7 +11,7 @@ import Add from '@material-ui/icons/Add';
 import { Input, WrapInCard, TextArea } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { BodyTextLarge, H4, ButtonText } from '../../typography';
-import DepartmentWithModel from '../../departmentWithModel';
+import DepartmentWithModel from '../../departmentWithModal';
 import { useStyles } from './style';
 import { validationSchema } from './validationSchema';
 

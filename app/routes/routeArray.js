@@ -28,7 +28,7 @@ import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 import Locations from '../containers/location/loadable';
 import Departments from '../containers/department/loadable';
 import CreateDepartment from '../containers/addDepartment/loadable';
-import AddDocument from '../containers/addDocument/loadable';
+import AddDocument from '../containers/createDocument/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
