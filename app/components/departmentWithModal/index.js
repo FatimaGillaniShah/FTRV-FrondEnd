@@ -14,7 +14,7 @@ import { getDepartments } from '../../state/queryFunctions';
 import { useStyles } from './style';
 import { validationSchema } from './schema';
 
-function DepartmentWithModel({ selectedValue, initialValues, ...props }) {
+function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
   const { mutate } = useCreateDepartment();
   const { data: deparments } = useQuery(keys.department, getDepartments);
 
@@ -81,12 +81,12 @@ function DepartmentWithModel({ selectedValue, initialValues, ...props }) {
   );
 }
 
-DepartmentWithModel.propTypes = {
+DepartmentWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
 };
-DepartmentWithModel.defaultProps = {
+DepartmentWithModal.defaultProps = {
   initialValues: { name: '' },
 };
 
-export default memo(DepartmentWithModel);
+export default memo(DepartmentWithModal);
