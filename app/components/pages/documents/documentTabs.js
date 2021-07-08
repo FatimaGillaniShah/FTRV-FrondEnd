@@ -6,9 +6,9 @@ import { useStyles } from './style';
 import TabPanel from './tabPanel';
 import DocumentList from './documentList';
 
-function tabProps(index) {
+function tabProps(id) {
   return {
-    id: `vertical-tab-${index}`,
+    id: `vertical-tab-${id}`,
   };
 }
 
@@ -40,8 +40,8 @@ export default function DocumentTabs({ departments, onHandleDelete }) {
           />
         ))}
       </Tabs>
-      {departments?.map((department, index) => (
-        <TabPanel value={selected} index={index}>
+      {departments?.map((department, id) => (
+        <TabPanel value={selected} index={id}>
           <DocumentList
             departments={departments}
             departmentName={department.name}

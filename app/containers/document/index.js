@@ -9,13 +9,15 @@ import { Loading } from '../../components/loading';
 import DocumentPage from '../../components/pages/documents';
 
 function Document() {
-  const { data, isLoading } = useQuery(keys.department, getDepartmentDocuments);
-  const departmentData = data?.data?.data;
+  const { data, isLoading } = useQuery(
+    keys.documentDepartment,
+    getDepartmentDocuments
+  );
+  const department = data?.data?.data;
   return (
     <>
       <Helmet>
         <title>Document</title>
-        <meta name="ftrv blog listing" content="ftrv blog listing screen" />
       </Helmet>
 
       <WrapInBreadcrumbs>
@@ -23,10 +25,7 @@ function Document() {
           {isLoading ? (
             <Loading />
           ) : (
-            <DocumentPage
-              data={departmentData?.rows}
-              count={departmentData?.count}
-            />
+            <DocumentPage data={department?.rows} count={department?.count} />
           )}
         </WrapInCard>
       </WrapInBreadcrumbs>

@@ -4,11 +4,11 @@ import { useQuery } from 'react-query';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Document } from './document';
 import { H5 } from '../../typography';
-import { getDocuments } from '../../../state/queryFunctions';
-import { keys } from '../../../state/queryKeys';
 import { useStyles } from './style';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
+import { getDocuments } from '../../../state/queryFunctions';
+import { keys } from '../../../state/queryKeys';
 
 export default function DocumentList({
   departmentName,
@@ -25,7 +25,7 @@ export default function DocumentList({
   );
   const classes = useStyles();
   const departmentId = selectedDepartment.id;
-  const { data } = useQuery(keys.getdocuments(departmentId), () =>
+  const { data } = useQuery(keys.getDocument(departmentId), () =>
     getDocuments(departmentId)
   );
   const documentData = data?.data?.data;
@@ -90,11 +90,11 @@ export default function DocumentList({
                     ref={provided.innerRef}
                     style={getListStyle(snapshot.isDraggingOver)}
                   >
-                    {departmentDocuments?.map((document, index) => (
+                    {departmentDocuments?.map((document, id) => (
                       <Draggable
                         key={document.id.toString()}
                         draggableId={document.id.toString()}
-                        index={index}
+                        index={id}
                       >
                         {(providedDragabble, snapshotDragabble) => (
                           <Paper
