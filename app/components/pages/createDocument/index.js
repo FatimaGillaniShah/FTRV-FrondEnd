@@ -56,44 +56,37 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                       }
                       hidden
                     />
-                    <Input
-                      name="file"
-                      variant="outlined"
-                      prependIcon
-                      isDisabled
-                      onClick={handleUploadDocument}
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      flexDirection={['column', 'row']}
                       className={classes.documentUpload}
-                      Icon={() => (
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          flexDirection={['column', 'row']}
+                      onClick={handleUploadDocument}
+                      border="1px solid black"
+                      px={4}
+                      py={3}
+                    >
+                      <Tooltip title="Select Document">
+                        <Button
+                          color="secondary"
+                          variant="contained"
+                          startIcon={<Add fontSize="small" />}
                         >
-                          <Tooltip title="Select Document">
-                            <Button
-                              color="secondary"
-                              variant="contained"
-                              startIcon={<Add fontSize="small" />}
-                            >
-                              <ButtonText>Upload Document</ButtonText>
-                            </Button>
-                          </Tooltip>
-                          <Tooltip
-                            title={values.file.name || 'Select Document'}
+                          <ButtonText>Upload Document</ButtonText>
+                        </Button>
+                      </Tooltip>
+                      <Tooltip title={values.file.name || 'Select Document'}>
+                        <Box mx={4} width={[1, '30%', '45%']}>
+                          <BodyTextLarge
+                            fontWeight="fontWeightMedium"
+                            color="grey"
+                            className={classes.fileName}
                           >
-                            <Box mx={4} width={[1, '30%', '35%']}>
-                              <BodyTextLarge
-                                fontWeight="fontWeightMedium"
-                                color="grey"
-                                className={classes.fileName}
-                              >
-                                {values.file.name || 'No file chosen'}
-                              </BodyTextLarge>
-                            </Box>
-                          </Tooltip>
+                            {values.file.name || 'No file chosen'}
+                          </BodyTextLarge>
                         </Box>
-                      )}
-                    />
+                      </Tooltip>
+                    </Box>
                   </Box>
                   <Box mt={10}>
                     <Input
