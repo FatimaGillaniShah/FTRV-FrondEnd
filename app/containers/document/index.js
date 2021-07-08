@@ -10,8 +10,6 @@ import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { keys } from '../../state/queryKeys';
 import { Loading } from '../../components/loading';
 import DocumentPage from '../../components/pages/documents';
-import { useDeleteDocument } from '../../hooks/document';
-import { Modal } from '../../utils/helper';
 
 function Document() {
   const { data, isLoading } = useQuery(
@@ -19,15 +17,8 @@ function Document() {
     getDepartmentDocuments
   );
 
-  const department = data?.data?.data;
-  const mutation = useDeleteDocument();
-  const handleDelete = (id) => {
-    Modal.fire().then(({ isConfirmed }) => {
-      if (isConfirmed) {
-        mutation.mutate([id]);
-      }
-    });
-  };
+  const department = data?.data?.data?.rows;
+
   const sortOrderMutation = useMutation(updateDocumentOrder);
   const handleSortOrder = (updatedData) => {
     const payload = { updatedData };
@@ -46,9 +37,7 @@ function Document() {
             <Loading />
           ) : (
             <DocumentPage
-              data={department?.rows}
-              count={department?.count}
-              onHandleDelete={handleDelete}
+              data={department}
               onHandleSortOrder={handleSortOrder}
             />
           )}

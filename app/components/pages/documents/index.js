@@ -6,7 +6,7 @@ import { H5 } from '../../typography';
 import DocumentTabs from './documentTabs';
 import NotExist from '../notExist/index';
 
-export function Documents({ data, count, onHandleDelete, onHandleSortOrder }) {
+export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
   return (
     <>
       <Box pb={8} pt={3}>
@@ -19,7 +19,7 @@ export function Documents({ data, count, onHandleDelete, onHandleSortOrder }) {
           </Button>
         </Link>
       </Box>
-      {count > 0 ? (
+      {data.length > 0 ? (
         <Box my={8}>
           <DocumentTabs
             departments={data}
