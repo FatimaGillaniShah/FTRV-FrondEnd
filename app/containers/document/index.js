@@ -11,7 +11,10 @@ import { useDeleteDocument } from '../../hooks/document';
 import { Modal } from '../../utils/helper';
 
 function Document() {
-  const { data, isLoading } = useQuery(keys.department, getDepartmentDocuments);
+  const { data, isLoading } = useQuery(
+    keys.documentDepartment,
+    getDepartmentDocuments
+  );
   const department = data?.data?.data;
   const mutation = useDeleteDocument();
   const handleDelete = (id) => {
