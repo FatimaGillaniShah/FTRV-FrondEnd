@@ -9,11 +9,18 @@ import { BodyTextLarge, BodyTextSmall } from '../../typography';
 import { ListItemIcon, MenuItem } from '../..';
 import { navigateTo } from '../../../utils/helper';
 import { useStyles } from './style';
+import { ROLES } from '../../../utils/constants';
+import { useAuthContext } from '../../../context/authContext';
 
 export function Document({
   document: { id, name, description },
   onHandleDelete,
 }) {
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const classes = useStyles();
@@ -32,39 +39,50 @@ export function Document({
         <BodyTextLarge medium>{name}</BodyTextLarge>
         <BodyTextSmall>{description}</BodyTextSmall>
       </Box>
+
       <Box display="flex" flexDirection="column">
-        <IconButton onClick={handleClick} className={classes.documentAction}>
-          <MoreVertIcon color="secondary" />
-        </IconButton>
-        <Menu
-          anchorEl={anchorEl}
-          keepMounted
-          open={anchorEl}
-          onClose={handleClose}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-        >
-          <MenuItem onClick={() => navigateTo(history, '/documents/edit')}>
-            <ListItemIcon>
-              <EditIcon color="secondary" />
-            </ListItemIcon>
-            Edit
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleClose();
-              onHandleDelete(id);
-            }}
-          >
-            <ListItemIcon>
-              <DeleteIcon color="error" />
-            </ListItemIcon>
-            Delete
-          </MenuItem>
-        </Menu>
+        {role === ROLES.ADMIN && (
+          <Box>
+            <IconButton
+              onClick={handleClick}
+              className={classes.documentAction}
+            >
+              <MoreVertIcon color="secondary" />
+            </IconButton>
+
+            <Menu
+              anchorEl={anchorEl}
+              keepMounted
+              open={anchorEl}
+              onClose={handleClose}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+              <MenuItem
+                onClick={() => navigateTo(history, `/documents/edit/${id}`)}
+              >
+                <ListItemIcon>
+                  <EditIcon color="secondary" />
+                </ListItemIcon>
+                Edit
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  onHandleDelete(id);
+                }}
+              >
+                <ListItemIcon>
+                  <DeleteIcon color="error" />
+                </ListItemIcon>
+                Delete
+              </MenuItem>
+            </Menu>
+          </Box>
+        )}
         <IconButton>
           <CloudDownloadIcon color="secondary" />
         </IconButton>
