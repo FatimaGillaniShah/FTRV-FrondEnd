@@ -30,7 +30,7 @@ export default function DocumentList({
   const [departmentDocuments, updateDepartmentDocuments] = useState(
     documentList
   );
-  const documentListWithoutDraggable = () => (
+  const DocumentListWithoutDraggable = () => (
     <>
       {departmentDocuments?.map((document) => (
         <Box p={4}>
@@ -41,7 +41,7 @@ export default function DocumentList({
       ))}
     </>
   );
-  const documentListWithDraggable = () => (
+  const DocumentListWithDraggable = () => (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
         {(provided, snapshot) => (
@@ -140,9 +140,11 @@ export default function DocumentList({
         </Paper>
 
         <Box className={classes.documentList}>
-          {role === ROLES.ADMIN
-            ? documentListWithDraggable()
-            : documentListWithoutDraggable()}
+          {role === ROLES.ADMIN ? (
+            <DocumentListWithDraggable />
+          ) : (
+            <DocumentListWithoutDraggable />
+          )}
         </Box>
       </Box>
     </Paper>

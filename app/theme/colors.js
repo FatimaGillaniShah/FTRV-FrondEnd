@@ -48,4 +48,5 @@ export const colors = {
     success: green,
     error: red,
   },
+  silver: 'silver',
 };

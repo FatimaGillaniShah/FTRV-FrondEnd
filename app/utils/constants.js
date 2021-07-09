@@ -54,4 +54,5 @@ export const APIS = {
   WORK_ANNIVERSARY: '/users/workAnniversary',
   DOCUMENTS: '/documents',
   DOCUMENT_SORT_ORDER: '/documents/updateSortOrder',
+  DOCUMENT: '/documents',
 };

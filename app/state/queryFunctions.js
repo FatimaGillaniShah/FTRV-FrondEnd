@@ -25,6 +25,7 @@ const {
   WORK_ANNIVERSARY,
   DOCUMENTS,
   DOCUMENT_SORT_ORDER,
+  DOCUMENT,
 } = APIS;
 
 // USER CRUD
@@ -203,3 +204,4 @@ export const updateDocumentOrder = (payload) => {
   const { updatedData } = payload;
   return http.put(`${DOCUMENT_SORT_ORDER}`, updatedData);
 };
+export const createDocument = (payload) => http.post(DOCUMENT, payload);

@@ -29,6 +29,7 @@ import Locations from '../containers/location/loadable';
 import Departments from '../containers/department/loadable';
 import CreateDepartment from '../containers/addDepartment/loadable';
 import Documents from '../containers/document/loadable';
+import AddDocument from '../containers/createDocument/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -356,6 +357,14 @@ export const routeArray = [
     exact: true,
     breadCrumbKey: 'Documents',
     routeType: routeTypes.private,
-    roles: [ROLES.ADMIN, ROLES.USER],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: AddDocument,
+        exact: true,
+        breadCrumbKey: 'Add New Document',
+        routeType: routeTypes.private,
+      },
+    ],
   },
 ];
