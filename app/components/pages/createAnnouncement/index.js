@@ -1,4 +1,4 @@
-import { Box, Button, Hidden, FormLabel } from '@material-ui/core';
+import { Box, Button, Hidden, FormLabel, Tooltip } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
@@ -9,6 +9,8 @@ import { useHistory } from 'react-router-dom';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 
 import { string, object, date, ref } from 'yup';
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { ANNOUNCEMENT_STATUS, ROLES } from '../../../utils/constants';
 import FormikRadioGroup from '../../muiRadioButtons';
 import { H4 } from '../../typography';
@@ -17,27 +19,30 @@ import { useAuthContext } from '../../../context/authContext';
 import { DatePicker, Input } from '../../index';
 import { parseDate } from '../../../utils/functions';
 import { navigateTo } from '../../../utils/helper';
+import DepartmentWithModel from '../../departmentWithModel';
+import LocationWithModel from '../../locationWithModel';
 
 const announcementSchema = object().shape({
-  title: string()
-    .required('*Title Required')
+  name: string()
+    .required('*Name Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
-  startTime: date().required('*Start Date Required'),
-  endTime: date()
-    .min(ref('startTime'), 'End date should be greater than start date')
-    .required('*End Date Required'),
-  description: string()
-    .required('*Description Required')
-    .noWhitespace()
-    .typeError('* This field cannot contain only blankspaces'),
-  priority: string().required('*Priority Required'),
+  extension: string()
+    .required('*Extension Required')
+    .matches(/^[0-9]*$/, '* Only number are allowed')
+    .max(10, 'Too Long!')
+    .nullable(),
+  // startTime: date().required('*Start Date Required'),
+  // endTime: date()
+  //   .min(ref('startTime'), 'End date should be greater than start date')
+  //   .required('*End Date Required'),
+  // description: string()
+  //   .required('*Description Required')
+  //   .noWhitespace()
+  //   .typeError('* This field cannot contain only blankspaces'),
+  // priority: string().required('*Priority Required'),
 });
-function CreateAnnouncement({
-  initialValues,
-  onUpdateAnnouncement,
-  formType = 'add',
-}) {
+function CreateAnnouncement({ onUpdateAnnouncement, formType = 'add' }) {
   const options = [
     { value: 'high', label: 'High' },
     { value: 'medium', label: 'Medium' },
@@ -53,10 +58,17 @@ function CreateAnnouncement({
   } = useAuthContext();
   const history = useHistory();
   const formHeadings = {
-    add: 'Create New Announcement',
-    edit: 'Update Announcement Data',
+    add: 'Create New Ring Group',
+    edit: 'Update Ring Group',
   };
-
+  const initialValues = {
+    name: '',
+    extension: '',
+  };
+  const initialDialogData = {
+    location: '',
+    department: '',
+  };
   return (
     <>
       <Formik
@@ -91,24 +103,45 @@ function CreateAnnouncement({
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Input
-                      name="title"
+                      name="name"
                       variant="outlined"
-                      OutlinedInputPlaceholder="*Title"
-                      Icon={TitleOutlinedIcon}
-                      appendIcon
-                    />
-                  </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      name="description"
-                      variant="outlined"
-                      OutlinedInputPlaceholder="*Description"
-                      Icon={DescriptionOutlinedIcon}
+                      OutlinedInputPlaceholder="*Name"
+                      Icon={PersonOutlineIcon}
                       appendIcon
                     />
                   </Box>
 
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  <Box width={[1, 1, 1 / 2]} mt={4} px={3}>
+                    <DepartmentWithModel
+                      name="department"
+                      label="Department"
+                      selectedValue={values.departmentId}
+                      options={options}
+                      initialDialogData={initialDialogData}
+                    />
+                  </Box>
+                  <Box width={[1, 1, 1 / 2]} px={3}>
+                    <LocationWithModel
+                      name="location"
+                      label="Location"
+                      selectedValue={values.locationId}
+                      options={options}
+                      initialDialogData={initialDialogData}
+                    />
+                  </Box>
+                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
+                    <Tooltip title="Input your phone extenstion">
+                      <Input
+                        name="extension"
+                        variant="outlined"
+                        OutlinedInputPlaceholder="Phone Extension"
+                        Icon={ContactPhoneIcon}
+                        appendIcon
+                      />
+                    </Tooltip>
+                  </Box>
+
+                  {/* <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <DatePicker
                       disablePast
                       id="startTime"
@@ -125,8 +158,8 @@ function CreateAnnouncement({
                       disablePast
                       disabled={role === ROLES.USER}
                     />
-                  </Box>
-
+                  </Box> */}
+                  {/* 
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Select
                       name="status"
@@ -138,16 +171,16 @@ function CreateAnnouncement({
                       selectedValue={values.status}
                       options={statusOptions}
                     />
-                  </Box>
+                  </Box> */}
 
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
+                  {/* <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <FormLabel component="legend">Priority</FormLabel>
                     <Field
                       name="priority"
                       component={FormikRadioGroup}
                       options={options}
                     />
-                  </Box>
+                  </Box> */}
 
                   <Hidden smDown>
                     <Box width={[1, 1 / 2]} mt={10} px={3}></Box>
