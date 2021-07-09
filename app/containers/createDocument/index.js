@@ -31,28 +31,31 @@ function AddDocument() {
     description: document?.description || '',
     file: document?.url,
   };
+  const onDocumentSuccess = () => {
+    Toast({
+      icon: 'success',
+      title: `Document ${id ? 'Updated' : 'Created'}  successfully`,
+    });
+    queryClient.invalidateQueries(keys.documents);
+    navigateTo(history, '/documents');
+    if (id) queryClient.invalidateQueries(keys.getDocument(id));
+  };
+
+  const onDocumentError = ({
+    response: {
+      data: { message },
+    },
+  }) => {
+    Toast({
+      icon: 'error',
+      title: message || 'Some error occurred',
+    });
+  };
   const { mutate, isLoading } = useMutation(
     id ? updateDocument : createDocument,
     {
-      onSuccess: () => {
-        Toast({
-          icon: 'success',
-          title: `Document ${id ? 'Updated' : 'Created'}  successfully`,
-        });
-        queryClient.invalidateQueries(keys.documents);
-        navigateTo(history, '/documents');
-        if (id) queryClient.invalidateQueries(keys.getDocument(id));
-      },
-      onError: ({
-        response: {
-          data: { message },
-        },
-      }) => {
-        Toast({
-          icon: 'error',
-          title: message || 'Some error occurred',
-        });
-      },
+      onSuccess: onDocumentSuccess,
+      onError: onDocumentError,
     }
   );
 

@@ -27,6 +27,11 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
       setFieldValue('file', files[0]);
     }
   };
+  const documentToolTip = (values) => {
+    const toolTipTitle =
+      values?.file?.name || values?.url || '`Select Document';
+    return toolTipTitle;
+  };
   return (
     <WrapInBreadcrumbs>
       <WrapInCard>
@@ -57,11 +62,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                       }
                       hidden
                     />
-                    <Tooltip
-                      title={
-                        values.file?.name || values.url || `Select Document`
-                      }
-                    >
+                    <Tooltip title={documentToolTip(values)}>
                       <Box
                         display="flex"
                         alignItems="center"
