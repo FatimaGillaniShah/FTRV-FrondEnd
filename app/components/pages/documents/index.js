@@ -32,7 +32,7 @@ export function Documents({ data }) {
           </Link>
         </Box>
       )}
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <Box my={8}>
           <DocumentTabs departments={data} />
         </Box>

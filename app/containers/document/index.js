@@ -14,6 +14,7 @@ function Document() {
     getDepartmentDocuments
   );
   const department = data?.data?.data?.rows;
+
   return (
     <>
       <Helmet>

@@ -13,7 +13,7 @@ import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
 
 export function Document({
-  document: { id, name, description },
+  document: { id, name, description, url },
   onHandleDelete,
 }) {
   const {
@@ -32,6 +32,9 @@ export function Document({
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleDocumentDownload = (documentUrl) => {
+    window.open(documentUrl, '_self');
   };
   return (
     <Box display="flex" justifyContent="space-between" pb={2}>
@@ -83,7 +86,11 @@ export function Document({
             </Menu>
           </Box>
         )}
-        <IconButton>
+        <IconButton
+          onClick={() => {
+            handleDocumentDownload(url);
+          }}
+        >
           <CloudDownloadIcon color="secondary" />
         </IconButton>
       </Box>
