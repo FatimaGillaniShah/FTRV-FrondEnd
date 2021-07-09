@@ -173,7 +173,7 @@ function CreateUser({
               open={openLocDialog}
               onClose={() => handleDialogState('loc')}
               title="Create New Location"
-              handleSubmitForm={submitForm}
+              onSubmit={submitForm}
             >
               <Box
                 width={[1, 1, 1 / 2]}
@@ -197,7 +197,7 @@ function CreateUser({
               open={openDepDialog}
               onClose={() => handleDialogState('dep')}
               title="Create New Department"
-              handleSubmitForm={submitForm}
+              onSubmit={submitForm}
             >
               <Box
                 width={[1, 1, 1 / 2]}
