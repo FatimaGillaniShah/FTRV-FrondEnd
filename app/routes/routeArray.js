@@ -28,6 +28,7 @@ import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 import Locations from '../containers/location/loadable';
 import Departments from '../containers/department/loadable';
 import CreateDepartment from '../containers/addDepartment/loadable';
+import AddDocument from '../containers/createDocument/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -345,6 +346,21 @@ export const routeArray = [
         exact: true,
         noOfEnteriesToSkipAfterThisEntry: 1,
         breadCrumbKey: 'Edit Department',
+        routeType: routeTypes.private,
+      },
+    ],
+  },
+  {
+    path: '/documents',
+    exact: true,
+    breadCrumbKey: 'Documents',
+    routeType: routeTypes.private,
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: AddDocument,
+        exact: true,
+        breadCrumbKey: 'Add New Document',
         routeType: routeTypes.private,
       },
     ],
