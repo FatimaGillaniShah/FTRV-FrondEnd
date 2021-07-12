@@ -20,7 +20,7 @@ export function Documents({ data }) {
         <H5> Documents </H5>
       </Box>
       {role === ROLES.ADMIN && (
-        <Box>
+        <Box mb={12}>
           <Link href="/documents/add" underline="none">
             <Button
               variant="contained"
@@ -33,7 +33,7 @@ export function Documents({ data }) {
         </Box>
       )}
       {data?.length > 0 ? (
-        <Box my={8}>
+        <Box my={4}>
           <DocumentTabs departments={data} />
         </Box>
       ) : (
