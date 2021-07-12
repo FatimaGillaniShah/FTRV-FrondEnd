@@ -20,7 +20,7 @@ export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
         <H5> Documents </H5>
       </Box>
       {role === ROLES.ADMIN && (
-        <Box>
+        <Box mb={12}>
           <Link href="/documents/add" underline="none">
             <Button
               variant="contained"
