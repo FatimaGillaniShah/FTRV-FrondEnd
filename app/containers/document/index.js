@@ -17,7 +17,10 @@ function Document() {
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(
     keys.documentDepartment,
-    getDepartmentDocuments
+    getDepartmentDocuments,
+    {
+      cacheTime: 0,
+    }
   );
 
   const department = data?.data?.data?.rows;
