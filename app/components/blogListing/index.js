@@ -9,8 +9,8 @@ import Blog from '../pages/blog';
 import { H5 } from '../typography';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
-import NotExist from '../pages/notExist/index';
 import { navigateTo } from '../../utils/helper';
+import Show from '../show';
 
 const useStyles = makeStyles((theme) => ({
   paginator: {
@@ -45,7 +45,7 @@ export function BlogListing({
         <Box>
           <H5>Blogs</H5>
         </Box>
-        {role === ROLES.ADMIN && (
+        <Show IF={role === ROLES.ADMIN}>
           <Box mt={10}>
             <Button
               variant="contained"
@@ -56,8 +56,12 @@ export function BlogListing({
               New Blog
             </Button>
           </Box>
-        )}
-        {count > 0 ? (
+        </Show>
+        <Show
+          IF={count > 0}
+          Icon={SpeakerNotesOutlinedIcon}
+          description=" No Blogs To Show"
+        >
           <Box>
             {blogs && blogs?.length >= 1 && (
               <Box mt={5}>
@@ -93,12 +97,7 @@ export function BlogListing({
               />
             </Box>
           </Box>
-        ) : (
-          <NotExist
-            Icon={SpeakerNotesOutlinedIcon}
-            description=" No Blogs To Show"
-          />
-        )}
+        </Show>
       </Box>
     </>
   );

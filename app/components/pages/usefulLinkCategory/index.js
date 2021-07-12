@@ -8,8 +8,8 @@ import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
 import { Category } from '../../category';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
-import NotExist from '../notExist';
 import { navigateTo } from '../../../utils/helper';
+import Show from '../../show';
 
 function UsefulLinkCategory({ categories, handleDeleteCategory }) {
   const history = useHistory();
@@ -40,7 +40,11 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
           </Box>
         )}
       </Box>
-      {categories.length > 0 ? (
+      <Show
+        IF={categories.length > 0}
+        Icon={CategoryOutlinedIcon}
+        description=" No Category To Show"
+      >
         <Box display="flex" flexDirection="row" flexWrap="wrap">
           {categories.map(({ id, name, linksCount }) => (
             <Box width={[1, 1 / 2, 1 / 3, '20%']} m="38px">
@@ -53,12 +57,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
             </Box>
           ))}
         </Box>
-      ) : (
-        <NotExist
-          Icon={CategoryOutlinedIcon}
-          description=" No Category To Show"
-        />
-      )}
+      </Show>
     </Box>
   );
 }
