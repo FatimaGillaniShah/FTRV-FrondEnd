@@ -49,11 +49,11 @@ export default function DocumentList({
             ref={provided.innerRef}
             style={getListStyle(snapshot.isDraggingOver)}
           >
-            {departmentDocuments?.map((document, id) => (
+            {departmentDocuments?.map((document) => (
               <Draggable
                 key={document.id.toString()}
                 draggableId={document.id.toString()}
-                index={id}
+                index={document.id}
               >
                 {(providedDragabble, snapshotDragabble) => (
                   <Paper

@@ -41,6 +41,6 @@ export const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
   },
   documentPaper: {
-    padding: theme.spacing(5),
+    padding: theme.spacing(2),
   },
 }));

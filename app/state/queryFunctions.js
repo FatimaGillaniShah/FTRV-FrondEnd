@@ -197,6 +197,6 @@ export const updateDepartment = ({ id, ...payload }) =>
 
 export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
 
-export const getDepartmentDocuments = () => http.get(`${DOCUMENTS}`);
+export const getDepartmentDocuments = () => http.get(DOCUMENTS);
 
 export const createDocument = (payload) => http.post(DOCUMENT, payload);
