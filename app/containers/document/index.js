@@ -16,7 +16,6 @@ function Document() {
     keys.documentDepartment,
     getDepartmentDocuments,
     {
-      staleTime: 0,
       cacheTime: 0,
     }
   );
