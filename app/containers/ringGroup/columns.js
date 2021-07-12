@@ -2,41 +2,24 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
-import { Modal, navigateTo } from '../../utils/helper';
-import { useDeleteUser } from '../../hooks/user';
 
-const ActionButtons = ({ data, disabled, setSelected }) => {
-  const history = useHistory();
+const ActionButtons = ({ disabled }) => {
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
 
-  const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
-
-  const handleDeleteUser = () => {
-    Modal.fire().then((result) => {
-      if (result.isConfirmed) {
-        mutation.mutate([data.id]);
-      }
-    });
-  };
-
   return (
     <>
       {role === ROLES.ADMIN && (
         <>
-          <IconButton
-            disabled={disabled}
-            //   onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
-          >
+          <IconButton disabled={disabled}>
             <EditIcon color="secondary" />
           </IconButton>
-          <IconButton onClick={() => handleDeleteUser()} disabled={disabled}>
+          <IconButton disabled={disabled}>
             <DeleteIcon color="error" />
           </IconButton>
         </>
