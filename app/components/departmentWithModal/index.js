@@ -16,7 +16,10 @@ import { validationSchema } from './schema';
 
 function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
   const { mutate } = useCreateDepartment();
-  const { data: deparments } = useQuery(keys.department, getDepartments);
+  const { data: deparments, isLoading } = useQuery(
+    keys.department,
+    getDepartments
+  );
 
   const [open, setOpen] = useState(false);
   const handleDialogue = () => {
@@ -55,6 +58,7 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
               >
                 <Input
                   name="name"
+                  variant="outlined"
                   OutlinedInputPlaceholder="*Department"
                   Icon={BusinessIcon}
                   appendIcon
@@ -69,6 +73,7 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
           selectedValue={selectedValue}
           label="Department"
           options={options}
+          loading={isLoading}
           {...props}
         />
         <Box className={classes.modelLink}>

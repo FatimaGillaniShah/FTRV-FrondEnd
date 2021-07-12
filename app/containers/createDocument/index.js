@@ -1,9 +1,14 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
+import { Loading } from '../../components/loading';
 import { CreateDocumentPage } from '../../components/pages/createDocument';
-import { createDocument } from '../../state/queryFunctions';
+import {
+  createDocument,
+  getDocumentById,
+  updateDocument,
+} from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { createFormData } from '../../utils/functions';
 import { navigateTo, Toast } from '../../utils/helper';
@@ -11,32 +16,52 @@ import { navigateTo, Toast } from '../../utils/helper';
 function AddDocument() {
   const { id } = useParams();
   const history = useHistory();
-
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(createDocument, {
-    onSuccess: () => {
-      Toast({
-        icon: 'success',
-        title: `Document ${id ? 'Updated' : 'Created'}  successfully`,
-      });
-      queryClient.invalidateQueries(keys.documents);
-      navigateTo(history, '/documents');
+
+  const { data, isLoading: isDocumentLoading } = useQuery(
+    keys.getDocument(id),
+    getDocumentById,
+    {
+      enabled: !!id,
+    }
+  );
+  let document = data?.data?.data;
+  document = {
+    ...document,
+    description: document?.description || '',
+    file: document?.url,
+  };
+  const onDocumentSuccess = () => {
+    Toast({
+      icon: 'success',
+      title: `Document ${id ? 'Updated' : 'Created'}  successfully`,
+    });
+    queryClient.invalidateQueries(keys.documents);
+    navigateTo(history, '/documents');
+    if (id) queryClient.invalidateQueries(keys.getDocument(id));
+  };
+
+  const onDocumentError = ({
+    response: {
+      data: { message },
     },
-    onError: ({
-      response: {
-        data: { message },
-      },
-    }) => {
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occurred',
-      });
-    },
-  });
+  }) => {
+    Toast({
+      icon: 'error',
+      title: message || 'Some error occurred',
+    });
+  };
+  const { mutate, isLoading } = useMutation(
+    id ? updateDocument : createDocument,
+    {
+      onSuccess: onDocumentSuccess,
+      onError: onDocumentError,
+    }
+  );
 
   const handleSubmit = (values) => {
-    const data = createFormData(values);
-    mutate(data);
+    const formData = createFormData(values);
+    mutate(formData);
   };
 
   const initialValues = {
@@ -50,12 +75,15 @@ function AddDocument() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Document</title>
       </Helmet>
-
-      <CreateDocumentPage
-        id={id}
-        initialValues={initialValues}
-        onHandleSubmit={handleSubmit}
-      />
+      {isLoading || isDocumentLoading ? (
+        <Loading />
+      ) : (
+        <CreateDocumentPage
+          id={id}
+          initialValues={id ? document : initialValues}
+          onHandleSubmit={handleSubmit}
+        />
+      )}
     </>
   );
 }
