@@ -69,6 +69,7 @@ function DirectoryContainer() {
     keys.locations,
     getLocations
   );
+
   const { data: deparments, isDepartmentLoading } = useQuery(
     keys.departments,
     getDepartments
