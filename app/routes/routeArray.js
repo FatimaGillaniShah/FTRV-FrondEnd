@@ -28,6 +28,7 @@ import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 import Locations from '../containers/location/loadable';
 import Departments from '../containers/department/loadable';
 import CreateDepartment from '../containers/addDepartment/loadable';
+import Documents from '../containers/document/loadable';
 import AddDocument from '../containers/createDocument/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
@@ -352,6 +353,7 @@ export const routeArray = [
   },
   {
     path: '/documents',
+    component: Documents,
     exact: true,
     breadCrumbKey: 'Documents',
     routeType: routeTypes.private,

@@ -23,6 +23,8 @@ const {
   DEPARTMENTS,
   BANNER_IMAGE,
   WORK_ANNIVERSARY,
+  DOCUMENTS,
+  DOCUMENT_SORT_ORDER,
   DOCUMENT,
 } = APIS;
 
@@ -196,6 +198,12 @@ export const updateDepartment = ({ id, ...payload }) =>
 
 export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
 
+export const getDepartmentDocuments = () => http.get(DOCUMENTS);
+
+export const updateDocumentOrder = (payload) => {
+  const { updatedData } = payload;
+  return http.put(`${DOCUMENT_SORT_ORDER}`, updatedData);
+};
 export const createDocument = (payload) => http.post(DOCUMENT, payload);
 
 export const updateDocument = (payload) => {

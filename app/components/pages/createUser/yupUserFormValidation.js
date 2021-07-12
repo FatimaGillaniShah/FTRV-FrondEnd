@@ -39,7 +39,6 @@ export const yupUserFormValidaton = object().shape({
   title: string()
     .min(1, 'Too Short!')
     .max(200, 'Too Long!')
-    .matches(/^[a-zA-Z ]*$/, 'Designation can only include alphabets')
     .required('*Designation Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
