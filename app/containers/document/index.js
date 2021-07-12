@@ -14,7 +14,10 @@ import DocumentPage from '../../components/pages/documents';
 function Document() {
   const { data, isLoading } = useQuery(
     keys.documentDepartment,
-    getDepartmentDocuments
+    getDepartmentDocuments,
+    {
+      staleTime: 0,
+    }
   );
 
   const department = data?.data?.data?.rows;
