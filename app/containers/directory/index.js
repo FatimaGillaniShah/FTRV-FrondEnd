@@ -81,11 +81,13 @@ function DirectoryContainer() {
     setChecked(target.checked);
   };
   const handleSearch = debounce((e, setFieldValue) => {
+    setPageNumber(1);
     setFieldFunc({ setFormikField: setFieldValue });
     setQuery({ searchString: e.target.value });
   }, 500);
 
   const handleFilterSearch = (values) => {
+    setPageNumber(1);
     setFilters(values);
   };
   const onClear = () => {

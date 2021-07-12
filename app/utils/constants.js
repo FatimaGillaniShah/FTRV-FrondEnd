@@ -51,4 +51,6 @@ export const APIS = {
   LOCATIONS: '/locations',
   DEPARTMENTS: '/departments',
   BANNER_IMAGE: 'bannerImage',
+  WORK_ANNIVERSARY: '/users/workAnniversary',
+  DOCUMENT: '/documents',
 };

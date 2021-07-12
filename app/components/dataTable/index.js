@@ -64,6 +64,10 @@ export function DataTable({
   const handleChangeRowsPerPage = (params) => {
     setRowsPerPage(params.pageSize);
     setPage(0);
+    const currentPage = 1;
+    handleServerPageNumber({
+      currentPage,
+    });
     if (isServerSide) {
       const rowPerPage = params.pageSize;
       handleServerPageSize({ rowPerPage });

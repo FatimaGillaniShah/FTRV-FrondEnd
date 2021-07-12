@@ -41,13 +41,12 @@ export const menuItems = [
   },
   {
     name: 'settings',
-    link: '/',
     icon: BorderColorIcon,
     role: [ROLES.ADMIN],
     children: [
       { name: 'Quote', link: '/quote' },
       { name: 'events', link: '/events' },
-      { name: 'polls', link: '/polls' },
+      // { name: 'polls', link: '/polls' },
       {
         name: 'Announcement',
         link: '/announcement',

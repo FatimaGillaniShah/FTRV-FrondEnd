@@ -8,9 +8,12 @@ export const colors = {
   secondary: lightblue,
   light: 'white',
   orange: '#FF9200',
+  greenBlue: '#1875c0',
   red,
   green,
   grey,
+  darkGrey: '#A9A9A9',
+  darkBlue: 'linear-gradient(to right bottom, #031337, #1b578d)',
   bgColor: {
     main: '#F0F2F5',
     secondary: 'white',
@@ -45,4 +48,5 @@ export const colors = {
     success: green,
     error: red,
   },
+  silver: 'silver',
 };

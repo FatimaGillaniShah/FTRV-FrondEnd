@@ -24,11 +24,11 @@ export const userProfileValidation = object().shape({
   }),
 
   password: string()
-    .required('Password is required')
     .matches(/^(?!\s+$)/, '* This field cannot contain only blankspaces')
     .min(4, 'Too Short')
     .max(15, 'Exceeded Maximum Characters Limit'),
-  confirmPassword: string()
-    .required('confirm Password is required')
-    .oneOf([ref('password'), null], 'Passwords must match'),
+  confirmPassword: string().oneOf(
+    [ref('password'), null],
+    'Passwords must match'
+  ),
 });

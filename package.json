@@ -98,6 +98,7 @@
     "pre-commit": "^1.2.2",
     "prop-types": "15.7.2",
     "react": "17.0.1",
+    "react-beautiful-dnd": "^13.1.0",
     "react-big-calendar": "^0.33.2",
     "react-dom": "17.0.1",
     "react-google-login": "^5.2.2",

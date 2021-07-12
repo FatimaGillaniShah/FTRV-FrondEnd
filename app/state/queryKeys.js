@@ -27,4 +27,6 @@ export const keys = {
   departments: 'departments',
   bannerImage: 'banner-image',
   getDepartments: (id) => ['department', id],
+  workAnniversary: 'work-anniversary',
+  documents: 'documents',
 };

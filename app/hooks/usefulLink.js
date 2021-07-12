@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useParams } from 'react-router';
 import Swal from 'sweetalert2';
-import { Toast, isFunction } from '../utils/helper';
 import { deleteLink } from '../state/queryFunctions';
 import { keys } from '../state/queryKeys';
+import { Toast, isFunction } from '../utils/helper';
 
 export function useDeleteLink({ callbackFn } = {}) {
   const queryClient = useQueryClient();
