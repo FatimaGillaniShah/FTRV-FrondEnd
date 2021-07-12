@@ -9,6 +9,7 @@ import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
 
 export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
+  console.log('here', data);
   const {
     user: {
       data: { role },

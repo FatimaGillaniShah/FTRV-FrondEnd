@@ -48,7 +48,7 @@ function Document() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading ? (
+          {isLoading || mutation.isLoading ? (
             <Loading />
           ) : (
             <DocumentPage
