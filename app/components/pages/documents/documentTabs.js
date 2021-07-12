@@ -40,8 +40,8 @@ export default function DocumentTabs({ departments, onHandleDelete }) {
           />
         ))}
       </Tabs>
-      {departments?.map((department, id) => (
-        <TabPanel value={selected} index={id}>
+      {departments?.map((department) => (
+        <TabPanel value={selected} index={document.id}>
           <DocumentList
             departments={departments}
             departmentName={department.name}
