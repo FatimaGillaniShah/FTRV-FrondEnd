@@ -8,6 +8,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import PropTypes from 'prop-types';
 import { FormHelperText, Tooltip } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
+import { useHistory } from 'react-router-dom';
 import { Input, WrapInCard, TextArea } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { BodyTextLarge, H4, ButtonText } from '../../typography';
@@ -15,10 +16,12 @@ import DepartmentWithModel from '../../departmentWithModal';
 import { useStyles } from './style';
 import { validationSchema } from './validationSchema';
 import { colors } from '../../../theme/colors';
+import { navigateTo } from '../../../utils/helper';
 
 export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
   const documentFile = useRef(null);
   const classes = useStyles();
+  const history = useHistory();
   const handleUploadDocument = () => {
     documentFile.current.click();
   };
@@ -27,10 +30,18 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
       setFieldValue('file', files[0]);
     }
   };
-  const documentToolTip = (values) => {
-    const toolTipTitle =
-      values?.file?.name || values?.url || '`Select Document';
+  const getName = (url) => {
+    const urlArray = url?.split('/');
+    return url ? urlArray[urlArray?.length - 1] : '';
+  };
+  const documentToolTip = ({ file, url }) => {
+    const toolTipTitle = file?.name || getName(url) || '`Select Document';
     return toolTipTitle;
+  };
+  const handleFileName = ({ url, file }) =>
+    file?.name || getName(url) || 'No file chosen';
+  const handleCancel = () => {
+    navigateTo(history, '/documents');
   };
   return (
     <WrapInBreadcrumbs>
@@ -91,9 +102,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                             color="grey"
                             className={classes.fileName}
                           >
-                            {values.file?.name ||
-                              values.url ||
-                              'No file chosen'}
+                            {handleFileName(values)}
                           </BodyTextLarge>
                         </Box>
                       </Box>
@@ -131,7 +140,9 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                       display="flex"
                       justifyContent={['center', 'center', 'left']}
                     >
-                      <Button startIcon={<ClearIcon />}>Cancel</Button>
+                      <Button onClick={handleCancel} startIcon={<ClearIcon />}>
+                        Cancel
+                      </Button>
                     </Box>
                   </Box>
                 </Box>

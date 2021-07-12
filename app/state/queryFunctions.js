@@ -209,7 +209,7 @@ export const createDocument = (payload) => http.post(DOCUMENT, payload);
 export const updateDocument = (payload) => {
   const id = payload.get('id');
   payload.delete('id');
-  payload.delete('file');
+  payload.delete('url');
   return http.put(`${DOCUMENT}/${id}`, payload);
 };
 
