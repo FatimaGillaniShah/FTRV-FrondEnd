@@ -17,6 +17,7 @@ function Document() {
     getDepartmentDocuments,
     {
       staleTime: 0,
+      cacheTime: 0,
     }
   );
 
