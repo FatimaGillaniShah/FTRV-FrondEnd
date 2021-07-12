@@ -62,7 +62,7 @@ function DepartmentWithModel({
       </Formik>
       <Box mt={6}>
         <Select
-          name="locationId"
+          name="departmentId"
           selectedValue={selectedValue}
           label="Department"
           options={options}
