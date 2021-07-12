@@ -11,6 +11,7 @@ export default function DocumentList({
   departmentName,
   onHandleDelete,
   departments,
+  onHandleSortOrder,
 }) {
   const {
     user: {
@@ -84,9 +85,23 @@ export default function DocumentList({
     const documentsOrder = Array.from(departmentDocuments);
     const [reorderedItem] = documentsOrder.splice(result.source.index, 1);
     documentsOrder.splice(result.destination.index, 0, reorderedItem);
-
     updateDepartmentDocuments(documentsOrder);
+    const documentIds = documentsOrder.map((document) => document.id);
+    let sortOrder = 1;
+    const sortOrderWithIds = documentIds.map((id) => {
+      const sortOrderObj = {
+        id,
+        sortOrder,
+      };
+      sortOrder += 1;
+      return sortOrderObj;
+    });
+    const sortOrderData = {
+      documents: sortOrderWithIds,
+    };
+    onHandleSortOrder(sortOrderData);
   };
+
   const getItemStyle = (isDragging, draggableStyle) => {
     const { transform } = draggableStyle;
     let activeTransform = {};
@@ -101,6 +116,7 @@ export default function DocumentList({
     return {
       userSelect: 'none',
       padding: '20px',
+      cursor: 'pointer',
       margin: `0 0 ${6}px 0`,
       ...draggableStyle,
       ...activeTransform,

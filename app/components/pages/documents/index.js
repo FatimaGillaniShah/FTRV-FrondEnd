@@ -8,7 +8,7 @@ import NotExist from '../notExist/index';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
 
-export function Documents({ data }) {
+export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
   const {
     user: {
       data: { role },
@@ -33,8 +33,12 @@ export function Documents({ data }) {
         </Box>
       )}
       {data?.length > 0 ? (
-        <Box my={4}>
-          <DocumentTabs departments={data} />
+        <Box my={8}>
+          <DocumentTabs
+            departments={data}
+            onHandleDelete={onHandleDelete}
+            onHandleSortOrder={onHandleSortOrder}
+          />
         </Box>
       ) : (
         <NotExist
