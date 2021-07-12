@@ -45,7 +45,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
               <Box display="flex" ml={5}>
                 <Box pt={15} width={[1, '65%', '50%', '33.9%']}>
                   <Box display="flex">
-                    <H4>{id ? 'Update' : 'Submit'} New Document</H4>
+                    <H4>{id ? 'Update' : 'Create New'} Document</H4>
                   </Box>
                   <Box mt={10}>
                     <DepartmentWithModel
