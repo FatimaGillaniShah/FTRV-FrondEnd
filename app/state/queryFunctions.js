@@ -215,3 +215,6 @@ export const updateDocument = (payload) => {
 
 export const getDocumentById = ({ queryKey }) =>
   http.get(`${DOCUMENT}/${queryKey[1]}`);
+
+export const deleteDocument = (payload) =>
+  http.delete(DOCUMENTS, { data: { ids: payload } });

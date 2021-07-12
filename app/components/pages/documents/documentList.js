@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Paper } from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Document } from './document';
@@ -18,18 +18,19 @@ export default function DocumentList({
       data: { role },
     },
   } = useAuthContext();
+  const [departmentDocuments, updateDepartmentDocuments] = useState();
   const classes = useStyles();
-  const selectedDepartment = departments.find(
-    (department) => department.name === departmentName
-  );
-  const departmentId = selectedDepartment.id;
-  const department = departments.find(
-    (document) => document.id === departmentId
-  );
-  const documentList = department.documents;
-  const [departmentDocuments, updateDepartmentDocuments] = useState(
-    documentList
-  );
+  useEffect(() => {
+    const selectedDepartment = departments.find(
+      (department) => department.name === departmentName
+    );
+    const departmentId = selectedDepartment.id;
+    const department = departments.find(
+      (document) => document.id === departmentId
+    );
+    const documentList = department.documents;
+    updateDepartmentDocuments(documentList);
+  }, [departments]);
   const DocumentListWithoutDraggable = () => (
     <>
       {departmentDocuments?.map((document) => (
