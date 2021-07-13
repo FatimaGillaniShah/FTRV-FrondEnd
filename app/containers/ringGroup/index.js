@@ -1,8 +1,7 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
-import { debounce } from 'lodash';
 import { useQuery } from 'react-query';
 import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
@@ -19,11 +18,9 @@ import { keys } from '../../state/queryKeys';
 
 function RingGroupContainer() {
   const [selected, setSelected] = useState([]);
-  const [query, setQuery] = useState({ searchString: '' });
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortColumn, setSortColumn] = useState('firstName');
   const [checked, setChecked] = useState(false);
-  const [fieldFunc, setFieldFunc] = useState();
   const isServerSide = true;
   const {
     user: {
@@ -39,12 +36,7 @@ function RingGroupContainer() {
     keys.departments,
     getDepartments
   );
-  useEffect(() => {
-    if (checked) {
-      fieldFunc?.setFormikField('searchString', '');
-      setQuery({ searchString: '' });
-    }
-  }, [checked, sortOrder, sortColumn]);
+
   const onChangeSort = (order, property) => {
     if (isServerSide) {
       if (property === 'fullName') {
@@ -69,11 +61,6 @@ function RingGroupContainer() {
     setChecked(target.checked);
   };
 
-  const handleSearch = debounce((e, setFieldValue) => {
-    setFieldFunc({ setFormikField: setFieldValue });
-    setQuery({ searchString: e.target.value });
-  }, 500);
-
   return (
     <>
       <Helmet>
@@ -87,10 +74,8 @@ function RingGroupContainer() {
             <WrapInCard mb={8}>
               <Box display="flex">
                 <Search
-                  initialValues={query}
                   onHandleSwitchChange={handleSwitchChange}
                   checked={checked}
-                  onHandleSearch={handleSearch}
                 />
               </Box>
               <Box mt={2}>
