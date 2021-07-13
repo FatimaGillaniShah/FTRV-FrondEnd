@@ -205,3 +205,16 @@ export const updateDocumentOrder = (payload) => {
   return http.put(`${DOCUMENT_SORT_ORDER}`, updatedData);
 };
 export const createDocument = (payload) => http.post(DOCUMENT, payload);
+
+export const updateDocument = (payload) => {
+  const id = payload.get('id');
+  payload.delete('id');
+  payload.delete('url');
+  return http.put(`${DOCUMENT}/${id}`, payload);
+};
+
+export const getDocumentById = ({ queryKey }) =>
+  http.get(`${DOCUMENT}/${queryKey[1]}`);
+
+export const deleteDocument = (payload) =>
+  http.delete(DOCUMENTS, { data: { ids: payload } });
