@@ -361,7 +361,7 @@ export const routeArray = [
         path: '/add',
         component: AddDocument,
         exact: true,
-        bre1adCrumbKey: 'Add New Document',
+        breadCrumbKey: 'Add New Document',
         routeType: routeTypes.private,
       },
     ],
