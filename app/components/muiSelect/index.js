@@ -76,11 +76,11 @@ export default function SelectInput({
               <em>None</em>
             </MenuItem>
           </Show>
-          {loading && (
+          <Show IF={loading}>
             <MenuItem value="">
               <em>Loading...</em>
             </MenuItem>
-          )}
+          </Show>
 
           {options &&
             options.map((val) =>
