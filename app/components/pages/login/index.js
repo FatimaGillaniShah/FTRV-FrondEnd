@@ -18,6 +18,7 @@ import { Input } from '../../index';
 import { loginSchema } from '../../../containers/login/schema';
 import { H3 } from '../../typography';
 import useStyles from './style';
+import Show from '../../show';
 
 export function Login({
   onHandleSubmit,
@@ -49,16 +50,16 @@ export function Login({
           >
             <Form>
               <Paper className={classes.loginBox}>
-                {errorMessage && (
+                <Show IF={errorMessage}>
                   <Box mt={6} textAlign="center">
                     <Alert severity="error">{errorMessage}</Alert>
                   </Box>
-                )}
-                {googleError && (
+                </Show>
+                <Show IF={googleError}>
                   <Box mt={6} textAlign="center">
                     <Alert severity="error">{googleError}</Alert>
                   </Box>
-                )}
+                </Show>
                 <Box mt={7}>
                   <Input
                     name="email"

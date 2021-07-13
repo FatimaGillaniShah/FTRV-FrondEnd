@@ -6,7 +6,7 @@ const Show = ({ IF: condition, description, Icon, children }) => {
     return children;
   }
 
-  if (!condition && description && Icon) {
+  if (description && Icon) {
     return <NotExist Icon={Icon} description={description} />;
   }
 

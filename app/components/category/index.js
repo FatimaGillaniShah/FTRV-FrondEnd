@@ -19,6 +19,7 @@ import { colors } from '../../theme/colors';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { navigateTo } from '../../utils/helper';
+import Show from '../show';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -78,7 +79,7 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
   return (
     <Box width={1}>
       <Paper elevation={3} className={classes.paper}>
-        {role === ROLES.ADMIN && (
+        <Show IF={role === ROLES.ADMIN}>
           <Box>
             <Box mt={2} display="flex" justifyContent="flex-end">
               <MoreVertOutlinedIcon
@@ -113,7 +114,7 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
               </MenuItem>
             </StyledMenu>
           </Box>
-        )}
+        </Show>
         <FolderOpenOutlinedIcon
           className={classes.folderIcon}
           onClick={() =>

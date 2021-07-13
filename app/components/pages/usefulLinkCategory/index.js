@@ -27,7 +27,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
       justify-content="space-between"
     >
       <Box>
-        {role === ROLES.ADMIN && (
+        <Show IF={role === ROLES.ADMIN}>
           <Box ml={11} mt={7}>
             <Button
               variant="contained"
@@ -38,7 +38,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
               New Category
             </Button>
           </Box>
-        )}
+        </Show>
       </Box>
       <Show
         IF={categories.length > 0}

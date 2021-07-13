@@ -63,7 +63,7 @@ export function BlogListing({
           description=" No Blogs To Show"
         >
           <Box>
-            {blogs && blogs?.length >= 1 && (
+            <Show IF={blogs && blogs?.length >= 1}>
               <Box mt={5}>
                 {blogs.map(
                   ({ id, title, thumbnail, shortText, user, createdAt }) => (
@@ -82,7 +82,7 @@ export function BlogListing({
                   )
                 )}
               </Box>
-            )}
+            </Show>
             <Box component="span">
               <Pagination
                 count={noOfPages}

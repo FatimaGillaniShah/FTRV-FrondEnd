@@ -9,6 +9,7 @@ import { Box } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 import { BodyTextLarge, H5 } from '../typography';
 import BorderLinearProgress from '../muiLinearProgress';
+import Show from '../show';
 
 export const Poll = ({
   options,
@@ -60,7 +61,7 @@ export const Poll = ({
             </Box>
           </Box>
 
-          {!hidden && (
+          <Show IF={!hidden}>
             <>
               {options?.map((val, index) => (
                 <Box my={3}>
@@ -73,7 +74,7 @@ export const Poll = ({
                 </Box>
               ))}
             </>
-          )}
+          </Show>
         </Box>
       </Paper>
     </Box>

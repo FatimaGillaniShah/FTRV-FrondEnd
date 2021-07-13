@@ -7,6 +7,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
 import { navigateTo } from '../../../utils/helper';
+import Show from '../../show';
 
 export function TableButtons({ onDelete, numSelected }) {
   const { categoryId } = useParams();
@@ -18,7 +19,7 @@ export function TableButtons({ onDelete, numSelected }) {
   } = useAuthContext();
   return (
     <>
-      {role === ROLES.ADMIN && (
+      <Show IF={role === ROLES.ADMIN}>
         <Box display="flex" my={5}>
           <Box mr={2}>
             <Button
@@ -49,7 +50,7 @@ export function TableButtons({ onDelete, numSelected }) {
             </Button>
           </Box>
         </Box>
-      )}
+      </Show>
     </>
   );
 }

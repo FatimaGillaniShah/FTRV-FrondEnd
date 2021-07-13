@@ -15,6 +15,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { useField } from 'formik';
+import Show from '../show';
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -69,11 +70,11 @@ export default function SelectInput({
           {...field}
           {...props}
         >
-          {emptyItem && (
+          <Show IF={emptyItem}>
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-          )}
+          </Show>
 
           {options &&
             options.map((val) =>
