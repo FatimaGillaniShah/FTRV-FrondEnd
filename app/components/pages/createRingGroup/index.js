@@ -1,14 +1,15 @@
-import { Box, Button, Hidden, Tooltip } from '@material-ui/core';
+import { Box, Button, Tooltip } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import React, { memo } from 'react';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import { string, object } from 'yup';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { H4 } from '../../typography';
-import DepartmentWithModel from '../../departmentWithModel';
+import DepartmentWithModel from '../../departmentWithModal';
 import LocationWithModel from '../../locationWithModel';
 import { Input } from '../../index';
 
@@ -31,6 +32,7 @@ function CreateRingGroup({
   formType = 'add',
   options,
 }) {
+  const history = useHistory();
   const formHeadings = {
     add: 'Create New Ring Group',
     edit: 'Update Ring Group',
@@ -49,59 +51,58 @@ function CreateRingGroup({
               flexWrap="wrap"
               flexDirection="row"
               p={4}
-              pr={[0, 36]}
               display="flex"
               justifyContent="center"
               alignItems="center"
             >
               <Box width={[1, '70%']}>
-                <Box width={1} pt={10} flexWrap="wrap" display="flex" px={2}>
-                  <Box width={1} textAlign="center">
-                    <H4>{formHeadings[formType]}</H4>
-                  </Box>
-                  <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <Input
-                      name="name"
-                      variant="outlined"
-                      OutlinedInputPlaceholder="*Name"
-                      Icon={PersonOutlineIcon}
-                      appendIcon
-                    />
-                  </Box>
+                <Box width={1} pt={5} flexWrap="wrap" display="flex" px={2}>
+                  <Box width={1} pt={5} flexWrap="wrap" display="flex" px={2}>
+                    <Box width={[1, '94%']} mt={10} px={3}>
+                      <Box width={1} textAlign="center">
+                        <H4>{formHeadings[formType]}</H4>
+                      </Box>
+                    </Box>
 
-                  <Box width={[1, 1, 1 / 2]} mt={4} px={3}>
-                    <DepartmentWithModel
-                      name="department"
-                      label="Department"
-                      selectedValue={values.departmentId}
-                      options={options}
-                      initialDialogData={initialDialogData}
-                    />
-                  </Box>
-                  <Box width={[1, 1, 1 / 2]} px={3}>
-                    <LocationWithModel
-                      name="location"
-                      label="Location"
-                      selectedValue={values.locationId}
-                      options={options}
-                      initialDialogData={initialDialogData}
-                    />
-                  </Box>
-                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
-                    <Tooltip title="Input your phone extenstion">
+                    <Box width={[1, 1 / 2]} mt={16} px={3}>
                       <Input
-                        name="extension"
+                        name="name"
                         variant="outlined"
-                        OutlinedInputPlaceholder="Phone Extension"
-                        Icon={ContactPhoneIcon}
+                        OutlinedInputPlaceholder="*Name"
+                        Icon={PersonOutlineIcon}
                         appendIcon
                       />
-                    </Tooltip>
+                    </Box>
+                    <Box width={[1, 1 / 2]} mt={10} px={3}>
+                      <DepartmentWithModel
+                        name="department"
+                        label="Department"
+                        selectedValue={values.departmentId}
+                        options={options}
+                        initialDialogData={initialDialogData}
+                      />
+                    </Box>
+                    <Box width={[1, 1 / 2]} mt={4} px={3}>
+                      <LocationWithModel
+                        name="location"
+                        label="Location"
+                        selectedValue={values.locationId}
+                        options={options}
+                        initialDialogData={initialDialogData}
+                      />
+                    </Box>
+                    <Box width={[1, 1 / 2]} mt={10} px={3}>
+                      <Tooltip title="Input your phone extenstion">
+                        <Input
+                          name="extension"
+                          variant="outlined"
+                          OutlinedInputPlaceholder="Phone Extension"
+                          Icon={ContactPhoneIcon}
+                          appendIcon
+                        />
+                      </Tooltip>
+                    </Box>
                   </Box>
-
-                  <Hidden smDown>
-                    <Box width={[1, 1 / 2]} mt={10} px={3}></Box>
-                  </Hidden>
                   <Box
                     display="flex"
                     flexWrap="wrap"
@@ -120,7 +121,11 @@ function CreateRingGroup({
                       </Button>
                     </Box>
                     <Box mx={1}>
-                      <Button startIcon={<ClearIcon fontSize="small" />}>
+                      <Button
+                        variant="text"
+                        startIcon={<ClearIcon />}
+                        onClick={() => history.goBack()}
+                      >
                         Cancel
                       </Button>
                     </Box>
