@@ -35,7 +35,13 @@ const StyledGroupButton = withStyles({
   },
 })(ToggleButtonGroup);
 
-export function ToggleGroup({ initialValue }) {
+export function ToggleGroup({
+  initialValue,
+  firstToggleValue,
+  secondToggleValue,
+  firstToggleName,
+  secondToggleName,
+}) {
   const history = useHistory();
   const [alignment, setAlignment] = React.useState(initialValue);
 
@@ -45,17 +51,21 @@ export function ToggleGroup({ initialValue }) {
       alignmentValue = 'directory';
       navigateTo(history, '/directory');
     }
-    if (alignmentValue === 'directory') {
+    if (alignmentValue === firstToggleValue) {
       navigateTo(history, '/directory');
-    } else if (alignmentValue === 'ringGroup') {
+    } else if (alignmentValue === secondToggleValue) {
       navigateTo(history, '/ring-group');
     }
     setAlignment(alignmentValue);
   };
 
   const children = [
-    <StyledToggleButton value="directory">Directory</StyledToggleButton>,
-    <StyledToggleButton value="ringGroup">Ring Group</StyledToggleButton>,
+    <StyledToggleButton value={firstToggleValue}>
+      {firstToggleName}
+    </StyledToggleButton>,
+    <StyledToggleButton value={secondToggleValue}>
+      {secondToggleName}
+    </StyledToggleButton>,
   ];
   return (
     <StyledGroupButton value={alignment} exclusive onChange={handleChange}>

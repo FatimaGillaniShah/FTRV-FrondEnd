@@ -7,7 +7,7 @@ import Switch from '@material-ui/core/Switch';
 import { Form, Formik } from 'formik';
 import { Input } from '../../index';
 import { H5 } from '../../typography';
-import ToggleGroup from '../../directoryToggleGroup';
+import ToggleGroup from '../../toggleGroup';
 
 const useStyles = makeStyles((theme) => ({
   gridpadding: {
@@ -67,7 +67,13 @@ export function Search({
         </Box>
       </Grid>
       <Grid item xs={12} sm={4} md={3} lg={6}>
-        <ToggleGroup initialValue="ringGroup" />
+        <ToggleGroup
+          initialValue="ringGroup"
+          firstToggleValue="directory"
+          secondToggleValue="ringGroup"
+          firstToggleName="Directory"
+          secondToggleName="Ring Group"
+        />
       </Grid>
     </Grid>
   );
