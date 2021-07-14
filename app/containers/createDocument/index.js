@@ -32,11 +32,12 @@ function AddDocument() {
     file: document?.url,
   };
   const onDocumentSuccess = () => {
+    queryClient.invalidateQueries(keys.documentDepartment);
     Toast({
       icon: 'success',
       title: `Document ${id ? 'Updated' : 'Created'}  successfully`,
     });
-    queryClient.invalidateQueries(keys.documents);
+
     navigateTo(history, '/documents');
     if (id) queryClient.invalidateQueries(keys.getDocument(id));
   };

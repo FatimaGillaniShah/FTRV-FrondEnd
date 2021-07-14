@@ -209,9 +209,12 @@ export const createDocument = (payload) => http.post(DOCUMENT, payload);
 export const updateDocument = (payload) => {
   const id = payload.get('id');
   payload.delete('id');
-  payload.delete('file');
+  payload.delete('url');
   return http.put(`${DOCUMENT}/${id}`, payload);
 };
 
 export const getDocumentById = ({ queryKey }) =>
   http.get(`${DOCUMENT}/${queryKey[1]}`);
+
+export const deleteDocument = (payload) =>
+  http.delete(DOCUMENTS, { data: { ids: payload } });
