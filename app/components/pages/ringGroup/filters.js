@@ -4,9 +4,11 @@ import { Form, Formik } from 'formik';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
+import PropTypes from 'prop-types';
 import { Input, Select } from '../../index';
 
 function Filters({
+  initialValues,
   onHandleFilterSearch,
   onClear,
   locationOptions,
@@ -19,12 +21,7 @@ function Filters({
   return (
     <>
       <Formik
-        initialValues={{
-          name: '',
-          departmentId: '',
-          extension: '',
-          locationId: '',
-        }}
+        initialValues={initialValues}
         onSubmit={(values) => {
           onHandleFilterSearch(values);
         }}
@@ -76,7 +73,6 @@ function Filters({
               <Box mr={2} mt={[2, 0]}>
                 <Button
                   variant="text"
-                  fullWidth={false}
                   onClick={() => clearFilteringSearch(resetForm)}
                   startIcon={<ClearIcon />}
                 >
@@ -90,5 +86,13 @@ function Filters({
     </>
   );
 }
+Filters.defaultProps = {
+  initialValues: PropTypes.shape({
+    name: '',
+    departmentId: '',
+    extension: '',
+    locationId: '',
+  }),
+};
 
 export default Filters;
