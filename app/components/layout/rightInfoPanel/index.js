@@ -15,6 +15,7 @@ import {
 import BoxWithBg from '../../boxWithBg';
 import { H6 } from '../../typography';
 import WorkAnniversaryCard from '../../workAnniversary';
+import Show from '../../show';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -74,20 +75,20 @@ function Index() {
           </Grid>
         ))}
 
-        {birthdays.length > 0 && (
+        <Show IF={birthdays.length > 0}>
           <Grid xs={12}>
             <BirthdayCarousel items={birthdays} />
           </Grid>
-        )}
+        </Show>
 
-        {workAnniversary.length > 0 && (
+        <Show IF={workAnniversary.length > 0}>
           <Grid xs={12}>
             <WorkAnniversaryCard items={workAnniversary} />
           </Grid>
-        )}
+        </Show>
 
         <Grid xs={12}>
-          {quote && (
+          <Show IF={quote}>
             <BoxWithBg
               styles={classes.motivationSection}
               title="Daily Dose of Motivation"
@@ -95,7 +96,7 @@ function Index() {
             >
               <H6>{quote}</H6>
             </BoxWithBg>
-          )}
+          </Show>
         </Grid>
       </Grid>
     </>

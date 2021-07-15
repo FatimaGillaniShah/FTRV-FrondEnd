@@ -1,7 +1,7 @@
 import { string, object } from 'yup';
 
 export const validationSchema = object().shape({
-  departmentId: string().required('*Department ID is Required'),
+  departmentId: string().required('*Department is Required'),
   file: string().required('*Document is Required'),
   name: string()
     .required('*File Name is Required')

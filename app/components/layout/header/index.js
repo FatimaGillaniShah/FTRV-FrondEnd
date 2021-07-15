@@ -11,6 +11,7 @@ import { useQueryClient } from 'react-query';
 import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 import { navigateTo } from '../../../utils/helper';
+import Show from '../../show';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -86,7 +87,7 @@ export default function Header() {
           <Link to="/home">
             <img src={Logo} alt="intranet logo" className={classes.logoStyle} />
           </Link>
-          {user.isAuthenticated && (
+          <Show IF={user.isAuthenticated}>
             <Box className={classes.profileBox}>
               <Hidden xsDown>
                 <Box className={classes.titleBox}>
@@ -132,7 +133,7 @@ export default function Header() {
                 </Menu>
               </>
             </Box>
-          )}
+          </Show>
         </Toolbar>
       </AppBar>
     </>

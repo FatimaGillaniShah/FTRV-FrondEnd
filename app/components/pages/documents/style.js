@@ -40,4 +40,7 @@ export const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
     overflow: 'hidden',
   },
+  documentPaper: {
+    padding: theme.spacing(2),
+  },
 }));

@@ -23,6 +23,8 @@ const {
   DEPARTMENTS,
   BANNER_IMAGE,
   WORK_ANNIVERSARY,
+  DOCUMENTS,
+  DOCUMENT_SORT_ORDER,
   DOCUMENT,
   RING_GROUP,
 } = APIS;
@@ -197,6 +199,25 @@ export const updateDepartment = ({ id, ...payload }) =>
 
 export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
 
+export const getDepartmentDocuments = () => http.get(DOCUMENTS);
+
+export const updateDocumentOrder = (payload) => {
+  const { updatedData } = payload;
+  return http.put(`${DOCUMENT_SORT_ORDER}`, updatedData);
+};
 export const createDocument = (payload) => http.post(DOCUMENT, payload);
+
+export const updateDocument = (payload) => {
+  const id = payload.get('id');
+  payload.delete('id');
+  payload.delete('url');
+  return http.put(`${DOCUMENT}/${id}`, payload);
+};
+
+export const getDocumentById = ({ queryKey }) =>
+  http.get(`${DOCUMENT}/${queryKey[1]}`);
+
+export const deleteDocument = (payload) =>
+  http.delete(DOCUMENTS, { data: { ids: payload } });
 
 export const getRingGroups = () => http.get(RING_GROUP);
