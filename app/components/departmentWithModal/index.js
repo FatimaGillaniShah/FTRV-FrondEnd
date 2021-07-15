@@ -98,9 +98,11 @@ function DepartmentWithModal({
 DepartmentWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
+  showCreateButton: PropTypes.bool,
 };
 DepartmentWithModal.defaultProps = {
   initialValues: { name: '' },
+  // showCreateButton: true,
 };
 
 export default memo(DepartmentWithModal);
