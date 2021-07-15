@@ -9,7 +9,7 @@ import TableButtons from '../../components/pages/ringGroup/tableButtons';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
-import Search from '../../components/pages/ringGroup/search';
+import Search from '../../components/pages/directory/search';
 import Filters from '../../components/pages/ringGroup/filters';
 
 function RingGroupContainer() {
