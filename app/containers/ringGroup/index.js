@@ -46,7 +46,7 @@ function RingGroupContainer() {
               setSelected={setSelected}
               selected={selected}
               count={data?.length || 0}
-              sortColumn="title"
+              sortColumn="fullName"
             />
           </WrapInCard>
         </Box>

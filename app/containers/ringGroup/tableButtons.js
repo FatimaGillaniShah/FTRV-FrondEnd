@@ -9,12 +9,7 @@ export function TableButtons({ onDelete, numSelected }) {
     <Box display="flex" justifyContent="space-between" my={5}>
       <Box display="flex" flexWrap="wrap">
         <Box mr={2} mt={[2, 0, 0, 0]}>
-          <Button
-            color="secondary"
-            variant="contained"
-            fullWidth={false}
-            startIcon={<AddIcon />}
-          >
+          <Button color="secondary" variant="contained" startIcon={<AddIcon />}>
             New
           </Button>
         </Box>
@@ -22,7 +17,6 @@ export function TableButtons({ onDelete, numSelected }) {
           <Button
             color="secondary"
             variant="contained"
-            fullWidth={false}
             startIcon={<DeleteIcon />}
             onClick={onDelete}
             disabled={numSelected <= 0}
