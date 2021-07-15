@@ -51,7 +51,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
                 <LocationWithModel
                   name="locationId"
                   label="Location"
-                  selectVariant="standard"
+                  variant="standard"
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>

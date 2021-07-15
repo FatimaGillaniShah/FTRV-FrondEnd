@@ -130,7 +130,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                         <DepartmentWithModel
                           name="departmentId"
                           label="Department"
-                          showCreateButton
+                          model
                         />
                       </Box>
 

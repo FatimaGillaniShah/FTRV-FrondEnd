@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LocationWithModel({
-  selectVariant,
-  showCreateButton,
+  model,
   selectedValue,
   options,
   initialDialogData,
@@ -65,12 +64,12 @@ function LocationWithModel({
       <Box>
         <Select
           name="locationId"
-          variant={selectVariant}
+          variant={variant}
           selectedValue={selectedValue}
           label="Location"
           options={options}
         />
-        {showCreateButton && (
+        {model && (
           <Box className={classes.modelLink}>
             <Button startIcon={<AddIcon />} onClick={handleDialogState}>
               Create new location
@@ -84,10 +83,9 @@ function LocationWithModel({
 
 LocationWithModel.propTypes = {
   options: PropTypes.array,
-  initialDialogData: PropTypes.object,
   selectedValue: PropTypes.string,
   variant: PropTypes.string,
-  showCreateButton: PropTypes.bool,
+  model: PropTypes.bool,
 };
 LocationWithModel.defaultProps = {
   variant: 'outlined',

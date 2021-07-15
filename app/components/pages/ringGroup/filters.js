@@ -31,8 +31,8 @@ function Filters({ initialValues, onHandleFilterSearch, onClear }) {
                 <DepartmentWithModel
                   name="departmentId"
                   label="Department"
-                  selectVariant="standard"
-                  showCreateButton={false}
+                  variant="standard"
+                  model={false}
                 />
               </Box>
 
@@ -40,8 +40,8 @@ function Filters({ initialValues, onHandleFilterSearch, onClear }) {
                 <LocationWithModel
                   name="locationId"
                   label="Location"
-                  selectVariant="standard"
-                  showCreateButton={false}
+                  variant="standard"
+                  model={false}
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>

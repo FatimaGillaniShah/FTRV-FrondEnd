@@ -15,8 +15,8 @@ import { useStyles } from './style';
 import { validationSchema } from './schema';
 
 function DepartmentWithModal({
-  selectVariant,
-  showCreateButton,
+  variant,
+  model,
   selectedValue,
   initialValues,
   ...props
@@ -79,11 +79,11 @@ function DepartmentWithModal({
           selectedValue={selectedValue}
           label="Department"
           options={options}
-          variant={selectVariant}
+          variant={variant}
           loading={isLoading}
           {...props}
         />
-        {showCreateButton && (
+        {model && (
           <Box className={classes.modelLink}>
             <Button startIcon={<AddIcon />} onClick={handleDialogue}>
               Create new department
@@ -99,9 +99,11 @@ DepartmentWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
   showCreateButton: PropTypes.bool,
+  variant: PropTypes.string,
 };
 DepartmentWithModal.defaultProps = {
   initialValues: { name: '' },
+  variant: 'outlined',
 };
 
 export default memo(DepartmentWithModal);

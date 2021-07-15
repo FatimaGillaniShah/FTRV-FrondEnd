@@ -62,15 +62,11 @@ function CreateRingGroup({ id, initialValues }) {
                     <DepartmentWithModel
                       name="department"
                       label="Department"
-                      showCreateButton
+                      model
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <LocationWithModel
-                      name="location"
-                      label="Location"
-                      showCreateButton
-                    />
+                    <LocationWithModel name="location" label="Location" model />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your phone extenstion">
