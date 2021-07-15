@@ -10,7 +10,7 @@ import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { H5 } from '../../typography';
 import DepartmentWithModel from '../../departmentWithModal';
-import LocationWithModel from '../../locationWithModel';
+import LocationWithModel from '../../locationWithModal';
 import { Input } from '../../index';
 
 const ringGroupSchema = object().shape({
