@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Input } from '../../index';
-import LocationWithModel from '../../locationWithModel';
+import LocationWithModel from '../../locationWithModal';
 import DepartmentWithModel from '../../departmentWithModal';
 
 function Filters({ onHandleFilterSearch, onClear }) {

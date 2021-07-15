@@ -6,7 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
 import { Input } from '../../index';
-import LocationWithModel from '../../locationWithModel';
+import LocationWithModel from '../../locationWithModal';
 import DepartmentWithModel from '../../departmentWithModal';
 
 function Filters({ initialValues, onHandleFilterSearch, onClear }) {
