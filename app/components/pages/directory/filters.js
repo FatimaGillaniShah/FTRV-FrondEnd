@@ -4,14 +4,11 @@ import { Form, Formik } from 'formik';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-import { Input, Select } from '../../index';
+import { Input } from '../../index';
+import LocationWithModel from '../../locationWithModel';
+import DepartmentWithModel from '../../departmentWithModal';
 
-function Filters({
-  onHandleFilterSearch,
-  onClear,
-  locationOptions,
-  departmentOptions,
-}) {
+function Filters({ onHandleFilterSearch, onClear }) {
   const clearFilteringSearch = (resetForm) => {
     resetForm();
     onClear();
@@ -41,25 +38,13 @@ function Filters({
                 <Input name="name" placeholderText="Name" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <Select
-                  name="departmentId"
-                  label="Department"
-                  variant="standard"
-                  options={departmentOptions}
-                  emptyItem
-                />
+                <DepartmentWithModel name="departmentId" label="Department" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
                 <Input name="title" placeholderText="Designation" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <Select
-                  name="locationId"
-                  label="Location"
-                  variant="standard"
-                  options={locationOptions}
-                  emptyItem
-                />
+                <LocationWithModel name="locationId" label="Location" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
                 <Input name="extension" placeholderText="Extension" />

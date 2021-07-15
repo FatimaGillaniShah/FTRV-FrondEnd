@@ -14,8 +14,6 @@ import Filters from '../../components/pages/ringGroup/filters';
 
 function RingGroupContainer() {
   const [selected, setSelected] = useState([]);
-  const [sortOrder, setSortOrder] = useState('asc');
-  const [sortColumn, setSortColumn] = useState('name');
   const [checked, setChecked] = useState(false);
   const {
     user: {
@@ -23,11 +21,6 @@ function RingGroupContainer() {
     },
   } = useAuthContext();
   const data = [];
-
-  const onChangeSort = (order, property) => {
-    setSortColumn(property);
-    setSortOrder(order);
-  };
 
   const handleSwitchChange = ({ target }) => {
     setChecked(target.checked);
@@ -67,9 +60,6 @@ function RingGroupContainer() {
               headCells={headCells}
               setSelected={setSelected}
               selected={selected}
-              sortOrder={sortOrder}
-              sortColumn={sortColumn}
-              onChangeSort={onChangeSort}
               count={data?.length || 0}
             />
           </WrapInCard>
