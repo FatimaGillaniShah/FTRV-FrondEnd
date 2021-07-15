@@ -24,6 +24,7 @@ const {
   BANNER_IMAGE,
   WORK_ANNIVERSARY,
   DOCUMENT,
+  RING_GROUP,
 } = APIS;
 
 // USER CRUD
@@ -197,3 +198,5 @@ export const updateDepartment = ({ id, ...payload }) =>
 export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
 
 export const createDocument = (payload) => http.post(DOCUMENT, payload);
+
+export const createRingGroup = (payload) => http.post(RING_GROUP, payload);

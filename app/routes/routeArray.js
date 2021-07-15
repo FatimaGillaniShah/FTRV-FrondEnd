@@ -29,6 +29,7 @@ import Locations from '../containers/location/loadable';
 import Departments from '../containers/department/loadable';
 import CreateDepartment from '../containers/addDepartment/loadable';
 import AddDocument from '../containers/createDocument/loadable';
+import AddRingGroup from '../containers/createRingGroup/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -364,5 +365,12 @@ export const routeArray = [
         routeType: routeTypes.private,
       },
     ],
+  },
+  {
+    path: '/add-ring-group',
+    component: AddRingGroup,
+    exact: true,
+    breadCrumbKey: 'Ring Group',
+    routeType: routeTypes.private,
   },
 ];

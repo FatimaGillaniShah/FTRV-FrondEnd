@@ -53,4 +53,5 @@ export const APIS = {
   BANNER_IMAGE: 'bannerImage',
   WORK_ANNIVERSARY: '/users/workAnniversary',
   DOCUMENT: '/documents',
+  RING_GROUP: '/ringGroups',
 };
