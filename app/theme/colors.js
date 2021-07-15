@@ -2,7 +2,6 @@ const red = '#d33';
 const green = '#4BB543';
 const grey = '#808080';
 const lightblue = '#1875C0';
-const navyBlue = '#2778c4';
 const skyBlue = '#def2f3';
 export const colors = {
   primary: '#153D73',
@@ -14,7 +13,6 @@ export const colors = {
   green,
   grey,
   skyBlue,
-  navyBlue,
   darkGrey: '#A9A9A9',
   darkBlue: 'linear-gradient(to right bottom, #031337, #1b578d)',
   bgColor: {

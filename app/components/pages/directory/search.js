@@ -21,7 +21,6 @@ export function Search({
   checked,
   onHandleSearch,
   toggleValues,
-  initialValue,
   onHandleToggleChange,
   alignment,
 }) {
@@ -73,7 +72,6 @@ export function Search({
         <ToggleGroup
           toggleValues={toggleValues}
           onHandleToggleChange={onHandleToggleChange}
-          initialValue={initialValue}
           alignment={alignment}
         />
       </Grid>
