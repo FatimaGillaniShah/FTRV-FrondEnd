@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LocationWithModel({
+  selectVariant,
+  showCreateButton,
   selectedValue,
   options,
   initialDialogData,
@@ -60,18 +62,21 @@ function LocationWithModel({
           </MuiDialog>
         </Form>
       </Formik>
-      <Box mt={6}>
+      <Box>
         <Select
           name="locationId"
+          variant={selectVariant}
           selectedValue={selectedValue}
           label="Location"
           options={options}
         />
-        <Box className={classes.modelLink}>
-          <Button startIcon={<AddIcon />} onClick={handleDialogState}>
-            Create new location
-          </Button>
-        </Box>
+        {showCreateButton && (
+          <Box className={classes.modelLink}>
+            <Button startIcon={<AddIcon />} onClick={handleDialogState}>
+              Create new location
+            </Button>
+          </Box>
+        )}
       </Box>
     </>
   );
@@ -82,9 +87,11 @@ LocationWithModel.propTypes = {
   initialDialogData: PropTypes.object,
   selectedValue: PropTypes.string,
   variant: PropTypes.string,
+  showCreateButton: PropTypes.bool,
 };
 LocationWithModel.defaultProps = {
   variant: 'outlined',
+  showCreateButton: true,
 };
 
 export default memo(LocationWithModel);

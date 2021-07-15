@@ -14,7 +14,13 @@ import { getDepartments } from '../../state/queryFunctions';
 import { useStyles } from './style';
 import { validationSchema } from './schema';
 
-function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
+function DepartmentWithModal({
+  selectVariant,
+  showCreateButton,
+  selectedValue,
+  initialValues,
+  ...props
+}) {
   const { mutate } = useCreateDepartment();
   const { data: deparments } = useQuery(keys.department, getDepartments);
 
@@ -64,18 +70,21 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
           </Form>
         )}
       </Formik>
-      <Box mt={6}>
+      <Box>
         <Select
           selectedValue={selectedValue}
           label="Department"
           options={options}
+          variant={selectVariant}
           {...props}
         />
-        <Box className={classes.modelLink}>
-          <Button startIcon={<AddIcon />} onClick={handleDialogue}>
-            Create new department
-          </Button>
-        </Box>
+        {showCreateButton && (
+          <Box className={classes.modelLink}>
+            <Button startIcon={<AddIcon />} onClick={handleDialogue}>
+              Create new department
+            </Button>
+          </Box>
+        )}
       </Box>
     </>
   );

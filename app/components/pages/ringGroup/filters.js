@@ -28,11 +28,21 @@ function Filters({ initialValues, onHandleFilterSearch, onClear }) {
                 <Input name="name" placeholderText="Name" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <DepartmentWithModel name="departmentId" label="Department" />
+                <DepartmentWithModel
+                  name="departmentId"
+                  label="Department"
+                  selectVariant="standard"
+                  showCreateButton={false}
+                />
               </Box>
 
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <LocationWithModel name="locationId" label="Location" />
+                <LocationWithModel
+                  name="locationId"
+                  label="Location"
+                  selectVariant="standard"
+                  showCreateButton={false}
+                />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
                 <Input name="extension" placeholderText="Extension" />
