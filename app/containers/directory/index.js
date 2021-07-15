@@ -24,6 +24,7 @@ import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
+import Show from '../../components/show';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
@@ -182,32 +183,32 @@ function DirectoryContainer() {
                 />
               </Box>
               <Box mt={2}>
-                {checked && (
+                <Show IF={checked}>
                   <Filters
                     onHandleFilterSearch={handleFilterSearch}
                     onClear={onClear}
                     locationOptions={locationOptions}
                     departmentOptions={departmentOptions}
                   />
-                )}
+                </Show>
               </Box>
             </WrapInCard>
             <WrapInCard>
-              {role === ROLES.ADMIN && (
+              <Show IF={role === ROLES.ADMIN}>
                 <Box mt={4}>
                   <TableButtons
                     onDelete={handleDelete}
                     numSelected={selected.length}
                   />
                 </Box>
-              )}
-              {selected.length > 0 && (
+              </Show>
+              <Show IF={selected.length > 0}>
                 <Box my={4}>
                   <Alert severity="info" className={classes.alertPadding}>
                     <strong>{selected.length}</strong> User(s) Selected
                   </Alert>
                 </Box>
-              )}
+              </Show>
 
               <DataTable
                 data={tableData?.rows}

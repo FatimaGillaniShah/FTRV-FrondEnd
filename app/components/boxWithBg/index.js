@@ -1,6 +1,7 @@
 import { Box } from '@material-ui/core';
 import React from 'react';
 import { H5 } from '../typography';
+import Show from '../show';
 
 export default function BoxWithBg({
   showTitle = true,
@@ -15,13 +16,13 @@ export default function BoxWithBg({
 }) {
   return (
     <Box>
-      {showTitle && (
+      <Show IF={showTitle}>
         <Box ml={1} my={4}>
           <H5 color={titleColor} {...titleWeight}>
             {title}
           </H5>
         </Box>
-      )}
+      </Show>
       <Box
         className={styles}
         bgcolor={bgColor}

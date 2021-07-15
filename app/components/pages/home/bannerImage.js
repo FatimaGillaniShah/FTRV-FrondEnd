@@ -9,6 +9,7 @@ import BannerImage from '../bannerImage';
 import { useStyles } from './style';
 import { Loading } from '../../loading';
 import bannerImagePlaceholder from '../../../images/group.png';
+import Show from '../../show';
 
 function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
   const classes = useStyles();
@@ -34,7 +35,7 @@ function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
           <Box className={classes.bannerImage}>
             <BannerImage bannerImageURL={bannerImageURL} />
           </Box>
-          {role === ROLES.ADMIN && (
+          <Show IF={role === ROLES.ADMIN}>
             <Box className={classes.editBox} width="100%">
               <MuiFileInput
                 btnIcon={<EditIcon />}
@@ -48,7 +49,7 @@ function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
                 onFilechange={onHandleImageChange}
               />
             </Box>
-          )}
+          </Show>
         </>
       )}
     </Grid>

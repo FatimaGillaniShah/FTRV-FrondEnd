@@ -8,6 +8,7 @@ import { useStyles } from './styles';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import { navigateTo } from '../../../utils/helper';
+import Show from '../../show';
 
 export default function CeoMessage({ ceoMessageData }) {
   const classes = useStyles();
@@ -40,14 +41,14 @@ export default function CeoMessage({ ceoMessageData }) {
         <Box width={1 / 2}>
           <H5>CEO Message</H5>
         </Box>
-        {role === ROLES.ADMIN && (
+        <Show IF={role === ROLES.ADMIN}>
           <Box width={1 / 2} display="flex" justifyContent="flex-end">
             <EditIcon
               className={classes.editIcon}
               onClick={() => navigateTo(history, '/ceo-message/edit')}
             />{' '}
           </Box>
-        )}
+        </Show>
       </Box>
       <Box p={2} m={2}>
         <BodyTextLarge className={classes.lineBreak}>

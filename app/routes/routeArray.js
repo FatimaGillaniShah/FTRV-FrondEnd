@@ -28,6 +28,7 @@ import UsefulLinksCategory from '../containers/usefulLinksCategory/loadable';
 import Locations from '../containers/location/loadable';
 import Departments from '../containers/department/loadable';
 import CreateDepartment from '../containers/addDepartment/loadable';
+import Documents from '../containers/document/loadable';
 import AddDocument from '../containers/createDocument/loadable';
 import RingGroup from '../containers/ringGroup/loadable';
 
@@ -353,9 +354,11 @@ export const routeArray = [
   },
   {
     path: '/documents',
+    component: Documents,
     exact: true,
     breadCrumbKey: 'Documents',
     routeType: routeTypes.private,
+    roles: [ROLES.ADMIN, ROLES.USER],
     nestedRoutes: [
       {
         path: '/add',
@@ -363,6 +366,17 @@ export const routeArray = [
         exact: true,
         breadCrumbKey: 'Add New Document',
         routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: AddDocument,
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        exact: true,
+        breadCrumbKey: 'Edit Document',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
       },
     ],
   },
