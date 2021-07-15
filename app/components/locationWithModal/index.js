@@ -14,7 +14,13 @@ import { useCreateLocation } from '../../hooks/locationMutation';
 import { keys } from '../../state/queryKeys';
 import { getLocations } from '../../state/queryFunctions';
 
-function LocationWithModal({ selectedValue, initialValues, ...props }) {
+function LocationWithModal({
+  varient,
+  model,
+  selectedValue,
+  initialValues,
+  ...props
+}) {
   const [open, setOpen] = useState(false);
 
   const { mutate } = useCreateLocation();
@@ -65,18 +71,21 @@ function LocationWithModal({ selectedValue, initialValues, ...props }) {
           </Form>
         )}
       </Formik>
-      <Box mt={6}>
+      <Box>
         <Select
+          variant={varient}
           selectedValue={selectedValue}
           label="Location"
           options={options}
           {...props}
         />
-        <Box className={classes.modelLink}>
-          <Button startIcon={<AddIcon />} onClick={handleDialogue}>
-            Create new location
-          </Button>
-        </Box>
+        {model && (
+          <Box className={classes.modelLink}>
+            <Button startIcon={<AddIcon />} onClick={handleDialogue}>
+              Create new location
+            </Button>
+          </Box>
+        )}
       </Box>
     </>
   );
@@ -85,9 +94,13 @@ function LocationWithModal({ selectedValue, initialValues, ...props }) {
 LocationWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
+  varient: PropTypes.string,
+  model: PropTypes.bool,
 };
 LocationWithModal.defaultProps = {
   initialValues: { name: '' },
+  varient: 'outlined',
+  model: 'true',
 };
 
 export default memo(LocationWithModal);

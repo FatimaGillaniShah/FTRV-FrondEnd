@@ -126,7 +126,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                           <FormHelperText error>{errors.file}</FormHelperText>
                         ) : null}
                       </Box>
-                      <Box width={[1, 1 / 2]} mt={10} px={3}>
+                      <Box width={[1, 1 / 2]} mt={16} px={3}>
                         <DepartmentWithModel
                           name="departmentId"
                           label="Department"
