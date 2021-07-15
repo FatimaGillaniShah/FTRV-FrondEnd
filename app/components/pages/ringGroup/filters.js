@@ -20,12 +20,7 @@ function Filters({
   };
   return (
     <>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
-          onHandleFilterSearch(values);
-        }}
-      >
+      <Formik initialValues={initialValues} onSubmit={onHandleFilterSearch}>
         {({ resetForm }) => (
           <Form>
             <Box
