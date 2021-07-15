@@ -8,26 +8,23 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 import Select from '../muiSelect';
 import MuiDialog from '../muiDialog';
-import { useCreateDepartment } from '../../hooks/departmentMutation';
-import { keys } from '../../state/queryKeys';
-import { getDepartments } from '../../state/queryFunctions';
 import { useStyles } from './style';
-import { validationSchema } from './schema';
+import { locationSchema } from './schema';
+import { useCreateLocation } from '../../hooks/locationMutation';
+import { keys } from '../../state/queryKeys';
+import { getLocations } from '../../state/queryFunctions';
 
-function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
-  const { mutate } = useCreateDepartment();
-  const { data: deparments, isLoading } = useQuery(
-    keys.department,
-    getDepartments
-  );
-
+function LocationWithModal({ selectedValue, initialValues, ...props }) {
   const [open, setOpen] = useState(false);
-  const handleDialogue = () => {
-    setOpen(!open);
-  };
+
+  const { mutate } = useCreateLocation();
+  const { data: deparments } = useQuery(keys.locations, getLocations);
   const handleSubmit = (values, { resetForm }) => {
     mutate(values);
     resetForm();
+    setOpen(!open);
+  };
+  const handleDialogue = () => {
     setOpen(!open);
   };
   const options = deparments?.data.data.rows.map((val) => ({
@@ -40,7 +37,7 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
     <>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={locationSchema}
         onSubmit={handleSubmit}
       >
         {({ submitForm }) => (
@@ -48,7 +45,7 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
             <MuiDialog
               open={open}
               onClose={() => handleDialogue()}
-              title="Create New Department"
+              title="Create New Location"
               onSubmit={submitForm}
             >
               <Box
@@ -59,7 +56,7 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
                 <Input
                   name="name"
                   variant="outlined"
-                  OutlinedInputPlaceholder="*Department"
+                  OutlinedInputPlaceholder="*Location"
                   Icon={BusinessIcon}
                   appendIcon
                 />
@@ -71,14 +68,13 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
       <Box mt={6}>
         <Select
           selectedValue={selectedValue}
-          label="Department"
+          label="Location"
           options={options}
-          loading={isLoading}
           {...props}
         />
         <Box className={classes.modelLink}>
           <Button startIcon={<AddIcon />} onClick={handleDialogue}>
-            Create new department
+            Create new location
           </Button>
         </Box>
       </Box>
@@ -86,12 +82,12 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
   );
 }
 
-DepartmentWithModal.propTypes = {
+LocationWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
 };
-DepartmentWithModal.defaultProps = {
+LocationWithModal.defaultProps = {
   initialValues: { name: '' },
 };
 
-export default memo(DepartmentWithModal);
+export default memo(LocationWithModal);

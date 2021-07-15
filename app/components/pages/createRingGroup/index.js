@@ -10,7 +10,7 @@ import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { H5 } from '../../typography';
 import DepartmentWithModel from '../../departmentWithModal';
-import LocationWithModel from '../../locationWithModel';
+import LocationWithModel from '../../locationWithModal';
 import { Input } from '../../index';
 
 const ringGroupSchema = object().shape({
@@ -25,12 +25,16 @@ const ringGroupSchema = object().shape({
   departmentId: string().required('*Department Required'),
   locationId: string().required('*Location Required'),
 });
-function CreateRingGroup({ id, initialValues }) {
+function CreateRingGroup({ id, initialValues, onHandleSubmit }) {
   const history = useHistory();
 
   return (
     <>
-      <Formik initialValues={initialValues} validationSchema={ringGroupSchema}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onHandleSubmit}
+        validationSchema={ringGroupSchema}
+      >
         {() => (
           <Form>
             <Box
@@ -59,10 +63,13 @@ function CreateRingGroup({ id, initialValues }) {
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <DepartmentWithModel name="department" label="Department" />
+                    <DepartmentWithModel
+                      name="departmentId"
+                      label="Department"
+                    />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={4} px={3}>
-                    <LocationWithModel name="location" label="Location" />
+                    <LocationWithModel name="locationId" label="Location" />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your phone extenstion">

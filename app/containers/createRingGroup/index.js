@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { useHistory } from 'react-router';
 import { Loading } from '../../components/loading';
 import CreateRingGroupPage from '../../components/pages/createRingGroup';
@@ -9,7 +9,6 @@ import { navigateTo, Toast } from '../../utils/helper';
 
 function CreateLinkCategory() {
   const history = useHistory();
-  const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation(createRingGroup, {
     onSuccess: () => {
@@ -18,7 +17,6 @@ function CreateLinkCategory() {
         title: 'Ring Group Created Successfully',
       });
       navigateTo(history, '/ring-group');
-      //  queryClient.invalidateQueries(keys.ringGroup);
     },
     onError: ({
       response: {
@@ -37,8 +35,8 @@ function CreateLinkCategory() {
   const initialValues = {
     name: '',
     extension: '',
-    locationId: 0,
-    departmentId: 0,
+    locationId: null,
+    departmentId: null,
   };
   return (
     <>
