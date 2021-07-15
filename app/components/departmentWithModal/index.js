@@ -102,7 +102,6 @@ DepartmentWithModal.propTypes = {
 };
 DepartmentWithModal.defaultProps = {
   initialValues: { name: '' },
-  // showCreateButton: true,
 };
 
 export default memo(DepartmentWithModal);
