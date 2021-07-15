@@ -17,7 +17,7 @@ function AddCeoMessage() {
       navigateTo(history, '/ceo-message');
       Toast({
         icon: 'success',
-        title: 'Message updated successfully',
+        title: 'Message  successfully',
       });
       queryClient.invalidateQueries(keys.ceoMessage);
     },
