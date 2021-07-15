@@ -22,7 +22,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
-import { Modal } from '../../utils/helper';
+import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
 function DirectoryContainer() {
@@ -32,6 +32,7 @@ function DirectoryContainer() {
   const [filters, setFilters] = useState();
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [alignment, setAlignment] = useState('directory');
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortColumn, setSortColumn] = useState('firstName');
   const history = useHistory();
@@ -132,6 +133,29 @@ function DirectoryContainer() {
     value: val.id,
     label: val.name,
   }));
+  const toggleValues = [
+    {
+      value: 'directory',
+      label: 'Directory',
+    },
+    {
+      value: 'ringGroup',
+      label: 'Ring Group',
+    },
+  ];
+  const handleToggleChange = (event, toggleAlignment) => {
+    let alignmentValue = toggleAlignment;
+    if (alignmentValue === null) {
+      alignmentValue = alignment;
+      navigateTo(history, '/directory');
+    }
+    if (alignmentValue === 'directory') {
+      navigateTo(history, '/directory');
+    } else if (alignmentValue === 'ringGroup') {
+      navigateTo(history, '/ring-group');
+    }
+    setAlignment(alignmentValue);
+  };
   return (
     <>
       <Helmet>
@@ -151,7 +175,10 @@ function DirectoryContainer() {
                   initialValues={query}
                   onHandleSwitchChange={handleSwitchChange}
                   checked={checked}
+                  alignment={alignment}
                   onHandleSearch={handleSearch}
+                  toggleValues={toggleValues}
+                  onHandleToggleChange={handleToggleChange}
                 />
               </Box>
               <Box mt={2}>

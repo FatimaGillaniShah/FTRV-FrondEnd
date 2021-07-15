@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
 import { useQuery } from 'react-query';
+import { useHistory } from 'react-router-dom';
 import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
 import DataTable from '../../components/dataTable';
@@ -15,11 +16,14 @@ import Search from '../../components/pages/ringGroup/search';
 import Filters from '../../components/pages/ringGroup/filters';
 import { getLocations, getDepartments } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { navigateTo } from '../../utils/helper';
 
 function RingGroupContainer() {
+  const history = useHistory();
   const [selected, setSelected] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortColumn, setSortColumn] = useState('firstName');
+  const [alignment, setAlignment] = useState('ringGroup');
   const [checked, setChecked] = useState(false);
   const isServerSide = true;
   const {
@@ -60,7 +64,29 @@ function RingGroupContainer() {
   const handleSwitchChange = ({ target }) => {
     setChecked(target.checked);
   };
-
+  const toggleValues = [
+    {
+      value: 'directory',
+      label: 'Directory',
+    },
+    {
+      value: 'ringGroup',
+      label: 'Ring Group',
+    },
+  ];
+  const handleToggleChange = (event, toggleAlignment) => {
+    let alignmentValue = toggleAlignment;
+    if (alignmentValue === null) {
+      alignmentValue = alignment;
+      navigateTo(history, '/directory');
+    }
+    if (alignmentValue === 'directory') {
+      navigateTo(history, '/directory');
+    } else if (alignmentValue === 'ringGroup') {
+      navigateTo(history, '/ring-group');
+    }
+    setAlignment(alignmentValue);
+  };
   return (
     <>
       <Helmet>
@@ -76,6 +102,9 @@ function RingGroupContainer() {
                 <Search
                   onHandleSwitchChange={handleSwitchChange}
                   checked={checked}
+                  toggleValues={toggleValues}
+                  alignment={alignment}
+                  onHandleToggleChange={handleToggleChange}
                 />
               </Box>
               <Box mt={2}>

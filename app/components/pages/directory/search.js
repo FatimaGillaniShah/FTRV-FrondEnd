@@ -5,9 +5,8 @@ import { FormControlLabel, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { Form, Formik } from 'formik';
-import { Input } from '../../index';
+import { Input, ToggleGroup } from '../../index';
 import { H5 } from '../../typography';
-import ToggleGroup from '../../toggleGroup';
 
 const useStyles = makeStyles((theme) => ({
   gridpadding: {
@@ -21,6 +20,10 @@ export function Search({
   onHandleSwitchChange,
   checked,
   onHandleSearch,
+  toggleValues,
+  initialValue,
+  onHandleToggleChange,
+  alignment,
 }) {
   const classes = useStyles();
   return (
@@ -68,11 +71,10 @@ export function Search({
       </Grid>
       <Grid item xs={12} sm={4} md={3} lg={6}>
         <ToggleGroup
-          initialValue="directory"
-          firstToggleValue="directory"
-          secondToggleValue="ringGroup"
-          firstToggleName="Directory"
-          secondToggleName="Ring Group"
+          toggleValues={toggleValues}
+          onHandleToggleChange={onHandleToggleChange}
+          initialValue={initialValue}
+          alignment={alignment}
         />
       </Grid>
     </Grid>
