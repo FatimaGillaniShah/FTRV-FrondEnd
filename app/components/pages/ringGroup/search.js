@@ -20,12 +20,13 @@ export function Search({
   onHandleSwitchChange,
   checked,
   onHandleSearch,
+  name,
 }) {
   const classes = useStyles();
   return (
     <Grid container>
       <Grid item xs={12} sm={3} md={2} className={classes.gridpadding}>
-        <H5>Ring Group</H5>
+        <H5>{name}</H5>
       </Grid>
       <Grid item xs={12} sm={4}>
         <Formik initialValues={initialValues}>

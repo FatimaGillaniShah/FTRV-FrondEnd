@@ -148,6 +148,7 @@ function DirectoryContainer() {
             <WrapInCard mb={8}>
               <Box display="flex">
                 <Search
+                  name="Directory"
                   initialValues={query}
                   onHandleSwitchChange={handleSwitchChange}
                   checked={checked}

@@ -91,7 +91,6 @@ LocationWithModel.propTypes = {
 };
 LocationWithModel.defaultProps = {
   variant: 'outlined',
-  showCreateButton: true,
 };
 
 export default memo(LocationWithModel);

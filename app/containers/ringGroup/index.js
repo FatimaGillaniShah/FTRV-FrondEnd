@@ -36,6 +36,7 @@ function RingGroupContainer() {
           <WrapInCard mb={8}>
             <Box display="flex">
               <Search
+                name="Ring Group"
                 onHandleSwitchChange={handleSwitchChange}
                 checked={checked}
               />
