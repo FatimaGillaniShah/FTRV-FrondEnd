@@ -42,7 +42,7 @@ export const headCells = [
     type: 'label',
   },
   {
-    id: 'department',
+    id: 'department.name',
     numeric: false,
     disablePadding: false,
     label: 'Department',
