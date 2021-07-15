@@ -13,6 +13,7 @@ import { locationSchema } from './schema';
 import { useCreateLocation } from '../../hooks/locationMutation';
 import { keys } from '../../state/queryKeys';
 import { getLocations } from '../../state/queryFunctions';
+import Show from '../show';
 
 function LocationWithModal({
   varient,
@@ -79,13 +80,13 @@ function LocationWithModal({
           options={options}
           {...props}
         />
-        {model && (
+        <Show IF={model}>
           <Box className={classes.modelLink}>
             <Button startIcon={<AddIcon />} onClick={handleDialogue}>
               Create new location
             </Button>
           </Box>
-        )}
+        </Show>
       </Box>
     </>
   );
