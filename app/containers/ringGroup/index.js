@@ -47,9 +47,9 @@ function RingGroupContainer() {
     },
   ];
   const handleToggleChange = (event, toggleAlignment) => {
-    let alignmentValue = toggleAlignment;
-    if (alignmentValue === null) {
-      alignmentValue = alignment;
+    const alignmentValue = toggleAlignment;
+    if (!alignment) {
+      setAlignment(alignment);
       navigateTo(history, '/directory');
     }
     if (alignmentValue === 'directory') {
