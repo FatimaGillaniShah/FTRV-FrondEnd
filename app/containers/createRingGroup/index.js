@@ -35,8 +35,8 @@ function CreateLinkCategory() {
   const initialValues = {
     name: '',
     extension: '',
-    locationId: null,
-    departmentId: null,
+    locationId: '',
+    departmentId: '',
   };
   return (
     <>
