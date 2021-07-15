@@ -200,3 +200,6 @@ export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
 export const createDocument = (payload) => http.post(DOCUMENT, payload);
 
 export const getRingGroups = () => http.get(RING_GROUP);
+
+export const deleteRingGroup = (payload) =>
+  http.delete(RING_GROUP, { data: { ids: payload } });

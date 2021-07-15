@@ -5,26 +5,38 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
-import { navigateTo } from '../../../utils/helper';
+import { Modal, navigateTo } from '../../../utils/helper';
+import { useDeleteRingGroup } from '../../../hooks/ringGroup';
 
-const ActionButtons = ({ data, disabled }) => {
+const ActionButtons = ({ data, disabled, setSelected }) => {
   const history = useHistory();
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
+  const { mutate, isLoading } = useDeleteRingGroup({
+    callbackFn: () => setSelected([]),
+  });
+
+  const handleDelete = () => {
+    Modal.fire().then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        mutate([data.id]);
+      }
+    });
+  };
   return (
     <>
       {role === ROLES.ADMIN && (
         <>
           <IconButton
-            disabled={disabled}
+            disabled={isLoading || disabled}
             onClick={() => navigateTo(history, `/ring-group/edit/${data.id}`)}
           >
             <EditIcon color="secondary" />
           </IconButton>
-          <IconButton disabled={disabled}>
+          <IconButton disabled={isLoading || disabled} onClick={handleDelete}>
             <DeleteIcon color="error" />
           </IconButton>
         </>
