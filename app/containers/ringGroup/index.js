@@ -20,14 +20,13 @@ function RingGroupContainer() {
   });
 
   const handleDelete = () => {
-    if (!selected.length) {
-      return;
+    if (selected.length) {
+      Modal.fire().then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          mutate(selected);
+        }
+      });
     }
-    Modal.fire().then(({ isConfirmed }) => {
-      if (isConfirmed) {
-        mutate(selected);
-      }
-    });
   };
   return (
     <>
