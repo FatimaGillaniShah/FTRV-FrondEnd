@@ -5,6 +5,7 @@ import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { EventCalendar } from './calendar';
 import { H5 } from '../../typography';
+import Show from '../../show';
 
 export function EventsPage({ eventList, isLoading }) {
   return (
@@ -13,11 +14,11 @@ export function EventsPage({ eventList, isLoading }) {
         <Box pb={7} pt={3}>
           <H5> Events </H5>
         </Box>
-        {!isLoading && (
+        <Show IF={!isLoading}>
           <Box height={['60vh', '70vh', '80vh']} width={1}>
             <EventCalendar eventList={eventList} />
           </Box>
-        )}
+        </Show>
       </WrapInCard>
     </WrapInBreadcrumbs>
   );

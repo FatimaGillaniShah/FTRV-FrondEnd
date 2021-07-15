@@ -11,6 +11,7 @@ import Menu from 'material-ui-popup-state/HoverMenu';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { navigateTo } from '../../../utils/helper';
+import Show from '../../show';
 
 const ParentPopupState = React.createContext(null);
 
@@ -90,7 +91,7 @@ const SideMenu = ({ item }) => {
           >
             {item.children.map((childItem) => (
               <Box>
-                {!childItem.children && (
+                <Show IF={!childItem.children}>
                   <Link to={childItem.link} className={classes.linkStyle}>
                     <MenuItem
                       onClick={popupState.close}
@@ -101,7 +102,7 @@ const SideMenu = ({ item }) => {
                       </BodyTextSmall>
                     </MenuItem>
                   </Link>
-                )}
+                </Show>
 
                 {childItem.children && childItem.children.length > 0 && (
                   <Submenu popupId={childItem.name} title={childItem.name}>

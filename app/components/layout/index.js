@@ -6,6 +6,7 @@ import { twoColumnLayoutRouteNames } from './layoutTypes';
 import Header from './header';
 import SideMenu from './sideMenu';
 import RightInfoPanel from './rightInfoPanel';
+import Show from '../show';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -128,15 +129,15 @@ const Layout = ({ children }) => {
 
   return (
     <Box className={classes.root}>
-      {location.pathname === '/' && (
+      <Show IF={location.pathname === '/'}>
         <Grid xs={12} className={classes.rootGrid}>
           <Grid item className={classes.headerGrid}>
             <Header />
           </Grid>
           {children}
         </Grid>
-      )}
-      {location.pathname !== '/' && (
+      </Show>
+      <Show IF={location.pathname !== '/'}>
         <Grid xs={12} className={classes.rootGrid}>
           <Grid item className={classes.headerGrid}>
             <Header />
@@ -165,7 +166,7 @@ const Layout = ({ children }) => {
             </Grid>
           </Grid>
         </Grid>
-      )}
+      </Show>
     </Box>
   );
 };

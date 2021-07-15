@@ -4,9 +4,9 @@ import AddIcon from '@material-ui/icons/Add';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import { H5 } from '../../typography';
 import DocumentTabs from './documentTabs';
-import NotExist from '../notExist/index';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
+import Show from '../../show';
 
 export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
   const {
@@ -32,7 +32,11 @@ export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
           </Link>
         </Box>
       )}
-      {data?.length > 0 ? (
+      <Show
+        IF={data?.length > 0}
+        Icon={FileCopyOutlinedIcon}
+        description=" No Documents To Show"
+      >
         <Box my={8}>
           <DocumentTabs
             departments={data}
@@ -40,12 +44,7 @@ export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
             onHandleSortOrder={onHandleSortOrder}
           />
         </Box>
-      ) : (
-        <NotExist
-          Icon={FileCopyOutlinedIcon}
-          description=" No Documents To Show"
-        />
-      )}
+      </Show>
     </>
   );
 }

@@ -5,6 +5,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import AddIcon from '@material-ui/icons/Add';
 import { H5 } from '../../typography';
 import { ROLES } from '../../../utils/constants';
+import Show from '../../show';
 
 export const CustomToolbar = ({ home, data: { role } }) => ({
   label,
@@ -16,7 +17,7 @@ export const CustomToolbar = ({ home, data: { role } }) => ({
 
   return (
     <>
-      {role === ROLES.ADMIN && !home && (
+      <Show IF={role === ROLES.ADMIN && !home}>
         <Box mb={5}>
           <Link href="/events/add" underline="none">
             <Button
@@ -28,7 +29,7 @@ export const CustomToolbar = ({ home, data: { role } }) => ({
             </Button>
           </Link>
         </Box>
-      )}
+      </Show>
       <Box
         display="flex"
         flexDirection="row"
