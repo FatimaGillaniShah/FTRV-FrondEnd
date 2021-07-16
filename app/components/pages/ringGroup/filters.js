@@ -4,7 +4,6 @@ import { Form, Formik } from 'formik';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-import PropTypes from 'prop-types';
 import { Input } from '../../index';
 import LocationWithModal from '../../locationWithModal';
 import DepartmentWithModal from '../../departmentWithModal';
@@ -32,7 +31,7 @@ function Filters({ initialValues, onHandleFilterSearch, onClear }) {
                   name="departmentId"
                   label="Department"
                   variant="standard"
-                  model={false}
+                  modal={false}
                 />
               </Box>
 
@@ -41,7 +40,7 @@ function Filters({ initialValues, onHandleFilterSearch, onClear }) {
                   name="locationId"
                   label="Location"
                   variant="standard"
-                  model={false}
+                  modal={false}
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
@@ -75,13 +74,5 @@ function Filters({ initialValues, onHandleFilterSearch, onClear }) {
     </>
   );
 }
-Filters.defaultProps = {
-  initialValues: PropTypes.shape({
-    name: '',
-    departmentId: '',
-    extension: '',
-    locationId: '',
-  }),
-};
 
 export default Filters;

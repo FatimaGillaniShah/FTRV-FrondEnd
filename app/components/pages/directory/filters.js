@@ -42,7 +42,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
                   name="departmentId"
                   label="Department"
                   variant="standard"
-                  model={false}
+                  modal={false}
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
@@ -53,7 +53,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
                   name="locationId"
                   label="Location"
                   variant="standard"
-                  model={false}
+                  modal={false}
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>

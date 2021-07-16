@@ -12,7 +12,13 @@ import { Search } from '../../search/search';
 import Filters from './filters';
 import Show from '../../show';
 
-function RingGroup({ selected, data, setSelected, onHandleDelete }) {
+function RingGroup({
+  selected,
+  data,
+  setSelected,
+  onHandleDelete,
+  initialFilterValues,
+}) {
   const [checked, setChecked] = useState(false);
   const {
     user: {
@@ -35,7 +41,7 @@ function RingGroup({ selected, data, setSelected, onHandleDelete }) {
           </Box>
           <Box mt={2}>
             <Show IF={checked}>
-              <Filters />
+              <Filters initialValues={initialFilterValues} />
             </Show>
           </Box>
         </WrapInCard>

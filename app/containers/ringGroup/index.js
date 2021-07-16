@@ -73,6 +73,12 @@ function RingGroupContainer() {
       });
     }
   };
+  const initialFilterValues = {
+    name: '',
+    departmentId: '',
+    extension: '',
+    locationId: '',
+  };
   return (
     <>
       <Helmet>
@@ -93,7 +99,7 @@ function RingGroupContainer() {
             </Box>
             <Box mt={2}>
               <Show IF={checked}>
-                <Filters />
+                <Filters initialFilterValues={initialFilterValues} />
               </Show>
             </Box>
           </WrapInCard>

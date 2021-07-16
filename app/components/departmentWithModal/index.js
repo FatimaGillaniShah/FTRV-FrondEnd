@@ -17,7 +17,7 @@ import Show from '../show';
 
 function DepartmentWithModal({
   variant,
-  model,
+  modal,
   selectedValue,
   initialValues,
   ...props
@@ -84,7 +84,7 @@ function DepartmentWithModal({
           loading={isLoading}
           {...props}
         />
-        <Show IF={model}>
+        <Show IF={modal}>
           <Box className={classes.modelLink}>
             <Button startIcon={<AddIcon />} onClick={handleDialogue}>
               Create new department
@@ -99,13 +99,13 @@ function DepartmentWithModal({
 DepartmentWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
-  model: PropTypes.bool,
+  modal: PropTypes.bool,
   variant: PropTypes.string,
 };
 DepartmentWithModal.defaultProps = {
   initialValues: { name: '' },
   variant: 'outlined',
-  model: 'true',
+  modal: true,
 };
 
 export default memo(DepartmentWithModal);
