@@ -220,3 +220,8 @@ export const getDocumentById = ({ queryKey }) =>
 export const deleteDocument = (payload) =>
   http.delete(DOCUMENTS, { data: { ids: payload } });
 export const createRingGroup = (payload) => http.post(RING_GROUP, payload);
+
+export const getRingGroups = () => http.get(RING_GROUP);
+
+export const deleteRingGroup = (payload) =>
+  http.delete(RING_GROUP, { data: { ids: payload } });

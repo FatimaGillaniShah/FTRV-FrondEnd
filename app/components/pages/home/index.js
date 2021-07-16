@@ -4,6 +4,7 @@ import EventCalendarHome from './calendar';
 import PollHome from './poll';
 import BannerImageHome from './bannerImage';
 import { useStyles } from './style';
+import Show from '../../show';
 
 function Home({
   eventList,
@@ -29,7 +30,9 @@ function Home({
             flexDirection={['column', 'column', 'column', 'row']}
           >
             <EventCalendarHome eventList={eventList} />
-            <PollHome pollData={pollData} />
+            <Show IF={pollData}>
+              <PollHome pollData={pollData} />
+            </Show>
           </Box>
         </Grid>
       </Grid>
