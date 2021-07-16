@@ -9,8 +9,8 @@ import { string, object } from 'yup';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { H5 } from '../../typography';
-import DepartmentWithModel from '../../departmentWithModal';
-import LocationWithModel from '../../locationWithModal';
+import DepartmentWithModal from '../../departmentWithModal';
+import LocationWithModal from '../../locationWithModal';
 import { Input } from '../../index';
 
 const ringGroupSchema = object().shape({
@@ -59,14 +59,10 @@ function CreateRingGroup({ id, initialValues }) {
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <DepartmentWithModel
-                      name="department"
-                      label="Department"
-                      model
-                    />
+                    <DepartmentWithModal name="department" label="Department" />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <LocationWithModel name="location" label="Location" model />
+                    <LocationWithModal name="location" label="Location" />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your phone extenstion">

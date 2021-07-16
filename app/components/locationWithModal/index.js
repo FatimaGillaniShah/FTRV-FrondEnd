@@ -16,7 +16,7 @@ import { getLocations } from '../../state/queryFunctions';
 import Show from '../show';
 
 function LocationWithModal({
-  model,
+  modal,
   variant,
   selectedValue,
   initialValues,
@@ -84,7 +84,7 @@ function LocationWithModal({
           loading={isLoading}
           {...props}
         />
-        <Show IF={model}>
+        <Show IF={modal}>
           <Box className={classes.modelLink}>
             <Button startIcon={<AddIcon />} onClick={handleDialogue}>
               Create new location
@@ -99,12 +99,12 @@ function LocationWithModal({
 LocationWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
-  model: PropTypes.bool,
+  modal: PropTypes.bool,
   variant: PropTypes.string,
 };
 LocationWithModal.defaultProps = {
   initialValues: { name: '' },
-  model: true,
+  modal: true,
   variant: 'outlined',
 };
 

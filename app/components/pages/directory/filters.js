@@ -5,8 +5,8 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Input } from '../../index';
-import LocationWithModel from '../../locationWithModal';
-import DepartmentWithModel from '../../departmentWithModal';
+import LocationWithModal from '../../locationWithModal';
+import DepartmentWithModal from '../../departmentWithModal';
 
 function Filters({ onHandleFilterSearch, onClear }) {
   const clearFilteringSearch = (resetForm) => {
@@ -38,22 +38,22 @@ function Filters({ onHandleFilterSearch, onClear }) {
                 <Input name="name" placeholderText="Name" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <DepartmentWithModel
+                <DepartmentWithModal
                   name="departmentId"
                   label="Department"
                   variant="standard"
-                  model={false}
+                  modal={false}
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
                 <Input name="title" placeholderText="Designation" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <LocationWithModel
+                <LocationWithModal
                   name="locationId"
                   label="Location"
                   variant="standard"
-                  model={false}
+                  modal={false}
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
