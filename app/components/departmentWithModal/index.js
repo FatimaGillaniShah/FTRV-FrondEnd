@@ -16,7 +16,7 @@ import { validationSchema } from './schema';
 import Show from '../show';
 
 function DepartmentWithModal({
-  varient,
+  variant,
   model,
   selectedValue,
   initialValues,
@@ -77,7 +77,7 @@ function DepartmentWithModal({
       </Formik>
       <Box>
         <Select
-          variant={varient}
+          variant={variant}
           selectedValue={selectedValue}
           label="Department"
           options={options}
@@ -100,11 +100,11 @@ DepartmentWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
   model: PropTypes.bool,
-  varient: PropTypes.string,
+  variant: PropTypes.string,
 };
 DepartmentWithModal.defaultProps = {
   initialValues: { name: '' },
-  varient: 'outlined',
+  variant: 'outlined',
   model: 'true',
 };
 

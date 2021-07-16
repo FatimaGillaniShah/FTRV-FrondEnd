@@ -4,6 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import Show from '../../show';
 
 const ActionButtons = ({ disabled }) => {
   const {
@@ -14,7 +15,7 @@ const ActionButtons = ({ disabled }) => {
 
   return (
     <>
-      {role === ROLES.ADMIN && (
+      <Show IF={role === ROLES.ADMIN}>
         <>
           <IconButton disabled={disabled}>
             <EditIcon color="secondary" />
@@ -23,7 +24,7 @@ const ActionButtons = ({ disabled }) => {
             <DeleteIcon color="error" />
           </IconButton>
         </>
-      )}
+      </Show>
     </>
   );
 };

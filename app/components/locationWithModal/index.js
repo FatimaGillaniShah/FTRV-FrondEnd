@@ -15,13 +15,7 @@ import { keys } from '../../state/queryKeys';
 import { getLocations } from '../../state/queryFunctions';
 import Show from '../show';
 
-function LocationWithModal({
-  varient,
-  model,
-  selectedValue,
-  initialValues,
-  ...props
-}) {
+function LocationWithModal({ model, selectedValue, initialValues, ...props }) {
   const [open, setOpen] = useState(false);
 
   const { mutate } = useCreateLocation();
@@ -74,7 +68,6 @@ function LocationWithModal({
       </Formik>
       <Box>
         <Select
-          variant={varient}
           selectedValue={selectedValue}
           label="Location"
           options={options}
@@ -95,12 +88,12 @@ function LocationWithModal({
 LocationWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
-  varient: PropTypes.string,
+  variant: PropTypes.string,
   model: PropTypes.bool,
 };
 LocationWithModal.defaultProps = {
   initialValues: { name: '' },
-  varient: 'outlined',
+  variant: 'outlined',
   model: 'true',
 };
 
