@@ -9,7 +9,7 @@ import { TableButtons } from './tableButtons';
 import DataTable from '../../dataTable';
 import { headCells } from './columns';
 
-function RingGroup({ selected, data, setSelected }) {
+function RingGroup({ selected, data, setSelected, onHandleDelete }) {
   const {
     user: {
       data: { role },
@@ -21,7 +21,10 @@ function RingGroup({ selected, data, setSelected }) {
         <WrapInCard>
           {role === ROLES.ADMIN && (
             <Box mt={4}>
-              <TableButtons numSelected={selected.length} />
+              <TableButtons
+                numSelected={selected.length}
+                onHandleDelete={onHandleDelete}
+              />
               {selected.length > 0 && (
                 <Box my={4}>
                   <Alert severity="info">
