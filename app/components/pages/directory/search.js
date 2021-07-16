@@ -69,11 +69,13 @@ export function Search({
         </Box>
       </Grid>
       <Grid item xs={12} sm={4} md={3} lg={6}>
+        {/* <Box width={[1, 1, '50%', '70%']}> */}
         <ToggleGroup
           toggleValues={toggleValues}
           onHandleToggleChange={onHandleToggleChange}
           alignment={alignment}
         />
+        {/* </Box> */}
       </Grid>
     </Grid>
   );
