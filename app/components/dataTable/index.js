@@ -55,7 +55,9 @@ export function DataTable({
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-    onChangeSort(isAsc ? 'desc' : 'asc', property);
+    if (isServerSide) {
+      onChangeSort(isAsc ? 'desc' : 'asc', property);
+    }
   };
 
   const handleSelectAllClick = (event) => {
@@ -120,9 +122,6 @@ export function DataTable({
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
-  // const emptyRows =
-  //   rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const mapRows = (row, isItemSelected, labelId, currentUser) => (
     <>
@@ -207,7 +206,7 @@ export function DataTable({
                   role="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
-                  key={row.name}
+                  key={row.id}
                   selected={isItemSelected}
                   disabled={matchUserIdWithIDS && row.id === currentUserID}
                 >
