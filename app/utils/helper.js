@@ -1,3 +1,4 @@
+import { get } from 'lodash-es';
 import Swal from 'sweetalert2';
 import { colors } from '../theme/colors';
 
@@ -9,10 +10,10 @@ function getComparator(order, orderBy) {
 }
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
+  if (get(b, orderBy) < get(a, orderBy)) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (get(b, orderBy) > get(a, orderBy)) {
     return 1;
   }
   return 0;

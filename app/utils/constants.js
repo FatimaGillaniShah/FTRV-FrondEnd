@@ -55,4 +55,5 @@ export const APIS = {
   DOCUMENTS: '/documents',
   DOCUMENT_SORT_ORDER: '/documents/updateSortOrder',
   DOCUMENT: '/documents',
+  RING_GROUP: '/ringGroups',
 };
