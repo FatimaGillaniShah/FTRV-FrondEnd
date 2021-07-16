@@ -11,7 +11,16 @@ const MuiStyledToggleButton = withStyles((theme) => ({
     backgroundColor: colors.skyBlue,
     borderRadius: '30px',
     padding: theme.spacing(3),
-    width: '22%',
+    [theme.breakpoints.down('lg')]: {
+      width: '10vw',
+    },
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(2),
+      width: '15vw',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '30vw',
+    },
     '&$selected': {
       backgroundColor: colors.secondary,
       color: colors.light,
