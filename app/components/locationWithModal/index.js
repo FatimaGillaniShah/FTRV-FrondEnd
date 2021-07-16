@@ -1,94 +1,96 @@
 import { Box, Button } from '@material-ui/core';
 import React, { memo, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import { Input } from 'components';
 import { Form, Formik } from 'formik';
-import { string, object } from 'yup';
 import BusinessIcon from '@material-ui/icons/Business';
 import PropTypes from 'prop-types';
+import { useQuery } from 'react-query';
 import Select from '../muiSelect';
 import MuiDialog from '../muiDialog';
+import { useStyles } from './style';
+import { locationSchema } from './schema';
+import { useCreateLocation } from '../../hooks/locationMutation';
+import { keys } from '../../state/queryKeys';
+import { getLocations } from '../../state/queryFunctions';
+import Show from '../show';
 
-const useStyles = makeStyles((theme) => ({
-  modelLink: {
-    cursor: 'pointer',
-    paddingTop: theme.spacing(1),
-  },
-}));
+function LocationWithModal({ selectedValue, initialValues, model, ...props }) {
+  const [open, setOpen] = useState(false);
 
-function LocationWithModel({
-  model,
-  selectedValue,
-  options,
-  initialDialogData,
-  variant,
-}) {
-  const locationSchema = object().shape({
-    location: string()
-      .required('*Location Required')
-      .noWhitespace()
-      .typeError('* This field cannot contain only blankspaces'),
-  });
-
-  const [openLocDialog, setOpenLocDialog] = useState(false);
-  const handleDialogState = () => {
-    setOpenLocDialog(!openLocDialog);
+  const { mutate } = useCreateLocation();
+  const { data: deparments } = useQuery(keys.locations, getLocations);
+  const handleSubmit = (values, { resetForm }) => {
+    mutate(values);
+    resetForm();
+    setOpen(!open);
   };
+  const handleDialogue = () => {
+    setOpen(!open);
+  };
+  const options = deparments?.data.data.rows.map((val) => ({
+    value: val.id,
+    label: val.name,
+  }));
 
   const classes = useStyles();
   return (
     <>
       <Formik
-        initialValues={initialDialogData}
+        initialValues={initialValues}
         validationSchema={locationSchema}
+        onSubmit={handleSubmit}
       >
-        <Form>
-          <MuiDialog
-            open={openLocDialog}
-            onClose={() => handleDialogState()}
-            title="Create New Location"
-          >
-            <Box width={[1, 1, 1 / 2]} py={5}>
-              <Input
-                name="location"
-                variant={variant}
-                OutlinedInputPlaceholder="*Location"
-                Icon={BusinessIcon}
-                appendIcon
-              />
-            </Box>
-          </MuiDialog>
-        </Form>
+        {({ submitForm }) => (
+          <Form>
+            <MuiDialog
+              open={open}
+              onClose={() => handleDialogue()}
+              title="Create New Location"
+              onSubmit={submitForm}
+            >
+              <Box
+                width={[1, 1, 1 / 2]}
+                py={5}
+                className={classes.modalOverflow}
+              >
+                <Input
+                  name="name"
+                  variant="outlined"
+                  OutlinedInputPlaceholder="*Location"
+                  Icon={BusinessIcon}
+                  appendIcon
+                />
+              </Box>
+            </MuiDialog>
+          </Form>
+        )}
       </Formik>
       <Box>
         <Select
-          name="locationId"
-          variant={variant}
           selectedValue={selectedValue}
           label="Location"
           options={options}
+          {...props}
         />
-        {model && (
+        <Show IF={model}>
           <Box className={classes.modelLink}>
-            <Button startIcon={<AddIcon />} onClick={handleDialogState}>
+            <Button startIcon={<AddIcon />} onClick={handleDialogue}>
               Create new location
             </Button>
           </Box>
-        )}
+        </Show>
       </Box>
     </>
   );
 }
 
-LocationWithModel.propTypes = {
-  options: PropTypes.array,
+LocationWithModal.propTypes = {
+  initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
-  variant: PropTypes.string,
-  model: PropTypes.bool,
 };
-LocationWithModel.defaultProps = {
-  variant: 'outlined',
+LocationWithModal.defaultProps = {
+  initialValues: { name: '' },
 };
 
-export default memo(LocationWithModel);
+export default memo(LocationWithModal);

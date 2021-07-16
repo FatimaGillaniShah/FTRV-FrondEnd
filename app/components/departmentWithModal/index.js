@@ -13,6 +13,7 @@ import { keys } from '../../state/queryKeys';
 import { getDepartments } from '../../state/queryFunctions';
 import { useStyles } from './style';
 import { validationSchema } from './schema';
+import Show from '../show';
 
 function DepartmentWithModal({
   variant,
@@ -83,13 +84,13 @@ function DepartmentWithModal({
           loading={isLoading}
           {...props}
         />
-        {model && (
+        <Show IF={model}>
           <Box className={classes.modelLink}>
             <Button startIcon={<AddIcon />} onClick={handleDialogue}>
               Create new department
             </Button>
           </Box>
-        )}
+        </Show>
       </Box>
     </>
   );

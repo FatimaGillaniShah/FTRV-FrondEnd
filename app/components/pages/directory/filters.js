@@ -39,9 +39,9 @@ function Filters({ onHandleFilterSearch, onClear }) {
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
                 <DepartmentWithModel
-                  selectVariant="standard"
                   name="departmentId"
                   label="Department"
+                  varient="standard"
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
