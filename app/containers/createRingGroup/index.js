@@ -1,15 +1,16 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router';
 import { Loading } from '../../components/loading';
 import CreateRingGroupPage from '../../components/pages/createRingGroup';
 import { createRingGroup } from '../../state/queryFunctions';
 import { navigateTo, Toast } from '../../utils/helper';
+import { keys } from '../../state/queryKeys';
 
 function CreateLinkCategory() {
   const history = useHistory();
-
+  const queryClient = useQueryClient();
   const { mutate, isLoading } = useMutation(createRingGroup, {
     onSuccess: () => {
       Toast({
@@ -17,6 +18,7 @@ function CreateLinkCategory() {
         title: 'Ring Group Created Successfully',
       });
       navigateTo(history, '/ring-group');
+      queryClient.invalidateQueries(keys.ringGroups);
     },
     onError: ({
       response: {
