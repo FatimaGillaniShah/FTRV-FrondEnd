@@ -21,6 +21,7 @@ import Show from '../../components/show';
 function AnnouncementContainer() {
   const [selected, setSelected] = useState([]);
   const [formatData, setFormatData] = useState([]);
+  const [page, setPage] = useState(0);
 
   const { data, isLoading } = useQuery(
     keys.adminAnnouncements,
@@ -99,6 +100,8 @@ function AnnouncementContainer() {
                 setSelected={setSelected}
                 selected={selected}
                 count={formatData?.length || 0}
+                setPage={setPage}
+                page={page}
                 sortColumn="title"
               />
             </WrapInCard>

@@ -17,6 +17,7 @@ import { Modal } from '../../utils/helper';
 import { useDeleteDepartment } from '../../hooks/department';
 
 function Departments() {
+  const [page, setPage] = useState(0);
   const {
     user: {
       data: { role },
@@ -70,6 +71,8 @@ function Departments() {
               selected={selected}
               setSelected={setSelected}
               count={departments?.length || 0}
+              setPage={setPage}
+              page={page}
               sortColumn="name"
             />
           </WrapInCard>

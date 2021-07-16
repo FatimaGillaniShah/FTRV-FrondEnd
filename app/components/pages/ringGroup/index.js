@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
 import { useAuthContext } from '../../../context/authContext';
@@ -18,16 +18,22 @@ function RingGroup({
   setSelected,
   onHandleDelete,
   initialFilterValues,
+  onHandleSearch,
+  pageNumber,
+  checked,
+  query,
+  onHandleFilterSearch,
+  onClearFilter,
+  onHandleSwitchChange,
+  page,
+  setPage,
 }) {
-  const [checked, setChecked] = useState(false);
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
-  const handleSwitchChange = ({ target }) => {
-    setChecked(target.checked);
-  };
+
   return (
     <WrapInBreadcrumbs>
       <Box width={1}>
@@ -35,13 +41,19 @@ function RingGroup({
           <Box display="flex">
             <Search
               name="Ring Group"
-              onHandleSwitchChange={handleSwitchChange}
+              onHandleSwitchChange={onHandleSwitchChange}
               checked={checked}
+              onHandleSearch={onHandleSearch}
+              initialValues={query}
             />
           </Box>
           <Box mt={2}>
             <Show IF={checked}>
-              <Filters initialValues={initialFilterValues} />
+              <Filters
+                onHandleFilterSearch={onHandleFilterSearch}
+                initialValues={initialFilterValues}
+                onClear={onClearFilter}
+              />
             </Show>
           </Box>
         </WrapInCard>
@@ -69,7 +81,10 @@ function RingGroup({
             setSelected={setSelected}
             selected={selected}
             count={data?.length || 0}
+            pageNumber={pageNumber}
             sortColumn="name"
+            setPage={setPage}
+            page={page}
           />
         </WrapInCard>
       </Box>
