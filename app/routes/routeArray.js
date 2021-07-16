@@ -31,6 +31,7 @@ import CreateDepartment from '../containers/addDepartment/loadable';
 import Documents from '../containers/document/loadable';
 import AddDocument from '../containers/createDocument/loadable';
 import AddRingGroup from '../containers/createRingGroup/loadable';
+import RingGroup from '../containers/ringGroup/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -381,10 +382,20 @@ export const routeArray = [
     ],
   },
   {
-    path: '/add',
-    component: AddRingGroup,
+    path: '/ring-group',
+    component: RingGroup,
     exact: true,
-    breadCrumbKey: 'Add New Ring Group',
+    breadCrumbKey: 'Ring Group',
     routeType: routeTypes.private,
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: AddRingGroup,
+        exact: true,
+        breadCrumbKey: 'Add New Ring Group',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+    ],
   },
 ];
