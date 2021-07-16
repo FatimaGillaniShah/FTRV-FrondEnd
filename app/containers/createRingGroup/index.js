@@ -33,7 +33,14 @@ function CreateLinkCategory() {
       },
     }
   );
-
+  let ringGroup = data?.data?.data;
+  ringGroup = {
+    id,
+    name: ringGroup?.name,
+    extension: ringGroup?.extension,
+    departmentId: ringGroup?.location?.id,
+    locationId: ringGroup?.department?.id,
+  };
   const { mutate, isLoading } = useMutation(
     id ? updateRingGroup : createRingGroup,
     {
@@ -77,7 +84,7 @@ function CreateLinkCategory() {
         <CreateRingGroupPage
           id={id}
           onHandleSubmit={handleSubmit}
-          initialValues={id ? data?.data?.data : initialValues}
+          initialValues={id ? ringGroup : initialValues}
         />
       )}
     </>
