@@ -10,7 +10,7 @@ import WrapInCard from '../../layout/wrapInCard';
 import { H5 } from '../../typography';
 import { Poll } from '../../poll';
 import { Modal, navigateTo } from '../../../utils/helper';
-import NotExist from '../notExist/index';
+import Show from '../../show';
 
 export function PollsPage({ data }) {
   const history = useHistory();
@@ -38,7 +38,11 @@ export function PollsPage({ data }) {
           </Box>
         </Box>
 
-        {data ? (
+        <Show
+          IF={data?.length > 0}
+          Icon={BallotIcon}
+          description=" No Polls To Show"
+        >
           <Box
             display="flex"
             flexDirection={['column', 'column', 'column', 'row']}
@@ -63,9 +67,7 @@ export function PollsPage({ data }) {
               </Box>
             ))}
           </Box>
-        ) : (
-          <NotExist Icon={BallotIcon} description=" No Polls To Show" />
-        )}
+        </Show>
       </WrapInCard>
     </WrapInBreadcrumbs>
   );
