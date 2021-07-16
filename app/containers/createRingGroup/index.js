@@ -1,33 +1,61 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation } from 'react-query';
-import { useHistory } from 'react-router';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useHistory, useParams } from 'react-router';
 import { Loading } from '../../components/loading';
 import CreateRingGroupPage from '../../components/pages/createRingGroup';
-import { createRingGroup } from '../../state/queryFunctions';
+import {
+  createRingGroup,
+  getRingGroupById,
+  updateRingGroup,
+} from '../../state/queryFunctions';
 import { navigateTo, Toast } from '../../utils/helper';
+import { keys } from '../../state/queryKeys';
 
 function CreateLinkCategory() {
   const history = useHistory();
-
-  const { mutate, isLoading } = useMutation(createRingGroup, {
-    onSuccess: () => {
-      Toast({
-        icon: 'success',
-        title: 'Ring Group Created Successfully',
-      });
-      navigateTo(history, '/ring-group');
-    },
-    onError: ({
-      response: {
-        data: { message },
+  const { id } = useParams();
+  const queryClient = useQueryClient();
+  const { data, isLoading: isRingGroupLoading } = useQuery(
+    keys.getRingGroup(id),
+    getRingGroupById,
+    {
+      enabled: !!id,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
       },
-    }) =>
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occurred',
-      }),
-  });
+    }
+  );
+
+  const { mutate, isLoading } = useMutation(
+    id ? updateRingGroup : createRingGroup,
+    {
+      onSuccess: () => {
+        Toast({
+          icon: 'success',
+          title: `Ring Group ${id ? 'Updated' : 'Created'}  successfully`,
+        });
+        navigateTo(history, '/ring-groups');
+        queryClient.invalidateQueries(keys.ringGroups);
+      },
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) =>
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        }),
+    }
+  );
 
   const handleSubmit = (values) => {
     mutate(values);
@@ -41,14 +69,15 @@ function CreateLinkCategory() {
   return (
     <>
       <Helmet>
-        <title> Create Ring Group</title>
+        <title>{id ? 'Edit' : 'Create'} Ring Group</title>
       </Helmet>
-      {isLoading ? (
+      {isLoading || isRingGroupLoading ? (
         <Loading />
       ) : (
         <CreateRingGroupPage
+          id={id}
           onHandleSubmit={handleSubmit}
-          initialValues={initialValues}
+          initialValues={id ? data?.data?.data : initialValues}
         />
       )}
     </>
