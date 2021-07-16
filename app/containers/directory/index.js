@@ -13,7 +13,7 @@ import {
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
-import Search from '../../components/pages/directory/search';
+import Search from '../../components/search/search';
 import Filters from '../../components/pages/directory/filters';
 import DataTable from '../../components/dataTable';
 import TableButtons from './tableButtons';
