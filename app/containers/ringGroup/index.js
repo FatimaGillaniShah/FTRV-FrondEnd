@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Loading } from '../../components/loading';
 import RingGroup from '../../components/pages/ringGroup';
+import Show from '../../components/show';
 import { getRingGroups } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 
@@ -18,15 +19,16 @@ function RingGroupContainer() {
       <Helmet>
         <title> Ring Group</title>
       </Helmet>
-      {isListLoading ? (
+      <Show IF={isListLoading}>
         <Loading />
-      ) : (
+      </Show>
+      <Show IF={!isListLoading}>
         <RingGroup
           data={data?.data?.data?.rows}
           selected={selected}
           setSelected={setSelected}
         />
-      )}
+      </Show>
     </>
   );
 }
