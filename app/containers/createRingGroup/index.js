@@ -50,7 +50,7 @@ function CreateLinkCategory() {
           title: `Ring Group ${id ? 'Updated' : 'Created'}  successfully`,
         });
         navigateTo(history, '/ring-groups');
-        queryClient.invalidateQueries(keys.ringGroups);
+        if (id) queryClient.invalidateQueries(keys.ringGroups);
       },
       onError: ({
         response: {
