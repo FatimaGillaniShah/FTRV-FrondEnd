@@ -15,11 +15,20 @@ import { keys } from '../../state/queryKeys';
 import { getLocations } from '../../state/queryFunctions';
 import Show from '../show';
 
-function LocationWithModal({ selectedValue, initialValues, model, ...props }) {
+function LocationWithModal({
+  model,
+  variant,
+  selectedValue,
+  initialValues,
+  ...props
+}) {
   const [open, setOpen] = useState(false);
 
   const { mutate } = useCreateLocation();
-  const { data: deparments } = useQuery(keys.locations, getLocations);
+  const { data: deparments, isLoading } = useQuery(
+    keys.locations,
+    getLocations
+  );
   const handleSubmit = (values, { resetForm }) => {
     mutate(values);
     resetForm();
@@ -70,7 +79,9 @@ function LocationWithModal({ selectedValue, initialValues, model, ...props }) {
         <Select
           selectedValue={selectedValue}
           label="Location"
+          variant={variant}
           options={options}
+          loading={isLoading}
           {...props}
         />
         <Show IF={model}>
@@ -88,9 +99,13 @@ function LocationWithModal({ selectedValue, initialValues, model, ...props }) {
 LocationWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
+  model: PropTypes.bool,
+  variant: PropTypes.string,
 };
 LocationWithModal.defaultProps = {
   initialValues: { name: '' },
+  model: true,
+  variant: 'outlined',
 };
 
 export default memo(LocationWithModal);

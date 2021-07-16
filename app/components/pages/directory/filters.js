@@ -41,7 +41,8 @@ function Filters({ onHandleFilterSearch, onClear }) {
                 <DepartmentWithModel
                   name="departmentId"
                   label="Department"
-                  varient="standard"
+                  variant="standard"
+                  model={false}
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
@@ -52,6 +53,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
                   name="locationId"
                   label="Location"
                   variant="standard"
+                  model={false}
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>

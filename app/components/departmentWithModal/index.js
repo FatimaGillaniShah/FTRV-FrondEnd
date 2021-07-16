@@ -105,6 +105,7 @@ DepartmentWithModal.propTypes = {
 DepartmentWithModal.defaultProps = {
   initialValues: { name: '' },
   variant: 'outlined',
+  model: true,
 };
 
 export default memo(DepartmentWithModal);

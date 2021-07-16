@@ -4,7 +4,6 @@ import { Form, Formik } from 'formik';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
-import PropTypes from 'prop-types';
 import { Input } from '../../index';
 import LocationWithModel from '../../locationWithModal';
 import DepartmentWithModel from '../../departmentWithModal';
@@ -75,13 +74,5 @@ function Filters({ initialValues, onHandleFilterSearch, onClear }) {
     </>
   );
 }
-Filters.defaultProps = {
-  initialValues: PropTypes.shape({
-    name: '',
-    departmentId: '',
-    extension: '',
-    locationId: '',
-  }),
-};
 
 export default Filters;
