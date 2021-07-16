@@ -226,3 +226,7 @@ export const updateRingGroup = ({ id, ...payload }) => {
 };
 export const getRingGroupById = ({ queryKey }) =>
   http.get(`${RING_GROUP}/${queryKey[1]}`);
+export const getRingGroups = () => http.get(RING_GROUP);
+
+export const deleteRingGroup = (payload) =>
+  http.delete(RING_GROUP, { data: { ids: payload } });
