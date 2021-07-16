@@ -99,7 +99,7 @@ function DepartmentWithModal({
 DepartmentWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
-  showCreateButton: PropTypes.bool,
+  model: PropTypes.bool,
   variant: PropTypes.string,
 };
 DepartmentWithModal.defaultProps = {
