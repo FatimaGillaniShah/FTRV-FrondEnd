@@ -59,7 +59,11 @@ function CreateRingGroup({ id, initialValues }) {
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <DepartmentWithModel name="department" label="Department" />
+                    <DepartmentWithModel
+                      name="department"
+                      label="Department"
+                      model
+                    />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <LocationWithModel name="location" label="Location" />

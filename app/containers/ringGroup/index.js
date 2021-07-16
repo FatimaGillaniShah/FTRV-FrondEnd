@@ -10,16 +10,14 @@ import TableButtons from '../../components/pages/ringGroup/tableButtons';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
-import Search from '../../components/pages/ringGroup/search';
+import Search from '../../components/pages/directory/search';
 import Filters from '../../components/pages/ringGroup/filters';
 import { navigateTo } from '../../utils/helper';
 
 function RingGroupContainer() {
   const history = useHistory();
   const [selected, setSelected] = useState([]);
-  const [sortOrder, setSortOrder] = useState('asc');
   const [alignment, setAlignment] = useState('ringGroup');
-  const [sortColumn, setSortColumn] = useState('name');
   const [checked, setChecked] = useState(false);
   const {
     user: {
@@ -27,11 +25,6 @@ function RingGroupContainer() {
     },
   } = useAuthContext();
   const data = [];
-
-  const onChangeSort = (order, property) => {
-    setSortColumn(property);
-    setSortOrder(order);
-  };
 
   const handleSwitchChange = ({ target }) => {
     setChecked(target.checked);
@@ -69,6 +62,7 @@ function RingGroupContainer() {
           <WrapInCard mb={8}>
             <Box display="flex">
               <Search
+                name="Ring Group"
                 onHandleSwitchChange={handleSwitchChange}
                 checked={checked}
                 toggleValues={toggleValues}
@@ -96,9 +90,6 @@ function RingGroupContainer() {
               headCells={headCells}
               setSelected={setSelected}
               selected={selected}
-              sortOrder={sortOrder}
-              sortColumn={sortColumn}
-              onChangeSort={onChangeSort}
               count={data?.length || 0}
             />
           </WrapInCard>

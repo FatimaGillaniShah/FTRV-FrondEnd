@@ -30,7 +30,7 @@ export function Search({
       <Grid item xs={12} sm={3} md={2} lg={1} className={classes.gridpadding}>
         <H5>Ring Group</H5>
       </Grid>
-      <Grid item xs={12} sm={4} lg={3}>
+      <Grid item xs={12} sm={4} lg={2}>
         <Formik initialValues={initialValues}>
           {({ handleChange, setFieldValue }) => (
             <Form>

@@ -23,14 +23,15 @@ export function Search({
   toggleValues,
   onHandleToggleChange,
   alignment,
+  name,
 }) {
   const classes = useStyles();
   return (
     <Grid container>
       <Grid item xs={12} sm={3} md={2} lg={1} className={classes.gridpadding}>
-        <H5>Directory</H5>
+        <H5>{name}</H5>
       </Grid>
-      <Grid item xs={12} sm={4} lg={3}>
+      <Grid item xs={12} sm={4} lg={2}>
         <Formik initialValues={initialValues}>
           {({ handleChange, setFieldValue }) => (
             <Form>
@@ -69,13 +70,11 @@ export function Search({
         </Box>
       </Grid>
       <Grid item xs={12} sm={4} md={3} lg={6}>
-        {/* <Box width={[1, 1, '50%', '70%']}> */}
         <ToggleGroup
           toggleValues={toggleValues}
           onHandleToggleChange={onHandleToggleChange}
           alignment={alignment}
         />
-        {/* </Box> */}
       </Grid>
     </Grid>
   );
