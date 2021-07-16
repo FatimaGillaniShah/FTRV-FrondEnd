@@ -12,6 +12,7 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import BlogCreatorInfo from './blogCreatorInfo';
 import { navigateTo } from '../../../utils/helper';
+import Show from '../../show';
 
 const useStyles = makeStyles(() => ({
   imageView: {
@@ -68,7 +69,7 @@ function Blog({
               {title}
             </H5>
           </Box>
-          {role === ROLES.ADMIN && (
+          <Show IF={role === ROLES.ADMIN}>
             <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
               <IconButton>
                 <EditIcon
@@ -80,7 +81,7 @@ function Blog({
                 <DeleteIcon color="error" />
               </IconButton>
             </Box>
-          )}
+          </Show>
         </Box>
         <Box>
           <BodyTextLarge color="grey">

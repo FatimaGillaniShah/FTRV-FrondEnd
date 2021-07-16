@@ -11,6 +11,7 @@ import React, { useEffect } from 'react';
 import { Toast } from '../../../utils/helper';
 import { BodyTextSmall, ButtonText, H5 } from '../../typography';
 import { useStyles } from './styles';
+import Show from '../../show';
 
 export default function FileUploader({
   handleCapture,
@@ -86,14 +87,14 @@ export default function FileUploader({
                   </Button>
                 </label>
               </Tooltip>
-              {selectedFile && (
+              <Show IF={selectedFile}>
                 <Box mx={6} className={classes.fileLabelBox}>
                   <label>
                     {selectedFile ? selectedFile.name : 'Select File'}
                   </label>
                   . . .
                 </Box>
-              )}
+              </Show>
             </Box>
 
             <Box mx={8} className={classes.submitBtn}>
@@ -103,12 +104,12 @@ export default function FileUploader({
                 disabled={!selectedFile}
                 variant="contained"
               >
-                {mutation.isLoading && (
+                <Show IF={mutation.isLoading}>
                   <CircularProgress
                     size={15}
                     className={classes.circularProgress}
                   />
-                )}
+                </Show>
                 Submit
               </Button>
             </Box>

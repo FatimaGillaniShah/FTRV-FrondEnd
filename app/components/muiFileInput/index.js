@@ -7,6 +7,7 @@ import {
   SUPPORTED_FORMATS,
 } from '../../utils/constants';
 import { isFunction, Toast } from '../../utils/helper';
+import Show from '../show';
 
 export function MuiFileInput({
   setImgFile,
@@ -101,7 +102,7 @@ export function MuiFileInput({
           <label htmlFor={name}>
             {isIcon ? (
               <IconButton onClick={handleClick} disabled={mutation?.isLoading}>
-                {btnIcon && btnIcon}
+                <Show IF={btnIcon}>{btnIcon}</Show>
               </IconButton>
             ) : (
               <Button

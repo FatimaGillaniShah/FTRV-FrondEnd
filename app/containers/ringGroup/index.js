@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Loading } from '../../components/loading';
 import RingGroup from '../../components/pages/ringGroup';
+import Show from '../../components/show';
 import { useDeleteRingGroup } from '../../hooks/ringGroup';
 import { getRingGroups } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
@@ -33,16 +34,17 @@ function RingGroupContainer() {
       <Helmet>
         <title> Ring Group</title>
       </Helmet>
-      {isListLoading || isLoading ? (
+      <Show IF={isListLoading || isLoading}>
         <Loading />
-      ) : (
+      </Show>
+      <Show IF={!isListLoading || !isLoading}>
         <RingGroup
           data={data?.data?.data?.rows}
           selected={selected}
           setSelected={setSelected}
           onHandleDelete={handleDelete}
         />
-      )}
+      </Show>
     </>
   );
 }

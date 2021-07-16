@@ -4,6 +4,7 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import PeopleIcon from '@material-ui/icons/People';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import { ROLES } from 'utils/constants';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 export const menuItems = [
   {
@@ -27,6 +28,11 @@ export const menuItems = [
     link: 'https://funtownrv.trainualapp.com/',
     icon: QuestionAnswerIcon,
     externalLink: true,
+  },
+  {
+    name: 'File Storage',
+    link: '/documents',
+    icon: DescriptionIcon,
   },
   {
     name: 'links',

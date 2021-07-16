@@ -36,6 +36,7 @@ import Select from '../../muiSelect';
 
 import MuiDialog from '../../muiDialog';
 import { parseDate } from '../../../utils/functions';
+import Show from '../../show';
 
 const useStyles = makeStyles((theme) => ({
   imageStyle: {
@@ -428,14 +429,14 @@ function CreateUser({
                       options={locationOptions}
                       disabled={mutation.isLoading || isUserEditingHisProfile}
                     />
-                    {editRole === ROLES.ADMIN && (
+                    <Show IF={editRole === ROLES.ADMIN}>
                       <Box
                         className={classes.linkBox}
                         onClick={() => handleDialogState('loc')}
                       >
                         <AddIcon fontSize="small" /> Create new location
                       </Box>
-                    )}
+                    </Show>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Select
@@ -445,14 +446,14 @@ function CreateUser({
                       options={departmentOptions}
                       disabled={mutation.isLoading || isUserEditingHisProfile}
                     />
-                    {editRole === ROLES.ADMIN && (
+                    <Show IF={editRole === ROLES.ADMIN}>
                       <Box
                         className={classes.linkBox}
                         onClick={() => handleDialogState('dep')}
                       >
                         <AddIcon fontSize="small" /> Create new department
                       </Box>
-                    )}
+                    </Show>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your Designation">
@@ -526,17 +527,17 @@ function CreateUser({
                         color="secondary"
                         type="submit"
                         startIcon={
-                          !mutation.isLoading && (
+                          <Show IF={!mutation.isLoading}>
                             <GroupAddIcon fontSize="small" />
-                          )
+                          </Show>
                         }
                       >
-                        {mutation.isLoading && (
+                        <Show IF={mutation.isLoading}>
                           <CircularProgress
                             size={15}
                             className={classes.circularProgress}
                           />
-                        )}
+                        </Show>
                         {`${formType === 'add' ? 'Create' : 'Update'}`}
                       </Button>
                     </Box>

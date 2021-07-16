@@ -20,6 +20,7 @@ import { BodyTextLarge, H5 } from '../../typography';
 import { useStyles } from './style';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import Show from '../../show';
 
 const eventSchema = object().shape({
   title: string()
@@ -103,13 +104,13 @@ export function CreateEventPage({
                           px={3}
                           justifyContent="flex-end"
                         >
-                          {role === ROLES.ADMIN && (
+                          <Show IF={role === ROLES.ADMIN}>
                             <Box mr={3}>
                               <IconButton onClick={onHandleDeleteEvent}>
                                 <DeleteIcon color="error" />
                               </IconButton>
                             </Box>
-                          )}
+                          </Show>
                         </Box>
 
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
@@ -148,11 +149,11 @@ export function CreateEventPage({
                               KeyboardButtonProps={{ tabIndex: -1 }}
                             />
                           </MuiPickersUtilsProvider>
-                          {errors.startDate && touched.startDate && (
+                          <Show IF={errors.startDate && touched.startDate}>
                             <FormHelperText error>
                               {errors.startDate}
                             </FormHelperText>
-                          )}
+                          </Show>
                         </Box>
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
                           <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -180,11 +181,11 @@ export function CreateEventPage({
                               KeyboardButtonProps={{ tabIndex: -1 }}
                             />
                           </MuiPickersUtilsProvider>
-                          {errors.endDate && touched.endDate && (
+                          <Show IF={errors.endDate && touched.endDate}>
                             <FormHelperText error>
                               {errors.endDate}
                             </FormHelperText>
-                          )}
+                          </Show>
                         </Box>
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
                           <AutoComplete
