@@ -11,6 +11,7 @@ import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import Search from '../../components/pages/directory/search';
 import Filters from '../../components/pages/ringGroup/filters';
+import Show from '../../components/show';
 
 function RingGroupContainer() {
   const [selected, setSelected] = useState([]);
@@ -44,18 +45,18 @@ function RingGroupContainer() {
             <Box mt={2}>{checked && <Filters />}</Box>
           </WrapInCard>
           <WrapInCard>
-            {role === ROLES.ADMIN && (
+            <Show IF={role === ROLES.ADMIN}>
               <Box mt={4}>
                 <TableButtons numSelected={selected.length} />
-                {selected.length > 0 && (
+                <Show IF={selected.length > 0}>
                   <Box my={4}>
                     <Alert severity="info">
                       <strong>{selected.length}</strong> Ring Group(s) Selected
                     </Alert>
                   </Box>
-                )}
+                </Show>
               </Box>
-            )}
+            </Show>
             <DataTable
               data={data}
               headCells={headCells}
