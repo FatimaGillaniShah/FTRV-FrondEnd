@@ -10,7 +10,6 @@ import { headCells } from '../../components/pages/ringGroup/columns';
 import { Loading } from '../../components/loading';
 import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
-import Search from '../../components/pages/directory/search';
 import TableButtons from '../../components/pages/ringGroup/tableButtons';
 import Filters from '../../components/pages/ringGroup/filters';
 import Show from '../../components/show';
@@ -18,6 +17,7 @@ import { useDeleteRingGroup } from '../../hooks/ringGroup';
 import { getRingGroups } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Modal } from '../../utils/helper';
+import { Search } from '../../components/search/search';
 
 function RingGroupContainer() {
   const [selected, setSelected] = useState([]);

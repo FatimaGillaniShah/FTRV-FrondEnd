@@ -5,8 +5,8 @@ import { FormControlLabel, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { Form, Formik } from 'formik';
-import { Input } from '../../index';
-import { H5 } from '../../typography';
+import { Input } from '../index';
+import { H5 } from '../typography';
 
 const useStyles = makeStyles((theme) => ({
   gridpadding: {
