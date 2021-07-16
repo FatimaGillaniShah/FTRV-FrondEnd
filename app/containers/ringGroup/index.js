@@ -42,7 +42,11 @@ function RingGroupContainer() {
                 checked={checked}
               />
             </Box>
-            <Box mt={2}>{checked && <Filters />}</Box>
+            <Box mt={2}>
+              <Show IF={checked}>
+                <Filters />
+              </Show>
+            </Box>
           </WrapInCard>
           <WrapInCard>
             <Show IF={role === ROLES.ADMIN}>
