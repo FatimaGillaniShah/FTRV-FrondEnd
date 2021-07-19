@@ -19,10 +19,7 @@ function RingGroupContainer() {
 
   const { data, isLoading: isListLoading } = useQuery(
     keys.ringGroups({ query, filters }),
-    getRingGroups,
-    {
-      keepPreviousData: true,
-    }
+    getRingGroups
   );
 
   const { mutate, isLoading } = useDeleteRingGroup({
