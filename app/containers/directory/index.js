@@ -140,22 +140,19 @@ function DirectoryContainer() {
       label: 'Directory',
     },
     {
-      value: 'ringGroup',
+      value: 'ring-group',
       label: 'Ring Group',
     },
   ];
   const handleToggleChange = (event, toggleAlignment) => {
     const alignmentValue = toggleAlignment;
-    if (!alignment) {
+    if (!alignmentValue) {
       setAlignment(alignment);
-      navigateTo(history, '/directory');
+      navigateTo(history, `/${alignment}`);
+    } else {
+      setAlignment(alignmentValue);
+      navigateTo(history, `/${alignmentValue}`);
     }
-    if (alignmentValue === 'directory') {
-      navigateTo(history, '/directory');
-    } else if (alignmentValue === 'ringGroup') {
-      navigateTo(history, '/ring-group');
-    }
-    setAlignment(alignmentValue);
   };
   return (
     <>
