@@ -25,12 +25,16 @@ const ringGroupSchema = object().shape({
   departmentId: string().required('*Department Required'),
   locationId: string().required('*Location Required'),
 });
-function CreateRingGroup({ id, initialValues }) {
+function CreateRingGroup({ id, initialValues, onHandleSubmit }) {
   const history = useHistory();
 
   return (
     <>
-      <Formik initialValues={initialValues} validationSchema={ringGroupSchema}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onHandleSubmit}
+        validationSchema={ringGroupSchema}
+      >
         {() => (
           <Form>
             <Box
@@ -59,10 +63,13 @@ function CreateRingGroup({ id, initialValues }) {
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <DepartmentWithModal name="department" label="Department" />
+                    <DepartmentWithModal
+                      name="departmentId"
+                      label="Department"
+                    />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
-                    <LocationWithModal name="location" label="Location" />
+                    <LocationWithModal name="locationId" label="Location" />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
                     <Tooltip title="Input your phone extenstion">
