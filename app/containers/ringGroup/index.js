@@ -36,9 +36,9 @@ function RingGroupContainer() {
       navigateTo(history, '/directory');
     }
     if (alignmentValue === 'directory') {
-      navigateTo(history, '/directory');
+      navigateTo(history, `/${alignmentValue}`);
     } else if (alignmentValue === 'ringGroup') {
-      navigateTo(history, '/ring-group');
+      navigateTo(history, `/${alignmentValue}`);
     }
     setAlignment(alignmentValue);
   };
