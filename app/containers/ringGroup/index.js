@@ -8,7 +8,6 @@ import { useDeleteRingGroup } from '../../hooks/ringGroup';
 import { getRingGroups } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import RingGroup from '../../components/pages/ringGroup';
-import Show from '../../components/show';
 
 function RingGroupContainer() {
   const history = useHistory();
@@ -67,19 +66,20 @@ function RingGroupContainer() {
       <Helmet>
         <title> Ring Group</title>
       </Helmet>
-      <Show IF={isListLoading || isLoading}>
+      {isListLoading || isLoading ? (
         <Loading />
-      </Show>
-      <RingGroup
-        data={data?.data?.data?.rows}
-        selected={selected}
-        setSelected={setSelected}
-        onHandleDelete={handleDelete}
-        initialFilterValues={initialFilterValues}
-        onHandleToggleChange={handleToggleChange}
-        toggleValues={toggleValues}
-        alignment={alignment}
-      />
+      ) : (
+        <RingGroup
+          data={data?.data?.data?.rows}
+          selected={selected}
+          setSelected={setSelected}
+          onHandleDelete={handleDelete}
+          initialFilterValues={initialFilterValues}
+          onHandleToggleChange={handleToggleChange}
+          toggleValues={toggleValues}
+          alignment={alignment}
+        />
+      )}
     </>
   );
 }
