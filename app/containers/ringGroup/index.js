@@ -22,7 +22,10 @@ function RingGroupContainer() {
 
   const { data, isLoading: isListLoading } = useQuery(
     keys.ringGroups({ query, filters }),
-    getRingGroups
+    getRingGroups,
+    {
+      keepPreviousData: true,
+    }
   );
 
   const toggleValues = [
