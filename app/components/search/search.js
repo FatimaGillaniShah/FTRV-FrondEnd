@@ -28,7 +28,7 @@ export function Search({
   const classes = useStyles();
   return (
     <Grid container>
-      <Grid item xs={12} sm={3} md={2} lg={1} className={classes.gridpadding}>
+      <Grid item xs={12} sm={3} md={2} lg={2} className={classes.gridpadding}>
         <H5>{name}</H5>
       </Grid>
       <Grid item xs={12} sm={4} lg={3}>
@@ -54,7 +54,7 @@ export function Search({
           )}
         </Formik>
       </Grid>
-      <Grid item xs={12} sm={4} md={3} lg={2}>
+      <Grid item xs={12} sm={4} md={3} lg={3}>
         <Box px={[0, 5]}>
           <FormControlLabel
             label="Filter"
@@ -69,7 +69,7 @@ export function Search({
           />
         </Box>
       </Grid>
-      <Grid item xs={12} sm={4} md={3} lg={6}>
+      <Grid item xs={12} sm={4} md={3} lg={4}>
         <ToggleGroup
           toggleValues={toggleValues}
           onHandleToggleChange={onHandleToggleChange}
