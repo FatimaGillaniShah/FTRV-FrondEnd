@@ -18,6 +18,7 @@ import { ROLES } from '../../utils/constants';
 import Show from '../../components/show';
 
 function Locations() {
+  const [page, setPage] = useState(0);
   const {
     user: {
       data: { role },
@@ -69,6 +70,8 @@ function Locations() {
               headCells={headCells}
               selected={selected}
               setSelected={setSelected}
+              setPage={setPage}
+              page={page}
               count={locations?.length || 0}
               sortColumn="name"
             />

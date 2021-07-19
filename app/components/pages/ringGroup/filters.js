@@ -8,25 +8,14 @@ import { Input } from '../../index';
 import LocationWithModal from '../../locationWithModal';
 import DepartmentWithModal from '../../departmentWithModal';
 
-function Filters({ onHandleFilterSearch, onClear }) {
+function Filters({ initialValues, onHandleFilterSearch, onClear }) {
   const clearFilteringSearch = (resetForm) => {
     resetForm();
     onClear();
   };
   return (
     <>
-      <Formik
-        initialValues={{
-          name: '',
-          departmentId: '',
-          title: '',
-          extension: '',
-          locationId: '',
-        }}
-        onSubmit={(values) => {
-          onHandleFilterSearch(values);
-        }}
-      >
+      <Formik initialValues={initialValues} onSubmit={onHandleFilterSearch}>
         {({ resetForm }) => (
           <Form>
             <Box
@@ -45,9 +34,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
                   modal={false}
                 />
               </Box>
-              <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <Input name="title" placeholderText="Designation" />
-              </Box>
+
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
                 <LocationWithModal
                   name="locationId"
@@ -74,7 +61,6 @@ function Filters({ onHandleFilterSearch, onClear }) {
               <Box mr={2} mt={[2, 0]}>
                 <Button
                   variant="text"
-                  fullWidth={false}
                   onClick={() => clearFilteringSearch(resetForm)}
                   startIcon={<ClearIcon />}
                 >

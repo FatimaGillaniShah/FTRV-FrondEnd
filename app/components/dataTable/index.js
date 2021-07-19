@@ -32,11 +32,12 @@ export function DataTable({
   handleServerPageNumber,
   handleServerPageSize,
   pageNumber,
+  setPage,
+  page,
 }) {
   const classes = useStyles();
   const [order, setOrder] = useState(sortOrder || 'asc');
   const [orderBy, setOrderBy] = useState(sortColumn || '');
-  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
   const [rows, setRows] = useState([]);
 
@@ -253,12 +254,15 @@ DataTable.propTypes = {
   isServerSide: PropTypes.bool,
   matchUserIdWithIDS: PropTypes.bool,
   count: PropTypes.number.isRequired,
+  page: PropTypes.number,
+  setPage: PropTypes.func,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: PAGE_SIZE,
   selected: [],
   matchUserIdWithIDS: false,
   isServerSide: false,
+  page: 0,
 };
 
 export default DataTable;

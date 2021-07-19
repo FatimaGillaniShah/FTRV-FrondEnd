@@ -226,7 +226,16 @@ export const updateRingGroup = ({ id, ...payload }) => {
 };
 export const getRingGroupById = ({ queryKey }) =>
   http.get(`${RING_GROUP}/${queryKey[1]}`);
-export const getRingGroups = () => http.get(RING_GROUP);
+export const getRingGroups = ({ queryKey }) => {
+  let url = `${RING_GROUP}?pageSize=1000&`;
+  const { query, filters } = queryKey[1];
+  if (query.searchString) {
+    url = `${RING_GROUP}?pageSize=1000&${insertParams(query)}`;
+  } else if (filters) {
+    url = `${RING_GROUP}?pageSize=1000&${insertParams(filters)}`;
+  }
+  return http.get(url);
+};
 
 export const deleteRingGroup = (payload) =>
   http.delete(RING_GROUP, { data: { ids: payload } });

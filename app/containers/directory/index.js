@@ -13,7 +13,7 @@ import {
 import { keys } from '../../state/queryKeys';
 import { headCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
-import Search from '../../components/pages/directory/search';
+import Search from '../../components/search/search';
 import Filters from '../../components/pages/directory/filters';
 import DataTable from '../../components/dataTable';
 import TableButtons from './tableButtons';
@@ -22,7 +22,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
-import { Modal } from '../../utils/helper';
+import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 import Show from '../../components/show';
 
@@ -33,6 +33,7 @@ function DirectoryContainer() {
   const [filters, setFilters] = useState();
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [alignment, setAlignment] = useState('directory');
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortColumn, setSortColumn] = useState('firstName');
   const history = useHistory();
@@ -133,6 +134,26 @@ function DirectoryContainer() {
     value: val.id,
     label: val.name,
   }));
+  const toggleValues = [
+    {
+      value: 'directory',
+      label: 'Directory',
+    },
+    {
+      value: 'ring-group',
+      label: 'Ring Group',
+    },
+  ];
+  const handleToggleChange = (event, toggleAlignment) => {
+    const alignmentValue = toggleAlignment;
+    if (!alignmentValue) {
+      setAlignment(alignment);
+      navigateTo(history, `/${alignment}`);
+    } else {
+      setAlignment(alignmentValue);
+      navigateTo(history, `/${alignmentValue}`);
+    }
+  };
   return (
     <>
       <Helmet>
@@ -149,10 +170,14 @@ function DirectoryContainer() {
             <WrapInCard mb={8}>
               <Box display="flex">
                 <Search
+                  name="Directory"
                   initialValues={query}
                   onHandleSwitchChange={handleSwitchChange}
                   checked={checked}
+                  alignment={alignment}
                   onHandleSearch={handleSearch}
+                  toggleValues={toggleValues}
+                  onHandleToggleChange={handleToggleChange}
                 />
               </Box>
               <Box mt={2}>
