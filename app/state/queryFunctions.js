@@ -219,6 +219,7 @@ export const getDocumentById = ({ queryKey }) =>
 
 export const deleteDocument = (payload) =>
   http.delete(DOCUMENTS, { data: { ids: payload } });
+export const createRingGroup = (payload) => http.post(RING_GROUP, payload);
 
 export const getRingGroups = ({ queryKey }) => {
   let url = `${RING_GROUP}?pageSize=1000&`;
