@@ -70,11 +70,12 @@ function RingGroup({
               </Box>
             </Show>
             <DataTable
-              data={data?.data?.data?.rows}
+              data={data}
               headCells={headCells}
               setSelected={setSelected}
               selected={selected}
               count={data?.length || 0}
+              sortColumn="name"
             />
           </WrapInCard>
         </Box>
