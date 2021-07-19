@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
+import PropTypes from 'prop-types';
 import { useAuthContext } from '../../../context/authContext';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
@@ -83,4 +84,16 @@ function RingGroup({
     </>
   );
 }
+
+RingGroup.propTypes = {
+  selected: PropTypes.array,
+  data: PropTypes.array,
+  setSelected: PropTypes.array,
+  onHandleDelete: PropTypes.func,
+  toggleValues: PropTypes.array,
+  alignment: PropTypes.string,
+  onHandleToggleChange: PropTypes.func,
+  initialFilterValues: PropTypes.object,
+};
+
 export default memo(RingGroup);
