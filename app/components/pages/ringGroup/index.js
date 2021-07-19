@@ -17,6 +17,9 @@ function RingGroup({
   data,
   setSelected,
   onHandleDelete,
+  toggleValues,
+  alignment,
+  onHandleToggleChange,
   initialFilterValues,
 }) {
   const [checked, setChecked] = useState(false);
@@ -28,31 +31,35 @@ function RingGroup({
   const handleSwitchChange = ({ target }) => {
     setChecked(target.checked);
   };
+
   return (
-    <WrapInBreadcrumbs>
-      <Box width={1}>
-        <WrapInCard mb={8}>
-          <Box display="flex">
-            <Search
-              name="Ring Group"
-              onHandleSwitchChange={handleSwitchChange}
-              checked={checked}
-            />
-          </Box>
-          <Box mt={2}>
-            <Show IF={checked}>
-              <Filters initialValues={initialFilterValues} />
-            </Show>
-          </Box>
-        </WrapInCard>
-        <WrapInCard>
-          <Show IF={role === ROLES.ADMIN}>
-            <Box mt={4}>
-              <TableButtons
-                numSelected={selected.length}
-                onHandleDelete={onHandleDelete}
+    <>
+      <WrapInBreadcrumbs>
+        <Box width={1}>
+          <WrapInCard mb={8}>
+            <Box display="flex">
+              <Search
+                name="Ring Group"
+                onHandleSwitchChange={handleSwitchChange}
+                checked={checked}
+                toggleValues={toggleValues}
+                alignment={alignment}
+                onHandleToggleChange={onHandleToggleChange}
               />
-              {selected.length > 0 && (
+            </Box>
+            <Box mt={2}>
+              <Show IF={checked}>
+                <Filters initialFilterValues={initialFilterValues} />
+              </Show>
+            </Box>
+          </WrapInCard>
+          <WrapInCard>
+            <Show IF={role === ROLES.ADMIN}>
+              <Box mt={4}>
+                <TableButtons
+                  onHandleDelete={onHandleDelete}
+                  numSelected={selected.length}
+                />
                 <Show IF={selected.length > 0}>
                   <Box my={4}>
                     <Alert severity="info">
@@ -60,21 +67,19 @@ function RingGroup({
                     </Alert>
                   </Box>
                 </Show>
-              )}
-            </Box>
-          </Show>
-          <DataTable
-            data={data}
-            headCells={headCells}
-            setSelected={setSelected}
-            selected={selected}
-            count={data?.length || 0}
-            sortColumn="name"
-          />
-        </WrapInCard>
-      </Box>
-    </WrapInBreadcrumbs>
+              </Box>
+            </Show>
+            <DataTable
+              data={data?.data?.data?.rows}
+              headCells={headCells}
+              setSelected={setSelected}
+              selected={selected}
+              count={data?.length || 0}
+            />
+          </WrapInCard>
+        </Box>
+      </WrapInBreadcrumbs>
+    </>
   );
 }
-
 export default memo(RingGroup);
