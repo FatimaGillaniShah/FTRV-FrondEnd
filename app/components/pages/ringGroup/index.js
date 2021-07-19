@@ -23,14 +23,14 @@ function RingGroup({
   onHandleToggleChange,
   initialFilterValues,
 }) {
-  const [checked, setChecked] = useState(false);
+  const [filterCheck, setFilterCheck] = useState(false);
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
   const handleSwitchChange = ({ target }) => {
-    setChecked(target.checked);
+    setFilterCheck(target.checked);
   };
 
   return (
@@ -42,14 +42,14 @@ function RingGroup({
               <Search
                 name="Ring Group"
                 onHandleSwitchChange={handleSwitchChange}
-                checked={checked}
+                checked={filterCheck}
                 toggleValues={toggleValues}
                 alignment={alignment}
                 onHandleToggleChange={onHandleToggleChange}
               />
             </Box>
             <Box mt={2}>
-              <Show IF={checked}>
+              <Show IF={filterCheck}>
                 <Filters initialFilterValues={initialFilterValues} />
               </Show>
             </Box>
