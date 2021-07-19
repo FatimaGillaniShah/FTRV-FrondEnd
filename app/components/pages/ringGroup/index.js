@@ -21,7 +21,7 @@ function RingGroup({
   initialFilterValues,
   onHandleSearch,
   pageNumber,
-  checked,
+  filterToggle,
   query,
   onHandleFilterSearch,
   onClearFilter,
@@ -48,14 +48,14 @@ function RingGroup({
               onHandleSearch={onHandleSearch}
               onHandleSwitchChange={onHandleSwitchChange}
               initialValues={query}
-              checked={checked}
+              checked={filterToggle}
               toggleValues={toggleValues}
               alignment={alignment}
               onHandleToggleChange={onHandleToggleChange}
             />
           </Box>
           <Box mt={2}>
-            <Show IF={checked}>
+            <Show IF={filterToggle}>
               <Filters
                 onHandleFilterSearch={onHandleFilterSearch}
                 initialValues={initialFilterValues}

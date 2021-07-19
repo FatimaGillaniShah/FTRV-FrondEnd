@@ -15,7 +15,7 @@ function RingGroupContainer() {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [fieldFunc, setFieldFunc] = useState();
-  const [checked, setChecked] = useState(false);
+  const [filterToggle, setFilterToggle] = useState(false);
   const [query, setQuery] = useState({ searchString: '' });
   const [filters, setFilters] = useState();
   const [alignment, setAlignment] = useState('ring-group');
@@ -59,11 +59,11 @@ function RingGroupContainer() {
     }
   };
   useEffect(() => {
-    if (checked) {
+    if (filterToggle) {
       fieldFunc?.setFormikField('searchString', '');
       setQuery({ searchString: '' });
     }
-  }, [checked]);
+  }, [filterToggle]);
 
   const handleSearch = debounce((e, setFieldValue) => {
     setPage(0);
@@ -80,7 +80,7 @@ function RingGroupContainer() {
   };
   const handleSwitchChange = ({ target }) => {
     onClearFilter();
-    setChecked(target.checked);
+    setFilterToggle(target.checked);
   };
   const initialFilterValues = {
     name: '',
@@ -103,7 +103,7 @@ function RingGroupContainer() {
           onHandleDelete={handleDelete}
           initialFilterValues={initialFilterValues}
           onHandleSearch={handleSearch}
-          checked={checked}
+          filterToggle={filterToggle}
           query={query}
           onHandleFilterSearch={handleFilterSearch}
           onClearFilter={onClearFilter}
