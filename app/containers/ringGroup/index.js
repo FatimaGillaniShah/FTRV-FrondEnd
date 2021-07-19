@@ -12,7 +12,7 @@ import RingGroup from '../../components/pages/ringGroup';
 function RingGroupContainer() {
   const history = useHistory();
   const [selected, setSelected] = useState([]);
-  const [alignment, setAlignment] = useState('ringGroup');
+  const [alignment, setAlignment] = useState('ring-group');
 
   const { data, isLoading: isListLoading } = useQuery(
     keys.ringGroups,
@@ -25,22 +25,19 @@ function RingGroupContainer() {
       label: 'Directory',
     },
     {
-      value: 'ringGroup',
+      value: 'ring-group',
       label: 'Ring Group',
     },
   ];
   const handleToggleChange = (event, toggleAlignment) => {
     const alignmentValue = toggleAlignment;
-    if (!alignment) {
+    if (!alignmentValue) {
       setAlignment(alignment);
-      navigateTo(history, '/directory');
-    }
-    if (alignmentValue === 'directory') {
-      navigateTo(history, `/${alignmentValue}`);
-    } else if (alignmentValue === 'ringGroup') {
+      navigateTo(history, `/${alignment}`);
+    } else {
+      setAlignment(alignmentValue);
       navigateTo(history, `/${alignmentValue}`);
     }
-    setAlignment(alignmentValue);
   };
   const { mutate, isLoading } = useDeleteRingGroup({
     callbackFn: () => setSelected([]),
