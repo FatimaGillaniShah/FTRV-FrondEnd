@@ -77,10 +77,10 @@ function DepartmentWithModal({
       </Formik>
       <Box>
         <Select
+          variant={variant}
           selectedValue={selectedValue}
           label="Department"
           options={options}
-          variant={variant}
           loading={isLoading}
           {...props}
         />
