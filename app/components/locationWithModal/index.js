@@ -13,12 +13,22 @@ import { locationSchema } from './schema';
 import { useCreateLocation } from '../../hooks/locationMutation';
 import { keys } from '../../state/queryKeys';
 import { getLocations } from '../../state/queryFunctions';
+import Show from '../show';
 
-function LocationWithModal({ selectedValue, initialValues, ...props }) {
+function LocationWithModal({
+  modal,
+  variant,
+  selectedValue,
+  initialValues,
+  ...props
+}) {
   const [open, setOpen] = useState(false);
 
   const { mutate } = useCreateLocation();
-  const { data: deparments } = useQuery(keys.locations, getLocations);
+  const { data: deparments, isLoading } = useQuery(
+    keys.locations,
+    getLocations
+  );
   const handleSubmit = (values, { resetForm }) => {
     mutate(values);
     resetForm();
@@ -65,18 +75,22 @@ function LocationWithModal({ selectedValue, initialValues, ...props }) {
           </Form>
         )}
       </Formik>
-      <Box mt={6}>
+      <Box>
         <Select
           selectedValue={selectedValue}
           label="Location"
+          variant={variant}
           options={options}
+          loading={isLoading}
           {...props}
         />
-        <Box className={classes.modelLink}>
-          <Button startIcon={<AddIcon />} onClick={handleDialogue}>
-            Create new location
-          </Button>
-        </Box>
+        <Show IF={modal}>
+          <Box className={classes.modelLink}>
+            <Button startIcon={<AddIcon />} onClick={handleDialogue}>
+              Create new location
+            </Button>
+          </Box>
+        </Show>
       </Box>
     </>
   );
@@ -85,9 +99,13 @@ function LocationWithModal({ selectedValue, initialValues, ...props }) {
 LocationWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
+  modal: PropTypes.bool,
+  variant: PropTypes.string,
 };
 LocationWithModal.defaultProps = {
   initialValues: { name: '' },
+  modal: true,
+  variant: 'outlined',
 };
 
 export default memo(LocationWithModal);

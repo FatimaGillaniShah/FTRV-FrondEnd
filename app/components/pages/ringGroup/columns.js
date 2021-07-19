@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
+import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { useDeleteRingGroup } from '../../../hooks/ringGroup';
 
@@ -28,7 +29,7 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
   };
   return (
     <>
-      {role === ROLES.ADMIN && (
+      <Show IF={role === ROLES.ADMIN}>
         <>
           <IconButton
             disabled={isLoading || disabled}
@@ -40,7 +41,7 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
             <DeleteIcon color="error" />
           </IconButton>
         </>
-      )}
+      </Show>
     </>
   );
 };

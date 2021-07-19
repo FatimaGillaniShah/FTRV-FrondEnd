@@ -13,8 +13,15 @@ import { keys } from '../../state/queryKeys';
 import { getDepartments } from '../../state/queryFunctions';
 import { useStyles } from './style';
 import { validationSchema } from './schema';
+import Show from '../show';
 
-function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
+function DepartmentWithModal({
+  variant,
+  modal,
+  selectedValue,
+  initialValues,
+  ...props
+}) {
   const { mutate } = useCreateDepartment();
   const { data: deparments, isLoading } = useQuery(
     keys.department,
@@ -68,19 +75,22 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
           </Form>
         )}
       </Formik>
-      <Box mt={6}>
+      <Box>
         <Select
           selectedValue={selectedValue}
           label="Department"
           options={options}
+          variant={variant}
           loading={isLoading}
           {...props}
         />
-        <Box className={classes.modelLink}>
-          <Button startIcon={<AddIcon />} onClick={handleDialogue}>
-            Create new department
-          </Button>
-        </Box>
+        <Show IF={modal}>
+          <Box className={classes.modelLink}>
+            <Button startIcon={<AddIcon />} onClick={handleDialogue}>
+              Create new department
+            </Button>
+          </Box>
+        </Show>
       </Box>
     </>
   );
@@ -89,9 +99,13 @@ function DepartmentWithModal({ selectedValue, initialValues, ...props }) {
 DepartmentWithModal.propTypes = {
   initialValues: PropTypes.object,
   selectedValue: PropTypes.string,
+  modal: PropTypes.bool,
+  variant: PropTypes.string,
 };
 DepartmentWithModal.defaultProps = {
   initialValues: { name: '' },
+  variant: 'outlined',
+  modal: true,
 };
 
 export default memo(DepartmentWithModal);

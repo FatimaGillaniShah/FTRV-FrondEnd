@@ -2,12 +2,11 @@ import React, { memo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Loading } from '../../components/loading';
-import RingGroup from '../../components/pages/ringGroup';
-import Show from '../../components/show';
 import { useDeleteRingGroup } from '../../hooks/ringGroup';
 import { getRingGroups } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Modal } from '../../utils/helper';
+import RingGroup from '../../components/pages/ringGroup';
 
 function RingGroupContainer() {
   const [selected, setSelected] = useState([]);
@@ -29,22 +28,28 @@ function RingGroupContainer() {
       });
     }
   };
+  const initialFilterValues = {
+    name: '',
+    departmentId: '',
+    extension: '',
+    locationId: '',
+  };
   return (
     <>
       <Helmet>
         <title> Ring Group</title>
       </Helmet>
-      <Show IF={isListLoading || isLoading}>
+      {isListLoading || isLoading ? (
         <Loading />
-      </Show>
-      <Show IF={!isListLoading || !isLoading}>
+      ) : (
         <RingGroup
           data={data?.data?.data?.rows}
           selected={selected}
           setSelected={setSelected}
           onHandleDelete={handleDelete}
+          initialFilterValues={initialFilterValues}
         />
-      </Show>
+      )}
     </>
   );
 }

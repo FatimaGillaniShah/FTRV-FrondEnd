@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
 import { useAuthContext } from '../../../context/authContext';
@@ -8,32 +8,61 @@ import { ROLES } from '../../../utils/constants';
 import { TableButtons } from './tableButtons';
 import DataTable from '../../dataTable';
 import { headCells } from './columns';
+import { Search } from '../../search/search';
+import Filters from './filters';
+import Show from '../../show';
 
-function RingGroup({ selected, data, setSelected, onHandleDelete }) {
+function RingGroup({
+  selected,
+  data,
+  setSelected,
+  onHandleDelete,
+  initialFilterValues,
+}) {
+  const [checked, setChecked] = useState(false);
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
+  const handleSwitchChange = ({ target }) => {
+    setChecked(target.checked);
+  };
   return (
     <WrapInBreadcrumbs>
       <Box width={1}>
+        <WrapInCard mb={8}>
+          <Box display="flex">
+            <Search
+              name="Ring Group"
+              onHandleSwitchChange={handleSwitchChange}
+              checked={checked}
+            />
+          </Box>
+          <Box mt={2}>
+            <Show IF={checked}>
+              <Filters initialValues={initialFilterValues} />
+            </Show>
+          </Box>
+        </WrapInCard>
         <WrapInCard>
-          {role === ROLES.ADMIN && (
+          <Show IF={role === ROLES.ADMIN}>
             <Box mt={4}>
               <TableButtons
                 numSelected={selected.length}
                 onHandleDelete={onHandleDelete}
               />
               {selected.length > 0 && (
-                <Box my={4}>
-                  <Alert severity="info">
-                    <strong>{selected.length}</strong> Ring Group(s) Selected
-                  </Alert>
-                </Box>
+                <Show IF={selected.length > 0}>
+                  <Box my={4}>
+                    <Alert severity="info">
+                      <strong>{selected.length}</strong> Ring Group(s) Selected
+                    </Alert>
+                  </Box>
+                </Show>
               )}
             </Box>
-          )}
+          </Show>
           <DataTable
             data={data}
             headCells={headCells}
