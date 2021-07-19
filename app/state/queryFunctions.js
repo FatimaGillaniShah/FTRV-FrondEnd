@@ -225,8 +225,7 @@ export const getRingGroups = ({ queryKey }) => {
   const { query, filters } = queryKey[1];
   if (query.searchString) {
     url = `${RING_GROUP}?pageSize=1000&${insertParams(query)}`;
-  }
-  if (filters) {
+  } else if (filters) {
     url = `${RING_GROUP}?pageSize=1000&${insertParams(filters)}`;
   }
   return http.get(url);
