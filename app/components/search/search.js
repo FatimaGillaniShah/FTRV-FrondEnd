@@ -5,8 +5,8 @@ import { FormControlLabel, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { Form, Formik } from 'formik';
-import { Input } from '../../index';
-import { H5 } from '../../typography';
+import { Input } from '../index';
+import { H5 } from '../typography';
 
 const useStyles = makeStyles((theme) => ({
   gridpadding: {
@@ -20,12 +20,13 @@ export function Search({
   onHandleSwitchChange,
   checked,
   onHandleSearch,
+  name,
 }) {
   const classes = useStyles();
   return (
     <Grid container>
       <Grid item xs={12} sm={3} md={2} className={classes.gridpadding}>
-        <H5>Directory</H5>
+        <H5>{name}</H5>
       </Grid>
       <Grid item xs={12} sm={4}>
         <Formik initialValues={initialValues}>
