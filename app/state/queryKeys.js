@@ -31,5 +31,6 @@ export const keys = {
   documents: 'documents',
   documentDepartment: 'document-department',
   getDocument: (id) => ['document', id],
+  getRingGroup: (id) => ['ring-group', id],
   ringGroups: (payload) => ['/ringGroups', payload],
 };

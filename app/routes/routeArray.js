@@ -396,6 +396,16 @@ export const routeArray = [
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
       },
+      {
+        path: '/edit/:id',
+        component: AddRingGroup,
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        exact: true,
+        breadCrumbKey: 'Edit Ring Group',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
     ],
   },
 ];
