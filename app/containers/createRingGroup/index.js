@@ -38,8 +38,8 @@ function CreateLinkCategory() {
     id,
     name: ringGroup?.name,
     extension: ringGroup?.extension,
-    departmentId: ringGroup?.location?.id,
-    locationId: ringGroup?.department?.id,
+    departmentId: ringGroup?.department?.id,
+    locationId: ringGroup?.location?.id,
   };
   const { mutate, isLoading } = useMutation(
     id ? updateRingGroup : createRingGroup,
