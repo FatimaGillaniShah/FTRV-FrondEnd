@@ -7,6 +7,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteAnnouncement } from '../../hooks/announcement';
+import { ToolTip } from '../../components';
 
 const ActionButtons = ({ data, setSelected, disabled }) => {
   const history = useHistory();
@@ -51,54 +52,64 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
 
 export const headCells = [
   {
-    id: 'title',
-    numeric: false,
-    disablePadding: true,
-    label: 'Title',
-    type: 'label',
+    field: 'title',
+    type: 'string',
+    headerName: 'Title',
+    description: 'Title',
+    sortable: true,
+    width: 150,
   },
   {
-    id: 'description',
-    numeric: false,
-    disablePadding: false,
-    label: 'Description',
-    type: 'label',
+    field: 'description',
+    type: 'string',
+    headerName: 'Description',
+    description: 'Description',
+    sortable: true,
+    renderCell: ({ row: { description } }) => <ToolTip title={description} />,
+    width: 450,
   },
   {
-    id: 'startTime',
-    numeric: false,
-    disablePadding: false,
-    label: 'Start Time',
-    type: 'label',
+    field: 'startTime',
+    type: 'string',
+    headerName: 'Start Time',
+    description: 'Start Time',
+    sortable: true,
+    width: 150,
   },
   {
-    id: 'endTime',
-    numeric: false,
-    disablePadding: false,
-    label: 'End Time',
-    type: 'label',
+    field: 'endTime',
+    type: 'string',
+    headerName: 'End Time',
+    description: 'End Time',
+    sortable: true,
+    width: 150,
   },
   {
-    id: 'status',
-    numeric: false,
-    disablePadding: false,
-    label: 'Status',
-    type: 'label',
+    field: 'status',
+    type: 'string',
+    headerName: 'Status',
+    description: 'Status',
+    sortable: true,
+    width: 200,
   },
   {
-    id: 'priority',
-    numeric: false,
-    disablePadding: false,
-    label: 'Priority',
-    type: 'label',
+    field: 'priority',
+    type: 'string',
+    headerName: 'Priority',
+    description: 'Priority',
+    sortable: true,
+    width: 200,
   },
 
   {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: '',
-    buttons: ActionButtons,
-    type: 'action',
+    field: 'actions',
+    type: 'number',
+    headerName: ' ',
+    description: 'Actions',
+    sortable: false,
+    renderCell: ({ row }) => (
+      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+    ),
+    width: 200,
   },
 ];

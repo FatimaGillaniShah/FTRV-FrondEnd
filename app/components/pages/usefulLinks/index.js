@@ -26,14 +26,17 @@ function UsefulLinksPage({
           </Box>
         )}
         {!isLoading && (
-          <DataTable
-            data={data}
-            headCells={headCells}
-            selected={selected}
-            setSelected={setSelected}
-            count={data?.length || 0}
-            sortColumn="name"
-          />
+          <>
+            <DataTable
+              rows={data}
+              columns={headCells}
+              selected={selected}
+              setSelected={setSelected}
+              count={data?.length || 0}
+              sortColumn="name"
+              disableSelectionOnClick
+            />
+          </>
         )}
       </WrapInCard>
     </WrapInBreadcrumbs>

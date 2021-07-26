@@ -92,14 +92,19 @@ function AnnouncementContainer() {
                   )}
                 </Box>
               )}
-              <DataTable
-                data={formatData}
-                headCells={headCells}
-                setSelected={setSelected}
-                selected={selected}
-                count={formatData?.length || 0}
-                sortColumn="title"
-              />
+              {!isLoading && !mutation.isLoading && (
+                <>
+                  <DataTable
+                    rows={formatData}
+                    columns={headCells}
+                    setSelected={setSelected}
+                    selected={selected}
+                    count={formatData?.length || 0}
+                    sortColumn="title"
+                    disableSelectionOnClick
+                  />
+                </>
+              )}
             </WrapInCard>
           </Box>
         </WrapInBreadcrumbs>

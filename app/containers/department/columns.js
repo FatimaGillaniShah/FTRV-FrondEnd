@@ -50,19 +50,23 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
 };
 export const headCells = [
   {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Department',
-    type: 'label',
+    field: 'name',
+    type: 'string',
+    headerName: 'Department',
+    description: 'Department',
+    sortable: true,
+    flex: 1,
   },
 
   {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: '',
-    buttons: ActionButtons,
-    type: 'action',
+    field: 'actions',
+    type: 'number',
+    headerName: ' ',
+    description: 'Actions',
+    sortable: false,
+    renderCell: ({ row }) => (
+      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+    ),
+    flex: 1,
   },
 ];

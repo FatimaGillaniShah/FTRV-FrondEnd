@@ -63,14 +63,19 @@ function Locations() {
                 )}
               </Box>
             )}
-            <DataTable
-              data={locations}
-              headCells={headCells}
-              selected={selected}
-              setSelected={setSelected}
-              count={locations?.length || 0}
-              sortColumn="name"
-            />
+            {!isLoading && !mutation.isLoading && (
+              <>
+                <DataTable
+                  rows={locations}
+                  columns={headCells}
+                  selected={selected}
+                  setSelected={setSelected}
+                  count={locations?.length || 0}
+                  sortColumn="name"
+                  disableSelectionOnClick
+                />
+              </>
+            )}
           </WrapInCard>
         </WrapInBreadcrumbs>
       )}

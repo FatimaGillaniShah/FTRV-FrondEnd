@@ -3,6 +3,7 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory, useParams } from 'react-router-dom';
+import { get } from 'lodash';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
@@ -54,25 +55,45 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
 
 export const headCells = [
   {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Name',
-    type: 'label',
+    field: 'name',
+    type: 'string',
+    headerName: 'Name',
+    description: 'Name',
+    sortable: true,
+    flex: 1,
   },
   {
-    id: 'url',
-    numeric: false,
-    disablePadding: false,
-    label: 'Links',
-    type: 'link',
+    field: 'url',
+    type: 'string',
+    headerName: 'Links',
+    description: 'Links',
+    sortable: true,
+    renderCell: (params) => {
+      const cellValue = get(params.row, 'url');
+      return (
+        <>
+          <a
+            href={
+              cellValue?.includes('http') ? cellValue : `http://${cellValue}`
+            }
+            target="_blank"
+          >
+            {cellValue}
+          </a>
+        </>
+      );
+    },
+    flex: 1,
   },
   {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: '',
-    buttons: ActionButtons,
-    type: 'action',
+    field: 'actions',
+    type: 'number',
+    headerName: ' ',
+    description: 'Actions',
+    sortable: false,
+    renderCell: ({ row }) => (
+      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+    ),
+    flex: 1,
   },
 ];

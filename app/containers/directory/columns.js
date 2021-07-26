@@ -53,7 +53,7 @@ export const headCells = [
     headerName: 'Name',
     description: 'Name',
     sortable: true,
-    flex: 1,
+    width: 200,
   },
   {
     field: 'department.name',
@@ -62,7 +62,7 @@ export const headCells = [
     description: 'Department',
     sortable: true,
     valueFormatter: (params) => get(params.row, 'department.name'),
-    flex: 1,
+    width: 150,
   },
   {
     field: 'title',
@@ -70,7 +70,7 @@ export const headCells = [
     headerName: 'Designation',
     description: 'Designation',
     sortable: true,
-    flex: 1,
+    width: 200,
   },
   {
     field: 'location.name',
@@ -79,7 +79,7 @@ export const headCells = [
     description: 'Location',
     sortable: true,
     valueFormatter: (params) => get(params.row, 'location.name'),
-    flex: 1,
+    width: 200,
   },
   {
     field: 'email',
@@ -87,7 +87,7 @@ export const headCells = [
     headerName: 'Email ID',
     description: 'Email ID',
     sortable: true,
-    flex: 1,
+    width: 230,
   },
   {
     field: 'extension',
@@ -95,7 +95,7 @@ export const headCells = [
     headerName: 'Ext',
     description: 'Ext',
     sortable: false,
-    flex: 1,
+    width: 150,
   },
   {
     field: 'contactNo',
@@ -103,7 +103,7 @@ export const headCells = [
     headerName: 'Cell Phone',
     description: 'Cell Phone',
     sortable: false,
-    flex: 1,
+    width: 200,
   },
   {
     field: 'actions',
@@ -114,6 +114,6 @@ export const headCells = [
     renderCell: ({ row }) => (
       <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
     ),
-    flex: 1,
+    width: 200,
   },
 ];
