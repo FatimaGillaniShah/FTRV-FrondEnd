@@ -23,7 +23,10 @@ const {
   DEPARTMENTS,
   BANNER_IMAGE,
   WORK_ANNIVERSARY,
+  DOCUMENTS,
+  DOCUMENT_SORT_ORDER,
   DOCUMENT,
+  RING_GROUP,
 } = APIS;
 
 // USER CRUD
@@ -196,4 +199,42 @@ export const updateDepartment = ({ id, ...payload }) =>
 
 export const getWorkAnniversaries = () => http.get(`${WORK_ANNIVERSARY}`);
 
+export const getDepartmentDocuments = () => http.get(DOCUMENTS);
+
+export const updateDocumentOrder = (payload) => {
+  const { updatedData } = payload;
+  return http.put(`${DOCUMENT_SORT_ORDER}`, updatedData);
+};
 export const createDocument = (payload) => http.post(DOCUMENT, payload);
+
+export const updateDocument = (payload) => {
+  const id = payload.get('id');
+  payload.delete('id');
+  payload.delete('url');
+  return http.put(`${DOCUMENT}/${id}`, payload);
+};
+
+export const getDocumentById = ({ queryKey }) =>
+  http.get(`${DOCUMENT}/${queryKey[1]}`);
+
+export const deleteDocument = (payload) =>
+  http.delete(DOCUMENTS, { data: { ids: payload } });
+export const createRingGroup = (payload) => http.post(RING_GROUP, payload);
+
+export const updateRingGroup = ({ id, ...payload }) =>
+  http.put(`${RING_GROUP}/${id}`, payload);
+export const getRingGroupById = ({ queryKey }) =>
+  http.get(`${RING_GROUP}/${queryKey[1]}`);
+export const getRingGroups = ({ queryKey }) => {
+  let url = `${RING_GROUP}?pageSize=1000&`;
+  const { query, filters } = queryKey[1];
+  if (query.searchString) {
+    url = `${RING_GROUP}?pageSize=1000&${insertParams(query)}`;
+  } else if (filters) {
+    url = `${RING_GROUP}?pageSize=1000&${insertParams(filters)}`;
+  }
+  return http.get(url);
+};
+
+export const deleteRingGroup = (payload) =>
+  http.delete(RING_GROUP, { data: { ids: payload } });

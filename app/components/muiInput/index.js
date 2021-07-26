@@ -17,6 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useField } from 'formik';
 import PropTypes from 'prop-types';
 import React, { memo } from 'react';
+import Show from '../show';
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -60,11 +61,11 @@ function InputField({
     >
       {variant === 'outlined' ? (
         <>
-          {showInputLabel && (
+          <Show IF={showInputLabel}>
             <InputLabel htmlFor={inputID} className={classes.label}>
               {OutlinedInputPlaceholder}
             </InputLabel>
-          )}
+          </Show>
           <OutlinedInput
             label={showInputLabel ? OutlinedInputPlaceholder : undefined}
             id={inputID}

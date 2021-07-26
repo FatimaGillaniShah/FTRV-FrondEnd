@@ -15,6 +15,7 @@ import { TableButtons } from './tableButtons';
 import { useAuthContext } from '../../context/authContext';
 import { Loading } from '../../components/loading';
 import { ROLES } from '../../utils/constants';
+import Show from '../../components/show';
 
 function Locations() {
   const {
@@ -48,34 +49,30 @@ function Locations() {
       ) : (
         <WrapInBreadcrumbs>
           <WrapInCard mb={8}>
-            {role === ROLES.ADMIN && (
+            <Show IF={role === ROLES.ADMIN}>
               <Box mt={4}>
                 <TableButtons
                   handleDelete={handleDelete}
                   numSelected={selected?.length}
                 />
-                {selected?.length > 0 && (
+                <Show IF={selected?.length > 0}>
                   <Box my={4}>
                     <Alert severity="info">
                       <strong>{selected?.length}</strong> Location(s) Selected
                     </Alert>
                   </Box>
-                )}
+                </Show>
               </Box>
-            )}
-            {!isLoading && !mutation.isLoading && (
-              <>
-                <DataTable
-                  rows={locations}
-                  columns={headCells}
-                  selected={selected}
-                  setSelected={setSelected}
-                  count={locations?.length || 0}
-                  sortColumn="name"
-                  disableSelectionOnClick
-                />
-              </>
-            )}
+            </Show>
+            <DataTable
+              rows={locations}
+              columns={headCells}
+              selected={selected}
+              setSelected={setSelected}
+              count={locations?.length || 0}
+              sortColumn="name"
+              disableSelectionOnClick
+            />
           </WrapInCard>
         </WrapInBreadcrumbs>
       )}

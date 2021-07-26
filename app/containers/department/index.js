@@ -64,19 +64,15 @@ function Departments() {
                 )}
               </Box>
             )}
-            {!isLoading && !mutation.isLoading && (
-              <>
-                <DataTable
-                  rows={departments}
-                  columns={headCells}
-                  selected={selected}
-                  setSelected={setSelected}
-                  count={departments?.length || 0}
-                  sortColumn="name"
-                  disableSelectionOnClick
-                />
-              </>
-            )}
+            <DataTable
+              rows={departments}
+              columns={headCells}
+              selected={selected}
+              setSelected={setSelected}
+              count={departments?.length || 0}
+              sortColumn="name"
+              disableSelectionOnClick
+            />
           </WrapInCard>
         </WrapInBreadcrumbs>
       )}

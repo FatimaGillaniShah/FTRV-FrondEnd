@@ -5,8 +5,8 @@ import { FormControlLabel, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { Form, Formik } from 'formik';
-import { Input } from '../../index';
-import { H5 } from '../../typography';
+import { Input, ToggleGroup } from '../index';
+import { H5 } from '../typography';
 
 const useStyles = makeStyles((theme) => ({
   gridpadding: {
@@ -20,14 +20,18 @@ export function Search({
   onHandleSwitchChange,
   checked,
   onHandleSearch,
+  toggleValues,
+  onHandleToggleChange,
+  alignment,
+  name,
 }) {
   const classes = useStyles();
   return (
     <Grid container>
-      <Grid item xs={12} sm={3} md={2} className={classes.gridpadding}>
-        <H5>Directory</H5>
+      <Grid item xs={12} sm={3} md={2} lg={2} className={classes.gridpadding}>
+        <H5>{name}</H5>
       </Grid>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={4} lg={3}>
         <Formik initialValues={initialValues}>
           {({ handleChange, setFieldValue }) => (
             <Form>
@@ -50,7 +54,7 @@ export function Search({
           )}
         </Formik>
       </Grid>
-      <Grid item xs={12} sm={4} md={3} lg={2}>
+      <Grid item xs={12} sm={4} md={3} lg={3}>
         <Box px={[0, 5]}>
           <FormControlLabel
             label="Filter"
@@ -64,6 +68,13 @@ export function Search({
             }
           />
         </Box>
+      </Grid>
+      <Grid item xs={12} sm={4} md={3} lg={4}>
+        <ToggleGroup
+          toggleValues={toggleValues}
+          onHandleToggleChange={onHandleToggleChange}
+          alignment={alignment}
+        />
       </Grid>
     </Grid>
   );

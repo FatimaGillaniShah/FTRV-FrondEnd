@@ -16,6 +16,7 @@ import { retrieveAnnouncements } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Modal, capitalize } from '../../utils/helper';
 import { useDeleteAnnouncement } from '../../hooks/announcement';
+import Show from '../../components/show';
 
 function AnnouncementContainer() {
   const [selected, setSelected] = useState([]);
@@ -76,35 +77,31 @@ function AnnouncementContainer() {
         <WrapInBreadcrumbs>
           <Box width={1}>
             <WrapInCard>
-              {role === ROLES.ADMIN && (
+              <Show IF={role === ROLES.ADMIN}>
                 <Box mt={4}>
                   <TableButtons
                     onDelete={handleDelete}
                     numSelected={selected.length}
                   />
-                  {selected.length > 0 && (
+                  <Show IF={selected.length > 0}>
                     <Box my={4}>
                       <Alert severity="info">
                         <strong>{selected.length}</strong> Announcement(s)
                         Selected
                       </Alert>
                     </Box>
-                  )}
+                  </Show>
                 </Box>
-              )}
-              {!isLoading && !mutation.isLoading && (
-                <>
-                  <DataTable
-                    rows={formatData}
-                    columns={headCells}
-                    setSelected={setSelected}
-                    selected={selected}
-                    count={formatData?.length || 0}
-                    sortColumn="title"
-                    disableSelectionOnClick
-                  />
-                </>
-              )}
+              </Show>
+              <DataTable
+                rows={formatData}
+                columns={headCells}
+                setSelected={setSelected}
+                selected={selected}
+                count={formatData?.length || 0}
+                sortColumn="title"
+                disableSelectionOnClick
+              />
             </WrapInCard>
           </Box>
         </WrapInBreadcrumbs>

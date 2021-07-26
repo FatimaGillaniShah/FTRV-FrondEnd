@@ -4,11 +4,12 @@ import Carousel from 'react-material-ui-carousel';
 import BoxWithBg from '../boxWithBg';
 import BirdthdayCard from './birthdayCard';
 import { colors } from '../../theme/colors';
+import Show from '../show';
 
 export function BirthdayCarousel({ items }) {
   return (
     <>
-      {items?.length >= 1 && (
+      <Show IF={items?.length >= 1}>
         <Box>
           <BoxWithBg title="Birthdays" bgColor={colors.orange}>
             <Carousel
@@ -23,7 +24,7 @@ export function BirthdayCarousel({ items }) {
             </Carousel>
           </BoxWithBg>
         </Box>
-      )}
+      </Show>
     </>
   );
 }

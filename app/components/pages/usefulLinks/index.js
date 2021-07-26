@@ -5,6 +5,7 @@ import DataTable from '../../dataTable';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { TableButtons } from './tableButtons';
+import Show from '../../show';
 
 function UsefulLinksPage({
   selected,
@@ -18,14 +19,14 @@ function UsefulLinksPage({
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
         <TableButtons numSelected={selected?.length} onDelete={onDelete} />
-        {selected?.length > 0 && (
+        <Show IF={selected?.length > 0}>
           <Box my={4}>
             <Alert severity="info">
               <strong>{selected?.length}</strong> Links(s) Selected
             </Alert>
           </Box>
-        )}
-        {!isLoading && (
+        </Show>
+        <Show IF={!isLoading}>
           <>
             <DataTable
               rows={data}
@@ -37,7 +38,7 @@ function UsefulLinksPage({
               disableSelectionOnClick
             />
           </>
-        )}
+        </Show>
       </WrapInCard>
     </WrapInBreadcrumbs>
   );

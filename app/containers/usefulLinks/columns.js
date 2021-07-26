@@ -8,6 +8,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteLink } from '../../hooks/usefulLink';
+import Show from '../../components/show';
 
 const ActionButtons = ({ data, setSelected, disabled }) => {
   const { categoryId } = useParams();
@@ -31,7 +32,7 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
 
   return (
     <>
-      {role === ROLES.ADMIN && (
+      <Show IF={role === ROLES.ADMIN}>
         <>
           <IconButton
             onClick={() =>
@@ -48,7 +49,7 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
             <DeleteIcon color="error" />
           </IconButton>
         </>
-      )}
+      </Show>
     </>
   );
 };

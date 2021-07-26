@@ -19,6 +19,7 @@ import { H4 } from '../../typography';
 import { blogSchema } from './blogSchema';
 import { useStyles } from './style';
 import { navigateTo } from '../../../utils/helper';
+import Show from '../../show';
 
 function CreateBlog({ onHandleSubmit, id, initialValues }) {
   const imgURL = initialValues?.file;
@@ -164,11 +165,11 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                               setFieldValue('content', editor.getData());
                             }}
                           />
-                          {errors.content && touched.content && (
+                          <Show IF={errors.content && touched.content}>
                             <FormHelperText error>
                               {errors.content}
                             </FormHelperText>
-                          )}
+                          </Show>
                         </Box>
                       </Box>
 
