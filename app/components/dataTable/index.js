@@ -32,6 +32,8 @@ export function DataTable({
   handleServerPageNumber,
   matchUserIdWithIDS,
   disableSelectionOnClick,
+  page,
+  setPage,
   ...props
 }) {
   const {
@@ -44,7 +46,6 @@ export function DataTable({
   const [sortModel, setSortModel] = useState([
     { field: sortColumn || '', sort: sortOrder || 'asc' },
   ]);
-  const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
 
@@ -59,16 +60,17 @@ export function DataTable({
         setSortModel(params.sortModel);
         onChangeSort(params.sortModel[0].sort, params.sortModel[0].field);
       }
+      setSortModel(params.sortModel);
     }
   };
   const handleChangeRowsPerPage = (params) => {
     setRowsPerPage(params.pageSize);
     setPage(0);
     const currentPage = 1;
-    handleServerPageNumber({
-      currentPage,
-    });
     if (isServerSide) {
+      handleServerPageNumber({
+        currentPage,
+      });
       const rowPerPage = params.pageSize;
       handleServerPageSize({ rowPerPage });
     }
@@ -129,12 +131,15 @@ DataTable.propTypes = {
   isServerSide: PropTypes.bool,
   matchUserIdWithIDS: PropTypes.bool,
   count: PropTypes.number.isRequired,
+  page: PropTypes.number,
+  setPage: PropTypes.func,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: PAGE_SIZE,
   selected: [],
   matchUserIdWithIDS: false,
   isServerSide: false,
+  page: 0,
 };
 
 export default DataTable;

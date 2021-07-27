@@ -20,7 +20,6 @@ function RingGroup({
   onHandleDelete,
   initialFilterValues,
   onHandleSearch,
-  pageNumber,
   filterToggle,
   query,
   onHandleFilterSearch,
@@ -81,15 +80,15 @@ function RingGroup({
             </Box>
           </Show>
           <DataTable
-            data={data}
-            headCells={headCells}
+            rows={data}
+            columns={headCells}
             setSelected={setSelected}
             selected={selected}
             count={data?.length || 0}
             sortColumn="name"
-            pageNumber={pageNumber}
-            setPage={setPage}
+            disableSelectionOnClick
             page={page}
+            setPage={setPage}
           />
         </WrapInCard>
       </Box>

@@ -29,6 +29,7 @@ import Show from '../../components/show';
 function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
   const [pageNumber, setPageNumber] = useState(1);
+  const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [filters, setFilters] = useState();
   const [checked, setChecked] = useState(false);
@@ -83,12 +84,14 @@ function DirectoryContainer() {
     setChecked(target.checked);
   };
   const handleSearch = debounce((e, setFieldValue) => {
+    setPage(0);
     setPageNumber(1);
     setFieldFunc({ setFormikField: setFieldValue });
     setQuery({ searchString: e.target.value });
   }, 500);
 
   const handleFilterSearch = (values) => {
+    setPage(0);
     setPageNumber(1);
     setFilters(values);
   };
@@ -225,6 +228,8 @@ function DirectoryContainer() {
                     handleServerPageSize={handleServerPageSize}
                     matchUserIdWithIDS
                     disableSelectionOnClick
+                    page={page}
+                    setPage={setPage}
                   />
                 </>
               )}
