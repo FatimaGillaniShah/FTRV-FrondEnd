@@ -14,6 +14,8 @@ function UsefulLinksPage({
   data,
   headCells,
   isLoading,
+  page,
+  setPage,
 }) {
   return (
     <WrapInBreadcrumbs>
@@ -36,6 +38,8 @@ function UsefulLinksPage({
               count={data?.length || 0}
               sortColumn="name"
               disableSelectionOnClick
+              page={page}
+              setPage={setPage}
             />
           </>
         </Show>

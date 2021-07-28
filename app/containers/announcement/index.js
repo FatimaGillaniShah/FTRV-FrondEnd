@@ -21,6 +21,7 @@ import Show from '../../components/show';
 function AnnouncementContainer() {
   const [selected, setSelected] = useState([]);
   const [formatData, setFormatData] = useState([]);
+  const [page, setPage] = useState(0);
 
   const { data, isLoading } = useQuery(
     keys.adminAnnouncements,
@@ -101,6 +102,8 @@ function AnnouncementContainer() {
                 count={formatData?.length || 0}
                 sortColumn="title"
                 disableSelectionOnClick
+                page={page}
+                setPage={setPage}
               />
             </WrapInCard>
           </Box>

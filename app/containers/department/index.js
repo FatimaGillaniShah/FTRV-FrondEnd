@@ -24,6 +24,7 @@ function Departments() {
   } = useAuthContext();
 
   const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
   const mutation = useDeleteDepartment({ callbackFn: () => setSelected([]) });
   const { data, isLoading } = useQuery(keys.departments, getDepartments);
   const departments = data?.data?.data?.rows;
@@ -72,6 +73,8 @@ function Departments() {
               count={departments?.length || 0}
               sortColumn="name"
               disableSelectionOnClick
+              page={page}
+              setPage={setPage}
             />
           </WrapInCard>
         </WrapInBreadcrumbs>

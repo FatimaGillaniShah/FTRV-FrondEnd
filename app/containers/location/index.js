@@ -25,6 +25,7 @@ function Locations() {
   } = useAuthContext();
 
   const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
   const mutation = useDeleteLocation({ callbackFn: () => setSelected([]) });
   const { data, isLoading } = useQuery(keys.locations, getLocations);
   const locations = data?.data?.data?.rows;
@@ -72,6 +73,8 @@ function Locations() {
               count={locations?.length || 0}
               sortColumn="name"
               disableSelectionOnClick
+              page={page}
+              setPage={setPage}
             />
           </WrapInCard>
         </WrapInBreadcrumbs>
