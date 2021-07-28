@@ -6,7 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { MuiFileInput } from 'components/muiFileInput';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { FILE_ACCEPT_TYPES } from 'utils/constants';
+import { FILE_ACCEPT_TYPES, CKEDITOR_CUSTOM_CONFIG } from 'utils/constants';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import SaveIcon from '@material-ui/icons/Save';
@@ -26,39 +26,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
   const [imgFile, setImgFile] = useState(imgURL);
   const history = useHistory();
   const classes = useStyles();
-  const customConfig = {
-    placeholder: 'Start by typing content here!',
-    toolbar: {
-      items: [
-        'heading',
-        '|',
-        'bold',
-        'italic',
-        'link',
-        'bulletedList',
-        'numberedList',
-        '|',
-        'outdent',
-        'indent',
-        '|',
-        'imageUpload',
-        'blockQuote',
-        'insertTable',
-        'mediaEmbed',
-        'undo',
-        'redo',
-      ],
-    },
-    image: {
-      toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
-    },
-    table: {
-      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
-    },
-    mediaEmbed: {
-      previewsInData: true,
-    },
-  };
+
   return (
     <>
       <WrapInBreadcrumbs>
@@ -144,7 +112,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                           <CKEditor
                             editor={ClassicEditor}
                             data={values.content}
-                            config={customConfig}
+                            config={CKEDITOR_CUSTOM_CONFIG}
                             onReady={(editor) => {
                               editor.editing.view.change((writer) => {
                                 writer.setStyle(
