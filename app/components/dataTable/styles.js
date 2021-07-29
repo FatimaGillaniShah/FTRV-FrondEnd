@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: '62px !important',
       maxHeight: '62px !important',
       minHeight: '62px !important',
+
       '& .MuiCheckbox-root': {
         color: theme.palette.checkbox.secondary,
       },
@@ -58,6 +59,13 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiCheckbox-colorPrimary.Mui-disabled': {
       color: 'rgba(0, 0, 0, 0.26)',
+    },
+    '& .MuiDataGrid-cellCheckbox': {
+      minWidth: '60px !important',
+    },
+    '& .MuiDataGrid-columnHeaderCheckbox': {
+      minWidth: '60px !important',
+      maxWidth: '60px !important ',
     },
   },
 
