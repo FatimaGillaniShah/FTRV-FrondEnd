@@ -63,13 +63,6 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiCheckbox-colorPrimary.Mui-disabled': {
       color: 'rgba(0, 0, 0, 0.26)',
     },
-    '& .MuiDataGrid-cellCheckbox': {
-      minWidth: '60px !important',
-    },
-    '& .MuiDataGrid-columnHeaderCheckbox': {
-      minWidth: '60px !important',
-      maxWidth: '60px !important ',
-    },
   },
 
   gridOverlay: {
