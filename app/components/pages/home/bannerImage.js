@@ -4,7 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import clsx from 'clsx';
 import { useAuthContext } from '../../../context/authContext';
 import { FILE_ACCEPT_TYPES, ROLES } from '../../../utils/constants';
-import { MuiFileInput } from '../../muiFileInput';
+import { MuiFile } from '../../muiFile';
 import BannerImage from '../bannerImage';
 import { useStyles } from './style';
 import { Loading } from '../../loading';
@@ -37,7 +37,7 @@ function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
           </Box>
           <Show IF={role === ROLES.ADMIN}>
             <Box className={classes.editBox} width="100%">
-              <MuiFileInput
+              <MuiFile
                 btnIcon={<EditIcon />}
                 acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
                 buttonText="Update Banner Image"

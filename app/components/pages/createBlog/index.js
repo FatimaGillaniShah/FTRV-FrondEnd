@@ -3,7 +3,7 @@ import { Avatar, Box, Button, FormHelperText } from '@material-ui/core';
 import { Input } from 'components';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
-import { MuiFileInput } from 'components/muiFileInput';
+import { MuiFile } from 'components/muiFile';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES, CKEDITOR_CUSTOM_CONFIG } from 'utils/constants';
@@ -74,7 +74,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                       </Box>
                     </Box>
                     <Box ml={1} pt={5} display="flex" justifyContent="center">
-                      <MuiFileInput
+                      <MuiFile
                         name="file"
                         setImgFile={setImgFile}
                         setFieldValue={setFieldValue}
