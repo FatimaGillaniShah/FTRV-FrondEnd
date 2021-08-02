@@ -28,7 +28,39 @@ export const ANNOUNCEMENT_STATUS = {
   ACTIVE: 'active',
   INACTIVE: 'inactive',
 };
-
+export const CKEDITOR_CUSTOM_CONFIG = {
+  placeholder: 'Start by typing content here!',
+  toolbar: {
+    items: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      'link',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'outdent',
+      'indent',
+      '|',
+      'imageUpload',
+      'blockQuote',
+      'insertTable',
+      'mediaEmbed',
+      'undo',
+      'redo',
+    ],
+  },
+  image: {
+    toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+  },
+  table: {
+    contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
+  },
+  mediaEmbed: {
+    previewsInData: true,
+  },
+};
 export const POLL_OPTIONS_LIMIT = 4;
 
 export const APIS = {
