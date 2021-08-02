@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.checkbox.secondary,
       },
     },
-    '& .MuiDataGrid-cell': {
+    '& .MuiDataGrid-cell, & .MuiDataGrid-columnHeader': {
       outline: 'none !important',
     },
     '& .MuiDataGrid-window': {
