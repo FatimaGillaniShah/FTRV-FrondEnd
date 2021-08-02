@@ -9,7 +9,7 @@ import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
-const ActionButtons = ({ data, disabled, setSelected }) => {
+const ActionButtons = ({ data, disabled }) => {
   const history = useHistory();
   const {
     user: {
@@ -17,7 +17,7 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
     },
   } = useAuthContext();
 
-  const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
+  const mutation = useDeleteUser();
 
   const handleDeleteUser = () => {
     Modal.fire().then((result) => {
@@ -53,7 +53,7 @@ export const headCells = [
     headerName: 'Name',
     description: 'Name',
     sortable: true,
-    width: 200,
+    flex: 1,
   },
   {
     field: 'department.name',
@@ -70,7 +70,7 @@ export const headCells = [
     headerName: 'Designation',
     description: 'Designation',
     sortable: true,
-    width: 200,
+    flex: 1,
   },
   {
     field: 'location.name',
@@ -87,7 +87,7 @@ export const headCells = [
     headerName: 'Email ID',
     description: 'Email ID',
     sortable: true,
-    width: 230,
+    width: 240,
   },
   {
     field: 'extension',
@@ -103,7 +103,7 @@ export const headCells = [
     headerName: 'Cell Phone',
     description: 'Cell Phone',
     sortable: false,
-    width: 200,
+    flex: 1,
   },
   {
     field: 'actions',

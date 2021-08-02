@@ -43,49 +43,49 @@ export function DataTable({
   } = useAuthContext();
 
   const classes = useStyles();
-  const [sortModel, setSortModel] = useState([
+  const [sortingModel, setSortingModel] = useState([
     { field: sortColumn || '', sort: sortOrder || 'asc' },
   ]);
 
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
 
-  function currentlySelected(selections) {
-    if (selected !== selections.selectionModel) {
-      setSelected(selections.selectionModel);
+  function currentlySelected({ selectionModel }) {
+    if (selected !== selectionModel) {
+      setSelected(selectionModel);
     }
   }
-  const handleSortModelChange = (params) => {
-    if (params.sortModel !== sortModel) {
+  const handleSortModelChange = ({ sortModel }) => {
+    if (sortModel !== sortingModel) {
       if (isServerSide) {
-        setSortModel(params.sortModel);
-        onChangeSort(params.sortModel[0].sort, params.sortModel[0].field);
+        setSortingModel(sortModel);
+        onChangeSort(sortModel[0].sort, sortModel[0].field);
       }
-      setSortModel(params.sortModel);
+      setSortingModel(sortModel);
     }
   };
-  const handleChangeRowsPerPage = (params) => {
-    setRowsPerPage(params.pageSize);
+  const handleChangeRowsPerPage = ({ pageSize }) => {
+    setRowsPerPage(pageSize);
     setPage(0);
     const currentPage = 1;
     if (isServerSide) {
       handleServerPageNumber({
         currentPage,
       });
-      const rowPerPage = params.pageSize;
+      const rowPerPage = pageSize;
       handleServerPageSize({ rowPerPage });
     }
   };
-  const handleChangePage = (params) => {
-    setPage(params.page);
+  const handleChangePage = ({ page: newPage }) => {
+    setPage(newPage);
     if (isServerSide) {
-      const currentPage = params.page + 1;
+      const currentPage = page + 1;
       handleServerPageNumber({
         currentPage,
       });
     }
   };
   return (
-    <Box className={`${classes.root} ${classes.cell}`}>
+    <Box className={classes.root}>
       <DataGrid
         rowHeight={75}
         components={{
@@ -103,7 +103,7 @@ export function DataTable({
         isRowSelectable={(params) =>
           !(matchUserIdWithIDS && params?.row?.id === currentUserID)
         }
-        sortModel={sortModel}
+        sortModel={sortingModel}
         sortingMode={isServerSide ? 'server' : 'client'}
         onSortModelChange={handleSortModelChange}
         sortingOrder={['asc', 'desc']}
@@ -130,6 +130,7 @@ DataTable.propTypes = {
   sortOrder: PropTypes.string,
   sortColumn: PropTypes.string.isRequired,
   isServerSide: PropTypes.bool,
+  disableSelectionOnClick: PropTypes.bool,
   matchUserIdWithIDS: PropTypes.bool,
   count: PropTypes.number.isRequired,
   page: PropTypes.number,
@@ -140,6 +141,7 @@ DataTable.defaultProps = {
   selected: [],
   matchUserIdWithIDS: false,
   isServerSide: false,
+  disableSelectionOnClick: true,
   page: 0,
 };
 

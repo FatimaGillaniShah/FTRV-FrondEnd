@@ -72,7 +72,6 @@ function Departments() {
               setSelected={setSelected}
               count={departments?.length || 0}
               sortColumn="name"
-              disableSelectionOnClick
               page={page}
               setPage={setPage}
             />

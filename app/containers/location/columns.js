@@ -8,9 +8,9 @@ import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteLocation } from '../../hooks/location';
 
-const ActionButtons = ({ data, setSelected, disabled }) => {
+const ActionButtons = ({ data, disabled }) => {
   const history = useHistory();
-  const mutation = useDeleteLocation({ callbackFn: () => setSelected([]) });
+  const mutation = useDeleteLocation();
   const {
     user: {
       data: { role },

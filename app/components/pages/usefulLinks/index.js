@@ -29,19 +29,16 @@ function UsefulLinksPage({
           </Box>
         </Show>
         <Show IF={!isLoading}>
-          <>
-            <DataTable
-              rows={data}
-              columns={headCells}
-              selected={selected}
-              setSelected={setSelected}
-              count={data?.length || 0}
-              sortColumn="name"
-              disableSelectionOnClick
-              page={page}
-              setPage={setPage}
-            />
-          </>
+          <DataTable
+            rows={data}
+            columns={headCells}
+            selected={selected}
+            setSelected={setSelected}
+            count={data?.length || 0}
+            sortColumn="name"
+            page={page}
+            setPage={setPage}
+          />
         </Show>
       </WrapInCard>
     </WrapInBreadcrumbs>

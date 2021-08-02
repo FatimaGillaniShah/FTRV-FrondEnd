@@ -10,12 +10,10 @@ import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteLink } from '../../hooks/usefulLink';
 import Show from '../../components/show';
 
-const ActionButtons = ({ data, setSelected, disabled }) => {
+const ActionButtons = ({ data, disabled }) => {
   const { categoryId } = useParams();
   const history = useHistory();
-  const mutation = useDeleteLink({
-    callbackFn: () => setSelected([]),
-  });
+  const mutation = useDeleteLink();
   const {
     user: {
       data: { role },

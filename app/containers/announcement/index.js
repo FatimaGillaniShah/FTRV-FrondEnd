@@ -101,7 +101,6 @@ function AnnouncementContainer() {
                 selected={selected}
                 count={formatData?.length || 0}
                 sortColumn="title"
-                disableSelectionOnClick
                 page={page}
                 setPage={setPage}
               />

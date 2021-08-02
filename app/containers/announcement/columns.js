@@ -9,9 +9,9 @@ import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteAnnouncement } from '../../hooks/announcement';
 import { ToolTip } from '../../components';
 
-const ActionButtons = ({ data, setSelected, disabled }) => {
+const ActionButtons = ({ data, disabled }) => {
   const history = useHistory();
-  const mutation = useDeleteAnnouncement({ callbackFn: () => setSelected([]) });
+  const mutation = useDeleteAnnouncement();
   const {
     user: {
       data: { role },
@@ -66,7 +66,7 @@ export const headCells = [
     description: 'Description',
     sortable: true,
     renderCell: ({ row: { description } }) => <ToolTip title={description} />,
-    width: 450,
+    width: 350,
   },
   {
     field: 'startTime',
@@ -74,7 +74,7 @@ export const headCells = [
     headerName: 'Start Time',
     description: 'Start Time',
     sortable: true,
-    width: 150,
+    flex: 1,
   },
   {
     field: 'endTime',
@@ -82,7 +82,7 @@ export const headCells = [
     headerName: 'End Time',
     description: 'End Time',
     sortable: true,
-    width: 150,
+    flex: 1,
   },
   {
     field: 'status',
@@ -90,7 +90,7 @@ export const headCells = [
     headerName: 'Status',
     description: 'Status',
     sortable: true,
-    width: 200,
+    width: 150,
   },
   {
     field: 'priority',
@@ -98,7 +98,7 @@ export const headCells = [
     headerName: 'Priority',
     description: 'Priority',
     sortable: true,
-    width: 200,
+    flex: 1,
   },
 
   {

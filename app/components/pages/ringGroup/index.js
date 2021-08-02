@@ -86,7 +86,6 @@ function RingGroup({
             selected={selected}
             count={data?.length || 0}
             sortColumn="name"
-            disableSelectionOnClick
             page={page}
             setPage={setPage}
           />
