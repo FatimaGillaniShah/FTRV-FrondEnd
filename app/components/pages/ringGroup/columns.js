@@ -9,16 +9,14 @@ import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { useDeleteRingGroup } from '../../../hooks/ringGroup';
 
-const ActionButtons = ({ data, disabled, setSelected }) => {
+const ActionButtons = ({ data, disabled }) => {
   const history = useHistory();
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
-  const { mutate, isLoading } = useDeleteRingGroup({
-    callbackFn: () => setSelected([]),
-  });
+  const { mutate, isLoading } = useDeleteRingGroup();
 
   const handleDelete = () => {
     Modal.fire().then(({ isConfirmed }) => {
@@ -53,7 +51,7 @@ export const headCells = [
     headerName: 'Name',
     description: 'Name',
     sortable: true,
-    flex: 1,
+    width: 200,
   },
   {
     field: 'department',
@@ -88,6 +86,6 @@ export const headCells = [
     renderCell: ({ row }) => (
       <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
     ),
-    flex: 1,
+    width: 150,
   },
 ];

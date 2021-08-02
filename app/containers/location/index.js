@@ -72,7 +72,6 @@ function Locations() {
               setSelected={setSelected}
               count={locations?.length || 0}
               sortColumn="name"
-              disableSelectionOnClick
               page={page}
               setPage={setPage}
             />

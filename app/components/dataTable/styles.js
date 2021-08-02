@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.checkbox.secondary,
       },
     },
-    '& .MuiDataGrid-cell:focus': {
-      outline: 'none',
+    '& .MuiDataGrid-cell': {
+      outline: 'none !important',
     },
     '& .MuiDataGrid-window': {
       backgroundColor: colors.bgColor.secondary,
@@ -51,9 +51,7 @@ const useStyles = makeStyles((theme) => ({
     '& .super-app.reviewed': {
       color: colors.orange,
     },
-  },
 
-  cell: {
     '& .MuiCheckbox-root': {
       color: theme.palette.checkbox.main,
     },
@@ -64,6 +62,18 @@ const useStyles = makeStyles((theme) => ({
       color: 'rgba(0, 0, 0, 0.26)',
     },
   },
+
+  // cell: {
+  //   '& .MuiCheckbox-root': {
+  //     color: theme.palette.checkbox.main,
+  //   },
+  //   '& .MuiDataGrid-sortIcon': {
+  //     color: theme.palette.iconColor.default,
+  //   },
+  //   '& .MuiCheckbox-colorPrimary.Mui-disabled': {
+  //     color: 'rgba(0, 0, 0, 0.26)',
+  //   },
+  // },
 
   gridOverlay: {
     zIndex: 100,

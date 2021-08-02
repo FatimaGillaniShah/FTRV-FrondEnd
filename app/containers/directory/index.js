@@ -124,11 +124,11 @@ function DirectoryContainer() {
       }
     });
   };
-  const handleServerPageNumber = (value) => {
-    setPageNumber(value.currentPage);
+  const handleServerPageNumber = ({ currentPage }) => {
+    setPageNumber(currentPage);
   };
-  const handleServerPageSize = (value) => {
-    setPageSize(value.rowPerPage);
+  const handleServerPageSize = ({ rowPerPage }) => {
+    setPageSize(rowPerPage);
   };
   const locationOptions = locations?.data.data.rows.map((val) => ({
     value: val.id,
@@ -213,25 +213,22 @@ function DirectoryContainer() {
               </Show>
 
               {!isLoading && !mutation.isLoading && (
-                <>
-                  <DataTable
-                    rows={tableData?.rows}
-                    columns={headCells}
-                    setSelected={setSelected}
-                    selected={selected}
-                    onChangeSort={onChangeSort}
-                    sortOrder={sortOrder}
-                    sortColumn={sortColumn}
-                    count={tableData?.count || 0}
-                    isServerSide={isServerSide}
-                    handleServerPageNumber={handleServerPageNumber}
-                    handleServerPageSize={handleServerPageSize}
-                    matchUserIdWithIDS
-                    disableSelectionOnClick
-                    page={page}
-                    setPage={setPage}
-                  />
-                </>
+                <DataTable
+                  rows={tableData?.rows}
+                  columns={headCells}
+                  setSelected={setSelected}
+                  selected={selected}
+                  onChangeSort={onChangeSort}
+                  sortOrder={sortOrder}
+                  sortColumn={sortColumn}
+                  count={tableData?.count || 0}
+                  isServerSide={isServerSide}
+                  handleServerPageNumber={handleServerPageNumber}
+                  handleServerPageSize={handleServerPageSize}
+                  matchUserIdWithIDS
+                  page={page}
+                  setPage={setPage}
+                />
               )}
             </WrapInCard>
           </Box>
