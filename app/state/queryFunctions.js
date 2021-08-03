@@ -27,6 +27,7 @@ const {
   DOCUMENT_SORT_ORDER,
   DOCUMENT,
   RING_GROUP,
+  JOB,
 } = APIS;
 
 // USER CRUD
@@ -238,3 +239,10 @@ export const getRingGroups = ({ queryKey }) => {
 
 export const deleteRingGroup = (payload) =>
   http.delete(RING_GROUP, { data: { ids: payload } });
+
+export const createJob = (payload) => http.post(JOB, payload);
+
+export const getJobById = ({ queryKey }) => http.get(`${JOB}/${queryKey[1]}`);
+
+export const updateJob = ({ id, ...payload }) =>
+  http.put(`${JOB}/${id}`, payload);

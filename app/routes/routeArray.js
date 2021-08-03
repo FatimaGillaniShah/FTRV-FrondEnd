@@ -32,6 +32,7 @@ import Documents from '../containers/document/loadable';
 import AddDocument from '../containers/createDocument/loadable';
 import AddRingGroup from '../containers/createRingGroup/loadable';
 import RingGroup from '../containers/ringGroup/loadable';
+import AddJob from '../containers/createJob/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -407,5 +408,23 @@ export const routeArray = [
         roles: [ROLES.ADMIN],
       },
     ],
+  },
+  {
+    path: '/add',
+    component: AddJob,
+    exact: true,
+    breadCrumbKey: 'Add New Job',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN],
+  },
+  {
+    path: '/edit/:id',
+    component: AddJob,
+    simplifiedPath: 'edit',
+    noOfEnteriesToSkipAfterThisEntry: 1,
+    exact: true,
+    breadCrumbKey: 'Edit Job',
+    routeType: routeTypes.private,
+    roles: [ROLES.ADMIN],
   },
 ];

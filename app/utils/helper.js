@@ -1,5 +1,6 @@
 import { get } from 'lodash-es';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 import { colors } from '../theme/colors';
 
 // SORITNG FUNCTIONS
@@ -98,4 +99,8 @@ export function formatDate(date) {
     hour: '2-digit',
     minute: '2-digit',
   });
+}
+
+export function nextWeekDate() {
+  return moment().add(7, 'day');
 }
