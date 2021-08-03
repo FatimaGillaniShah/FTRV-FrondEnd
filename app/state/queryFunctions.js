@@ -28,6 +28,7 @@ const {
   DOCUMENT,
   RING_GROUP,
   JOB,
+  APPLICANT,
 } = APIS;
 
 // USER CRUD
@@ -244,3 +245,5 @@ export const getJobs = () => http.get(`${JOB}?pageSize=1000&`);
 
 export const deleteJob = (payload) =>
   http.delete(JOB, { data: { ids: payload } });
+
+export const createApplicant = (payload) => http.post(APPLICANT, payload);

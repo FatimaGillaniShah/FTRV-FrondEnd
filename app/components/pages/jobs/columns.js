@@ -3,6 +3,7 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
@@ -30,6 +31,12 @@ const ActionButtons = ({ data }) => {
   return (
     <>
       <Show IF={role === ROLES.ADMIN}>
+        <IconButton
+          disabled={isLoading}
+          onClick={() => navigateTo(history, `/jobs/applicant/${data.id}`)}
+        >
+          <VisibilityOutlinedIcon />
+        </IconButton>
         <IconButton
           disabled={isLoading}
           onClick={() => navigateTo(history, `/jobs/edit/${data.id}`)}
