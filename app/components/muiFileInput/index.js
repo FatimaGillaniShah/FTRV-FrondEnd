@@ -1,154 +1,99 @@
-import { Box, Button, IconButton, Tooltip } from '@material-ui/core';
-import React, { useEffect, useRef, useState } from 'react';
+import { FormHelperText, Button, Box, Tooltip } from '@material-ui/core';
+import Add from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
-import {
-  MIN_UPLOADABLE_FILE_SIZE_IN_MBS,
-  MAX_UPLOADABLE_FILE_SIZE_IN_MBS,
-  SUPPORTED_FORMATS,
-} from '../../utils/constants';
-import { isFunction, Toast } from '../../utils/helper';
-import Show from '../show';
+import { makeStyles } from '@material-ui/core/styles';
+import React, { memo, useRef } from 'react';
+import { useField } from 'formik';
+import { ButtonText, BodyTextLarge } from '../typography';
+import { colors } from '../../theme/colors';
 
-export function MuiFileInput({
-  setImgFile,
-  mutation,
-  setFieldValue,
-  name,
-  acceptTypes,
-  toolTipTitle,
-  buttonText,
-  btnIcon,
-  variant,
-  iconColor,
-  fullWidth,
-  size,
-  isIcon,
-  dimensionValidation,
-  minimumDimensions,
-  onFilechange,
-}) {
-  const inputEl = useRef(null);
-  const [error, setError] = useState(undefined);
+const useStyles = makeStyles(() => ({
+  upload: {
+    cursor: 'pointer',
+    borderRadius: '4px',
+  },
+  fileName: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
+}));
 
-  useEffect(() => {
-    if (error) {
-      Toast({
-        icon: 'error',
-        title: error,
-      });
-    }
-  }, [error]);
-
-  const handleCapture = ({ target }) => {
-    const file = target?.files[0];
-    const fileSizeInMB = file?.size / 1024 / 1024;
-    if (file) {
-      if (fileSizeInMB <= MIN_UPLOADABLE_FILE_SIZE_IN_MBS) {
-        setError('Error: File is empty');
-      } else if (fileSizeInMB >= MAX_UPLOADABLE_FILE_SIZE_IN_MBS) {
-        setError('Error: File size too large');
-      } else if (!SUPPORTED_FORMATS.includes(file?.type)) {
-        setError('Error: Unsupported File Format');
-      } else {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onloadend = () => {
-          let fileObj = file;
-
-          const image = new Image();
-          image.src = window.URL.createObjectURL(file);
-          let dimensionsValid = false;
-          image.onload = () => {
-            dimensionsValid =
-              dimensionValidation &&
-              (image?.height < minimumDimensions.height ||
-                image?.width < minimumDimensions.width);
-            if (dimensionsValid) {
-              setError('Error: Minimum dimensions are 900 x 200');
-            }
-            fileObj = {
-              height: image.height,
-              width: image.width,
-              file,
-            };
-            if (!dimensionsValid) {
-              if (isFunction(setFieldValue)) setFieldValue(name, fileObj);
-              if (isFunction(onFilechange)) onFilechange(fileObj);
-              if (isFunction(setImgFile)) setImgFile(reader.result);
-            }
-          };
-        };
-        setError(null);
-      }
+function MuiFileInput({ buttonText, setFieldValue, values, ...props }) {
+  const [field, meta] = useField(props);
+  const classes = useStyles();
+  const selectedFile = useRef(null);
+  const handleUploadFile = () => {
+    selectedFile.current.click();
+  };
+  const handleCaptureFile = (files = []) => {
+    if (files.length) {
+      setFieldValue(props.name, files[0]);
     }
   };
-  const handleClick = () => {
-    inputEl.current.click();
+  const getName = (url) => {
+    const urlArray = url?.split('/');
+    return url ? urlArray[urlArray?.length - 1] : '';
   };
-
+  const documentToolTip = ({ file, url }) => {
+    const toolTipTitle = file?.name || getName(url) || `Select ${buttonText} `;
+    return toolTipTitle;
+  };
+  const handleFileName = (file) =>
+    file?.name || getName(file) || 'No file chosen';
   return (
-    <>
-      <Box>
-        <input
-          id={name}
-          type="file"
-          onChange={handleCapture}
-          hidden
-          ref={inputEl}
-          accept={acceptTypes}
-        />
-        <Tooltip title={toolTipTitle}>
-          <label htmlFor={name}>
-            {isIcon ? (
-              <IconButton onClick={handleClick} disabled={mutation?.isLoading}>
-                <Show IF={btnIcon}>{btnIcon}</Show>
-              </IconButton>
-            ) : (
-              <Button
-                size={size}
-                fullWidth={fullWidth}
-                color={iconColor}
-                onClick={handleClick}
-                variant={variant}
-                startIcon={btnIcon && btnIcon}
-                disabled={mutation?.isLoading}
-              >
-                {buttonText}
-              </Button>
-            )}
-          </label>
-        </Tooltip>
-      </Box>
-    </>
+    <Box>
+      <input
+        type="file"
+        ref={selectedFile}
+        onChange={({ target }) =>
+          handleCaptureFile(target.files, setFieldValue)
+        }
+        hidden
+      />
+      <Tooltip title={documentToolTip(values)}>
+        <Box
+          display="flex"
+          alignItems="center"
+          flexDirection={['column', 'row']}
+          className={classes.upload}
+          onClick={handleUploadFile}
+          border={`1px solid ${
+            meta.error && meta.touched ? colors.red : colors.silver
+          }`}
+          px={3}
+          py={2.2}
+          {...field}
+        >
+          <Button
+            color="secondary"
+            variant="contained"
+            startIcon={<Add fontSize="small" />}
+          >
+            <ButtonText>{buttonText}</ButtonText>
+          </Button>
+          <Box mx={4} width={[1, '30%', '45%']}>
+            <BodyTextLarge
+              fontWeight="fontWeightMedium"
+              color="grey"
+              className={classes.fileName}
+            >
+              {handleFileName(field?.value)}
+            </BodyTextLarge>
+          </Box>
+        </Box>
+      </Tooltip>
+      {meta.touched && meta.error ? (
+        <FormHelperText error>{meta.error}</FormHelperText>
+      ) : null}
+    </Box>
   );
 }
 
 MuiFileInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  fullWidth: PropTypes.bool,
-  variant: PropTypes.string,
-  setImgFile: PropTypes.func,
-  setFieldValue: PropTypes.func,
-  acceptTypes: PropTypes.string,
-  toolTipTitle: PropTypes.string,
   buttonText: PropTypes.string,
-  size: PropTypes.string,
-  dimensionValidation: PropTypes.bool,
-  onFilechange: PropTypes.func,
-  isIcon: PropTypes.bool,
-  minimumDimensions: PropTypes.shape({
-    height: PropTypes.number,
-    width: PropTypes.number,
-  }),
-  iconColor: PropTypes.string,
+  setFieldValue: PropTypes.func,
+  values: PropTypes.object,
 };
-MuiFileInput.defaultProps = {
-  fullWidth: true,
-  toolTipTitle: 'Select File',
-  buttonText: 'Upload',
-  variant: 'contained',
-  iconColor: 'secondary',
-  isIcon: false,
-  dimensionValidation: false,
-};
+
+export default memo(MuiFileInput);

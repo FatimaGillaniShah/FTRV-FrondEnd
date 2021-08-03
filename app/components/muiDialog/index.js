@@ -17,6 +17,8 @@ export default function MuiDialog({
   maxWidth,
   children,
   onSubmit,
+  classes,
+  successButtonText,
 }) {
   return (
     <Dialog
@@ -26,17 +28,19 @@ export default function MuiDialog({
       fullWidth={fullWidth}
       maxWidth={maxWidth}
     >
-      <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-      <DialogContent>{children}</DialogContent>
+      <DialogTitle id="form-dialog-title" className={classes?.dialog}>
+        {title}
+      </DialogTitle>
+      <DialogContent className={classes?.content}>{children}</DialogContent>
       <Box display="flex" px={5}>
-        <DialogActions>
+        <DialogActions className={classes?.dialogActions}>
           <Button
             onClick={onSubmit}
             type="submit"
             color="primary"
             variant="contained"
           >
-            Create
+            {successButtonText}
           </Button>
           <Button onClick={onClose} color="primary">
             Cancel
@@ -55,8 +59,10 @@ MuiDialog.propTypes = {
   open: PropTypes.bool,
   title: PropTypes.string,
   children: PropTypes.element,
+  successButtonText: PropTypes.string,
 };
 MuiDialog.defaultProps = {
   fullWidth: true,
   maxWidth: 'sm',
+  successButtonText: 'Create',
 };

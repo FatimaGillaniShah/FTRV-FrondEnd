@@ -21,7 +21,7 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
 import AddIcon from '@material-ui/icons/Add';
 import { Input, DatePicker } from 'components';
-import { MuiFileInput } from 'components/muiFileInput';
+import { MuiFile } from 'components/muiFile';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
@@ -265,7 +265,7 @@ function CreateUser({
                     minWidth: '118px',
                   }}
                 >
-                  <MuiFileInput
+                  <MuiFile
                     name="file"
                     mutation={mutation}
                     setImgFile={setImgFile}
