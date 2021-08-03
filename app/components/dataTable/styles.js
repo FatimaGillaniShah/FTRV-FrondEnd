@@ -6,6 +6,9 @@ import { colors } from '../../theme/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    '& .row-disabled': {
+      cursor: 'not-allowed',
+    },
     '& .MuiDataGrid-columnsContainer': {
       backgroundColor: theme.palette.secondary.main,
       color: theme.palette.text.light,
