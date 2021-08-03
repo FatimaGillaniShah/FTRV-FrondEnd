@@ -78,7 +78,7 @@ export function DataTable({
   const handleChangePage = ({ page: newPage }) => {
     setPage(newPage);
     if (isServerSide) {
-      const currentPage = page + 1;
+      const currentPage = newPage + 1;
       handleServerPageNumber({
         currentPage,
       });
