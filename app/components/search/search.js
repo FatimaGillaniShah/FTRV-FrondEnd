@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import { Form, Formik } from 'formik';
 import { Input, ToggleGroup } from '../index';
+import Show from '../show';
 import { H5 } from '../typography';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +21,7 @@ export function Search({
   onHandleSwitchChange,
   checked,
   onHandleSearch,
+  showToggle,
   toggleValues,
   onHandleToggleChange,
   alignment,
@@ -69,13 +71,15 @@ export function Search({
           />
         </Box>
       </Grid>
-      <Grid item xs={12} sm={4} md={3} lg={4}>
-        <ToggleGroup
-          toggleValues={toggleValues}
-          onHandleToggleChange={onHandleToggleChange}
-          alignment={alignment}
-        />
-      </Grid>
+      <Show IF={showToggle}>
+        <Grid item xs={12} sm={4} md={3} lg={4}>
+          <ToggleGroup
+            toggleValues={toggleValues}
+            onHandleToggleChange={onHandleToggleChange}
+            alignment={alignment}
+          />
+        </Grid>
+      </Show>
     </Grid>
   );
 }

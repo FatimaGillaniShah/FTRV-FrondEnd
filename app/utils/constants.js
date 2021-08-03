@@ -88,4 +88,5 @@ export const APIS = {
   DOCUMENT_SORT_ORDER: '/documents/updateSortOrder',
   DOCUMENT: '/documents',
   RING_GROUP: '/ringGroups',
+  JOB: '/jobs',
 };

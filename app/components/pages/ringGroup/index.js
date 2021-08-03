@@ -47,6 +47,7 @@ function RingGroup({
               onHandleSearch={onHandleSearch}
               onHandleSwitchChange={onHandleSwitchChange}
               initialValues={query}
+              showToggle
               checked={filterToggle}
               toggleValues={toggleValues}
               alignment={alignment}
