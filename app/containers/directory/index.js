@@ -178,6 +178,7 @@ function DirectoryContainer() {
                   initialValues={query}
                   onHandleSwitchChange={handleSwitchChange}
                   checked={checked}
+                  showToggle
                   alignment={alignment}
                   onHandleSearch={handleSearch}
                   toggleValues={toggleValues}
