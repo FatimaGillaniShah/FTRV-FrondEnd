@@ -5,6 +5,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import { ROLES } from 'utils/constants';
 import DescriptionIcon from '@material-ui/icons/Description';
+import WorkOutlinedIcon from '@material-ui/icons/WorkOutlined';
 
 export const menuItems = [
   {
@@ -28,6 +29,11 @@ export const menuItems = [
     link: 'https://funtownrv.trainualapp.com/',
     icon: QuestionAnswerIcon,
     externalLink: true,
+  },
+  {
+    name: 'career',
+    link: '/jobs',
+    icon: WorkOutlinedIcon,
   },
   {
     name: 'File Storage',
