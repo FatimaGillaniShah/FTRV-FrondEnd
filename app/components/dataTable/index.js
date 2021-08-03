@@ -116,6 +116,12 @@ export function DataTable({
         rowsPerPageOptions={[5, 10, 20]}
         hideFooterSelectedRowCount
         pagination
+        getRowClassName={(params) => {
+          if (matchUserIdWithIDS && params?.row?.id === currentUserID) {
+            return `row-disabled`;
+          }
+          return '';
+        }}
       />
     </Box>
   );
