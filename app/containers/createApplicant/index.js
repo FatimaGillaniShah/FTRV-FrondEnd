@@ -14,12 +14,10 @@ function CreateApplicant() {
   const history = useHistory();
   const queryClient = useQueryClient();
   const onApplicantSuccess = () => {
-    queryClient.invalidateQueries(keys.documentDepartment);
     Toast({
       icon: 'success',
       title: 'Applicant Created  successfully',
     });
-
     queryClient.invalidateQueries(keys.applicant);
     navigateTo(history, '/jobs');
   };
