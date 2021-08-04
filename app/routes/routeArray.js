@@ -438,6 +438,16 @@ export const routeArray = [
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
       },
+      {
+        path: '/applicants/:id',
+        component: AddApplicant,
+        exact: true,
+        simplifiedPath: 'applicant',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        breadCrumbKey: 'Add New Applicant',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
     ],
   },
 ];

@@ -32,7 +32,11 @@ export const JobDetailModal = ({
     setOpen(false);
   };
   const handleChange = () => {
-    navigateTo(history, `/jobs/applicant/${id}`);
+    if (role !== ROLES.ADMIN) {
+      navigateTo(history, `/jobs/applicant/${id}`);
+    } else {
+      navigateTo(history, `/jobs/applicants/${id}`);
+    }
   };
   return (
     <>
