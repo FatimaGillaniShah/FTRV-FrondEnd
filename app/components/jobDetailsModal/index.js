@@ -2,23 +2,38 @@ import React, { memo, useState } from 'react';
 import { Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'html-react-parser';
+import { useHistory } from 'react-router-dom';
 import MuiDialog from '../muiDialog';
+import { ROLES } from '../../utils/constants';
+import { useAuthContext } from '../../context/authContext';
 import { useStyles } from './style';
 import { BodyTextSmall } from '../typography';
+import { navigateTo } from '../../utils/helper';
 import { DialogTitle } from './dialogTitle';
 
 export const JobDetailModal = ({
+  id,
   department,
   location,
   description,
   expiryDate,
+  modal,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(modal);
   const classes = useStyles();
+  const history = useHistory();
+  const {
+    user: {
+      data: { role },
+    },
+  } = useAuthContext();
+
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleChange = () => {
+    navigateTo(history, `/jobs/applicant/${id}`);
+  };
   return (
     <>
       <MuiDialog
@@ -32,9 +47,10 @@ export const JobDetailModal = ({
             onHandleClose={handleClose}
           />
         }
+        onSubmit={handleChange}
         maxWidth="lg"
         classes={classes}
-        successButtonText="View Applicants"
+        successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}
       >
         <Box px={5} mt={5}>
           <BodyTextSmall color="grey">

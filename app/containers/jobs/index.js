@@ -20,6 +20,7 @@ function JobsContainer() {
     location: value.location.name,
     expiryDate: moment(value.expiryDate).format('MM-DD-YYYY'),
   }));
+
   const { mutate, isLoading } = useDeleteJob({
     callbackFn: () => setSelected([]),
   });

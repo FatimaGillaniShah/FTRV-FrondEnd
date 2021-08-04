@@ -30,13 +30,13 @@ const ActionButtons = ({ data }) => {
 
   return (
     <>
+      <IconButton
+        disabled={isLoading}
+        onClick={() => navigateTo(history, `/jobs/detail/${data.id}`)}
+      >
+        <VisibilityOutlinedIcon />
+      </IconButton>
       <Show IF={role === ROLES.ADMIN}>
-        <IconButton
-          disabled={isLoading}
-          onClick={() => navigateTo(history, `/jobs/applicant/${data.id}`)}
-        >
-          <VisibilityOutlinedIcon />
-        </IconButton>
         <IconButton
           disabled={isLoading}
           onClick={() => navigateTo(history, `/jobs/edit/${data.id}`)}
