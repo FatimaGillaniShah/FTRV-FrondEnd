@@ -5,7 +5,7 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 
-const ActionButtons = ({ url }) => {
+const ActionButtons = ({ data: applicant }) => {
   const {
     user: {
       data: { role },
@@ -21,7 +21,7 @@ const ActionButtons = ({ url }) => {
         <>
           <IconButton
             onClick={() => {
-              handleResumeDownload(url);
+              handleResumeDownload(applicant.resume);
             }}
           >
             <DescriptionOutlinedIcon color="secondary" />
