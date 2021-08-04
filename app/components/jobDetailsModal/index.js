@@ -18,6 +18,7 @@ export const JobDetailModal = ({
   description,
   expiryDate,
   modal,
+  onHandleClose,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -27,30 +28,27 @@ export const JobDetailModal = ({
     },
   } = useAuthContext();
 
-  const handleClose = () => {
-    navigateTo(history, `/jobs`);
-  };
-  const handleChange = () => {
-    if (role !== ROLES.ADMIN) {
-      navigateTo(history, `/jobs/applicant/add/${id}`);
-    } else {
+  const handleSubmit = () => {
+    if (role === ROLES.ADMIN) {
       navigateTo(history, `/jobs/applicants/${id}`);
+    } else {
+      navigateTo(history, `/jobs/applicant/add/${id}`);
     }
   };
   return (
     <>
       <MuiDialog
         open={modal}
-        onClose={() => handleClose()}
+        onClose={() => onHandleClose()}
         title={
           <DialogTitle
             department={department}
             location={location}
             expiryDate={expiryDate}
-            onHandleClose={handleClose}
+            onHandleClose={onHandleClose}
           />
         }
-        onSubmit={handleChange}
+        onSubmit={handleSubmit}
         maxWidth="lg"
         classes={classes}
         successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}

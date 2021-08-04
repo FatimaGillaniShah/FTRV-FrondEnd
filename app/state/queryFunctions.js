@@ -246,8 +246,6 @@ export const getJobs = () => http.get(`${JOB}?pageSize=1000&`);
 export const deleteJob = (payload) =>
   http.delete(JOB, { data: { ids: payload } });
 
-export const getJobById = ({ queryKey }) => http.get(`${JOB}/${queryKey[1]}`);
-
 export const createApplicant = (payload) => http.post(APPLICANT, payload);
 
 export const getApplicants = ({ queryKey }) =>
