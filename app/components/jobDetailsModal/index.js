@@ -32,7 +32,7 @@ export const JobDetailModal = ({
     setOpen(false);
   };
   const handleChange = () => {
-    navigateTo(history, `/jobs/applicant/${id}`);
+    navigateTo(history, `/jobs/applicant/add/${id}`);
   };
   return (
     <>

@@ -428,7 +428,7 @@ export const routeArray = [
         routeType: routeTypes.private,
       },
       {
-        path: '/applicant/:id',
+        path: '/applicant/add/:id',
         component: AddApplicant,
         exact: true,
         simplifiedPath: 'applicant',
