@@ -240,7 +240,16 @@ export const getRingGroups = ({ queryKey }) => {
 export const deleteRingGroup = (payload) =>
   http.delete(RING_GROUP, { data: { ids: payload } });
 
-export const getJobs = () => http.get(`${JOB}?pageSize=1000&`);
+export const getJobs = ({ queryKey }) => {
+  let url = `${JOB}?pageSize=1000&`;
+  const { query, filters } = queryKey[1];
+  if (query.searchString) {
+    url = `${JOB}?pageSize=1000&${insertParams(query)}`;
+  } else if (filters) {
+    url = `${JOB}?pageSize=1000&${insertParams(filters)}`;
+  }
+  return http.get(url);
+};
 
 export const deleteJob = (payload) =>
   http.delete(JOB, { data: { ids: payload } });
