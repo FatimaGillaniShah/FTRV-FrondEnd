@@ -35,4 +35,5 @@ export const keys = {
   ringGroups: (payload) => ['/ringGroups', payload],
   jobs: 'jobs',
   getJob: (id) => ['job', id],
+  applicant: (id) => ['applicant', id],
 };

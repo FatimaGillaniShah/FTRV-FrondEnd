@@ -5,18 +5,26 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 
-const ActionButtons = ({ disabled }) => {
+const ActionButtons = ({ disabled, url }) => {
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
 
+  const handleResumeDownload = (resumeUrl) => {
+    window.open(resumeUrl, '_self');
+  };
   return (
     <>
       <Show IF={role === ROLES.ADMIN}>
         <>
-          <IconButton disabled={disabled}>
+          <IconButton
+            disabled={disabled}
+            onClick={() => {
+              handleResumeDownload(url);
+            }}
+          >
             <DescriptionOutlinedIcon color="secondary" />
           </IconButton>
         </>

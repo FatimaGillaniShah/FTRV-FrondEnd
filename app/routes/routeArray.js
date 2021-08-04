@@ -35,6 +35,7 @@ import RingGroup from '../containers/ringGroup/loadable';
 import Jobs from '../containers/jobs/loadable';
 import JobDetailModal from '../containers/jobDetailModal/loadable';
 import AddApplicant from '../containers/createApplicant/loadable';
+import Applicant from '../containers/applicant/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
 export const routeArray = [
@@ -440,11 +441,11 @@ export const routeArray = [
       },
       {
         path: '/applicants/:id',
-        component: AddApplicant,
+        component: Applicant,
         exact: true,
-        simplifiedPath: 'applicant',
+        simplifiedPath: 'applicants',
         noOfEnteriesToSkipAfterThisEntry: 1,
-        breadCrumbKey: 'Add New Applicant',
+        breadCrumbKey: 'Applicant',
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
       },
