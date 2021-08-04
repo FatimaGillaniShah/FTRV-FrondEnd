@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'html-react-parser';
@@ -19,7 +19,6 @@ export const JobDetailModal = ({
   expiryDate,
   modal,
 }) => {
-  const [open, setOpen] = useState(modal);
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -29,7 +28,7 @@ export const JobDetailModal = ({
   } = useAuthContext();
 
   const handleClose = () => {
-    setOpen(false);
+    navigateTo(history, `/jobs`);
   };
   const handleChange = () => {
     navigateTo(history, `/jobs/applicant/add/${id}`);
@@ -37,7 +36,7 @@ export const JobDetailModal = ({
   return (
     <>
       <MuiDialog
-        open={open}
+        open={modal}
         onClose={() => handleClose()}
         title={
           <DialogTitle
