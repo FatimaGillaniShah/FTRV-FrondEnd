@@ -49,7 +49,7 @@ export const JobDetailModal = ({
           />
         }
         onSubmit={handleSubmit}
-        maxWidth="lg"
+        maxWidth="md"
         classes={classes}
         successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}
       >

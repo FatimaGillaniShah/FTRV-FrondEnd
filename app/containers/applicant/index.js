@@ -28,15 +28,18 @@ function ApplicantContainer() {
       },
     }
   );
-  const rows = data?.data?.data?.rows.map((value) => ({
-    ...value,
-    location: value.user.location,
-    department: value.user.department,
-    emailId: value.user.email,
-    name: value.user.fullName,
-    designation: value.user.title,
-  }));
 
+  const rows = data?.data?.data?.rows.map((applicant) => {
+    const { user } = applicant;
+    return {
+      ...applicant,
+      location: user?.location?.name,
+      department: user?.department?.name,
+      emailId: user?.email,
+      name: user?.fullName,
+      designation: user?.title,
+    };
+  });
   return (
     <>
       <Helmet>
