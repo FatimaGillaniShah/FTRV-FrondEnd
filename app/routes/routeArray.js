@@ -33,7 +33,6 @@ import AddDocument from '../containers/createDocument/loadable';
 import AddRingGroup from '../containers/createRingGroup/loadable';
 import RingGroup from '../containers/ringGroup/loadable';
 import Jobs from '../containers/jobs/loadable';
-import JobDetailModal from '../containers/jobDetailModal/loadable';
 import AddApplicant from '../containers/createApplicant/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
@@ -418,15 +417,6 @@ export const routeArray = [
     breadCrumbKey: 'Jobs',
     routeType: routeTypes.private,
     nestedRoutes: [
-      {
-        path: '/detail/:id',
-        component: JobDetailModal,
-        exact: true,
-        simplifiedPath: 'detail',
-        noOfEnteriesToSkipAfterThisEntry: 1,
-        breadCrumbKey: 'Details',
-        routeType: routeTypes.private,
-      },
       {
         path: '/applicant/add/:id',
         component: AddApplicant,

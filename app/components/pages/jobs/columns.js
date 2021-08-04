@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { useDeleteJob } from '../../../hooks/job';
+import { JobDetailModal } from '../../jobDetailsModal/index';
 
 const ActionButtons = ({ data }) => {
   const history = useHistory();
@@ -17,7 +19,7 @@ const ActionButtons = ({ data }) => {
       data: { role },
     },
   } = useAuthContext();
-
+  const [openJobModal, setOpenJobModal] = useState(false);
   const { mutate, isLoading } = useDeleteJob();
 
   const handleDelete = () => {
@@ -27,13 +29,27 @@ const ActionButtons = ({ data }) => {
       }
     });
   };
+  const expiryDate = moment(data?.expiryDate).format('MM-DD-YYYY');
+  const handleJobModal = () => {
+    setOpenJobModal(true);
+  };
 
+  const handleClose = () => {
+    setOpenJobModal(false);
+  };
   return (
     <>
-      <IconButton
-        disabled={isLoading}
-        onClick={() => navigateTo(history, `/jobs/detail/${data.id}`)}
-      >
+      <JobDetailModal
+        id={data.id}
+        department={data.department}
+        location={data.location}
+        description={data.description}
+        expiryDate={expiryDate}
+        modal={openJobModal}
+        onHandleClose={handleClose}
+      />
+
+      <IconButton disabled={isLoading} onClick={handleJobModal}>
         <VisibilityOutlinedIcon />
       </IconButton>
       <Show IF={role === ROLES.ADMIN}>
