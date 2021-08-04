@@ -427,17 +427,15 @@ export const routeArray = [
         noOfEnteriesToSkipAfterThisEntry: 1,
         breadCrumbKey: 'Details',
         routeType: routeTypes.private,
-        roles: [ROLES.ADMIN],
       },
       {
-        path: '/applicant/:id',
+        path: '/applicant/add/:id',
         component: AddApplicant,
         exact: true,
         simplifiedPath: 'applicant',
         noOfEnteriesToSkipAfterThisEntry: 1,
         breadCrumbKey: 'Add New Applicant',
         routeType: routeTypes.private,
-        roles: [ROLES.ADMIN],
       },
       {
         path: '/applicants/:id',
