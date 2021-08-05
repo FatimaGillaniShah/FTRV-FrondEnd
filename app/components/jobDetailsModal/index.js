@@ -29,7 +29,7 @@ export const JobDetailModal = ({
   } = useAuthContext();
 
   const handleSubmit = () => {
-    if (role === ROLES.ADMIN) {
+    if (role !== ROLES.ADMIN) {
       navigateTo(history, `/jobs/applicants/${id}`);
     } else {
       navigateTo(history, `/jobs/applicant/add/${id}`);
