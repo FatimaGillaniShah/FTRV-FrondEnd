@@ -36,4 +36,5 @@ export const keys = {
   jobs: 'jobs',
   applicant: (id) => ['applicant', id],
   getJobs: (payload) => ['jobs', payload],
+  getJobById: (id) => ['job', id],
 };

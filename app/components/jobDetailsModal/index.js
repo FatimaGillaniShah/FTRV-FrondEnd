@@ -18,6 +18,8 @@ export const JobDetailModal = ({
   description,
   expiryDate,
   modal,
+  applied,
+  expired,
   onHandleClose,
 }) => {
   const classes = useStyles();
@@ -29,10 +31,10 @@ export const JobDetailModal = ({
   } = useAuthContext();
 
   const handleSubmit = () => {
-    if (role !== ROLES.ADMIN) {
+    if (role === ROLES.ADMIN) {
       navigateTo(history, `/jobs/applicants/${id}`);
     } else {
-      navigateTo(history, `/jobs/applicant/add/${id}`);
+      navigateTo(history, `/jobs/apply/${id}`);
     }
   };
   return (
@@ -42,16 +44,19 @@ export const JobDetailModal = ({
         onClose={() => onHandleClose()}
         title={
           <DialogTitle
+            expired={expired}
             department={department}
             location={location}
             expiryDate={expiryDate}
             onHandleClose={onHandleClose}
+            applied={applied}
           />
         }
         onSubmit={handleSubmit}
         maxWidth="md"
         classes={classes}
         successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}
+        expired={expired}
       >
         <Box px={5} mt={5}>
           <BodyTextSmall color="grey">

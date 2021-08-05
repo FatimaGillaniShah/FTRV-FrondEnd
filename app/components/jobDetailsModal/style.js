@@ -30,4 +30,8 @@ export const useStyles = makeStyles((theme) => ({
   icon: {
     fontSize: '2rem',
   },
+  badge: {
+    width: '4rem',
+    marginTop: theme.spacing(3),
+  },
 }));

@@ -259,3 +259,5 @@ export const createApplicant = (payload) => http.post(APPLICANT, payload);
 
 export const getApplicants = ({ queryKey }) =>
   http.get(`${APPLICANT}?jobId=${queryKey[1]}`);
+
+export const getJobById = ({ queryKey }) => http.get(`${JOB}/${queryKey[1]}`);

@@ -419,16 +419,6 @@ export const routeArray = [
     routeType: routeTypes.private,
     nestedRoutes: [
       {
-        path: '/applicant/add/:id',
-        component: AddApplicant,
-        exact: true,
-        breadCrumbKey: 'Add New Applicant',
-        simplifiedPath: 'add',
-        noOfEnteriesToSkipAfterThisEntry: 1,
-        routeType: routeTypes.private,
-        roles: [ROLES.ADMIN, ROLES.USER],
-      },
-      {
         path: '/applicants/:id',
         component: Applicant,
         exact: true,
@@ -437,6 +427,16 @@ export const routeArray = [
         breadCrumbKey: 'Applicant',
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/apply/:id',
+        component: AddApplicant,
+        exact: true,
+        breadCrumbKey: 'Add New Applicant',
+        simplifiedPath: 'apply',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN, ROLES.USER],
       },
     ],
   },
