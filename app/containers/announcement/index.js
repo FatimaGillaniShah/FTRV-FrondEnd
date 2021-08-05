@@ -95,14 +95,14 @@ function AnnouncementContainer() {
                 </Box>
               </Show>
               <DataTable
-                data={formatData}
-                headCells={headCells}
+                rows={formatData}
+                columns={headCells}
                 setSelected={setSelected}
                 selected={selected}
                 count={formatData?.length || 0}
-                setPage={setPage}
-                page={page}
                 sortColumn="title"
+                page={page}
+                setPage={setPage}
               />
             </WrapInCard>
           </Box>

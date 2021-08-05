@@ -91,6 +91,11 @@ function RingGroupContainer() {
     extension: '',
     locationId: '',
   };
+  const rows = data?.data?.data?.rows.map((value) => ({
+    ...value,
+    department: value.department.name,
+    location: value.location.name,
+  }));
   return (
     <>
       <Helmet>
@@ -100,7 +105,7 @@ function RingGroupContainer() {
         <Loading />
       ) : (
         <RingGroup
-          data={data?.data?.data?.rows}
+          data={rows}
           selected={selected}
           setSelected={setSelected}
           onHandleDelete={handleDelete}

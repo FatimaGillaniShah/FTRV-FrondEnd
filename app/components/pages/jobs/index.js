@@ -3,33 +3,30 @@ import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 import { useAuthContext } from '../../../context/authContext';
-import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
 import { ROLES } from '../../../utils/constants';
 import { TableButtons } from './tableButtons';
 import DataTable from '../../dataTable';
-import { headCells } from './columns';
 import { Search } from '../../search/search';
 import Filters from './filters';
+import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
+import { headCells } from './columns';
 import Show from '../../show';
 
-function RingGroup({
-  selected,
+function Jobs({
   data,
-  setSelected,
-  onHandleDelete,
-  initialFilterValues,
+  selected,
   onHandleSearch,
-  filterToggle,
-  query,
-  onHandleFilterSearch,
-  onClearFilter,
+  setSelected,
   onHandleSwitchChange,
+  onHandleDelete,
   page,
+  query,
   setPage,
-  toggleValues,
-  alignment,
-  onHandleToggleChange,
+  filterToggle,
+  onClearFilter,
+  initialFilterValues,
+  onHandleFilterSearch,
 }) {
   const {
     user: {
@@ -43,23 +40,20 @@ function RingGroup({
         <WrapInCard mb={8}>
           <Box display="flex">
             <Search
-              name="Ring Group"
+              name="Jobs"
+              showToggle={false}
               onHandleSearch={onHandleSearch}
               onHandleSwitchChange={onHandleSwitchChange}
               initialValues={query}
-              showToggle
               checked={filterToggle}
-              toggleValues={toggleValues}
-              alignment={alignment}
-              onHandleToggleChange={onHandleToggleChange}
             />
           </Box>
           <Box mt={2}>
             <Show IF={filterToggle}>
               <Filters
                 onHandleFilterSearch={onHandleFilterSearch}
-                initialValues={initialFilterValues}
                 onClear={onClearFilter}
+                initialValues={initialFilterValues}
               />
             </Show>
           </Box>
@@ -68,13 +62,13 @@ function RingGroup({
           <Show IF={role === ROLES.ADMIN}>
             <Box mt={4}>
               <TableButtons
-                numSelected={selected.length}
+                numSelected={selected?.length}
                 onHandleDelete={onHandleDelete}
               />
-              <Show IF={selected.length > 0}>
+              <Show IF={selected?.length > 0}>
                 <Box my={4}>
                   <Alert severity="info">
-                    <strong>{selected.length}</strong> Ring Group(s) Selected
+                    <strong>{selected?.length}</strong> Job(s) Selected
                   </Alert>
                 </Box>
               </Show>
@@ -86,7 +80,8 @@ function RingGroup({
             setSelected={setSelected}
             selected={selected}
             count={data?.length || 0}
-            sortColumn="name"
+            sortColumn="title"
+            disableSelectionOnClick
             page={page}
             setPage={setPage}
           />
@@ -96,15 +91,11 @@ function RingGroup({
   );
 }
 
-RingGroup.propTypes = {
+Jobs.propTypes = {
   selected: PropTypes.array,
   data: PropTypes.array,
   setSelected: PropTypes.array,
   onHandleDelete: PropTypes.func,
-  toggleValues: PropTypes.array,
-  alignment: PropTypes.string,
-  onHandleToggleChange: PropTypes.func,
-  initialFilterValues: PropTypes.object,
 };
 
-export default memo(RingGroup);
+export default memo(Jobs);

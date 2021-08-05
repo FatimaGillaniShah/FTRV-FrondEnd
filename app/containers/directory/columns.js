@@ -3,12 +3,13 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import { get } from 'lodash';
 import { useAuthContext } from '../../context/authContext';
 import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
-const ActionButtons = ({ data, disabled, setSelected }) => {
+const ActionButtons = ({ data, disabled }) => {
   const history = useHistory();
   const {
     user: {
@@ -16,7 +17,7 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
     },
   } = useAuthContext();
 
-  const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
+  const mutation = useDeleteUser();
 
   const handleDeleteUser = () => {
     Modal.fire().then((result) => {
@@ -47,60 +48,72 @@ const ActionButtons = ({ data, disabled, setSelected }) => {
 
 export const headCells = [
   {
-    id: 'fullName',
-    numeric: false,
-    disablePadding: true,
-    label: 'Name',
-    type: 'label',
+    field: 'fullName',
+    type: 'string',
+    headerName: 'Name',
+    description: 'Name',
+    sortable: true,
+    flex: 1,
   },
   {
-    id: 'department.name',
-    numeric: false,
-    disablePadding: false,
-    label: 'Department',
-    type: 'label',
+    field: 'department.name',
+    type: 'string',
+    headerName: 'Department',
+    description: 'Department',
+    sortable: true,
+    valueFormatter: (params) => get(params.row, 'department.name'),
+    width: 150,
   },
   {
-    id: 'title',
-    numeric: false,
-    disablePadding: false,
-    label: 'Designation',
-    type: 'label',
+    field: 'title',
+    type: 'string',
+    headerName: 'Designation',
+    description: 'Designation',
+    sortable: true,
+    flex: 1,
   },
   {
-    id: 'location.name',
-    numeric: false,
-    disablePadding: false,
-    label: 'Location',
-    type: 'label',
+    field: 'location.name',
+    type: 'string',
+    headerName: 'Location',
+    description: 'Location',
+    sortable: true,
+    valueFormatter: (params) => get(params.row, 'location.name'),
+    width: 200,
   },
   {
-    id: 'email',
-    numeric: false,
-    disablePadding: false,
-    label: 'Email ID',
-    type: 'label',
+    field: 'email',
+    type: 'string',
+    headerName: 'Email ID',
+    description: 'Email ID',
+    sortable: true,
+    width: 240,
   },
   {
-    id: 'extension',
-    numeric: true,
-    disablePadding: false,
-    label: 'Ext',
-    type: 'label',
+    field: 'extension',
+    type: 'number',
+    headerName: 'Ext',
+    description: 'Ext',
+    sortable: false,
+    width: 150,
   },
   {
-    id: 'contactNo',
-    numeric: true,
-    disablePadding: false,
-    label: 'Cell Phone',
-    type: 'label',
+    field: 'contactNo',
+    type: 'number',
+    headerName: 'Cell Phone',
+    description: 'Cell Phone',
+    sortable: false,
+    flex: 1,
   },
   {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: '',
-    buttons: ActionButtons,
-    type: 'action',
+    field: 'actions',
+    type: 'number',
+    headerName: ' ',
+    description: 'Actions',
+    sortable: false,
+    renderCell: ({ row }) => (
+      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+    ),
+    width: 200,
   },
 ];

@@ -1,51 +1,77 @@
-import {
-  createStyles,
-  lighten,
-  makeStyles,
-  withStyles,
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles, withStyles } from '@material-ui/core/styles';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
+import { colors } from '../../theme/colors';
 
-// TABLE STYLES
+// Grid Styles
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-  },
-  paper: {
-    width: '100%',
-    marginBottom: theme.spacing(2),
-  },
-  table: {
-    minWidth: 1050,
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: 'rect(0 0 0 0)',
-    height: 1,
-    margin: -1,
-    overflow: 'hidden',
-    padding: 0,
-    position: 'absolute',
-    top: 20,
-    width: 1,
-  },
-  tableHead: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.text.light,
-  },
-  headCells: {
-    width: '100px',
-    color: theme.palette.text.main,
-    '&:hover': {
-      color: theme.palette.text.main,
+    '& .row-disabled': {
+      cursor: 'not-allowed',
+    },
+    '& .MuiDataGrid-columnsContainer': {
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.text.light,
+      lineHeight: '62px !important',
+      maxHeight: '62px !important',
+      minHeight: '62px !important',
+
+      '& .MuiCheckbox-root': {
+        color: theme.palette.checkbox.secondary,
+      },
+    },
+    '& .MuiDataGrid-cell, & .MuiDataGrid-columnHeader': {
+      outline: 'none !important',
+    },
+    '& .MuiDataGrid-window': {
+      backgroundColor: colors.bgColor.secondary,
+    },
+    '& .MuiDataGrid-columnSeparator': { display: 'none' },
+    '& .super-app.paid': {
+      color: colors.green,
+    },
+    '& .super-app.open': {
+      color: colors.green,
+    },
+    '& .super-app.redeemed': {
+      color: colors.green,
+    },
+    '& .super-app.sold': {
+      color: colors.red,
+    },
+    '& .super-app.adjudicated': {
+      color: colors.red,
+    },
+    '& .super-app.closed': {
+      color: colors.red,
+    },
+    '& .super-app.unpaid': {
+      color: colors.grey,
+    },
+    '& .super-app.pending': {
+      color: colors.grey,
+    },
+    '& .super-app.reviewed': {
+      color: colors.orange,
+    },
+
+    '& .MuiCheckbox-root': {
+      color: theme.palette.checkbox.main,
+    },
+    '& .MuiDataGrid-sortIcon': {
+      color: theme.palette.iconColor.default,
+    },
+    '& .MuiCheckbox-colorPrimary.Mui-disabled': {
+      color: 'rgba(0, 0, 0, 0.26)',
     },
   },
-  headLabel: {
-    color: theme.palette.text.light,
-    '&:hover': {
-      color: lighten(theme.palette.secondary.light, 0.85),
-    },
+
+  gridOverlay: {
+    zIndex: 100,
+  },
+  label: {
+    marginTop: theme.spacing(1),
+    width: '100%',
   },
 }));
 

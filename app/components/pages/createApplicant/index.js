@@ -12,14 +12,14 @@ import WrapInCard from '../../layout/wrapInCard';
 import { H5 } from '../../typography';
 
 const applicantSchema = object().shape({
-  resume: string().required('*Resume is Required'),
+  file: string().required('*Resume is Required'),
   note: string()
     .notRequired()
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
 });
 
-export function CreateApplicant({ initialValues }) {
+export function CreateApplicant({ initialValues, onHandleSubmit }) {
   const history = useHistory();
 
   return (
@@ -33,13 +33,14 @@ export function CreateApplicant({ initialValues }) {
             enableReinitialize
             initialValues={initialValues}
             validationSchema={applicantSchema}
+            onSubmit={onHandleSubmit}
           >
             {({ values, setFieldValue }) => (
               <Form>
                 <Box display="flex" flexDirection="column" pb={10}>
                   <Box width={[1, 1, 1 / 2, 1 / 3]} my={5}>
                     <MuiFileInput
-                      name="resume"
+                      name="file"
                       buttonText="Resume"
                       values={values}
                       setFieldValue={setFieldValue}

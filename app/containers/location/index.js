@@ -18,7 +18,6 @@ import { ROLES } from '../../utils/constants';
 import Show from '../../components/show';
 
 function Locations() {
-  const [page, setPage] = useState(0);
   const {
     user: {
       data: { role },
@@ -26,6 +25,7 @@ function Locations() {
   } = useAuthContext();
 
   const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
   const mutation = useDeleteLocation({ callbackFn: () => setSelected([]) });
   const { data, isLoading } = useQuery(keys.locations, getLocations);
   const locations = data?.data?.data?.rows;
@@ -66,14 +66,14 @@ function Locations() {
               </Box>
             </Show>
             <DataTable
-              data={locations}
-              headCells={headCells}
+              rows={locations}
+              columns={headCells}
               selected={selected}
               setSelected={setSelected}
-              setPage={setPage}
-              page={page}
               count={locations?.length || 0}
               sortColumn="name"
+              page={page}
+              setPage={setPage}
             />
           </WrapInCard>
         </WrapInBreadcrumbs>

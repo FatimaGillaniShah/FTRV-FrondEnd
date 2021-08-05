@@ -1,5 +1,5 @@
 import { Box } from '@material-ui/core';
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { Alert } from '../..';
 import DataTable from '../../dataTable';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
@@ -14,8 +14,9 @@ function UsefulLinksPage({
   data,
   headCells,
   isLoading,
+  page,
+  setPage,
 }) {
-  const [page, setPage] = useState(0);
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -29,8 +30,8 @@ function UsefulLinksPage({
         </Show>
         <Show IF={!isLoading}>
           <DataTable
-            data={data}
-            headCells={headCells}
+            rows={data}
+            columns={headCells}
             selected={selected}
             setSelected={setSelected}
             count={data?.length || 0}

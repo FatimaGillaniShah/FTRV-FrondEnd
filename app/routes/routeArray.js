@@ -32,6 +32,8 @@ import Documents from '../containers/document/loadable';
 import AddDocument from '../containers/createDocument/loadable';
 import AddRingGroup from '../containers/createRingGroup/loadable';
 import RingGroup from '../containers/ringGroup/loadable';
+import Jobs from '../containers/jobs/loadable';
+import AddApplicant from '../containers/createApplicant/loadable';
 import AddJob from '../containers/createJob/loadable';
 
 const routeTypes = { public: 'public', private: 'private' };
@@ -410,21 +412,40 @@ export const routeArray = [
     ],
   },
   {
-    path: '/add',
-    component: AddJob,
+    path: '/jobs',
+    component: Jobs,
     exact: true,
-    breadCrumbKey: 'Add New Job',
+    breadCrumbKey: 'Jobs',
     routeType: routeTypes.private,
-    roles: [ROLES.ADMIN],
-  },
-  {
-    path: '/edit/:id',
-    component: AddJob,
-    simplifiedPath: 'edit',
-    noOfEnteriesToSkipAfterThisEntry: 1,
-    exact: true,
-    breadCrumbKey: 'Edit Job',
-    routeType: routeTypes.private,
-    roles: [ROLES.ADMIN],
+    nestedRoutes: [
+      {
+        path: '/applicant/add/:id',
+        component: AddApplicant,
+        exact: true,
+        breadCrumbKey: 'Add New Applicant',
+        simplifiedPath: 'add',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN, ROLES.USER],
+      },
+      {
+        path: '/add',
+        component: AddJob,
+        exact: true,
+        breadCrumbKey: 'Add New Job',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+      {
+        path: '/edit/:id',
+        component: AddJob,
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        exact: true,
+        breadCrumbKey: 'Edit Job',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+    ],
   },
 ];

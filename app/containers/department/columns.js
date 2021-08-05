@@ -8,9 +8,9 @@ import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteDepartment } from '../../hooks/department';
 
-const ActionButtons = ({ data, setSelected, disabled }) => {
+const ActionButtons = ({ data, disabled }) => {
   const history = useHistory();
-  const mutation = useDeleteDepartment({ callbackFn: () => setSelected([]) });
+  const mutation = useDeleteDepartment();
   const {
     user: {
       data: { role },
@@ -50,19 +50,23 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
 };
 export const headCells = [
   {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Department',
-    type: 'label',
+    field: 'name',
+    type: 'string',
+    headerName: 'Department',
+    description: 'Department',
+    sortable: true,
+    flex: 1,
   },
 
   {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: '',
-    buttons: ActionButtons,
-    type: 'action',
+    field: 'actions',
+    type: 'number',
+    headerName: ' ',
+    description: 'Actions',
+    sortable: false,
+    renderCell: ({ row }) => (
+      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+    ),
+    flex: 1,
   },
 ];

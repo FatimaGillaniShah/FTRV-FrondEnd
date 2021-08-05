@@ -21,6 +21,8 @@ import { Loading } from '../../components/loading';
 import { keys } from '../../state/queryKeys';
 
 function CreateUser() {
+  const locationMutation = useCreateLocation();
+  const departmentMutation = useCreateDepartment();
   const history = useHistory();
   const {
     user: {
@@ -67,8 +69,7 @@ function CreateUser() {
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
-  const locationMutation = useCreateLocation();
-  const departmentMutation = useCreateDepartment();
+
   const handleCreateLocation = (payload) => {
     locationMutation.mutate(payload);
   };

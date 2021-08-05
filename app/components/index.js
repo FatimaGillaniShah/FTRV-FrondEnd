@@ -12,6 +12,7 @@ export { default as Tabs } from './muiTabs';
 export { default as Tab } from './muiTab';
 export { default as MenuItem } from './muiMenuItem';
 export { default as ListItemIcon } from './muiListItemIcon';
+export { default as ToolTip } from './muiTooltip';
 export { default as ToggleGroup } from './muiToggleButtonGroup';
 export { default as MuiFileInput } from './muiFileInput';
 

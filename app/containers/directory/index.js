@@ -29,13 +29,14 @@ import Show from '../../components/show';
 function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
   const [pageNumber, setPageNumber] = useState(1);
+  const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [filters, setFilters] = useState();
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState([]);
   const [alignment, setAlignment] = useState('directory');
   const [sortOrder, setSortOrder] = useState('asc');
-  const [sortColumn, setSortColumn] = useState('firstName');
+  const [sortColumn, setSortColumn] = useState('email');
   const history = useHistory();
   const isServerSide = true;
   const classes = useStyles();
@@ -67,6 +68,7 @@ function DirectoryContainer() {
       keepPreviousData: true,
     }
   );
+
   const { data: locations, isLocationLoading } = useQuery(
     keys.locations,
     getLocations
@@ -82,12 +84,14 @@ function DirectoryContainer() {
     setChecked(target.checked);
   };
   const handleSearch = debounce((e, setFieldValue) => {
+    setPage(0);
     setPageNumber(1);
     setFieldFunc({ setFormikField: setFieldValue });
     setQuery({ searchString: e.target.value });
   }, 500);
 
   const handleFilterSearch = (values) => {
+    setPage(0);
     setPageNumber(1);
     setFilters(values);
   };
@@ -120,11 +124,11 @@ function DirectoryContainer() {
       }
     });
   };
-  const handleServerPageNumber = (value) => {
-    setPageNumber(value.currentPage);
+  const handleServerPageNumber = ({ currentPage }) => {
+    setPageNumber(currentPage);
   };
-  const handleServerPageSize = (value) => {
-    setPageSize(value.rowPerPage);
+  const handleServerPageSize = ({ rowPerPage }) => {
+    setPageSize(rowPerPage);
   };
   const locationOptions = locations?.data.data.rows.map((val) => ({
     value: val.id,
@@ -174,6 +178,7 @@ function DirectoryContainer() {
                   initialValues={query}
                   onHandleSwitchChange={handleSwitchChange}
                   checked={checked}
+                  showToggle
                   alignment={alignment}
                   onHandleSearch={handleSearch}
                   toggleValues={toggleValues}
@@ -208,21 +213,24 @@ function DirectoryContainer() {
                 </Box>
               </Show>
 
-              <DataTable
-                data={tableData?.rows}
-                headCells={headCells}
-                setSelected={setSelected}
-                selected={selected}
-                sortOrder={sortOrder}
-                sortColumn={sortColumn}
-                onChangeSort={onChangeSort}
-                isServerSide={isServerSide}
-                matchUserIdWithIDS
-                count={tableData?.count || 0}
-                handleServerPageNumber={handleServerPageNumber}
-                handleServerPageSize={handleServerPageSize}
-                pageNumber={pageNumber}
-              />
+              {!isLoading && !mutation.isLoading && (
+                <DataTable
+                  rows={tableData?.rows}
+                  columns={headCells}
+                  setSelected={setSelected}
+                  selected={selected}
+                  onChangeSort={onChangeSort}
+                  sortOrder={sortOrder}
+                  sortColumn={sortColumn}
+                  count={tableData?.count || 0}
+                  isServerSide={isServerSide}
+                  handleServerPageNumber={handleServerPageNumber}
+                  handleServerPageSize={handleServerPageSize}
+                  matchUserIdWithIDS
+                  page={page}
+                  setPage={setPage}
+                />
+              )}
             </WrapInCard>
           </Box>
         </WrapInBreadcrumbs>

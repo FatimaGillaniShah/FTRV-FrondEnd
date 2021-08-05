@@ -8,9 +8,9 @@ import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteLocation } from '../../hooks/location';
 
-const ActionButtons = ({ data, setSelected, disabled }) => {
+const ActionButtons = ({ data, disabled }) => {
   const history = useHistory();
-  const mutation = useDeleteLocation({ callbackFn: () => setSelected([]) });
+  const mutation = useDeleteLocation();
   const {
     user: {
       data: { role },
@@ -47,19 +47,23 @@ const ActionButtons = ({ data, setSelected, disabled }) => {
 };
 export const headCells = [
   {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Location',
-    type: 'label',
+    field: 'name',
+    type: 'string',
+    headerName: 'Location',
+    description: 'Location',
+    sortable: true,
+    flex: 1,
   },
 
   {
-    id: 'actions',
-    numeric: true,
-    disablePadding: false,
-    label: '',
-    buttons: ActionButtons,
-    type: 'action',
+    field: 'actions',
+    type: 'number',
+    headerName: ' ',
+    description: 'Actions',
+    sortable: false,
+    renderCell: ({ row }) => (
+      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+    ),
+    flex: 1,
   },
 ];

@@ -17,7 +17,6 @@ import { Modal } from '../../utils/helper';
 import { useDeleteDepartment } from '../../hooks/department';
 
 function Departments() {
-  const [page, setPage] = useState(0);
   const {
     user: {
       data: { role },
@@ -25,6 +24,7 @@ function Departments() {
   } = useAuthContext();
 
   const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
   const mutation = useDeleteDepartment({ callbackFn: () => setSelected([]) });
   const { data, isLoading } = useQuery(keys.departments, getDepartments);
   const departments = data?.data?.data?.rows;
@@ -66,14 +66,14 @@ function Departments() {
               </Box>
             )}
             <DataTable
-              data={departments}
-              headCells={headCells}
+              rows={departments}
+              columns={headCells}
               selected={selected}
               setSelected={setSelected}
               count={departments?.length || 0}
-              setPage={setPage}
-              page={page}
               sortColumn="name"
+              page={page}
+              setPage={setPage}
             />
           </WrapInCard>
         </WrapInBreadcrumbs>

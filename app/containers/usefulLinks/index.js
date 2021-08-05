@@ -12,6 +12,7 @@ import { useDeleteLink } from '../../hooks/usefulLink';
 
 function UsefulLinks() {
   const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
   const { categoryId } = useParams();
   const { data, isLoading } = useQuery(
     keys.getLink(categoryId),
@@ -59,6 +60,8 @@ function UsefulLinks() {
           onDelete={handleDeleteLinks}
           headCells={headCells}
           isLoading={isLoading}
+          page={page}
+          setPage={setPage}
         />
       )}
     </>
