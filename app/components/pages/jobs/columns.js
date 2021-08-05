@@ -32,7 +32,6 @@ const ActionButtons = ({ data }) => {
       }
     });
   };
-
   const handleJobModal = () => {
     setOpenJobModal(true);
   };
