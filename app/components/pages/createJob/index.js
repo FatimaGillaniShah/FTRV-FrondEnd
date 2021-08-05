@@ -18,14 +18,18 @@ import DepartmentWithModal from '../../departmentWithModal';
 import LocationWithModal from '../../locationWithModal';
 import { CKEDITOR_CUSTOM_CONFIG } from '../../../utils/constants';
 
-function CreateJob({ id, initialValues }) {
+function CreateJob({ id, initialValues, onHandleSubmit }) {
   const history = useHistory();
 
   return (
     <>
       <WrapInBreadcrumbs>
         <WrapInCard mb={8}>
-          <Formik initialValues={initialValues} validationSchema={jobSchema}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={jobSchema}
+            onSubmit={onHandleSubmit}
+          >
             {({ setFieldValue, errors, touched, values }) => (
               <Form>
                 <Box
@@ -36,7 +40,7 @@ function CreateJob({ id, initialValues }) {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Box width={[1, 1, 1, '80%']}>
+                  <Box width={[1, 1, 1, '63%']}>
                     <Box width={1} pt={7} flexWrap="wrap" display="flex" px={2}>
                       <Box width={1} textAlign="center">
                         <H4>{id ? 'Update' : 'Create'} New Job</H4>
@@ -59,13 +63,13 @@ function CreateJob({ id, initialValues }) {
                           label="Department*"
                         />
                       </Box>
-                      <Box width={[1, 1 / 2]} mt={9} px={3}>
+                      <Box width={[1, 1 / 2]} mt={8} px={3}>
                         <LocationWithModal
                           name="locationId"
                           label="Location*"
                         />
                       </Box>
-                      <Box width={[1, 1 / 2]} mt={9} px={3}>
+                      <Box width={[1, 1 / 2]} mt={8} px={3}>
                         <DatePicker
                           disablePast
                           id="expiryDate"
@@ -76,7 +80,7 @@ function CreateJob({ id, initialValues }) {
                       <Box mt={7} width={1} px={3}>
                         <CKEditor
                           editor={ClassicEditor}
-                          data={values.content}
+                          data={values.description}
                           config={CKEDITOR_CUSTOM_CONFIG}
                           onReady={(editor) => {
                             editor.editing.view.change((writer) => {

@@ -256,3 +256,10 @@ export const deleteJob = (payload) =>
   http.delete(JOB, { data: { ids: payload } });
 
 export const createApplicant = (payload) => http.post(APPLICANT, payload);
+
+export const createJob = (payload) => http.post(JOB, payload);
+
+export const getJobById = ({ queryKey }) => http.get(`${JOB}/${queryKey[1]}`);
+
+export const updateJob = ({ id, ...payload }) =>
+  http.put(`${JOB}/${id}`, payload);
