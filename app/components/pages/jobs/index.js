@@ -23,7 +23,6 @@ function Jobs({
   page,
   query,
   setPage,
-  onHandleToggleChange,
   filterToggle,
   onClearFilter,
   initialFilterValues,
@@ -36,8 +35,8 @@ function Jobs({
   } = useAuthContext();
 
   return (
-    <Box width={1}>
-      <WrapInBreadcrumbs>
+    <WrapInBreadcrumbs>
+      <Box width={1}>
         <WrapInCard mb={8}>
           <Box display="flex">
             <Search
@@ -47,15 +46,14 @@ function Jobs({
               onHandleSwitchChange={onHandleSwitchChange}
               initialValues={query}
               checked={filterToggle}
-              onHandleToggleChange={onHandleToggleChange}
             />
           </Box>
           <Box mt={2}>
             <Show IF={filterToggle}>
               <Filters
                 onHandleFilterSearch={onHandleFilterSearch}
-                initialValues={initialFilterValues}
                 onClear={onClearFilter}
+                initialValues={initialFilterValues}
               />
             </Show>
           </Box>
@@ -88,8 +86,8 @@ function Jobs({
             setPage={setPage}
           />
         </WrapInCard>
-      </WrapInBreadcrumbs>
-    </Box>
+      </Box>
+    </WrapInBreadcrumbs>
   );
 }
 
