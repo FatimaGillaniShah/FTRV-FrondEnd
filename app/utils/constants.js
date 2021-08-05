@@ -89,4 +89,5 @@ export const APIS = {
   DOCUMENT: '/documents',
   RING_GROUP: '/ringGroups',
   JOB: '/jobs',
+  APPLICANT: '/jobApplicant',
 };

@@ -32,7 +32,7 @@ export const DialogTitle = ({
           mb={3}
           mt={6}
         >
-          <Box width={[1, 1, 1 / 3, '40%']} ml={6}>
+          <Box width={[1, 1, 1 / 3, '30%']} ml={6}>
             <H4 color="secondary">HR Manager</H4>
           </Box>
           <Box
@@ -41,7 +41,7 @@ export const DialogTitle = ({
             justifyContent="flex-end"
             mb={3}
             mt={[5, 5, 5, 1]}
-            width={[1, 1, 1 / 3, '60%']}
+            width={[1, 1, 1 / 3, '70%']}
           >
             <Box
               px={[4, 4, 8, 8]}
