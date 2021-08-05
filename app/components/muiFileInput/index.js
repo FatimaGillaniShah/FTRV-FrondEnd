@@ -50,10 +50,11 @@ function MuiFileInput({ buttonText, setFieldValue, values, ...props }) {
         setError('Error: File is empty');
       } else if (fileSizeInMB >= MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS) {
         setError('Error: File size too large');
-      } else if (!['application/x-msdos-program'].includes(file?.type)) {
+      } else if (['application/x-msdownload'].includes(file?.type)) {
         setError('Error: Executable files are not allowed!');
+      } else {
+        setFieldValue(props.name, file);
       }
-      setFieldValue(props.name, file);
     }
   };
   const getName = (url) => {
