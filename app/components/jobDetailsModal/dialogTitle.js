@@ -7,7 +7,6 @@ import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import AlarmOutlinedIcon from '@material-ui/icons/AlarmOutlined';
 import Divider from '@material-ui/core/Divider';
-import Badge from '@material-ui/core/Badge';
 import PropTypes from 'prop-types';
 import { colors } from '../../theme/colors';
 import { useStyles } from './style';
@@ -49,16 +48,10 @@ export const DialogTitle = ({
                 </Box>
                 <Box mt={2} ml={7} display="flex" flexDirection="row">
                   <Show IF={applied}>
-                    <Box>
-                      <MuiBadge color={colors.info} badgeContent="applied" />
-                    </Box>
+                    <MuiBadge color={colors.info} badgeContent="applied" />
                   </Show>
                   <Show IF={expired}>
-                    <Badge
-                      className={classes.badge}
-                      badgeContent="expired"
-                      color="error"
-                    />
+                    <MuiBadge badgeContent="expired" color="error" />
                   </Show>
                 </Box>
               </Box>
