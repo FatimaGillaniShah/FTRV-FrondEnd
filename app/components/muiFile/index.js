@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   MIN_UPLOADABLE_FILE_SIZE_IN_MBS,
-  MAX_UPLOADABLE_FILE_SIZE_IN_MBS,
   SUPPORTED_FORMATS,
+  MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS,
 } from '../../utils/constants';
 import { isFunction, Toast } from '../../utils/helper';
 import Show from '../show';
@@ -34,7 +34,7 @@ export function MuiFile({
     if (error) {
       Toast({
         icon: 'error',
-        title: error,
+        title: error || 'Some error occured',
       });
     }
   }, [error]);
@@ -45,7 +45,7 @@ export function MuiFile({
     if (file) {
       if (fileSizeInMB <= MIN_UPLOADABLE_FILE_SIZE_IN_MBS) {
         setError('Error: File is empty');
-      } else if (fileSizeInMB >= MAX_UPLOADABLE_FILE_SIZE_IN_MBS) {
+      } else if (fileSizeInMB >= MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS) {
         setError('Error: File size too large');
       } else if (!SUPPORTED_FORMATS.includes(file?.type)) {
         setError('Error: Unsupported File Format');

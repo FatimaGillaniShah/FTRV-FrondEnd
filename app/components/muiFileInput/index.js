@@ -2,10 +2,15 @@ import { FormHelperText, Button, Box, Tooltip } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { memo, useRef } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import { ButtonText, BodyTextLarge } from '../typography';
 import { colors } from '../../theme/colors';
+import {
+  MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS,
+  MIN_UPLOADABLE_FILE_SIZE_IN_MBS,
+} from '../../utils/constants';
+import { Toast } from '../../utils/helper';
 
 const useStyles = makeStyles(() => ({
   upload: {
@@ -26,9 +31,30 @@ function MuiFileInput({ buttonText, setFieldValue, values, ...props }) {
   const handleUploadFile = () => {
     selectedFile.current.click();
   };
+  const [error, setError] = useState(undefined);
+
+  useEffect(() => {
+    if (error) {
+      Toast({
+        icon: 'error',
+        title: error || 'Some error occured',
+      });
+    }
+  }, [error]);
+
   const handleCaptureFile = (files = []) => {
     if (files.length) {
-      setFieldValue(props.name, files[0]);
+      const file = files[0];
+      const fileSizeInMB = file?.size / 1024 / 1024;
+      if (fileSizeInMB <= MIN_UPLOADABLE_FILE_SIZE_IN_MBS) {
+        setError('Error: File is empty');
+      } else if (fileSizeInMB >= MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS) {
+        setError('Error: File size too large');
+      } else if (['application/x-msdownload'].includes(file?.type)) {
+        setError('Error: Executable files are not allowed!');
+      } else {
+        setFieldValue(props.name, file);
+      }
     }
   };
   const getName = (url) => {
