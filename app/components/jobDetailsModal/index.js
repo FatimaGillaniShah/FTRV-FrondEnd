@@ -13,13 +13,12 @@ import { DialogTitle } from './dialogTitle';
 
 export const JobDetailModal = ({
   id,
-  department,
-  location,
-  description,
   expiryDate,
+  jobDetail,
   modal,
   onHandleClose,
 }) => {
+  const { department, location, applied, expired, description } = jobDetail;
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -32,7 +31,7 @@ export const JobDetailModal = ({
     if (role === ROLES.ADMIN) {
       navigateTo(history, `/jobs/applicants/${id}`);
     } else {
-      navigateTo(history, `/jobs/applicant/add/${id}`);
+      navigateTo(history, `/jobs/apply/${id}`);
     }
   };
   return (
@@ -42,16 +41,19 @@ export const JobDetailModal = ({
         onClose={() => onHandleClose()}
         title={
           <DialogTitle
-            department={department}
-            location={location}
+            expired={expired}
+            department={department.name}
+            location={location.name}
             expiryDate={expiryDate}
             onHandleClose={onHandleClose}
+            applied={applied}
           />
         }
         onSubmit={handleSubmit}
-        maxWidth="lg"
+        maxWidth="md"
         classes={classes}
         successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}
+        disabled={expired}
       >
         <Box px={5} mt={5}>
           <BodyTextSmall color="grey">

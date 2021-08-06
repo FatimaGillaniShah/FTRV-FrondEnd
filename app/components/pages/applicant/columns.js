@@ -5,18 +5,25 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 
-const ActionButtons = ({ disabled }) => {
+const ActionButtons = ({ applicant }) => {
   const {
     user: {
       data: { role },
     },
   } = useAuthContext();
 
+  const handleResumeDownload = (resumeUrl) => {
+    window.open(resumeUrl, '_self');
+  };
   return (
     <>
       <Show IF={role === ROLES.ADMIN}>
         <>
-          <IconButton disabled={disabled}>
+          <IconButton
+            onClick={() => {
+              handleResumeDownload(applicant.resume);
+            }}
+          >
             <DescriptionOutlinedIcon color="secondary" />
           </IconButton>
         </>
@@ -72,9 +79,7 @@ export const headCells = [
     headerName: 'Resume',
     description: 'Actions',
     sortable: false,
-    renderCell: ({ row }) => (
-      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
-    ),
+    renderCell: ({ row }) => <ActionButtons applicant={row} />,
     width: 150,
   },
 ];

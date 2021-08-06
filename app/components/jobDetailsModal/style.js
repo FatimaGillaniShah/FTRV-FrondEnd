@@ -12,9 +12,6 @@ export const useStyles = makeStyles((theme) => ({
     top: theme.spacing(2),
     color: colors.secondary,
   },
-  content: {
-    height: '36rem',
-  },
   dialog: {
     marginLeft: theme.spacing(2),
     marginTop: theme.spacing(8),
@@ -23,11 +20,21 @@ export const useStyles = makeStyles((theme) => ({
     background: colors.black,
   },
   dialogActions: {
-    marginBottom: theme.spacing(20),
+    marginBottom: theme.spacing(10),
     marginLeft: theme.spacing(7),
     marginTop: theme.spacing(8),
   },
   icon: {
     fontSize: '2rem',
+  },
+  badge: {
+    width: '4rem',
+    marginTop: theme.spacing(3),
+  },
+  elipses: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    maxWidth: '100px',
   },
 }));

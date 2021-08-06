@@ -19,6 +19,7 @@ export default function MuiDialog({
   onSubmit,
   classes,
   successButtonText,
+  disabled,
 }) {
   return (
     <Dialog
@@ -31,14 +32,16 @@ export default function MuiDialog({
       <DialogTitle id="form-dialog-title" className={classes?.dialog}>
         {title}
       </DialogTitle>
-      <DialogContent className={classes?.content}>{children}</DialogContent>
-      <Box display="flex" px={5}>
+      <DialogContent>{children}</DialogContent>
+
+      <Box display="flex" px={1}>
         <DialogActions className={classes?.dialogActions}>
           <Button
             onClick={onSubmit}
             type="submit"
             color="primary"
             variant="contained"
+            disabled={disabled}
           >
             {successButtonText}
           </Button>
@@ -60,6 +63,7 @@ MuiDialog.propTypes = {
   title: PropTypes.string,
   children: PropTypes.element,
   successButtonText: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 MuiDialog.defaultProps = {
   fullWidth: true,

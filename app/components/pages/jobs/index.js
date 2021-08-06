@@ -8,8 +8,8 @@ import { ROLES } from '../../../utils/constants';
 import { TableButtons } from './tableButtons';
 import DataTable from '../../dataTable';
 import { Search } from '../../search/search';
-import Filters from './filters';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
+import Filters from './filters';
 import { headCells } from './columns';
 import Show from '../../show';
 

@@ -16,6 +16,7 @@ export const colors = {
   skyBlue,
   darkGrey: '#A9A9A9',
   black,
+  oliveGreen: '#28a745',
   darkBlue: 'linear-gradient(to right bottom, #031337, #1b578d)',
   bgColor: {
     main: '#F0F2F5',
