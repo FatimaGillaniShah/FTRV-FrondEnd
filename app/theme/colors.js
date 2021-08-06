@@ -4,6 +4,7 @@ const grey = '#808080';
 const lightblue = '#1875C0';
 const skyBlue = '#def2f3';
 const black = '#000000';
+const info = '#1976d2';
 export const colors = {
   primary: '#153D73',
   secondary: lightblue,
@@ -14,6 +15,7 @@ export const colors = {
   green,
   grey,
   skyBlue,
+  info,
   darkGrey: '#A9A9A9',
   black,
   oliveGreen: '#28a745',

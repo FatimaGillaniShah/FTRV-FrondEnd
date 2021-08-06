@@ -34,6 +34,8 @@ export const JobDetailModal = ({
       navigateTo(history, `/jobs/apply/${id}`);
     }
   };
+  const disabled =
+    (role === ROLES.USER && expired) || (role === ROLES.USER && applied);
   return (
     <>
       <MuiDialog
@@ -53,7 +55,7 @@ export const JobDetailModal = ({
         maxWidth="md"
         classes={classes}
         successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}
-        disabled={expired}
+        disabled={disabled}
       >
         <Box px={5} mt={5}>
           <BodyTextSmall color="grey">

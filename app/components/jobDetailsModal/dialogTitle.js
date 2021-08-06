@@ -38,7 +38,7 @@ export const DialogTitle = ({
           mt={6}
         >
           <Box mb={2} width={[1, 1, 1 / 3, '30%']}>
-            {expired ? (
+            {expired || applied ? (
               <Box
                 display="flex"
                 flexDirection={['column', 'column', 'column', 'column']}
@@ -48,12 +48,9 @@ export const DialogTitle = ({
                   <H4 color="secondary">HR Manager</H4>
                 </Box>
                 <Box mt={2} ml={7} display="flex" flexDirection="row">
-                  <Show IF={!applied}>
+                  <Show IF={applied}>
                     <Box>
-                      <MuiBadge
-                        color={colors.oliveGreen}
-                        badgeContent="applied"
-                      />
+                      <MuiBadge color={colors.info} badgeContent="applied" />
                     </Box>
                   </Show>
                   <Show IF={expired}>
