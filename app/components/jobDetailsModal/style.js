@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme) => ({
   dialogActions: {
     marginBottom: theme.spacing(20),
     marginLeft: theme.spacing(7),
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(3),
   },
   icon: {
     fontSize: '2rem',

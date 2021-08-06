@@ -13,7 +13,7 @@ import { Modal, navigateTo } from '../../../utils/helper';
 import { useDeleteJob } from '../../../hooks/job';
 import JobDetailModal from '../../../containers/jobDetailModal';
 import { colors } from '../../../theme/colors';
-import MuiStyledBadge from '../../muiStyledBadge';
+import { MuiBadge } from '../../index';
 
 const ActionButtons = ({ data }) => {
   const history = useHistory();
@@ -78,7 +78,7 @@ const StatusIcons = ({ data }) => (
     ) : (
       <Box ml={2}>
         <IconButton>
-          <MuiStyledBadge color={colors.oliveGreen} badgeContent="active" />
+          <MuiBadge color={colors.oliveGreen} badgeContent="active" />
         </IconButton>
       </Box>
     )}

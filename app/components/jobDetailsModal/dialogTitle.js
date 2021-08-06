@@ -12,7 +12,8 @@ import PropTypes from 'prop-types';
 import { colors } from '../../theme/colors';
 import { useStyles } from './style';
 import { BodyTextLarge, H4 } from '../typography';
-import MuiStyledBadge from '../muiStyledBadge';
+import { MuiBadge } from '../index';
+import Show from '../show';
 
 export const DialogTitle = ({
   department,
@@ -20,6 +21,7 @@ export const DialogTitle = ({
   expiryDate,
   expired,
   onHandleClose,
+  applied,
 }) => {
   const classes = useStyles();
 
@@ -48,17 +50,21 @@ export const DialogTitle = ({
                 </Box>
 
                 <Box mt={1} display="flex" flexDirection="row">
-                  <Box ml={6}>
-                    <MuiStyledBadge
-                      color={colors.oliveGreen}
-                      badgeContent="applied"
+                  <Show IF={!applied}>
+                    <Box ml={6}>
+                      <MuiBadge
+                        color={colors.oliveGreen}
+                        badgeContent="applied"
+                      />
+                    </Box>
+                  </Show>
+                  <Show IF={expired}>
+                    <Badge
+                      className={classes.badge}
+                      badgeContent="expired"
+                      color="error"
                     />
-                  </Box>
-                  <Badge
-                    className={classes.badge}
-                    badgeContent="expired"
-                    color="error"
-                  />
+                  </Show>
                 </Box>
               </Box>
             ) : (

@@ -455,7 +455,7 @@ export const routeArray = [
         simplifiedPath: 'apply',
         noOfEnteriesToSkipAfterThisEntry: 1,
         routeType: routeTypes.private,
-        roles: [ROLES.ADMIN, ROLES.USER],
+        roles: [ROLES.USER],
       },
     ],
   },

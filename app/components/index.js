@@ -15,6 +15,7 @@ export { default as ListItemIcon } from './muiListItemIcon';
 export { default as ToolTip } from './muiTooltip';
 export { default as ToggleGroup } from './muiToggleButtonGroup';
 export { default as MuiFileInput } from './muiFileInput';
+export { default as MuiBadge } from './muiBadge';
 
 export {
   H1,

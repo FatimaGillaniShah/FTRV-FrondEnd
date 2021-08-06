@@ -56,7 +56,7 @@ export const JobDetailModal = ({
         maxWidth="md"
         classes={classes}
         successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}
-        expired={expired}
+        disabled={expired}
       >
         <Box px={5} mt={5}>
           <BodyTextSmall color="grey">
