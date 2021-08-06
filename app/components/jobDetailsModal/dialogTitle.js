@@ -24,8 +24,6 @@ export const DialogTitle = ({
   applied,
 }) => {
   const classes = useStyles();
-  const truncate = (source, size) =>
-    source.length > size ? `${source.slice(0, size - 1)} . . .` : source;
   return (
     <>
       <MuiDialogTitle className={classes.root}>
@@ -90,14 +88,12 @@ export const DialogTitle = ({
               flexDirection={['row', 'column', 'row', 'row']}
             >
               <LocationOnOutlinedIcon color="secondary" />
-              <BodyTextLarge color="grey" fontWeight="fontWeightMedium">
+              <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>
                 Location:
               </BodyTextLarge>
-              <Box ml={1}>
+              <Box ml={1} className={classes.elipses}>
                 <ToolTip title={location}>
-                  <BodyTextLarge color="grey">
-                    {truncate(location, 10)}
-                  </BodyTextLarge>
+                  <BodyTextLarge color="grey">{location}</BodyTextLarge>
                 </ToolTip>
               </Box>
             </Box>
@@ -108,14 +104,12 @@ export const DialogTitle = ({
               flexDirection={['row', 'column', 'row', 'row']}
             >
               <SearchOutlinedIcon color="secondary" />
-              <BodyTextLarge color="grey" fontWeight="fontWeightMedium">
+              <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>
                 Department:
               </BodyTextLarge>
-              <Box ml={1}>
+              <Box ml={1} className={classes.elipses}>
                 <ToolTip title={department}>
-                  <BodyTextLarge color="grey">
-                    {truncate(department, 10)}
-                  </BodyTextLarge>
+                  <BodyTextLarge color="grey">{department}</BodyTextLarge>
                 </ToolTip>
               </Box>
             </Box>
@@ -126,14 +120,12 @@ export const DialogTitle = ({
               flexDirection={['row', 'column', 'row', 'row']}
             >
               <AlarmOutlinedIcon color="secondary" />
-              <BodyTextLarge color="grey" fontWeight="fontWeightMedium">
+              <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>
                 Deadline:
               </BodyTextLarge>
               <Box ml={1}>
                 <ToolTip title={expiryDate}>
-                  <BodyTextLarge color="grey">
-                    {truncate(expiryDate, 10)}
-                  </BodyTextLarge>
+                  <BodyTextLarge color="grey">{expiryDate}</BodyTextLarge>
                 </ToolTip>
               </Box>
             </Box>

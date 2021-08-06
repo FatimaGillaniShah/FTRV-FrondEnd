@@ -31,4 +31,10 @@ export const useStyles = makeStyles((theme) => ({
     width: '4rem',
     marginTop: theme.spacing(3),
   },
+  elipses: {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    maxWidth: '100px',
+  },
 }));
