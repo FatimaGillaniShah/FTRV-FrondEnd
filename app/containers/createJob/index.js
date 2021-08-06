@@ -19,7 +19,7 @@ function AddJob() {
       enabled: !!id,
     }
   );
-  let job = data?.data?.data;
+  let job = data?.data?.data[0];
   job = {
     ...job,
     departmentId: job?.department?.id,
