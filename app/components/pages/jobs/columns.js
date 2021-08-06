@@ -67,9 +67,9 @@ const ActionButtons = ({ jobs }) => {
     </>
   );
 };
-const StatusIcons = ({ data }) => (
+const StatusIcons = ({ jobs }) => (
   <>
-    {data.expired ? (
+    {jobs.expired ? (
       <Box ml={2}>
         <IconButton>
           <Badge badgeContent="expired" color="error" />
@@ -123,7 +123,7 @@ export const headCells = [
     headerName: 'Status',
     description: 'Status',
     sortable: false,
-    renderCell: ({ row }) => <StatusIcons data={row} />,
+    renderCell: ({ row }) => <StatusIcons jobs={row} />,
     width: 250,
   },
   {

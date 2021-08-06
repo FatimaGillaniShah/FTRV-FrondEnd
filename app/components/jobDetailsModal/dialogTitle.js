@@ -89,7 +89,9 @@ export const DialogTitle = ({
                 Location:
               </BodyTextLarge>
               <Box ml={1}>
-                <BodyTextLarge color="grey">{location}</BodyTextLarge>
+                <BodyTextLarge color="grey" className={classes.lineBreak}>
+                  {location}
+                </BodyTextLarge>
               </Box>
             </Box>
 
@@ -104,7 +106,9 @@ export const DialogTitle = ({
                 Department:
               </BodyTextLarge>
               <Box ml={1}>
-                <BodyTextLarge color="grey">{department}</BodyTextLarge>
+                <BodyTextLarge color="grey" className={classes.lineBreak}>
+                  {department}
+                </BodyTextLarge>
               </Box>
             </Box>
 
@@ -119,7 +123,9 @@ export const DialogTitle = ({
                 Deadline:
               </BodyTextLarge>
               <Box ml={1}>
-                <BodyTextLarge color="grey">{expiryDate}</BodyTextLarge>
+                <BodyTextLarge color="grey" className={classes.dateLineBreak}>
+                  {expiryDate}
+                </BodyTextLarge>
               </Box>
             </Box>
           </Box>

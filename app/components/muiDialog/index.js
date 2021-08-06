@@ -42,6 +42,7 @@ export default function MuiDialog({
             color="primary"
             variant="contained"
             disabled={disabled}
+            className={classes?.viewButton}
           >
             {successButtonText}
           </Button>
