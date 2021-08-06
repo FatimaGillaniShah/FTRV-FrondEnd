@@ -12,9 +12,6 @@ export const useStyles = makeStyles((theme) => ({
     top: theme.spacing(2),
     color: colors.secondary,
   },
-  content: {
-    height: '36rem',
-  },
   dialog: {
     marginLeft: theme.spacing(2),
     marginTop: theme.spacing(8),
@@ -33,18 +30,5 @@ export const useStyles = makeStyles((theme) => ({
   badge: {
     width: '4rem',
     marginTop: theme.spacing(3),
-  },
-  viewButton: {
-    height: '2.5rem',
-    width: '9rem',
-  },
-  lineBreak: {
-    inlineSize: '70px',
-    wordBreak: 'break-word',
-    hyphens: 'auto',
-  },
-  dateLineBreak: {
-    inlineSize: '80px',
-    wordBreak: 'break-word',
   },
 }));

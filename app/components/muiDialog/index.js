@@ -32,9 +32,9 @@ export default function MuiDialog({
       <DialogTitle id="form-dialog-title" className={classes?.dialog}>
         {title}
       </DialogTitle>
-      <DialogContent className={classes?.content}>{children}</DialogContent>
+      <DialogContent>{children}</DialogContent>
 
-      <Box display="flex" px={5}>
+      <Box display="flex" px={1}>
         <DialogActions className={classes?.dialogActions}>
           <Button
             onClick={onSubmit}
@@ -42,7 +42,6 @@ export default function MuiDialog({
             color="primary"
             variant="contained"
             disabled={disabled}
-            className={classes?.viewButton}
           >
             {successButtonText}
           </Button>

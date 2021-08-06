@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import { colors } from '../../theme/colors';
 import { useStyles } from './style';
 import { BodyTextLarge, H4 } from '../typography';
-import { MuiBadge } from '../index';
+import { MuiBadge, ToolTip } from '../index';
 import Show from '../show';
 
 export const DialogTitle = ({
@@ -24,7 +24,8 @@ export const DialogTitle = ({
   applied,
 }) => {
   const classes = useStyles();
-
+  const truncate = (source, size) =>
+    source.length > size ? `${source.slice(0, size - 1)} . . .` : source;
   return (
     <>
       <MuiDialogTitle className={classes.root}>
@@ -38,7 +39,7 @@ export const DialogTitle = ({
           mb={3}
           mt={6}
         >
-          <Box mb={3} width={[1, 1, 1 / 3, '30%']} ml={6}>
+          <Box mb={2} width={[1, 1, 1 / 3, '30%']}>
             {expired ? (
               <Box
                 display="flex"
@@ -48,10 +49,9 @@ export const DialogTitle = ({
                 <Box width="65%">
                   <H4 color="secondary">HR Manager</H4>
                 </Box>
-
-                <Box mt={1} display="flex" flexDirection="row">
+                <Box mt={2} ml={7} display="flex" flexDirection="row">
                   <Show IF={!applied}>
-                    <Box ml={6}>
+                    <Box>
                       <MuiBadge
                         color={colors.oliveGreen}
                         badgeContent="applied"
@@ -68,7 +68,12 @@ export const DialogTitle = ({
                 </Box>
               </Box>
             ) : (
-              <H4 color="secondary">HR Manager</H4>
+              <>
+                <H4 color="secondary">HR Manager</H4>
+                <Box mt={1} ml={7}>
+                  <MuiBadge color={colors.oliveGreen} badgeContent="active" />
+                </Box>
+              </>
             )}
           </Box>
           <Box
@@ -89,12 +94,13 @@ export const DialogTitle = ({
                 Location:
               </BodyTextLarge>
               <Box ml={1}>
-                <BodyTextLarge color="grey" className={classes.lineBreak}>
-                  {location}
-                </BodyTextLarge>
+                <ToolTip title={location}>
+                  <BodyTextLarge color="grey">
+                    {truncate(location, 10)}
+                  </BodyTextLarge>
+                </ToolTip>
               </Box>
             </Box>
-
             <Box
               px={[4, 4, 8, 3]}
               mt={[1.8, 1.8, 1.8, 0]}
@@ -106,12 +112,13 @@ export const DialogTitle = ({
                 Department:
               </BodyTextLarge>
               <Box ml={1}>
-                <BodyTextLarge color="grey" className={classes.lineBreak}>
-                  {department}
-                </BodyTextLarge>
+                <ToolTip title={department}>
+                  <BodyTextLarge color="grey">
+                    {truncate(department, 10)}
+                  </BodyTextLarge>
+                </ToolTip>
               </Box>
             </Box>
-
             <Box
               px={[4, 4, 8, 3]}
               mt={[1.8, 1.8, 1.8, 0]}
@@ -123,9 +130,11 @@ export const DialogTitle = ({
                 Deadline:
               </BodyTextLarge>
               <Box ml={1}>
-                <BodyTextLarge color="grey" className={classes.dateLineBreak}>
-                  {expiryDate}
-                </BodyTextLarge>
+                <ToolTip title={expiryDate}>
+                  <BodyTextLarge color="grey">
+                    {truncate(expiryDate, 10)}
+                  </BodyTextLarge>
+                </ToolTip>
               </Box>
             </Box>
           </Box>
