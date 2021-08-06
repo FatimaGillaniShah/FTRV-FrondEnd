@@ -3,9 +3,9 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
+import TouchAppIcon from '@material-ui/icons/TouchApp';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
@@ -51,7 +51,7 @@ const ActionButtons = ({ jobs }) => {
       </Show>
 
       <IconButton disabled={isLoading} onClick={handleJobModal}>
-        <VisibilityOutlinedIcon />
+        <TouchAppIcon color="action" />
       </IconButton>
       <Show IF={role === ROLES.ADMIN}>
         <IconButton
@@ -118,9 +118,9 @@ export const headCells = [
     flex: 1,
   },
   {
-    field: 'status',
+    field: '',
     type: 'string',
-    headerName: 'Status',
+    headerName: '',
     description: 'Status',
     sortable: false,
     renderCell: ({ row }) => <StatusIcons jobs={row} />,

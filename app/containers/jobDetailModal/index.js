@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { useQuery } from 'react-query';
 import moment from 'moment';
 import JobDetailModal from '../../components/jobDetailsModal';
-import { Loading } from '../../components/loading';
 import { getJobById } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Toast } from '../../utils/helper';
@@ -30,9 +29,7 @@ function JobDetailModalContainer({ id, modal, onHandleClose }) {
 
   return (
     <>
-      {isListLoading ? (
-        <Loading />
-      ) : (
+      {!isListLoading && (
         <JobDetailModal
           id={id}
           jobDetail={jobDetail}
