@@ -13,15 +13,12 @@ import { DialogTitle } from './dialogTitle';
 
 export const JobDetailModal = ({
   id,
-  department,
-  location,
-  description,
   expiryDate,
+  jobDetail,
   modal,
-  applied,
-  expired,
   onHandleClose,
 }) => {
+  const { department, location, applied, expired, description } = jobDetail;
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -45,8 +42,8 @@ export const JobDetailModal = ({
         title={
           <DialogTitle
             expired={expired}
-            department={department}
-            location={location}
+            department={department.name}
+            location={location.name}
             expiryDate={expiryDate}
             onHandleClose={onHandleClose}
             applied={applied}

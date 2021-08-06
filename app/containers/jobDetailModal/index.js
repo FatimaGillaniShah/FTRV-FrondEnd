@@ -27,6 +27,7 @@ function JobDetailModalContainer({ id, modal, onHandleClose }) {
   );
   const jobDetail = data?.data?.data && data?.data?.data[0];
   const expiryDate = moment(jobDetail?.expiryDate).format('MM-DD-YYYY');
+
   return (
     <>
       {isListLoading ? (
@@ -34,11 +35,7 @@ function JobDetailModalContainer({ id, modal, onHandleClose }) {
       ) : (
         <JobDetailModal
           id={id}
-          applied={jobDetail?.applied}
-          expired={jobDetail?.expired}
-          department={jobDetail?.department?.name}
-          location={jobDetail?.location?.name}
-          description={jobDetail?.description}
+          jobDetail={jobDetail}
           expiryDate={expiryDate}
           onHandleClose={onHandleClose}
           modal={modal}

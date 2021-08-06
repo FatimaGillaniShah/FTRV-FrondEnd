@@ -418,6 +418,7 @@ export const routeArray = [
     exact: true,
     breadCrumbKey: 'Jobs',
     routeType: routeTypes.private,
+    roles: [ROLES.ADMIN, ROLES.USER],
     nestedRoutes: [
       {
         path: '/applicants/:id',

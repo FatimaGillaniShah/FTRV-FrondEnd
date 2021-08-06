@@ -15,7 +15,7 @@ import JobDetailModal from '../../../containers/jobDetailModal';
 import { colors } from '../../../theme/colors';
 import { MuiBadge } from '../../index';
 
-const ActionButtons = ({ data }) => {
+const ActionButtons = ({ jobs }) => {
   const history = useHistory();
   const {
     user: {
@@ -28,7 +28,7 @@ const ActionButtons = ({ data }) => {
   const handleDelete = () => {
     Modal.fire().then(({ isConfirmed }) => {
       if (isConfirmed) {
-        mutate([data.id]);
+        mutate([jobs.id]);
       }
     });
   };
@@ -44,7 +44,7 @@ const ActionButtons = ({ data }) => {
     <>
       <Show IF={openJobModal}>
         <JobDetailModal
-          id={data.id}
+          id={jobs.id}
           modal={openJobModal}
           onHandleClose={handleClose}
         />
@@ -56,7 +56,7 @@ const ActionButtons = ({ data }) => {
       <Show IF={role === ROLES.ADMIN}>
         <IconButton
           disabled={isLoading}
-          onClick={() => navigateTo(history, `/jobs/edit/${data.id}`)}
+          onClick={() => navigateTo(history, `/jobs/edit/${jobs.id}`)}
         >
           <EditIcon color="secondary" />
         </IconButton>
@@ -133,7 +133,7 @@ export const headCells = [
     description: 'Actions',
     sortable: false,
     renderCell: ({ row }) => (
-      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+      <ActionButtons jobs={row} disabled={row.role === ROLES.ADMIN} />
     ),
     width: 150,
   },

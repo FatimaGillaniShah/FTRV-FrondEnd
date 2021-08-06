@@ -5,7 +5,7 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 
-const ActionButtons = ({ data: applicant }) => {
+const ActionButtons = ({ applicant }) => {
   const {
     user: {
       data: { role },
@@ -79,7 +79,7 @@ export const headCells = [
     headerName: 'Resume',
     description: 'Actions',
     sortable: false,
-    renderCell: ({ row }) => <ActionButtons data={row} />,
+    renderCell: ({ row }) => <ActionButtons applicant={row} />,
     width: 150,
   },
 ];
