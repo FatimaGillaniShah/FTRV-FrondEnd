@@ -34,6 +34,7 @@ export function DataTable({
   disableSelectionOnClick,
   page,
   setPage,
+  checkboxSelection,
   ...props
 }) {
   const {
@@ -98,7 +99,7 @@ export function DataTable({
         autoHeight
         disableSelectionOnClick={disableSelectionOnClick}
         {...props}
-        checkboxSelection={role === ROLES.ADMIN}
+        checkboxSelection={role === ROLES.ADMIN && checkboxSelection}
         disableColumnMenu
         isRowSelectable={(params) =>
           !(matchUserIdWithIDS && params?.row?.id === currentUserID)
@@ -141,6 +142,7 @@ DataTable.propTypes = {
   count: PropTypes.number.isRequired,
   page: PropTypes.number,
   setPage: PropTypes.func,
+  checkboxSelection: PropTypes.bool,
 };
 DataTable.defaultProps = {
   tableRowsPerPage: PAGE_SIZE,
@@ -148,6 +150,7 @@ DataTable.defaultProps = {
   matchUserIdWithIDS: false,
   isServerSide: false,
   disableSelectionOnClick: true,
+  checkboxSelection: true,
   page: 0,
 };
 
