@@ -52,15 +52,16 @@ const ActionButtons = ({ jobs }) => {
         />
       </Show>
       <IconButton disabled={isLoading} onClick={handleJobModal}>
-        {role === ROLES.ADMIN ? (
+        <Show IF={role === ROLES.ADMIN}>
           <Tooltip title="View Details">
             <VisibilityOutlinedIcon color="action" />
           </Tooltip>
-        ) : (
+        </Show>
+        <Show IF={role === ROLES.USER}>
           <Tooltip title="Apply">
             <DescriptionOutlinedIcon color="action" />
           </Tooltip>
-        )}
+        </Show>
       </IconButton>
       <Show IF={role === ROLES.ADMIN}>
         <IconButton
