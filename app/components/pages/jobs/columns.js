@@ -122,7 +122,7 @@ export const headCells = [
   {
     field: 'expiryDate',
     type: 'string',
-    headerName: 'Expiry Date',
+    headerName: 'Due Date',
     description: 'Expiry Date',
     sortable: false,
     flex: 1,

@@ -116,7 +116,7 @@ export const DialogTitle = ({
             >
               <AlarmOutlinedIcon color="secondary" />
               <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>
-                Deadline:
+                Due Date:
               </BodyTextLarge>
               <Box ml={1}>
                 <ToolTip title={expiryDate}>

@@ -74,7 +74,7 @@ function CreateJob({ id, initialValues, onHandleSubmit }) {
                           disablePast
                           id="expiryDate"
                           name="expiryDate"
-                          label="Expiry Date*"
+                          label="Due Date*"
                         />
                       </Box>
                       <Box mt={7} width={1} px={3}>
