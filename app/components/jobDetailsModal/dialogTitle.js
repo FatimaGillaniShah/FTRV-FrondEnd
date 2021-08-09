@@ -43,10 +43,10 @@ export const DialogTitle = ({
                 flexDirection={['column', 'column', 'column', 'column']}
                 width={1}
               >
-                <Box width="65%">
+                <Box mb={4} width="65%">
                   <H4 color="secondary">HR Manager</H4>
                 </Box>
-                <Box mt={2} ml={7} display="flex" flexDirection="row">
+                <Box ml={7} display="flex" flexDirection="row">
                   <Show IF={applied}>
                     <MuiBadge color={colors.info} badgeContent="applied" />
                   </Show>

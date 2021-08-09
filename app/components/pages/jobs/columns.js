@@ -54,7 +54,7 @@ const ActionButtons = ({ jobs }) => {
 
       <IconButton disabled={isLoading} onClick={handleJobModal}>
         {role === ROLES.ADMIN ? (
-          <Tooltip title="View Applicants">
+          <Tooltip title="View Job">
             <VisibilityOutlinedIcon color="action" />
           </Tooltip>
         ) : (

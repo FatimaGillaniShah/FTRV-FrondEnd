@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { navigateTo } from '../../utils/helper';
@@ -28,7 +28,7 @@ export function TableButtons({ onDelete, numSelected }) {
             color="secondary"
             variant="contained"
             fullWidth={false}
-            startIcon={<CloudDownloadIcon />}
+            startIcon={<CloudUploadIcon />}
             onClick={() => navigateTo(history, '/directory/upload')}
           >
             Import
