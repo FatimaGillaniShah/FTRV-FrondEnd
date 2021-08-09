@@ -5,7 +5,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
-import TouchAppIcon from '@material-ui/icons/TouchApp';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
@@ -51,7 +53,15 @@ const ActionButtons = ({ jobs }) => {
       </Show>
 
       <IconButton disabled={isLoading} onClick={handleJobModal}>
-        <TouchAppIcon color="action" />
+        {role === ROLES.ADMIN ? (
+          <Tooltip title="View Applicants">
+            <VisibilityOutlinedIcon color="action" />
+          </Tooltip>
+        ) : (
+          <Tooltip title="Apply">
+            <DescriptionOutlinedIcon color="action" />
+          </Tooltip>
+        )}
       </IconButton>
       <Show IF={role === ROLES.ADMIN}>
         <IconButton
