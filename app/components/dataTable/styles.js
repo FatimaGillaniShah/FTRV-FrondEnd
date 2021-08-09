@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
   gridOverlay: {
     zIndex: 100,
+    height: '70px',
   },
   label: {
     marginTop: theme.spacing(1),

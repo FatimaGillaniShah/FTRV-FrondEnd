@@ -87,7 +87,7 @@ export function DataTable({
   return (
     <Box className={classes.root}>
       <DataGrid
-        rowHeight={75}
+        rowHeight={rows.length ? 75 : 35}
         components={{
           NoRowsOverlay: CustomNoRowsOverlay,
         }}
