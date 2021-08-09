@@ -47,14 +47,23 @@ export const DialogTitle = ({
                 <Box mb={4} width="65%">
                   <H4 color="secondary">{title}</H4>
                 </Box>
+
                 <Box display="flex" flexDirection="row">
+                  <Box ml={1}>
+                    <Show IF={!expired}>
+                      <MuiBadge
+                        color={colors.oliveGreen}
+                        badgeContent="active"
+                      />
+                    </Show>
+                  </Box>
                   <Box>
                     <Show IF={expired}>
                       <MuiBadge badgeContent="expired" color="error" />
                     </Show>
                   </Box>
                   <Box ml={1}>
-                    <Show IF={applied} style={{ marginLeft: '10px' }}>
+                    <Show IF={applied} className={classes.multipleBadge}>
                       <MuiBadge badgeContent="applied" color={colors.info} />
                     </Show>
                   </Box>
@@ -63,9 +72,6 @@ export const DialogTitle = ({
             ) : (
               <>
                 <H4 color="secondary">{title}</H4>
-                <Box mt={2} ml={7}>
-                  <MuiBadge color={colors.oliveGreen} badgeContent="active" />
-                </Box>
               </>
             )}
           </Box>

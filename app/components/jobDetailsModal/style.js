@@ -37,4 +37,7 @@ export const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     maxWidth: '100px',
   },
+  multipleBadge: {
+    marginLeft: theme.spacing(5),
+  },
 }));
