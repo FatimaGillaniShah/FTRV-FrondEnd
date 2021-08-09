@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconButton } from '@material-ui/core';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
@@ -24,7 +25,9 @@ const ActionButtons = ({ applicant }) => {
               handleResumeDownload(applicant.resume);
             }}
           >
-            <DescriptionOutlinedIcon color="secondary" />
+            <Tooltip title="Resume">
+              <DescriptionOutlinedIcon color="secondary" />
+            </Tooltip>
           </IconButton>
         </>
       </Show>

@@ -18,6 +18,7 @@ function Applicant({ data, page, setPage }) {
             sortColumn="name"
             page={page}
             setPage={setPage}
+            checkboxSelection={false}
           />
         </WrapInCard>
       </WrapInBreadcrumbs>

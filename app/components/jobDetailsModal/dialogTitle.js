@@ -16,6 +16,7 @@ import Show from '../show';
 
 export const DialogTitle = ({
   department,
+  title,
   location,
   expiryDate,
   expired,
@@ -43,24 +44,34 @@ export const DialogTitle = ({
                 flexDirection={['column', 'column', 'column', 'column']}
                 width={1}
               >
-                <Box width="65%">
-                  <H4 color="secondary">HR Manager</H4>
+                <Box mb={4} width="65%">
+                  <H4 color="secondary">{title}</H4>
                 </Box>
-                <Box mt={2} ml={7} display="flex" flexDirection="row">
-                  <Show IF={applied}>
-                    <MuiBadge color={colors.info} badgeContent="applied" />
-                  </Show>
-                  <Show IF={expired}>
-                    <MuiBadge badgeContent="expired" color="error" />
-                  </Show>
+
+                <Box display="flex" flexDirection="row">
+                  <Box ml={1}>
+                    <Show IF={!expired}>
+                      <MuiBadge
+                        color={colors.oliveGreen}
+                        badgeContent="active"
+                      />
+                    </Show>
+                  </Box>
+                  <Box>
+                    <Show IF={expired}>
+                      <MuiBadge badgeContent="expired" color="error" />
+                    </Show>
+                  </Box>
+                  <Box ml={1}>
+                    <Show IF={applied} className={classes.multipleBadge}>
+                      <MuiBadge badgeContent="applied" color={colors.info} />
+                    </Show>
+                  </Box>
                 </Box>
               </Box>
             ) : (
               <>
-                <H4 color="secondary">HR Manager</H4>
-                <Box mt={1} ml={7}>
-                  <MuiBadge color={colors.oliveGreen} badgeContent="active" />
-                </Box>
+                <H4 color="secondary">{title}</H4>
               </>
             )}
           </Box>
@@ -111,7 +122,7 @@ export const DialogTitle = ({
             >
               <AlarmOutlinedIcon color="secondary" />
               <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>
-                Deadline:
+                Due Date:
               </BodyTextLarge>
               <Box ml={1}>
                 <ToolTip title={expiryDate}>

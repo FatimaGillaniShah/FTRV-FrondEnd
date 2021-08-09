@@ -10,6 +10,8 @@ import { useStyles } from './style';
 import { BodyTextSmall } from '../typography';
 import { navigateTo } from '../../utils/helper';
 import { DialogTitle } from './dialogTitle';
+import Show from '../show';
+import { Loading } from '../loading';
 
 export const JobDetailModal = ({
   id,
@@ -17,8 +19,16 @@ export const JobDetailModal = ({
   jobDetail,
   modal,
   onHandleClose,
+  isLoading,
 }) => {
-  const { department, location, applied, expired, description } = jobDetail;
+  const {
+    department,
+    location,
+    applied,
+    expired,
+    description,
+    title,
+  } = jobDetail;
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -35,21 +45,26 @@ export const JobDetailModal = ({
     }
   };
   const disabled =
-    (role === ROLES.USER && expired) || (role === ROLES.USER && applied);
+    (role === ROLES.USER && expired) ||
+    (role === ROLES.USER && applied) ||
+    isLoading;
   return (
     <>
       <MuiDialog
         open={modal}
         onClose={() => onHandleClose()}
         title={
-          <DialogTitle
-            expired={expired}
-            department={department.name}
-            location={location.name}
-            expiryDate={expiryDate}
-            onHandleClose={onHandleClose}
-            applied={applied}
-          />
+          <Show IF={!isLoading}>
+            <DialogTitle
+              title={title}
+              expired={expired}
+              department={department.name}
+              location={location.name}
+              expiryDate={expiryDate}
+              onHandleClose={onHandleClose}
+              applied={applied}
+            />
+          </Show>
         }
         onSubmit={handleSubmit}
         maxWidth="md"
@@ -57,11 +72,15 @@ export const JobDetailModal = ({
         successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}
         disabled={disabled}
       >
-        <Box px={5} mt={5}>
-          <BodyTextSmall color="grey">
-            {ReactHtmlParser(description)}
-          </BodyTextSmall>
-        </Box>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Box px={5} mt={5}>
+            <BodyTextSmall color="grey">
+              {ReactHtmlParser(description)}
+            </BodyTextSmall>
+          </Box>
+        )}
       </MuiDialog>
     </>
   );
