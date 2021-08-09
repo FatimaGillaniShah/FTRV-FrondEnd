@@ -64,15 +64,19 @@ const ActionButtons = ({ jobs }) => {
         </Show>
       </IconButton>
       <Show IF={role === ROLES.ADMIN}>
-        <IconButton
-          disabled={isLoading}
-          onClick={() => navigateTo(history, `/jobs/edit/${jobs.id}`)}
-        >
-          <EditIcon color="secondary" />
-        </IconButton>
-        <IconButton disabled={isLoading} onClick={handleDelete}>
-          <DeleteIcon color="error" />
-        </IconButton>
+        <Tooltip title="Edit">
+          <IconButton
+            disabled={isLoading}
+            onClick={() => navigateTo(history, `/jobs/edit/${jobs.id}`)}
+          >
+            <EditIcon color="secondary" />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+          <IconButton disabled={isLoading} onClick={handleDelete}>
+            <DeleteIcon color="error" />
+          </IconButton>
+        </Tooltip>
       </Show>
     </>
   );
@@ -81,15 +85,11 @@ const StatusIcons = ({ jobs }) => (
   <>
     {jobs.expired ? (
       <Box ml={6}>
-        <IconButton>
-          <Badge badgeContent="expired" color="error" />
-        </IconButton>
+        <Badge badgeContent="expired" color="error" />
       </Box>
     ) : (
       <Box>
-        <IconButton>
-          <MuiBadge color={colors.oliveGreen} badgeContent="active" />
-        </IconButton>
+        <MuiBadge color={colors.oliveGreen} badgeContent="active" />
       </Box>
     )}
   </>
