@@ -16,6 +16,7 @@ import Show from '../show';
 
 export const DialogTitle = ({
   department,
+  title,
   location,
   expiryDate,
   expired,
@@ -44,21 +45,25 @@ export const DialogTitle = ({
                 width={1}
               >
                 <Box mb={4} width="65%">
-                  <H4 color="secondary">HR Manager</H4>
+                  <H4 color="secondary">{title}</H4>
                 </Box>
-                <Box ml={7} display="flex" flexDirection="row">
-                  <Show IF={applied}>
-                    <MuiBadge color={colors.info} badgeContent="applied" />
-                  </Show>
-                  <Show IF={expired}>
-                    <MuiBadge badgeContent="expired" color="error" />
-                  </Show>
+                <Box display="flex" flexDirection="row">
+                  <Box>
+                    <Show IF={expired}>
+                      <MuiBadge badgeContent="expired" color="error" />
+                    </Show>
+                  </Box>
+                  <Box ml={1}>
+                    <Show IF={applied} style={{ marginLeft: '10px' }}>
+                      <MuiBadge badgeContent="applied" color={colors.info} />
+                    </Show>
+                  </Box>
                 </Box>
               </Box>
             ) : (
               <>
-                <H4 color="secondary">HR Manager</H4>
-                <Box mt={1} ml={7}>
+                <H4 color="secondary">{title}</H4>
+                <Box mt={2} ml={7}>
                   <MuiBadge color={colors.oliveGreen} badgeContent="active" />
                 </Box>
               </>

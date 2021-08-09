@@ -16,7 +16,7 @@ function CreateApplicant() {
   const onApplicantSuccess = () => {
     Toast({
       icon: 'success',
-      title: 'Applicant Created  successfully',
+      title: 'Applied Successfully ',
     });
     queryClient.invalidateQueries(keys.applicant);
     navigateTo(history, '/jobs');

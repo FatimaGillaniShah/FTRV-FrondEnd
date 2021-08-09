@@ -79,13 +79,13 @@ const ActionButtons = ({ jobs }) => {
 const StatusIcons = ({ jobs }) => (
   <>
     {jobs.expired ? (
-      <Box ml={2}>
+      <Box ml={6}>
         <IconButton>
           <Badge badgeContent="expired" color="error" />
         </IconButton>
       </Box>
     ) : (
-      <Box ml={2}>
+      <Box>
         <IconButton>
           <MuiBadge color={colors.oliveGreen} badgeContent="active" />
         </IconButton>

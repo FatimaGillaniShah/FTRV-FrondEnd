@@ -36,6 +36,7 @@ function JobDetailModalContainer({ id, modal, onHandleClose }) {
           expiryDate={expiryDate}
           onHandleClose={onHandleClose}
           modal={modal}
+          isLoading={isListLoading}
         />
       )}
     </>

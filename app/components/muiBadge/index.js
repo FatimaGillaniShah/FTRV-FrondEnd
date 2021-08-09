@@ -5,10 +5,18 @@ import { colors } from '../../theme/colors';
 
 const MuiBadge = withStyles(() => ({
   badge: {
-    width: '3.7rem',
+    position: 'relative',
     backgroundColor: (props) => props.color,
     color: colors.light,
   },
-}))((props) => <Badge {...props} />);
+}))((props) => (
+  <Badge
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
 
 export default MuiBadge;
