@@ -7,6 +7,7 @@ import CreateJobPage from '../../components/pages/createJob';
 import { createJob, getJobById, updateJob } from '../../state/queryFunctions';
 import { navigateTo, Toast, nextWeekDate } from '../../utils/helper';
 import { keys } from '../../state/queryKeys';
+import { parseDate } from '../../utils/functions';
 
 function AddJob() {
   const { id } = useParams();
@@ -31,9 +32,8 @@ function AddJob() {
       icon: 'success',
       title: `Job  ${id ? 'Updated' : 'Created'}  successfully`,
     });
-    navigateTo(history, '/jobs');
-    queryClient.invalidateQueries(keys.jobs);
     if (id) queryClient.invalidateQueries(keys.getJob(id));
+    navigateTo(history, '/jobs');
   };
 
   const onJobError = ({
@@ -65,7 +65,7 @@ function AddJob() {
       title,
       departmentId,
       locationId,
-      expiryDate,
+      expiryDate: parseDate(expiryDate),
       description,
     };
     mutate(updatedJobDataValues);
