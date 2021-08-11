@@ -38,12 +38,8 @@ export const DialogTitle = ({
           mt={6}
         >
           <Box mb={2} width={[1, 1, 1 / 3, '30%']}>
-            {expired || applied ? (
-              <Box
-                display="flex"
-                flexDirection={['column', 'column', 'column', 'column']}
-                width={1}
-              >
+            {applied || expired || !expired ? (
+              <Box display="flex" flexDirection="column" width={1}>
                 <Box mb={4} width="65%">
                   <H4 color="secondary">{title}</H4>
                 </Box>
@@ -83,11 +79,7 @@ export const DialogTitle = ({
             mt={[5, 5, 5, 1.5]}
             width={[1, 1, 1 / 3, '70%']}
           >
-            <Box
-              px={[4, 4, 8, 3]}
-              display="flex"
-              flexDirection={['row', 'column', 'row', 'row']}
-            >
+            <Box px={[0, 0, 0, 3]} display="flex" flexDirection="row">
               <LocationOnOutlinedIcon color="secondary" />
               <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>
                 Location:
@@ -99,10 +91,10 @@ export const DialogTitle = ({
               </Box>
             </Box>
             <Box
-              px={[4, 4, 8, 3]}
+              px={[0, 0, 0, 3]}
               mt={[1.8, 1.8, 1.8, 0]}
               display="flex"
-              flexDirection={['row', 'column', 'row', 'row']}
+              flexDirection="row"
             >
               <SearchOutlinedIcon color="secondary" />
               <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>
@@ -115,10 +107,10 @@ export const DialogTitle = ({
               </Box>
             </Box>
             <Box
-              px={[4, 4, 8, 3]}
+              px={[0, 0, 0, 3]}
               mt={[1.8, 1.8, 1.8, 0]}
               display="flex"
-              flexDirection={['row', 'column', 'row', 'row']}
+              flexDirection="row"
             >
               <AlarmOutlinedIcon color="secondary" />
               <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>

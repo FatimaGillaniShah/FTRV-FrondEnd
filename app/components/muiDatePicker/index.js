@@ -7,7 +7,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 
-import { FormHelperText } from '@material-ui/core';
+import { Box, FormHelperText } from '@material-ui/core';
 import { useStyles } from './style';
 import { BodyTextLarge } from '../typography';
 
@@ -20,6 +20,7 @@ const MuiDatePicker = ({ label, inputVariant, format, ...props }) => {
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
         showTodayButton
+        error={meta.touched && meta.error}
         fullWidth
         format={format}
         inputVariant={inputVariant}
@@ -33,9 +34,11 @@ const MuiDatePicker = ({ label, inputVariant, format, ...props }) => {
           setFieldValue(field.name, val);
         }}
       />
-      {meta.touched && meta.error ? (
-        <FormHelperText error>{meta.error}</FormHelperText>
-      ) : null}
+      <Box ml={4}>
+        {meta.touched && meta.error ? (
+          <FormHelperText error>{meta.error}</FormHelperText>
+        ) : null}
+      </Box>
     </MuiPickersUtilsProvider>
   );
 };

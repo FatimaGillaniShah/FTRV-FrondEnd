@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
@@ -51,18 +50,11 @@ const ActionButtons = ({ jobs }) => {
           onHandleClose={handleClose}
         />
       </Show>
-      <IconButton disabled={isLoading} onClick={handleJobModal}>
-        <Show IF={role === ROLES.ADMIN}>
-          <Tooltip title="View Details">
-            <VisibilityOutlinedIcon color="action" />
-          </Tooltip>
-        </Show>
-        <Show IF={role === ROLES.USER}>
-          <Tooltip title="Apply">
-            <DescriptionOutlinedIcon color="action" />
-          </Tooltip>
-        </Show>
-      </IconButton>
+      <Tooltip title="View Details">
+        <IconButton disabled={isLoading} onClick={handleJobModal}>
+          <VisibilityOutlinedIcon color="action" />
+        </IconButton>
+      </Tooltip>
       <Show IF={role === ROLES.ADMIN}>
         <Tooltip title="Edit">
           <IconButton

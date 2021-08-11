@@ -75,6 +75,7 @@ function CreateJob({ id, initialValues, onHandleSubmit }) {
                           id="expiryDate"
                           name="expiryDate"
                           label="Due Date*"
+                          helperText={null}
                         />
                       </Box>
                       <Box mt={7} width={1} px={3}>
