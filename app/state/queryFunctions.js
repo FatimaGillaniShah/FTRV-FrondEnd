@@ -137,7 +137,7 @@ export const updateEvent = ({ id, ...payload }) =>
 
 // BLOG CRUD
 export const getBlogs = ({ queryKey }) => {
-  const url = `${BLOG}?sortColumn=id&sortOrder=asc&pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
+  const url = `${BLOG}?sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
   return http.get(url);
 };
 export const createBlog = (payload) => http.post(BLOG, payload);
