@@ -8,7 +8,7 @@ import { WrapInCard } from 'components';
 import CreateNewUser from 'components/pages/createUser';
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { createUser, getLocations, getDepartments } from 'state/queryFunctions';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
@@ -23,6 +23,7 @@ import { keys } from '../../state/queryKeys';
 function CreateUser() {
   const locationMutation = useCreateLocation();
   const departmentMutation = useCreateDepartment();
+  const queryClient = useQueryClient();
   const history = useHistory();
   const {
     user: {
@@ -39,6 +40,7 @@ function CreateUser() {
   );
   const mutation = useMutation(createUser, {
     onSuccess: () => {
+      queryClient.invalidateQueries(keys.getUsers({}));
       Toast({
         icon: 'success',
         title: `User Created Successfully`,

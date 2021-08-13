@@ -49,6 +49,7 @@ function EditUser() {
   const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
   const mutation = useMutation(updateUser, {
     onSuccess: () => {
+      queryClient.invalidateQueries(keys.getUser(id));
       Toast({
         icon: 'success',
         title: `User Updated Successfully`,
@@ -56,7 +57,7 @@ function EditUser() {
 
       navigateTo(history, '/directory');
 
-      queryClient.removeQueries(keys.getUser(id));
+      queryClient.invalidateQueries(keys.getUsers({}));
     },
     onError: ({
       response: {
