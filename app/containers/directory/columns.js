@@ -9,11 +9,11 @@ import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
-const ActionButtons = ({ data, disabled }) => {
+const ActionButtons = ({ data }) => {
   const history = useHistory();
   const {
     user: {
-      data: { role },
+      data: { role, id: currentUserID },
     },
   } = useAuthContext();
 
@@ -26,7 +26,7 @@ const ActionButtons = ({ data, disabled }) => {
       }
     });
   };
-
+  const disabled = data.id === currentUserID;
   return (
     <>
       {role === ROLES.ADMIN && (
@@ -111,9 +111,7 @@ export const headCells = [
     headerName: ' ',
     description: 'Actions',
     sortable: false,
-    renderCell: ({ row }) => (
-      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
-    ),
+    renderCell: ({ row }) => <ActionButtons data={row} />,
     width: 200,
   },
 ];
