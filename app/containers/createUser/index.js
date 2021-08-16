@@ -40,12 +40,11 @@ function CreateUser() {
   );
   const mutation = useMutation(createUser, {
     onSuccess: () => {
-      queryClient.invalidateQueries(keys.getUsers({}));
       Toast({
         icon: 'success',
         title: `User Created Successfully`,
       });
-
+      queryClient.invalidateQueries(keys.getUsers({}));
       navigateTo(history, '/directory');
     },
     onError: ({

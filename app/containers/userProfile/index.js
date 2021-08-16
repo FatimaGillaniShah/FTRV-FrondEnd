@@ -50,7 +50,6 @@ function EditUser() {
         data: { avatar, firstName, lastName },
       },
     }) => {
-      queryClient.invalidateQueries(keys.getUsers({}));
       if (avatar) {
         const parsedUserData = { ...user };
         if (parsedUserData.data) {
@@ -66,6 +65,7 @@ function EditUser() {
         icon: 'success',
         title: `User Updated Successfully`,
       });
+      queryClient.invalidateQueries(keys.getUsers({}));
       queryClient.invalidateQueries(keys.getUser(id));
       navigateTo(history, '/directory');
     },
