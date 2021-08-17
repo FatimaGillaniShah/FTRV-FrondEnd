@@ -103,7 +103,7 @@ export const headCells = [
     headerName: 'Cell Phone',
     description: 'Cell Phone',
     sortable: false,
-    flex: 1,
+    width: 110,
   },
   {
     field: 'actions',

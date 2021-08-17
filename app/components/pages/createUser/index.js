@@ -130,7 +130,10 @@ function CreateUser({
     const data = values;
 
     if (data.contactNo)
-      data.contactNo = data.contactNo.replace(/[{()}]| |-|_/g, '');
+      data.contactNo = data.contactNo.replace(
+        /(\d{3})(\d{3})(\d{4})/,
+        '$1-$2-$3'
+      );
 
     const dataFile = new FormData();
 
