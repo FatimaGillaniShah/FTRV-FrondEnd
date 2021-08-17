@@ -68,7 +68,7 @@ export const yupUserFormValidaton = object().shape({
     .min(10, 'Minimum 10 digits are allowed!')
     .max(12, 'Maximum 12 digits are allowed!')
     .nullable()
-    .transform((value) => value.replace(/[^\d]/g, '')),
+    .transform((value) => (value ? value.replace(/[^\d]/g, '') : null)),
   extension: string()
     .matches(/^[0-9]*$/, '* Only number are allowed')
     .max(10, 'Too Long!')
