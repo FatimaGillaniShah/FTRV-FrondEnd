@@ -64,7 +64,11 @@ export const yupUserFormValidaton = object().shape({
       .max(15, 'Exceeded Maximum Characters Limit')
       .oneOf([ref('password'), null], 'Passwords must match'),
   }),
-  contactNo: string().max(15, 'Too Long!').nullable(),
+  contactNo: string()
+    .min(10, 'Minimum 10 digits are allowed!')
+    .max(12, 'Maximum 12 digits are allowed!')
+    .nullable()
+    .transform((value) => value.replace(/[^\d]/g, '')),
   extension: string()
     .matches(/^[0-9]*$/, '* Only number are allowed')
     .max(10, 'Too Long!')

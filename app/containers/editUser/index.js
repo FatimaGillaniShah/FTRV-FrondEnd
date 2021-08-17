@@ -53,10 +53,9 @@ function EditUser() {
         icon: 'success',
         title: `User Updated Successfully`,
       });
-
+      queryClient.invalidateQueries(keys.getUser(id));
+      queryClient.invalidateQueries(keys.getUsers({}));
       navigateTo(history, '/directory');
-
-      queryClient.removeQueries(keys.getUser(id));
     },
     onError: ({
       response: {
