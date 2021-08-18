@@ -140,7 +140,7 @@ function CreateUser({
     if (data.firstName) dataFile.append('firstName', data.firstName);
     if (data.lastName) dataFile.append('lastName', data.lastName);
     if (data.contactNo) dataFile.append('contactNo', data.contactNo);
-    dataFile.append('extension', data.extension);
+    dataFile.append('extension', data.extension ? data.extension : '');
     if (data.title) dataFile.append('title', data.title);
     if (data?.file?.file) {
       dataFile.append('file', data.file.file);
