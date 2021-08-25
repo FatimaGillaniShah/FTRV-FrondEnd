@@ -29,6 +29,15 @@ export const useStyles = makeStyles((theme) => ({
     flex: '0.7',
     marginBlock: '0.2rem',
   },
+  carousel: {
+    overflow: 'visible !important',
+  },
+  prevClass: {
+    textAlign: 'end',
+  },
+  nextClass: {
+    textAlign: 'left',
+  },
   bannerImage: {
     flex: 1,
     opacity: 1,

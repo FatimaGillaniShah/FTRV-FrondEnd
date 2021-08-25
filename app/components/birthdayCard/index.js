@@ -1,10 +1,10 @@
 import { Box } from '@material-ui/core';
 import React from 'react';
-import Carousel from 'react-material-ui-carousel';
 import BoxWithBg from '../boxWithBg';
 import BirdthdayCard from './birthdayCard';
 import { colors } from '../../theme/colors';
 import Show from '../show';
+import { Carousel } from '../index';
 
 export function BirthdayCarousel({ items }) {
   return (

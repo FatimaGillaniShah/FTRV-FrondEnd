@@ -1,10 +1,10 @@
 import { Box } from '@material-ui/core';
 import React from 'react';
-import Carousel from 'react-material-ui-carousel';
 import { makeStyles } from '@material-ui/core/styles';
 import BoxWithBg from '../boxWithBg';
 import WorkAnniversaryCard from './workAnniversaryCard';
 import { colors } from '../../theme/colors';
+import { Carousel } from '../index';
 
 const useStyles = makeStyles(() => ({
   bgImage: {

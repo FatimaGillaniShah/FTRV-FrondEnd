@@ -16,6 +16,7 @@ export { default as ToolTip } from './muiTooltip';
 export { default as ToggleGroup } from './muiToggleButtonGroup';
 export { default as MuiFileInput } from './muiFileInput';
 export { default as MuiBadge } from './muiBadge';
+export { default as Carousel } from './muiCarousel';
 
 export {
   H1,

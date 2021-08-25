@@ -4,7 +4,7 @@ import { Poll } from '../../poll';
 
 function PollHome({ pollData }) {
   return (
-    <Box p={2} mr={[0, 0, 0, 8]} ml={[0, 0, 0, 8]} width={[1, 1, 1, 1 / 2]}>
+    <Box p={2} mr={[0, 0, 0, 8]} ml={[0, 0, 0, 0]} width={[1, 1, 1, 1]}>
       <Poll
         name={pollData.name}
         description={pollData.description}

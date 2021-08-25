@@ -5,6 +5,7 @@ import PollHome from './poll';
 import BannerImageHome from './bannerImage';
 import { useStyles } from './style';
 import Show from '../../show';
+import { Carousel } from '../../index';
 
 function Home({
   eventList,
@@ -30,9 +31,15 @@ function Home({
             flexDirection={['column', 'column', 'column', 'row']}
           >
             <EventCalendarHome eventList={eventList} />
-            <Show IF={pollData}>
-              <PollHome pollData={pollData} />
-            </Show>
+            <Box width={[1, 1, 1, 1 / 2]} pb={8}>
+              <Show IF={pollData.length}>
+                <Carousel>
+                  {pollData.map((poll) => (
+                    <PollHome pollData={poll} />
+                  ))}
+                </Carousel>
+              </Show>
+            </Box>
           </Box>
         </Grid>
       </Grid>
