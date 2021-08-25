@@ -46,7 +46,7 @@ export function CreateApplicant({ initialValues, onHandleSubmit }) {
                       setFieldValue={setFieldValue}
                     />
                   </Box>
-                  <Box width={(1, 1 / 3)} my={5}>
+                  <Box width={[1, 1 / 3]} my={5}>
                     <TextArea
                       name="note"
                       variant="outlined"
