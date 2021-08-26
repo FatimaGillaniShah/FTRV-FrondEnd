@@ -30,7 +30,7 @@ function CreatePoll() {
     'options-2': '',
     startDate: new Date(),
     endDate: new Date(),
-    status: '',
+    status: 'active',
   };
 
   return (

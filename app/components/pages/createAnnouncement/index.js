@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 
 import { string, object, date, ref } from 'yup';
-import { ANNOUNCEMENT_STATUS, ROLES } from '../../../utils/constants';
+import { STATUS, ROLES } from '../../../utils/constants';
 import FormikRadioGroup from '../../muiRadioButtons';
 import { H4 } from '../../typography';
 import Select from '../../muiSelect';
@@ -43,9 +43,7 @@ function CreateAnnouncement({
     { value: 'medium', label: 'Medium' },
     { value: 'low', label: 'Low' },
   ];
-  const statusOptions = Object.keys(ANNOUNCEMENT_STATUS).map(
-    (val) => ANNOUNCEMENT_STATUS[val]
-  );
+  const statusOptions = Object.keys(STATUS).map((val) => STATUS[val]);
   const {
     user: {
       data: { role },

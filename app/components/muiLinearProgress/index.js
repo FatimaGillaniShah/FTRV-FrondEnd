@@ -4,7 +4,7 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
 
-const BorderLinearProgress = ({ value, color }) => {
+const BorderLinearProgress = ({ value, color, variant, animation }) => {
   const theme = useTheme();
   const useStyles = makeStyles({
     root: {
@@ -39,12 +39,14 @@ const BorderLinearProgress = ({ value, color }) => {
         <span>{`${value}%`}</span>
       </Box>
       <LinearProgress
-        variant="determinate"
+        variant={variant}
         value={value}
         classes={{
           root: classes.root,
           colorPrimary: classes.colorPrimary,
           bar: classes.bar,
+          bar1Indeterminate: animation?.bar1Indeterminate,
+          bar2Indeterminate: animation?.bar2Indeterminate,
         }}
       />
     </Box>

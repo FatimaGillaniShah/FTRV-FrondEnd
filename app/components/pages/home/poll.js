@@ -9,6 +9,7 @@ function PollHome({ pollData }) {
         name={pollData.name}
         description={pollData.description}
         options={pollData.options}
+        home
       />
     </Box>
   );

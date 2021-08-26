@@ -21,11 +21,6 @@ const theme = createMuiTheme({
       root: {
         color: colors.grey,
       },
-      colorSecondary: {
-        '&$checked': {
-          color: colors.grey,
-        },
-      },
     },
   },
   palette: {

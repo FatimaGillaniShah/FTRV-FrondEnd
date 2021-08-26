@@ -1,14 +1,14 @@
 import React from 'react';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import MUIRadio from '@material-ui/core/Radio';
-import { FormControlLabel } from '@material-ui/core';
-import { BodyTextSmall } from '../typography/index';
-import { colors } from '../../theme/colors';
+import { FormControlLabel, FormHelperText } from '@material-ui/core';
+import Show from '../show';
 
 const FormikRadioGroup = ({
   field,
   form: { touched, errors },
   name,
+  fieldError,
   options,
   ...props
 }) => {
@@ -24,11 +24,16 @@ const FormikRadioGroup = ({
           />
         ))}
       </RadioGroup>
-      <BodyTextSmall style={{ color: colors.red }}>
-        {touched[fieldName] && errors[fieldName] && <>{errors[fieldName]}</>}
-      </BodyTextSmall>
+      <Show IF={fieldError}>
+        <FormHelperText error>
+          {touched[fieldName] && errors[fieldName] && <>{errors[fieldName]}</>}
+        </FormHelperText>
+      </Show>
     </>
   );
+};
+FormikRadioGroup.defaultProps = {
+  fieldError: true,
 };
 
 export default FormikRadioGroup;

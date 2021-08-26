@@ -24,7 +24,7 @@ export const ROLES = {
   ADMIN: 'admin',
   USER: 'user',
 };
-export const ANNOUNCEMENT_STATUS = {
+export const STATUS = {
   ACTIVE: 'active',
   INACTIVE: 'inactive',
 };

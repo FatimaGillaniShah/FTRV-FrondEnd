@@ -11,10 +11,11 @@ import SaveIcon from '@material-ui/icons/Save';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { Divider } from '@material-ui/core';
+import { STATUS, POLL_OPTIONS_LIMIT } from '../../../utils/constants';
 import { DatePicker, Input, Select, WrapInCard } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { BodyTextLarge, H4 } from '../../typography';
-import { POLL_OPTIONS_LIMIT } from '../../../utils/constants';
+
 import { navigateTo } from '../../../utils/helper';
 
 const pollSchema = object().shape({
@@ -24,6 +25,7 @@ const pollSchema = object().shape({
     .typeError('* This field cannot contain only blankspaces'),
   question: string()
     .required('*Required')
+    .max(255, '* Too long')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
   'options-1': string()
@@ -58,8 +60,7 @@ export const CreatePollPage = ({ onHandleSubmit, id, initialValues }) => {
       remove(index);
     }
   };
-  const options = ['active', 'inactive'];
-
+  const statusOptions = Object.keys(STATUS).map((val) => STATUS[val]);
   return (
     <WrapInBreadcrumbs>
       <WrapInCard>
@@ -86,7 +87,7 @@ export const CreatePollPage = ({ onHandleSubmit, id, initialValues }) => {
                     </Box>
                     <Box width={[1, 1 / 2]} mt={10} px={3}>
                       <Input
-                        OutlinedInputPlaceholder="Questions"
+                        OutlinedInputPlaceholder="Question"
                         name="question"
                         variant="outlined"
                         Icon={HelpOutlineIcon}
@@ -114,7 +115,7 @@ export const CreatePollPage = ({ onHandleSubmit, id, initialValues }) => {
                       name="status"
                       label="Status"
                       selectedValue={values.status}
-                      options={options}
+                      options={statusOptions}
                     />
                   </Box>
                   <Box px={20}>

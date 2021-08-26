@@ -1,15 +1,13 @@
 import React from 'react';
-import { Box, Button, IconButton } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Box, Button } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import AddIcon from '@material-ui/icons/Add';
 import BallotIcon from '@material-ui/icons/Ballot';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { Poll } from '../../poll';
+import { navigateTo } from '../../../utils/helper';
 import Filters from './filter';
-import { Modal, navigateTo } from '../../../utils/helper';
 import Show from '../../show';
 import { Search } from '../../search/search';
 
@@ -24,11 +22,6 @@ export function PollsPage({
   initialFilterValues,
 }) {
   const history = useHistory();
-
-  const handleDeleteEvent = () => {
-    Modal.fire();
-  };
-
   return (
     <>
       <WrapInBreadcrumbs>
@@ -55,7 +48,7 @@ export function PollsPage({
             </Box>
           </WrapInCard>
           <WrapInCard>
-            <Box mt={7}>
+            <Box mt={7} pl={4.5}>
               <Button
                 startIcon={<AddIcon fontSize="small" />}
                 variant="contained"
@@ -74,22 +67,14 @@ export function PollsPage({
             >
               <Box
                 display="flex"
-                flexDirection={['column', 'column', 'column', 'row']}
+                flexWrap="wrap"
+                justifyContent="space-between"
+                flexDirection={['column', 'column', 'row', 'row']}
+                width={1}
+                p={4}
               >
                 {data?.map((val) => (
-                  <Box mr={6}>
-                    <Box display="flex" justifyContent="flex-end">
-                      <IconButton
-                        onClick={() =>
-                          navigateTo(history, `/polls/edit/${val.id}`)
-                        }
-                      >
-                        <EditIcon color="secondary" />
-                      </IconButton>
-                      <IconButton onClick={handleDeleteEvent}>
-                        <DeleteIcon color="error" />
-                      </IconButton>
-                    </Box>
+                  <Box mt={8} mb={8} width={[1, 1, 1 / 2, '30%']}>
                     <Poll
                       name={val.name}
                       description={val.description}
