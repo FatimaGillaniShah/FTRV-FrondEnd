@@ -49,7 +49,11 @@ function QuoteContainer() {
             {isLoading ? (
               <Loading />
             ) : (
-              <Quote handleSubmit={handleSubmit} value={data?.data?.data} />
+              <Quote
+                handleSubmit={handleSubmit}
+                value={data?.data?.data}
+                loading={mutation.isLoading}
+              />
             )}
           </WrapInCard>
         </Box>

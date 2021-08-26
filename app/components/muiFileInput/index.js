@@ -1,4 +1,4 @@
-import { FormHelperText, Button, Box, Tooltip } from '@material-ui/core';
+import { FormHelperText, Box, Tooltip } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,7 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
 import { ButtonText, BodyTextLarge } from '../typography';
 import { colors } from '../../theme/colors';
+import Button from '../muiButton';
 import {
   MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS,
   MIN_UPLOADABLE_FILE_SIZE_IN_MBS,
@@ -24,7 +25,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function MuiFileInput({ buttonText, setFieldValue, values, ...props }) {
+function MuiFileInput({
+  loading,
+  buttonText,
+  setFieldValue,
+  values,
+  ...props
+}) {
   const [field, meta] = useField(props);
   const classes = useStyles();
   const selectedFile = useRef(null);
@@ -76,6 +83,7 @@ function MuiFileInput({ buttonText, setFieldValue, values, ...props }) {
           handleCaptureFile(target.files, setFieldValue)
         }
         hidden
+        disabled={loading}
       />
       <Tooltip title={documentToolTip(values)}>
         <Box
@@ -95,6 +103,8 @@ function MuiFileInput({ buttonText, setFieldValue, values, ...props }) {
             color="secondary"
             variant="contained"
             startIcon={<Add fontSize="small" />}
+            disabled={loading}
+            loading={false}
           >
             <ButtonText>{buttonText}</ButtonText>
           </Button>

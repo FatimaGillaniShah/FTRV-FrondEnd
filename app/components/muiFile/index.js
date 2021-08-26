@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Tooltip } from '@material-ui/core';
+import { Box, IconButton, Tooltip } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -8,10 +8,10 @@ import {
 } from '../../utils/constants';
 import { isFunction, Toast } from '../../utils/helper';
 import Show from '../show';
+import { Button } from '../index';
 
 export function MuiFile({
   setImgFile,
-  mutation,
   setFieldValue,
   name,
   acceptTypes,
@@ -21,6 +21,7 @@ export function MuiFile({
   variant,
   iconColor,
   fullWidth,
+  loading,
   size,
   isIcon,
   dimensionValidation,
@@ -97,11 +98,12 @@ export function MuiFile({
           hidden
           ref={inputEl}
           accept={acceptTypes}
+          disabled={loading}
         />
         <Tooltip title={toolTipTitle}>
           <label htmlFor={name}>
             {isIcon ? (
-              <IconButton onClick={handleClick} disabled={mutation?.isLoading}>
+              <IconButton onClick={handleClick} disabled={loading}>
                 <Show IF={btnIcon}>{btnIcon}</Show>
               </IconButton>
             ) : (
@@ -112,7 +114,8 @@ export function MuiFile({
                 onClick={handleClick}
                 variant={variant}
                 startIcon={btnIcon && btnIcon}
-                disabled={mutation?.isLoading}
+                disabled={loading}
+                loading={false}
               >
                 {buttonText}
               </Button>

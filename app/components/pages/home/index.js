@@ -32,9 +32,9 @@ function Home({
           >
             <EventCalendarHome eventList={eventList} />
             <Box width={[1, 1, 1, 1 / 2]} pb={8}>
-              <Show IF={pollData.length}>
+              <Show IF={pollData?.length}>
                 <Carousel>
-                  {pollData.map((poll) => (
+                  {pollData?.map((poll) => (
                     <PollHome pollData={poll} />
                   ))}
                 </Carousel>

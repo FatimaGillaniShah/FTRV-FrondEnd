@@ -2,14 +2,14 @@ import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import Button from '@material-ui/core/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { ROLES } from '../../../utils/constants';
 import { useAuthContext } from '../../../context/authContext';
 import { navigateTo } from '../../../utils/helper';
 import Show from '../../show';
+import { Button } from '../..';
 
-export function TableButtons({ onDelete, numSelected }) {
+export function TableButtons({ onDelete, numSelected, loading }) {
   const { categoryId } = useParams();
   const history = useHistory();
   const {
@@ -26,6 +26,7 @@ export function TableButtons({ onDelete, numSelected }) {
               color="secondary"
               variant="contained"
               fullWidth={false}
+              loading={false}
               startIcon={<AddIcon />}
               onClick={() =>
                 navigateTo(
@@ -44,7 +45,8 @@ export function TableButtons({ onDelete, numSelected }) {
               fullWidth={false}
               startIcon={<DeleteIcon />}
               onClick={onDelete}
-              disabled={numSelected <= 0}
+              loading={false}
+              disabled={numSelected <= 0 || loading}
             >
               Delete
             </Button>

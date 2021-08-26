@@ -76,13 +76,14 @@ function AddDocument() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Document</title>
       </Helmet>
-      {isLoading || isDocumentLoading ? (
+      {isDocumentLoading ? (
         <Loading />
       ) : (
         <CreateDocumentPage
           id={id}
           initialValues={id ? document : initialValues}
           onHandleSubmit={handleSubmit}
+          loading={isLoading}
         />
       )}
     </>

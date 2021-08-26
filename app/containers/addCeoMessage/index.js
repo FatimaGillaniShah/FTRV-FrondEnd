@@ -54,9 +54,9 @@ function AddCeoMessage() {
         <Loading />
       ) : (
         <AddCeoMessageInfo
-          mutation={mutation}
           onHandleSubmit={handleSubmit}
           value={data?.data?.data}
+          loading={mutation.isLoading}
         />
       )}
     </>

@@ -83,13 +83,14 @@ function AddJob() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Job</title>
       </Helmet>
-      {isLoading || isJobLoading ? (
+      {isJobLoading ? (
         <Loading />
       ) : (
         <CreateJobPage
           id={id}
           initialValues={id ? job : initialValues}
           onHandleSubmit={handleSubmit}
+          loading={isLoading}
         />
       )}
     </>

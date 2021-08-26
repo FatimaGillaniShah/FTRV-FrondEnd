@@ -16,21 +16,25 @@ function AddLocation() {
   const history = useHistory();
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery(keys.getLocation(id), getLocationById, {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    onError: ({
-      response: {
-        data: { message },
+  const { data, isLoading: isLocationLoading } = useQuery(
+    keys.getLocation(id),
+    getLocationById,
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
       },
-    }) => {
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occurred',
-      });
-    },
-  });
-  const { mutate, isLoading: loading } = useMutation(
+    }
+  );
+  const { mutate, isLoading } = useMutation(
     id ? updateLocation : createLocation,
     {
       onSuccess: () => {
@@ -65,13 +69,14 @@ function AddLocation() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Location</title>
       </Helmet>
-      {isLoading || loading ? (
+      {isLocationLoading ? (
         <Loading />
       ) : (
         <AddLocationPage
           onHandleSubmit={handleSubmit}
           id={id}
           initialValues={id ? data?.data?.data : initialValues}
+          loading={isLoading}
         />
       )}
     </>

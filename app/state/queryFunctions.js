@@ -166,9 +166,7 @@ export const getLinkCategoryById = ({ queryKey }) =>
 export const updateLinkCategory = ({ id, ...payload }) =>
   http.put(`${CATEGORY}/${id}`, payload);
 
-export const deleteLinkCategory = (id) => {
-  http.delete(`${CATEGORY}/${id}`);
-};
+export const deleteLinkCategory = (id) => http.delete(`${CATEGORY}/${id}`);
 export const getCategories = () => http.get(CATEGORY);
 
 export const getLocations = () => http.get(`${LOCATIONS}?pageSize=1000&`);

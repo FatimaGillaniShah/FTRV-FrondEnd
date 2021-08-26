@@ -36,7 +36,12 @@ function BannerImageHome({ isImageLoading, onHandleImageChange, fileName }) {
             <BannerImage bannerImageURL={bannerImageURL} />
           </Box>
           <Show IF={role === ROLES.ADMIN}>
-            <Box className={classes.editBox} width="100%">
+            <Box
+              className={classes.editBox}
+              width="100%"
+              justifyContent="center"
+              display="flex"
+            >
               <MuiFile
                 btnIcon={<EditIcon />}
                 acceptTypes={FILE_ACCEPT_TYPES.imageFiles}

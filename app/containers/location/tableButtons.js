@@ -9,7 +9,7 @@ import { useAuthContext } from '../../context/authContext';
 import { navigateTo } from '../../utils/helper';
 import Show from '../../components/show';
 
-export function TableButtons({ numSelected, handleDelete }) {
+export function TableButtons({ numSelected, handleDelete, loading }) {
   const {
     user: {
       data: { role },
@@ -25,6 +25,7 @@ export function TableButtons({ numSelected, handleDelete }) {
               color="secondary"
               variant="contained"
               fullWidth={false}
+              loading={false}
               startIcon={<AddIcon />}
               onClick={() => navigateTo(history, '/locations/add')}
             >
@@ -38,7 +39,8 @@ export function TableButtons({ numSelected, handleDelete }) {
               fullWidth={false}
               startIcon={<DeleteIcon />}
               onClick={handleDelete}
-              disabled={numSelected <= 0}
+              loading={false}
+              disabled={numSelected <= 0 || loading}
             >
               Delete
             </Button>

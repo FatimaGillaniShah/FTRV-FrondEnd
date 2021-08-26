@@ -1,11 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Hidden,
-  Tooltip,
-} from '@material-ui/core';
+import { Avatar, Box, Hidden, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
@@ -20,7 +13,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
 import AddIcon from '@material-ui/icons/Add';
-import { Input, DatePicker } from 'components';
+import { Input, DatePicker, Button } from 'components';
 import { MuiFile } from 'components/muiFile';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
@@ -270,7 +263,7 @@ function CreateUser({
                 >
                   <MuiFile
                     name="file"
-                    mutation={mutation}
+                    loading={mutation.isLoading}
                     setImgFile={setImgFile}
                     setFieldValue={setFieldValue}
                     acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
@@ -526,6 +519,7 @@ function CreateUser({
                   >
                     <Box mx={1} mb={7}>
                       <Button
+                        disabled={mutation.isLoading}
                         variant="contained"
                         color="secondary"
                         type="submit"
@@ -535,12 +529,6 @@ function CreateUser({
                           </Show>
                         }
                       >
-                        <Show IF={mutation.isLoading}>
-                          <CircularProgress
-                            size={15}
-                            className={classes.circularProgress}
-                          />
-                        </Show>
                         {`${formType === 'add' ? 'Create' : 'Update'}`}
                       </Button>
                     </Box>

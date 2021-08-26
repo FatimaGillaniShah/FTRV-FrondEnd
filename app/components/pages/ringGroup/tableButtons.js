@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import { navigateTo } from '../../../utils/helper';
 
-export function TableButtons({ onHandleDelete, numSelected }) {
+export function TableButtons({ onHandleDelete, numSelected, loading }) {
   const history = useHistory();
   return (
     <Box display="flex" justifyContent="space-between" my={5}>
@@ -15,6 +15,7 @@ export function TableButtons({ onHandleDelete, numSelected }) {
           <Button
             color="secondary"
             variant="contained"
+            loading={false}
             startIcon={<AddIcon />}
             onClick={() => navigateTo(history, '/ring-group/add')}
           >
@@ -27,7 +28,8 @@ export function TableButtons({ onHandleDelete, numSelected }) {
             variant="contained"
             startIcon={<DeleteIcon />}
             onClick={onHandleDelete}
-            disabled={numSelected <= 0}
+            loading={false}
+            disabled={numSelected <= 0 || loading}
           >
             Delete
           </Button>

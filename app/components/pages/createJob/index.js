@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import { Box, Button, FormHelperText } from '@material-ui/core';
-import { Input, DatePicker } from 'components';
+import { Box, FormHelperText } from '@material-ui/core';
+import { Input, DatePicker, Button } from 'components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
@@ -18,7 +18,7 @@ import DepartmentWithModal from '../../departmentWithModal';
 import LocationWithModal from '../../locationWithModal';
 import { CKEDITOR_CUSTOM_CONFIG } from '../../../utils/constants';
 
-function CreateJob({ id, initialValues, onHandleSubmit }) {
+function CreateJob({ id, initialValues, onHandleSubmit, loading }) {
   const history = useHistory();
 
   return (
@@ -119,6 +119,7 @@ function CreateJob({ id, initialValues, onHandleSubmit }) {
                       >
                         <Button
                           type="submit"
+                          disabled={loading}
                           color="secondary"
                           variant="contained"
                           startIcon={<SaveIcon />}

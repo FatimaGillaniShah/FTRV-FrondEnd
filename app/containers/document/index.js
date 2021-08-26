@@ -48,20 +48,19 @@ function Document() {
       <Helmet>
         <title>Document</title>
       </Helmet>
-
-      <WrapInBreadcrumbs>
-        <WrapInCard>
-          {isLoading || mutation.isLoading ? (
-            <Loading />
-          ) : (
+      {isLoading || mutation.isLoading ? (
+        <Loading />
+      ) : (
+        <WrapInBreadcrumbs>
+          <WrapInCard>
             <DocumentPage
               data={department}
               onHandleSortOrder={handleSortOrder}
               onHandleDelete={handleDelete}
             />
-          )}
-        </WrapInCard>
-      </WrapInBreadcrumbs>
+          </WrapInCard>
+        </WrapInBreadcrumbs>
+      )}
     </>
   );
 }

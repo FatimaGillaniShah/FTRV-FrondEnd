@@ -72,7 +72,7 @@ function AnnouncementContainer() {
       <Helmet>
         <title>Announcement</title>
       </Helmet>
-      {isLoading || mutation.isLoading ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <WrapInBreadcrumbs>
@@ -81,6 +81,7 @@ function AnnouncementContainer() {
               <Show IF={role === ROLES.ADMIN}>
                 <Box mt={4}>
                   <TableButtons
+                    loading={mutation.isLoading}
                     onDelete={handleDelete}
                     numSelected={selected.length}
                   />

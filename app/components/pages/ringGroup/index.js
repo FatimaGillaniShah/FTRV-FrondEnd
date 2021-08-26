@@ -30,6 +30,7 @@ function RingGroup({
   toggleValues,
   alignment,
   onHandleToggleChange,
+  loading,
 }) {
   const {
     user: {
@@ -70,6 +71,7 @@ function RingGroup({
               <TableButtons
                 numSelected={selected.length}
                 onHandleDelete={onHandleDelete}
+                loading={loading}
               />
               <Show IF={selected.length > 0}>
                 <Box my={4}>

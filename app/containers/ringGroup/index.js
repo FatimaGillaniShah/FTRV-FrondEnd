@@ -106,6 +106,7 @@ function RingGroupContainer() {
       ) : (
         <RingGroup
           data={rows}
+          loading={isLoading}
           selected={selected}
           setSelected={setSelected}
           onHandleDelete={handleDelete}

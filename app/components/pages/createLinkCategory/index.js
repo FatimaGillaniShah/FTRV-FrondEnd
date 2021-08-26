@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input } from '../../index';
+import { Input, Button } from '../../index';
 import { H5 } from '../../typography';
 
 const eventSchema = object().shape({
@@ -17,7 +17,12 @@ const eventSchema = object().shape({
   // ADD BLANK SPACE FUNCTION HERE
 });
 
-export function CreateLinkCategory({ onHandleSubmit, id, initialValues }) {
+export function CreateLinkCategory({
+  onHandleSubmit,
+  id,
+  initialValues,
+  loading,
+}) {
   const history = useHistory();
   return (
     <WrapInBreadcrumbs>
@@ -55,6 +60,7 @@ export function CreateLinkCategory({ onHandleSubmit, id, initialValues }) {
                         type="submit"
                         color="secondary"
                         variant="contained"
+                        disabled={loading}
                         startIcon={<SaveIcon />}
                       >
                         {id ? 'Update' : 'Create'}

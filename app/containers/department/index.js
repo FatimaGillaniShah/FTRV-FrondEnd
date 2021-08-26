@@ -55,6 +55,7 @@ function Departments() {
                 <TableButtons
                   handleDelete={handleDelete}
                   numSelected={selected.length}
+                  loading={mutation.isLoading}
                 />
                 {selected?.length > 0 && (
                   <Box my={4}>

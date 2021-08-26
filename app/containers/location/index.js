@@ -55,6 +55,7 @@ function Locations() {
                 <TableButtons
                   handleDelete={handleDelete}
                   numSelected={selected?.length}
+                  loading={mutation.isLoading}
                 />
                 <Show IF={selected?.length > 0}>
                   <Box my={4}>

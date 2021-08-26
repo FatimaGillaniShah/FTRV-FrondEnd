@@ -79,6 +79,7 @@ function EditAnnouncement() {
               initialValues={initialData || defaultData}
               onUpdateAnnouncement={handleSubmit}
               formType="edit"
+              loading={mutation.isLoading}
             />
           )}
         </WrapInCard>

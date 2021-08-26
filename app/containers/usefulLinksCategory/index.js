@@ -35,7 +35,7 @@ function UsefulLinksCategory() {
         <title>Useful Links Category</title>
       </Helmet>
       <WrapInBreadcrumbs>
-        {isLoading ? (
+        {isLoading || mutation.isLoading ? (
           <Loading />
         ) : (
           <UsefulLinksCategoryPage

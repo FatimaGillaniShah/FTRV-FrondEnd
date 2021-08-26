@@ -1,20 +1,24 @@
 import React, { memo } from 'react';
 import { Formik, Form } from 'formik';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import ClearIcon from '@material-ui/icons/Clear';
 import AttachFileOutlinedIcon from '@material-ui/icons/AttachFileOutlined';
 import SaveIcon from '@material-ui/icons/Save';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { Input, WrapInCard, TextArea, MuiFileInput } from '../../index';
+import { Input, WrapInCard, TextArea, MuiFileInput, Button } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { H5 } from '../../typography';
 import DepartmentWithModel from '../../departmentWithModal';
 import { validationSchema } from './validationSchema';
 import { navigateTo } from '../../../utils/helper';
 
-export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
+export function CreateDocumentPage({
+  initialValues,
+  id,
+  onHandleSubmit,
+  loading,
+}) {
   const history = useHistory();
 
   const handleCancel = () => {
@@ -62,6 +66,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                           buttonText="Document"
                           values={values}
                           setFieldValue={setFieldValue}
+                          loading={loading}
                         />
                       </Box>
                       <Box width={[1, 1 / 2]} mt={16} px={3}>
@@ -88,6 +93,7 @@ export function CreateDocumentPage({ initialValues, id, onHandleSubmit }) {
                           type="submit"
                           color="secondary"
                           variant="contained"
+                          disabled={loading}
                           startIcon={<SaveIcon />}
                         >
                           {id ? 'Update' : 'Create'}

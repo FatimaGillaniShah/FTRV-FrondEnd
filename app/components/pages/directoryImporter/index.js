@@ -1,17 +1,13 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Tooltip,
-} from '@material-ui/core';
+import { Box, Grid, Tooltip } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import React, { useEffect } from 'react';
+import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import { Toast } from '../../../utils/helper';
 import { BodyTextSmall, ButtonText, H5 } from '../../typography';
 import { useStyles } from './styles';
 import Show from '../../show';
+import { Button } from '../../index';
 
 export default function FileUploader({
   handleCapture,
@@ -82,6 +78,7 @@ export default function FileUploader({
                     variant="contained"
                     startIcon={<Add fontSize="small" />}
                     disabled={mutation.isLoading}
+                    loading={false}
                   >
                     <ButtonText>Upload</ButtonText>
                   </Button>
@@ -101,15 +98,15 @@ export default function FileUploader({
               <Button
                 onClick={() => handleSubmit()}
                 color="secondary"
-                disabled={!selectedFile}
+                disabled={!selectedFile || mutation.isLoading}
+                loading={mutation.isLoading}
                 variant="contained"
+                startIcon={
+                  <Show IF={!mutation.isLoading}>
+                    <SaveOutlinedIcon fontSize="small" />
+                  </Show>
+                }
               >
-                <Show IF={mutation.isLoading}>
-                  <CircularProgress
-                    size={15}
-                    className={classes.circularProgress}
-                  />
-                </Show>
                 Submit
               </Button>
             </Box>

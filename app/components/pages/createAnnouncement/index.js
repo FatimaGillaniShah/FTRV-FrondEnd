@@ -1,4 +1,4 @@
-import { Box, Button, Hidden, FormLabel } from '@material-ui/core';
+import { Box, Hidden, FormLabel } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
@@ -7,14 +7,14 @@ import PropTypes from 'prop-types';
 import React, { memo } from 'react';
 import { useHistory } from 'react-router-dom';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
-
 import { string, object, date, ref } from 'yup';
-import { STATUS, ROLES } from '../../../utils/constants';
+import { Button, DatePicker, Input } from '../../index';
+import { ROLES, STATUS } from '../../../utils/constants';
 import FormikRadioGroup from '../../muiRadioButtons';
 import { H4 } from '../../typography';
 import Select from '../../muiSelect';
 import { useAuthContext } from '../../../context/authContext';
-import { DatePicker, Input } from '../../index';
+
 import { parseDate } from '../../../utils/functions';
 import { navigateTo } from '../../../utils/helper';
 
@@ -37,6 +37,7 @@ function CreateAnnouncement({
   initialValues,
   onUpdateAnnouncement,
   formType = 'add',
+  loading,
 }) {
   const options = [
     { value: 'high', label: 'High' },
@@ -161,6 +162,7 @@ function CreateAnnouncement({
                       <Button
                         variant="contained"
                         color="secondary"
+                        disabled={loading}
                         type="submit"
                         startIcon={<NotificationImportantIcon />}
                       >
