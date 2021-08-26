@@ -1,7 +1,7 @@
 import { object, string, date, number } from 'yup';
 import { parseDate } from '../../../utils/functions';
 
-const maxDate = parseDate(new Date('12-30-2099'));
+const maxDate = parseDate(new Date('2099-12-30'));
 export const jobSchema = object().shape({
   title: string().required('*Title Required'),
   departmentId: number().required('*Department Required'),
