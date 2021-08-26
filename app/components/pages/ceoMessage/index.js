@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from 'react-router-dom';
-import { Avatar } from '@material-ui/core';
+import { Avatar, IconButton } from '@material-ui/core';
 import { H5, BodyTextLarge } from '../../typography';
 import { useStyles } from './styles';
 import { useAuthContext } from '../../../context/authContext';
@@ -43,10 +43,11 @@ export default function CeoMessage({ ceoMessageData }) {
         </Box>
         <Show IF={role === ROLES.ADMIN}>
           <Box width={1 / 2} display="flex" justifyContent="flex-end">
-            <EditIcon
-              className={classes.editIcon}
+            <IconButton
               onClick={() => navigateTo(history, '/ceo-message/edit')}
-            />{' '}
+            >
+              <EditIcon className={classes.editIcon} />
+            </IconButton>
           </Box>
         </Show>
       </Box>

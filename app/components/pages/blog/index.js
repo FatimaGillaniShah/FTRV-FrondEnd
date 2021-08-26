@@ -71,11 +71,10 @@ function Blog({
           </Box>
           <Show IF={role === ROLES.ADMIN}>
             <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
-              <IconButton>
-                <EditIcon
-                  color="secondary"
-                  onClick={() => navigateTo(history, `/blogs/edit/${id}`)}
-                />
+              <IconButton
+                onClick={() => navigateTo(history, `/blogs/edit/${id}`)}
+              >
+                <EditIcon color="secondary" />
               </IconButton>
               <IconButton onClick={() => onHandleDeleteBlog(id)}>
                 <DeleteIcon color="error" />

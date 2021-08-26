@@ -29,13 +29,11 @@ const ActionButtons = ({ data, disabled }) => {
     <>
       {role === ROLES.ADMIN && (
         <>
-          <IconButton disabled={disabled}>
-            <EditIcon
-              color="secondary"
-              onClick={() =>
-                navigateTo(history, `/departments/edit/${data.id}`)
-              }
-            />
+          <IconButton
+            disabled={disabled}
+            onClick={() => navigateTo(history, `/departments/edit/${data.id}`)}
+          >
+            <EditIcon color="secondary" />
           </IconButton>
           <IconButton
             disabled={disabled}
