@@ -29,6 +29,7 @@ const {
   RING_GROUP,
   JOB,
   APPLICANT,
+  POLL,
 } = APIS;
 
 // USER CRUD
@@ -264,3 +265,6 @@ export const createJob = (payload) => http.post(JOB, payload);
 
 export const updateJob = ({ id, ...payload }) =>
   http.put(`${JOB}/${id}`, payload);
+
+export const createPolls = ({ date, ...payload }) =>
+  http.post(`${POLL}?date=${date}`, payload);
