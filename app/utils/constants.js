@@ -91,4 +91,5 @@ export const APIS = {
   JOB: '/jobs',
   APPLICANT: '/jobApplicant',
   POLL: '/polls',
+  VOTE_POLL: '/polls/vote',
 };

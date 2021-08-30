@@ -1,18 +1,22 @@
 import { Box, Grid } from '@material-ui/core';
 import React from 'react';
+import BallotIcon from '@material-ui/icons/Ballot';
 import EventCalendarHome from './calendar';
 import PollHome from './poll';
 import BannerImageHome from './bannerImage';
 import { useStyles } from './style';
 import Show from '../../show';
 import { Carousel } from '../../index';
+import NotExist from '../notExist';
 
 function Home({
   eventList,
-  pollData,
   isImageLoading,
   onHandleImageChange,
   fileName,
+  pollList,
+  onHandleVoteSubmit,
+  isVoteLoading,
 }) {
   const classes = useStyles();
   return (
@@ -32,10 +36,24 @@ function Home({
           >
             <EventCalendarHome eventList={eventList} />
             <Box width={[1, 1, 1, 1 / 2]} pb={8}>
-              <Show IF={pollData?.length}>
-                <Carousel>
-                  {pollData?.map((poll) => (
-                    <PollHome pollData={poll} />
+              <Show IF={pollList?.length === 0}>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  height="450px"
+                >
+                  <NotExist Icon={BallotIcon} description="No Active Polls" />;
+                </Box>
+              </Show>
+              <Show IF={pollList?.length}>
+                <Carousel navButtonsAlwaysInvisible={pollList?.length <= 1}>
+                  {pollList?.map((poll) => (
+                    <PollHome
+                      poll={poll}
+                      onHandleVoteSubmit={onHandleVoteSubmit}
+                      isVoteLoading={isVoteLoading}
+                    />
                   ))}
                 </Carousel>
               </Show>

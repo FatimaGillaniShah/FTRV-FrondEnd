@@ -23,6 +23,7 @@ export function PollsPage({
   initialFilterValues,
   initialValues,
   onHandleDelete,
+  voted,
 }) {
   const history = useHistory();
   return (
@@ -97,6 +98,7 @@ export function PollsPage({
                         pending={pending}
                         initialValues={initialValues}
                         onHandleDelete={onHandleDelete}
+                        voted={voted}
                       />
                     </Box>
                   )

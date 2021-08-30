@@ -30,6 +30,7 @@ const {
   JOB,
   APPLICANT,
   POLL,
+  VOTE_POLL,
 } = APIS;
 
 // USER CRUD
@@ -269,7 +270,7 @@ export const updateJob = ({ id, ...payload }) =>
 export const getPolls = ({ queryKey }) => {
   let url = `${POLL}?date=${queryKey[1].date}&pageSize=1000&`;
   const { query, filters } = queryKey[1];
-  if (query.searchString) {
+  if (query?.searchString) {
     url = `${POLL}?date=${queryKey[1].date}&pageSize=1000&${insertParams(
       query
     )}`;
@@ -285,3 +286,6 @@ export const createPolls = ({ date, ...payload }) =>
 
 export const deletePoll = (payload) =>
   http.delete(POLL, { data: { ids: payload } });
+
+export const votePoll = ({ date, ...payload }) =>
+  http.post(`${VOTE_POLL}?date=${date}`, payload);

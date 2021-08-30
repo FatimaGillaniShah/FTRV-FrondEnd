@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import {
   Box,
@@ -18,16 +17,20 @@ import Alert from '@material-ui/lab/Alert';
 import Fade from '@material-ui/core/Fade';
 import { string, object } from 'yup';
 import { useTheme } from '@material-ui/styles';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Formik, Field } from 'formik';
-import Show from '../show';
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import Tooltip from '@material-ui/core/Tooltip';
 import { navigateTo } from '../../utils/helper';
 import FormikRadioGroup from '../muiRadioButtons';
-import { MuiBadge } from '../index';
+import { Button, MuiBadge } from '../index';
 import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
 import { BodyTextLarge, H5 } from '../typography';
 import BorderLinearProgress from '../muiLinearProgress';
+import Show from '../show';
 import { colors } from '../../theme/colors';
 
 const useStyles = makeStyles(() => ({
@@ -70,11 +73,12 @@ export const Poll = ({
   expired,
   pending,
   initialValues,
+  onHandleVoteSubmit,
+  isVoteLoading,
+  voted,
 }) => {
-  let voted = [];
-  voted = options.filter((option) => option.votes > 0);
   const validationSchema = object().shape({
-    pollsOption: string().required('*Please choose option!'),
+    pollOption: string().required('*Please select an option!'),
   });
   const {
     user: {
@@ -102,46 +106,25 @@ export const Poll = ({
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onsubmit}
+      onSubmit={(values) => onHandleVoteSubmit(id, values)}
     >
       {({ errors }) => (
         <Form>
           <Box p={1}>
-            <Paper className={classes.card} elevation={home ? 2 : 8}>
+            <Paper className={!home && classes.card} elevation={home ? 2 : 8}>
               <Box p={10}>
                 <Box
                   display="flex"
-                  flexDirection={['column', 'column', 'column', 'row']}
+                  flexDirection={['row']}
                   width={1}
                   justifyContent="space-between"
                 >
-                  <Box mb={7} mt={2} width={[1, 1, 1, '40%']}>
+                  <Box mt={2} width={1}>
                     <H5>{name}</H5>
                   </Box>
 
-                  {role === ROLES.ADMIN && (
-                    <Box
-                      display="flex"
-                      flexDirection={['column', 'column', 'column', 'row']}
-                      width={[1, 1, 1, '80%']}
-                      justifyContent="flex-end"
-                    >
-                      <Show IF={!home}>
-                        <Box mt={3}>
-                          <MuiBadge badgeContent={status} color={statusColor} />
-                        </Box>
-                        <Box mt={3} ml={[0, 0, 0, 1]}>
-                          <Show IF={expired}>
-                            <MuiBadge badgeContent="expired" color="error" />
-                          </Show>
-                          <Show IF={pending}>
-                            <MuiBadge
-                              badgeContent="pending"
-                              color={colors.orange}
-                            />
-                          </Show>
-                        </Box>
-                      </Show>
+                  <Show IF={role === ROLES.ADMIN}>
+                    <Box display="flex" justifyContent="flex-end">
                       <Box>
                         <IconButton onClick={handleClick}>
                           <MoreVertIcon color="secondary" />
@@ -183,46 +166,101 @@ export const Poll = ({
                         </MenuItem>
                       </Menu>
                     </Box>
-                  )}
+                  </Show>
+                </Box>
+                <Box display="flex" flexDirection="row" mb={6}>
+                  <Show IF={home && voted}>
+                    <Box>
+                      <MuiBadge
+                        badgeContent="voted"
+                        color={colors.oliveGreen}
+                      />
+                    </Box>
+                  </Show>
+                  <Show IF={!home}>
+                    <Box>
+                      <MuiBadge badgeContent={status} color={statusColor} />
+                    </Box>
+                    <Box ml={[0, 0, 0, 1]}>
+                      <Show IF={expired}>
+                        <MuiBadge badgeContent="expired" color="error" />
+                      </Show>
+                      <Show IF={pending}>
+                        <MuiBadge
+                          badgeContent="pending"
+                          color={colors.orange}
+                        />
+                      </Show>
+                    </Box>
+                  </Show>
                 </Box>
 
                 <Box>
                   <BodyTextLarge bold> {description}</BodyTextLarge>
                 </Box>
-                <Show IF={errors.pollsOption}>
-                  <Fade in={errors.pollsOption}>
+                <Show IF={errors?.pollOption}>
+                  <Fade in={errors?.pollOption}>
                     <Box mt={3}>
                       <Alert severity="error">
                         <FormHelperText error>
-                          {errors.pollsOption}
+                          {errors?.pollOption}
                         </FormHelperText>
                       </Alert>
                     </Box>
                   </Fade>
                 </Show>
-                <Field
-                  name="pollsOption"
-                  component={FormikRadioGroup}
-                  options={options}
-                  fieldError={false}
-                />
+                <Tooltip
+                  title={
+                    voted
+                      ? 'You have already voted for this poll'
+                      : 'Please select an option'
+                  }
+                >
+                  <Box>
+                    <Field
+                      name="pollOption"
+                      component={FormikRadioGroup}
+                      disabled={isVoteLoading || voted}
+                      options={options}
+                      fieldError={false}
+                    />
+                  </Box>
+                </Tooltip>
                 <Box
                   display="flex"
                   flexDirection={['column', 'column', 'column', 'row']}
                 >
-                  <Box mr={4} my={3}>
-                    <Button variant="contained" color="secondary" type="submit">
-                      Vote
-                    </Button>
-                  </Box>
-                  <Box my={3}>
-                    <Button
-                      variant="contained"
-                      onClick={() => setHidden(!hidden)}
-                    >
-                      {hidden ? 'Show Results' : 'Hide Results'}
-                    </Button>
-                  </Box>
+                  <Tooltip
+                    title={
+                      voted ? 'You have already voted for this poll' : 'Vote'
+                    }
+                  >
+                    <Box mr={4} my={3}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        type="submit"
+                        disabled={isVoteLoading || voted}
+                        loading={!voted}
+                        startIcon={<HowToVoteIcon />}
+                      >
+                        {voted ? 'Voted' : 'Vote'}
+                      </Button>
+                    </Box>
+                  </Tooltip>
+                  <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
+                    <Box my={3}>
+                      <Button
+                        variant="contained"
+                        onClick={() => setHidden(!hidden)}
+                        startIcon={
+                          hidden ? <VisibilityIcon /> : <VisibilityOffIcon />
+                        }
+                      >
+                        {hidden ? 'Show Results' : 'Hide Results'}
+                      </Button>
+                    </Box>
+                  </Tooltip>
                 </Box>
 
                 <Show IF={!hidden}>
