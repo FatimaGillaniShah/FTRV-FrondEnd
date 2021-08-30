@@ -8,21 +8,70 @@ import { useAuthContext } from '../../context/authContext';
 import {
   fetchEvents,
   getBannerImage,
+  getPolls,
   updateBannerImage,
+  votePoll,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { parseDate } from '../../utils/functions';
 import { Toast, navigateTo } from '../../utils/helper';
 
 function HomeContainer() {
   const { user } = useAuthContext();
   const history = useHistory();
   const { data, isEventsLoading } = useQuery(keys.events, fetchEvents);
-
+  const date = parseDate(new Date());
+  const {
+    data: pollResponse,
+    isLoading: isPollLoading,
+    refetch: refetchPolls,
+  } = useQuery(keys.polls({ filters: { status: 'active' }, date }), getPolls);
+  const pollList = pollResponse?.data?.data?.rows
+    .map((value) => {
+      const totalVotes = 0;
+      const pollsOptions = value?.options.map(({ id, name, votes, voted }) => ({
+        label: name,
+        value: id,
+        votes,
+        totalVotes: totalVotes + votes,
+        voted,
+      }));
+      return {
+        ...value,
+        options: pollsOptions,
+      };
+    })
+    .filter((poll) => !poll.expired && !poll.pending);
   const {
     data: image,
     isLoading: isImageLoading,
     refetch: refetchBannerImage,
   } = useQuery(keys.bannerImage, getBannerImage);
+
+  const onVoteSuccess = () => {
+    refetchPolls();
+    Toast({
+      icon: 'success',
+      title: `Voted Successfully`,
+    });
+  };
+  const onVoteError = ({
+    response: {
+      data: { message },
+    },
+  }) => {
+    Toast({
+      icon: 'error',
+      title: message || 'Some error occurred',
+    });
+  };
+  const { isLoading: isVoteLoading, mutate: mutateVote } = useMutation(
+    votePoll,
+    {
+      onSuccess: onVoteSuccess,
+      onError: onVoteError,
+    }
+  );
 
   const onUpdateImageSuccess = () => {
     Toast({
@@ -64,13 +113,22 @@ function HomeContainer() {
     }
   };
 
+  const handleVoteSubmit = (pollId, values) => {
+    const body = {
+      pollOptionId: Number(values.pollOption),
+      pollId,
+      date,
+    };
+    mutateVote(body);
+  };
+
   return (
     <>
       <Helmet>
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
-      {isEventsLoading ? (
+      {isEventsLoading || isPollLoading ? (
         <Loading />
       ) : (
         <Home
@@ -78,6 +136,9 @@ function HomeContainer() {
           eventList={data?.data?.data?.rows}
           fileName={image?.data?.data?.fileName}
           onHandleImageChange={handleImageChange}
+          pollList={pollList}
+          onHandleVoteSubmit={handleVoteSubmit}
+          isVoteLoading={isVoteLoading}
         />
       )}
     </>

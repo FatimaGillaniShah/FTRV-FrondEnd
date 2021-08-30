@@ -16,11 +16,16 @@ function UsefulLinksPage({
   isLoading,
   page,
   setPage,
+  loading,
 }) {
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
-        <TableButtons numSelected={selected?.length} onDelete={onDelete} />
+        <TableButtons
+          numSelected={selected?.length}
+          onDelete={onDelete}
+          loading={loading}
+        />
         <Show IF={selected?.length > 0}>
           <Box my={4}>
             <Alert severity="info">

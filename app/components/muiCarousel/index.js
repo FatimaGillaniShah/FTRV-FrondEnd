@@ -39,6 +39,7 @@ function MuiCarousel({
   navButtonsAlwaysVisible,
   navButtonsAlwaysInvisible,
   autoPlay,
+  animation,
   ...props
 }) {
   const classes = useStyles();
@@ -80,7 +81,7 @@ function MuiCarousel({
           </Box>
         )}
         autoPlay={autoPlay}
-        animation="fade"
+        animation={animation}
         navButtonsAlwaysVisible={navButtonsAlwaysVisible}
         navButtonsAlwaysInvisible={navButtonsAlwaysInvisible}
         indicators={indicators}
@@ -98,6 +99,7 @@ MuiCarousel.propTypes = {
   autoPlay: PropTypes.bool,
   navButtonsAlwaysVisible: PropTypes.bool,
   navButtonsAlwaysInvisible: PropTypes.bool,
+  animation: PropTypes.string,
 };
 
 MuiCarousel.defaultProps = {
@@ -105,6 +107,7 @@ MuiCarousel.defaultProps = {
   navButtonsAlwaysVisible: true,
   navButtonsAlwaysInvisible: false,
   indicators: false,
+  animation: 'fade',
 };
 
 export default memo(MuiCarousel);

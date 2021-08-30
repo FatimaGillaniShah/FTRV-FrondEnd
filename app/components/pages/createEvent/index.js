@@ -1,4 +1,4 @@
-import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
+import { Box, FormHelperText, IconButton } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
@@ -15,7 +15,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input, TextArea, AutoComplete } from '../../index';
+import { Input, TextArea, AutoComplete, Button } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
 import { useStyles } from './style';
 import { useAuthContext } from '../../../context/authContext';
@@ -55,6 +55,7 @@ export function CreateEventPage({
   pageTitle,
   onHandleDeleteEvent,
   locationData,
+  loading,
 }) {
   const classes = useStyles();
   const history = useHistory();
@@ -63,6 +64,7 @@ export function CreateEventPage({
       data: { role },
     },
   } = useAuthContext();
+
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
@@ -221,6 +223,7 @@ export function CreateEventPage({
                             type="submit"
                             color="secondary"
                             variant="contained"
+                            disabled={loading}
                             startIcon={<SaveIcon />}
                           >
                             {id ? 'Update' : 'Create'}

@@ -1,5 +1,5 @@
-import { Avatar, Box, Button } from '@material-ui/core';
-import { TextArea } from 'components';
+import { Avatar, Box } from '@material-ui/core';
+import { TextArea, Button } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function AddCeoMessage({ mutation, onHandleSubmit, value }) {
+function AddCeoMessage({ onHandleSubmit, value, loading }) {
   const classes = useStyles();
   const [imgFile, setImgFile] = useState((value && value.avatar) || null);
   const history = useHistory();
@@ -80,7 +80,7 @@ function AddCeoMessage({ mutation, onHandleSubmit, value }) {
                   >
                     <MuiFile
                       name="file"
-                      mutation={mutation}
+                      loading={loading}
                       setImgFile={setImgFile}
                       setFieldValue={setFieldValue}
                       acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
@@ -119,6 +119,7 @@ function AddCeoMessage({ mutation, onHandleSubmit, value }) {
                           variant="contained"
                           color="secondary"
                           type="submit"
+                          disabled={loading}
                         >
                           Update
                         </Button>

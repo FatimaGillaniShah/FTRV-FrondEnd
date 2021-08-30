@@ -1,11 +1,11 @@
-import { Box, Button } from '@material-ui/core';
-import { TextArea } from 'components';
+import { Box } from '@material-ui/core';
+import { TextArea, Button } from 'components';
 import { Form, Formik } from 'formik';
 import React, { memo } from 'react';
 import { string, object } from 'yup';
 import { H5 } from '../../typography';
 
-function Quote({ value, handleSubmit }) {
+function Quote({ value, handleSubmit, loading }) {
   const initialValues = {
     quote: value,
   };
@@ -19,7 +19,6 @@ function Quote({ value, handleSubmit }) {
   return (
     <>
       <H5>Quote</H5>
-
       <Formik
         initialValues={initialValues}
         validationSchema={quoteSchema}
@@ -35,7 +34,12 @@ function Quote({ value, handleSubmit }) {
             display="flex"
             justifyContent="flex-end"
           >
-            <Button color="secondary" variant="contained" type="submit">
+            <Button
+              color="secondary"
+              variant="contained"
+              disabled={loading}
+              type="submit"
+            >
               Publish
             </Button>
           </Box>

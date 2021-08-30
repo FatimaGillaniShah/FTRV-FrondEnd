@@ -79,13 +79,14 @@ function CreateLinkCategory() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Ring Group</title>
       </Helmet>
-      {isLoading || isRingGroupLoading ? (
+      {isRingGroupLoading ? (
         <Loading />
       ) : (
         <CreateRingGroupPage
           id={id}
           onHandleSubmit={handleSubmit}
           initialValues={id ? ringGroup : initialValues}
+          loading={isLoading}
         />
       )}
     </>

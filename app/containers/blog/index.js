@@ -40,7 +40,7 @@ function Blog() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading ? (
+          {isLoading || mutation.isLoading ? (
             <Loading />
           ) : (
             <BlogListing

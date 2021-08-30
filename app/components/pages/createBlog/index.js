@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
-import { Avatar, Box, Button, FormHelperText } from '@material-ui/core';
-import { Input } from 'components';
+import { Avatar, Box, FormHelperText } from '@material-ui/core';
+import { Input, Button } from 'components';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
 import { MuiFile } from 'components/muiFile';
@@ -21,7 +21,7 @@ import { useStyles } from './style';
 import { navigateTo } from '../../../utils/helper';
 import Show from '../../show';
 
-function CreateBlog({ onHandleSubmit, id, initialValues }) {
+function CreateBlog({ onHandleSubmit, id, initialValues, loading }) {
   const imgURL = initialValues?.file;
   const [imgFile, setImgFile] = useState(imgURL);
   const history = useHistory();
@@ -80,6 +80,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                         setFieldValue={setFieldValue}
                         acceptTypes={FILE_ACCEPT_TYPES.imageFiles}
                         toolTipTitle="Select thumbnail"
+                        loading={loading}
                         buttonText={
                           id ? 'Update thumbnail' : 'Upload thumbnail'
                         }
@@ -153,6 +154,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues }) {
                           type="submit"
                           color="secondary"
                           variant="contained"
+                          disabled={loading}
                           startIcon={<SaveIcon />}
                         >
                           {id ? 'Update' : 'Create'}

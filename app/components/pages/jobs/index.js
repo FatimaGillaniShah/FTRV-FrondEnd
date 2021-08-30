@@ -22,6 +22,7 @@ function Jobs({
   onHandleDelete,
   page,
   query,
+  loading,
   setPage,
   filterToggle,
   onClearFilter,
@@ -62,6 +63,7 @@ function Jobs({
           <Show IF={role === ROLES.ADMIN}>
             <Box mt={4}>
               <TableButtons
+                loading={loading}
                 numSelected={selected?.length}
                 onHandleDelete={onHandleDelete}
               />

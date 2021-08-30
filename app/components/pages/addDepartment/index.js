@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
@@ -9,14 +9,19 @@ import { useHistory } from 'react-router';
 import BusinessIcon from '@material-ui/icons/Business';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input } from '../../index';
+import { Input, Button } from '../../index';
 import { H5 } from '../../typography';
 
 const departmentSchema = object().shape({
   name: string().required('*Department Required'),
 });
 
-export function AddDepartmentPage({ onHandleSubmit, id, initialValues }) {
+export function AddDepartmentPage({
+  loading,
+  onHandleSubmit,
+  id,
+  initialValues,
+}) {
   const history = useHistory();
   return (
     <WrapInBreadcrumbs>
@@ -51,6 +56,7 @@ export function AddDepartmentPage({ onHandleSubmit, id, initialValues }) {
                   <Box mb={5}>
                     <Button
                       type="submit"
+                      disabled={loading}
                       color="secondary"
                       variant="contained"
                       startIcon={<SaveIcon />}

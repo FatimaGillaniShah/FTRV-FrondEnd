@@ -1,4 +1,4 @@
-import { Box, Button, Tooltip } from '@material-ui/core';
+import { Box, Tooltip } from '@material-ui/core';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
@@ -11,7 +11,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { H5 } from '../../typography';
 import DepartmentWithModal from '../../departmentWithModal';
 import LocationWithModal from '../../locationWithModal';
-import { Input, WrapInCard } from '../../index';
+import { Input, WrapInCard, Button } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 
 const ringGroupSchema = object().shape({
@@ -26,7 +26,7 @@ const ringGroupSchema = object().shape({
   departmentId: string().required('*Department Required'),
   locationId: string().required('*Location Required'),
 });
-function CreateRingGroup({ id, initialValues, onHandleSubmit }) {
+function CreateRingGroup({ id, initialValues, onHandleSubmit, loading }) {
   const history = useHistory();
 
   return (
@@ -97,6 +97,7 @@ function CreateRingGroup({ id, initialValues, onHandleSubmit }) {
                         variant="contained"
                         color="secondary"
                         type="submit"
+                        disabled={loading}
                         startIcon={<NotificationImportantIcon />}
                       >
                         {id ? 'Update' : 'Create'}

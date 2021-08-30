@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input, Select } from '../../index';
+import { Input, Select, Button } from '../../index';
 import { H5 } from '../../typography';
 import { navigateTo } from '../../../utils/helper';
 
@@ -33,6 +33,7 @@ export function AddUsefulLinkPage({
   initialValues,
   history,
   options,
+  loading,
 }) {
   const { categoryId, id } = useParams();
   return (
@@ -90,6 +91,7 @@ export function AddUsefulLinkPage({
                         color="secondary"
                         variant="contained"
                         fullWidth={false}
+                        disabled={loading}
                         startIcon={<SaveIcon />}
                       >
                         {id ? 'Update' : 'Create'}

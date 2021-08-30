@@ -62,6 +62,7 @@ function UsefulLinks() {
           isLoading={isLoading}
           page={page}
           setPage={setPage}
+          loading={mutation.isLoading}
         />
       )}
     </>

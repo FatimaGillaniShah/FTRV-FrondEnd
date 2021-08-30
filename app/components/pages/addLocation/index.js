@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
@@ -9,14 +9,19 @@ import { useHistory } from 'react-router';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { Input } from '../../index';
+import { Input, Button } from '../../index';
 import { H5 } from '../../typography';
 
 const LocationSchema = object().shape({
   name: string().required('*Location Required'),
 });
 
-export function AddLocationPage({ onHandleSubmit, id, initialValues }) {
+export function AddLocationPage({
+  onHandleSubmit,
+  id,
+  initialValues,
+  loading,
+}) {
   const history = useHistory();
   return (
     <WrapInBreadcrumbs>
@@ -52,6 +57,7 @@ export function AddLocationPage({ onHandleSubmit, id, initialValues }) {
                     <Button
                       type="submit"
                       color="secondary"
+                      disabled={loading}
                       variant="contained"
                       startIcon={<SaveIcon />}
                     >

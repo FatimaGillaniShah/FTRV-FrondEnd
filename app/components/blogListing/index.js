@@ -1,4 +1,4 @@
-import { Box, Divider, Button } from '@material-ui/core';
+import { Box, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import AddIcon from '@material-ui/icons/Add';
@@ -11,6 +11,7 @@ import { useAuthContext } from '../../context/authContext';
 import { ROLES, PAGE_SIZE } from '../../utils/constants';
 import { navigateTo } from '../../utils/helper';
 import Show from '../show';
+import { Button } from '../index';
 
 const useStyles = makeStyles((theme) => ({
   paginator: {

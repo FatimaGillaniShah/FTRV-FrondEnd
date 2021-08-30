@@ -113,6 +113,8 @@ export const CreatePollPage = ({ onHandleSubmit, id, initialValues }) => {
                   <Box width={[1, 1 / 2]} mt={10} px={3} mb={5}>
                     <Select
                       name="status"
+                      selectName="status"
+                      selectId="status"
                       label="Status"
                       selectedValue={values.status}
                       options={statusOptions}

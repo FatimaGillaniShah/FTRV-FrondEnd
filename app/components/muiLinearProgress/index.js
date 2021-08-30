@@ -6,6 +6,8 @@ import { useTheme } from '@material-ui/styles';
 
 const BorderLinearProgress = ({ value, color, variant, animation }) => {
   const theme = useTheme();
+  const votePercentageColor =
+    value === 0 ? theme.palette.text.dark : theme.palette.text.light;
   const useStyles = makeStyles({
     root: {
       height: 15,
@@ -18,6 +20,7 @@ const BorderLinearProgress = ({ value, color, variant, animation }) => {
     bar: {
       borderRadius: 5,
       backgroundColor: color?.main,
+      width: `${value}%`,
     },
     progressLabel: {
       position: 'relative',
@@ -26,7 +29,7 @@ const BorderLinearProgress = ({ value, color, variant, animation }) => {
       textAlign: 'end',
       display: 'flex',
       '& span': {
-        color: theme.palette.text.light,
+        color: votePercentageColor,
         width: `${value - 3}%`,
       },
     },

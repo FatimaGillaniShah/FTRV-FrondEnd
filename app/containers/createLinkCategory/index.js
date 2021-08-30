@@ -69,13 +69,14 @@ function CreateLinkCategory() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Link Category</title>
       </Helmet>
-      {isCategoryLoading || isLoading ? (
+      {isCategoryLoading ? (
         <Loading />
       ) : (
         <CreateLinkCategoryPage
           onHandleSubmit={handleSubmit}
           id={id}
           initialValues={id ? data?.data?.data : initialValues}
+          loading={isLoading}
         />
       )}
     </>

@@ -164,9 +164,9 @@ function DirectoryContainer() {
         <title>Directory Listing</title>
       </Helmet>
       {isLoading ||
-      mutation.isLoading ||
       isLocationLoading ||
-      isDepartmentLoading ? (
+      isDepartmentLoading ||
+      mutation.isLoading ? (
         <Loading />
       ) : (
         <WrapInBreadcrumbs>
@@ -202,6 +202,7 @@ function DirectoryContainer() {
                   <TableButtons
                     onDelete={handleDelete}
                     numSelected={selected.length}
+                    loading={mutation.isLoading}
                   />
                 </Box>
               </Show>

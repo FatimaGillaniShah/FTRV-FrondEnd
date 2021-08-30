@@ -83,7 +83,7 @@ function JobsContainer() {
       <Helmet>
         <title> Jobs</title>
       </Helmet>
-      {isLoading || isListLoading ? (
+      {isListLoading || isLoading ? (
         <Loading />
       ) : (
         <Jobs
@@ -103,6 +103,7 @@ function JobsContainer() {
           onHandleSearch={handleSearch}
           filterToggle={filterToggle}
           onHandleSwitchChange={handleSwitchChange}
+          loading={isLoading}
         />
       )}
     </>

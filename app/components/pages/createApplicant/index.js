@@ -1,11 +1,11 @@
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import React, { memo } from 'react';
 import SaveIcon from '@material-ui/icons/Save';
 import { Form, Formik } from 'formik';
 import { string, object } from 'yup';
 import ClearIcon from '@material-ui/icons/Clear';
 import PropTypes from 'prop-types';
-import { TextArea, MuiFileInput } from 'components';
+import { TextArea, MuiFileInput, Button } from 'components';
 import { useHistory } from 'react-router';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
@@ -19,7 +19,7 @@ const applicantSchema = object().shape({
     .typeError('* This field cannot contain only blankspaces'),
 });
 
-export function CreateApplicant({ initialValues, onHandleSubmit }) {
+export function CreateApplicant({ initialValues, onHandleSubmit, loading }) {
   const history = useHistory();
 
   return (
@@ -60,6 +60,7 @@ export function CreateApplicant({ initialValues, onHandleSubmit }) {
                     <Button
                       type="submit"
                       color="secondary"
+                      disabled={loading}
                       variant="contained"
                       startIcon={<SaveIcon />}
                     >

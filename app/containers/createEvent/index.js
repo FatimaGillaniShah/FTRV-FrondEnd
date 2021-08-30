@@ -23,7 +23,7 @@ function CreateEvent() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const today = new Date();
-  const { data, isLoading } = useQuery(keys.getEvent(id), getEventById, {
+  const { data, isEventLoading } = useQuery(keys.getEvent(id), getEventById, {
     enabled: !!id,
     refetchOnWindowFocus: false,
     onError: ({
@@ -37,28 +37,25 @@ function CreateEvent() {
       });
     },
   });
-  const { mutate, isLoading: loading } = useMutation(
-    id ? updateEvent : createEvent,
-    {
-      onSuccess: () => {
-        Toast({
-          icon: 'success',
-          title: `Event ${id ? 'Updated' : 'Created'}  Successfully`,
-        });
-        queryClient.invalidateQueries(keys.getEvent(id));
-        navigateTo(history, '/events');
+  const { mutate, isLoading } = useMutation(id ? updateEvent : createEvent, {
+    onSuccess: () => {
+      Toast({
+        icon: 'success',
+        title: `Event ${id ? 'Updated' : 'Created'}  Successfully`,
+      });
+      queryClient.invalidateQueries(keys.getEvent(id));
+      navigateTo(history, '/events');
+    },
+    onError: ({
+      response: {
+        data: { message },
       },
-      onError: ({
-        response: {
-          data: { message },
-        },
-      }) =>
-        Toast({
-          icon: 'error',
-          title: message || 'Some error occurred',
-        }),
-    }
-  );
+    }) =>
+      Toast({
+        icon: 'error',
+        title: message || 'Some error occurred',
+      }),
+  });
   const mutation = useDeleteEvent();
   const handleSubmit = (values) => {
     const dataValues = { ...values };
@@ -83,7 +80,7 @@ function CreateEvent() {
     locationIds: [],
   };
   const onLoading = () => {
-    if (isLoading || isLocationLoading || loading || mutation.isLoading) {
+    if (isEventLoading || isLocationLoading) {
       return true;
     }
     return false;
@@ -103,6 +100,7 @@ function CreateEvent() {
           pageTitle={id ? 'Update' : 'Create New'}
           onHandleDeleteEvent={handleDeleteEvent}
           locationData={locationData?.data?.data?.rows}
+          loading={isLoading}
         />
       )}
     </>

@@ -90,4 +90,6 @@ export const APIS = {
   RING_GROUP: '/ringGroups',
   JOB: '/jobs',
   APPLICANT: '/jobApplicant',
+  POLL: '/polls',
+  VOTE_POLL: '/polls/vote',
 };

@@ -63,6 +63,7 @@ function CreateAnnouncement() {
             initialValues={defaultData}
             onUpdateAnnouncement={handleSubmit}
             formType="add"
+            loading={mutation.isLoading}
           />
         </WrapInCard>
       </WrapInBreadcrumbs>

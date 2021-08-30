@@ -16,7 +16,7 @@ function AddDepartment() {
   const history = useHistory();
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery(
+  const { data, isLoading: isDepartmentLoading } = useQuery(
     keys.getDepartments(id),
     getDepartmentById,
     {
@@ -34,7 +34,7 @@ function AddDepartment() {
       },
     }
   );
-  const { mutate, isLoading: loading } = useMutation(
+  const { mutate, isLoading } = useMutation(
     id ? updateDepartment : createDepartment,
     {
       onSuccess: () => {
@@ -69,13 +69,14 @@ function AddDepartment() {
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Department</title>
       </Helmet>
-      {isLoading || loading ? (
+      {isDepartmentLoading ? (
         <Loading />
       ) : (
         <AddDepartmentPage
           onHandleSubmit={handleSubmit}
           id={id}
           initialValues={id ? data?.data?.data : initialValues}
+          loading={isLoading}
         />
       )}
     </>

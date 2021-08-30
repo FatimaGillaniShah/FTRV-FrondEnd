@@ -70,18 +70,20 @@ function CreateBlog() {
     content: data?.data?.data?.content || '',
     file: data?.data?.data?.thumbnail || '',
   };
+
   return (
     <>
       <Helmet>
         <title>{id ? 'Edit' : 'Create'} Blog</title>
       </Helmet>
-      {isListLoading || isLoading ? (
+      {isListLoading ? (
         <Loading />
       ) : (
         <CreateBlogPage
           onHandleSubmit={handleSubmit}
           id={id}
           initialValues={initialValues}
+          loading={isLoading}
         />
       )}
     </>

@@ -10,6 +10,7 @@ const FormikRadioGroup = ({
   name,
   fieldError,
   options,
+  disabled,
   ...props
 }) => {
   const fieldName = name || field.name;
@@ -17,9 +18,10 @@ const FormikRadioGroup = ({
   return (
     <>
       <RadioGroup row {...field} {...props} name={fieldName}>
-        {options.map((option) => (
+        {options?.map((option) => (
           <FormControlLabel
-            control={<MUIRadio value={option.value} />}
+            disabled={disabled}
+            control={<MUIRadio value={option.value.toString()} />}
             label={option.label}
           />
         ))}
@@ -34,6 +36,7 @@ const FormikRadioGroup = ({
 };
 FormikRadioGroup.defaultProps = {
   fieldError: true,
+  disabled: false,
 };
 
 export default FormikRadioGroup;
