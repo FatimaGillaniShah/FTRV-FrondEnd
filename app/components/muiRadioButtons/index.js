@@ -17,9 +17,9 @@ const FormikRadioGroup = ({
   return (
     <>
       <RadioGroup row {...field} {...props} name={fieldName}>
-        {options.map((option) => (
+        {options?.map((option) => (
           <FormControlLabel
-            control={<MUIRadio value={option.value} />}
+            control={<MUIRadio value={option.value.toString()} />}
             label={option.label}
           />
         ))}

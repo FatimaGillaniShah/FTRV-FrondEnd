@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import AddIcon from '@material-ui/icons/Add';
 import BallotIcon from '@material-ui/icons/Ballot';
@@ -10,6 +10,7 @@ import { navigateTo } from '../../../utils/helper';
 import Filters from './filter';
 import Show from '../../show';
 import { Search } from '../../search/search';
+import { Button } from '../..';
 
 export function PollsPage({
   data,
@@ -20,6 +21,8 @@ export function PollsPage({
   onClearFilter,
   onHandleFilterSearch,
   initialFilterValues,
+  initialValues,
+  onHandleDelete,
 }) {
   const history = useHistory();
   return (
@@ -73,15 +76,31 @@ export function PollsPage({
                 width={1}
                 p={4}
               >
-                {data?.map((val) => (
-                  <Box mt={8} mb={8} width={[1, 1, 1 / 2, '30%']}>
-                    <Poll
-                      name={val.name}
-                      description={val.description}
-                      options={val.options}
-                    />
-                  </Box>
-                ))}
+                {data?.map(
+                  ({
+                    id,
+                    name,
+                    options,
+                    question,
+                    status,
+                    expired,
+                    pending,
+                  }) => (
+                    <Box mt={8} mb={8} width={[1, 1, 1 / 2, '30%']}>
+                      <Poll
+                        id={id}
+                        name={name}
+                        description={question}
+                        options={options}
+                        status={status}
+                        expired={expired}
+                        pending={pending}
+                        initialValues={initialValues}
+                        onHandleDelete={onHandleDelete}
+                      />
+                    </Box>
+                  )
+                )}
               </Box>
             </Show>
           </WrapInCard>

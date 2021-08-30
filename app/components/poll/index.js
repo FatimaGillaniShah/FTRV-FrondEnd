@@ -20,6 +20,7 @@ import { string, object } from 'yup';
 import { useTheme } from '@material-ui/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, Formik, Field } from 'formik';
+import Show from '../show';
 import { navigateTo } from '../../utils/helper';
 import FormikRadioGroup from '../muiRadioButtons';
 import { MuiBadge } from '../index';
@@ -27,7 +28,6 @@ import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
 import { BodyTextLarge, H5 } from '../typography';
 import BorderLinearProgress from '../muiLinearProgress';
-import Show from '../show';
 import { colors } from '../../theme/colors';
 
 const useStyles = makeStyles(() => ({
@@ -66,8 +66,13 @@ export const Poll = ({
   id,
   onHandleDelete,
   home,
+  status,
+  expired,
+  pending,
   initialValues,
 }) => {
+  let voted = [];
+  voted = options.filter((option) => option.votes > 0);
   const validationSchema = object().shape({
     pollsOption: string().required('*Please choose option!'),
   });
@@ -85,14 +90,20 @@ export const Poll = ({
     setAnchorEl(null);
   };
   const history = useHistory();
-
   const theme = useTheme();
   const colorArray = ['success', 'error', 'warning', 'info'];
   const [hidden, setHidden] = useState(false);
   const classes = useStyles();
-
+  const statusColor =
+    status === 'active' ? colors.oliveGreen : colors.lightGrey;
+  const votePercentage = (votes, totalVotes) =>
+    votes > 0 ? (votes / totalVotes) * 100 : 0;
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onsubmit}
+    >
       {({ errors }) => (
         <Form>
           <Box p={1}>
@@ -100,22 +111,35 @@ export const Poll = ({
               <Box p={10}>
                 <Box
                   display="flex"
-                  flexDirection="row"
+                  flexDirection={['column', 'column', 'column', 'row']}
                   width={1}
                   justifyContent="space-between"
                 >
-                  <Box mb={7} mt={2}>
+                  <Box mb={7} mt={2} width={[1, 1, 1, '40%']}>
                     <H5>{name}</H5>
                   </Box>
 
                   {role === ROLES.ADMIN && (
-                    <Box display="flex">
+                    <Box
+                      display="flex"
+                      flexDirection={['column', 'column', 'column', 'row']}
+                      width={[1, 1, 1, '80%']}
+                      justifyContent="flex-end"
+                    >
                       <Show IF={!home}>
                         <Box mt={3}>
-                          <MuiBadge
-                            badgeContent="active"
-                            color={colors.oliveGreen}
-                          />
+                          <MuiBadge badgeContent={status} color={statusColor} />
+                        </Box>
+                        <Box mt={3} ml={[0, 0, 0, 1]}>
+                          <Show IF={expired}>
+                            <MuiBadge badgeContent="expired" color="error" />
+                          </Show>
+                          <Show IF={pending}>
+                            <MuiBadge
+                              badgeContent="pending"
+                              color={colors.orange}
+                            />
+                          </Show>
                         </Box>
                       </Show>
                       <Box>
@@ -134,18 +158,21 @@ export const Poll = ({
                           horizontal: 'left',
                         }}
                       >
-                        <MenuItem
-                          onClick={() =>
-                            navigateTo(history, `/polls/edit/${id}`)
-                          }
-                        >
-                          <ListItemIcon>
-                            <EditIcon color="secondary" />
-                          </ListItemIcon>
-                          Edit
-                        </MenuItem>
+                        <Show IF={!pending && !expired && !voted.length > 0}>
+                          <MenuItem
+                            onClick={() =>
+                              navigateTo(history, `/polls/edit/${id}`)
+                            }
+                          >
+                            <ListItemIcon>
+                              <EditIcon color="secondary" />
+                            </ListItemIcon>
+                            Edit
+                          </MenuItem>
+                        </Show>
                         <MenuItem
                           onClick={() => {
+                            handleClose();
                             onHandleDelete(id);
                           }}
                         >
@@ -179,7 +206,10 @@ export const Poll = ({
                   options={options}
                   fieldError={false}
                 />
-                <Box display="flex" flexDirection={['column', 'row', 'row']}>
+                <Box
+                  display="flex"
+                  flexDirection={['column', 'column', 'column', 'row']}
+                >
                   <Box mr={4} my={3}>
                     <Button variant="contained" color="secondary" type="submit">
                       Vote
@@ -201,7 +231,8 @@ export const Poll = ({
                       {val.label}
                       <BorderLinearProgress
                         variant="indeterminate"
-                        value={val.result}
+                        votes={val.vote}
+                        value={votePercentage(val.votes, val.totalVotes)}
                         color={theme.palette[colorArray[index]]}
                         animation={{
                           bar1Indeterminate: classes.bar1Indeterminate,

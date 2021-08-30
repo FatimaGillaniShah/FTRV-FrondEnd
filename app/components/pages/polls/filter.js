@@ -11,7 +11,7 @@ function Filters({ initialValues, onHandleFilterSearch, onClear }) {
     resetForm();
     onClear();
   };
-  const options = ['Active', 'Inactive', 'Pending', 'Expired'];
+  const options = ['active', 'inactive', 'pending', 'expired'];
   return (
     <>
       <Formik initialValues={initialValues} onSubmit={onHandleFilterSearch}>
