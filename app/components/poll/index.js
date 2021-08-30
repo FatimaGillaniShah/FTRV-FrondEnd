@@ -36,11 +36,8 @@ import { colors } from '../../theme/colors';
 const useStyles = makeStyles(() => ({
   card: {
     '&:hover': {
-      marginTop: '-12px',
-      marginLeft: '-12px',
-      transition: 'all 0.4s',
       boxShadow:
-        '-1px 5px 5px -2px rgb(0 0 0 / 20%), 0px 1px 2px 0px rgb(0 0 0 / 14%), 0px 1px 4px 0px rgb(0 0 0 / 12%)',
+        '0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)',
     },
   },
   bar1Indeterminate: {
@@ -95,7 +92,6 @@ export const Poll = ({
   };
   const history = useHistory();
   const theme = useTheme();
-  const colorArray = ['success', 'error', 'warning', 'info'];
   const [hidden, setHidden] = useState(false);
   const classes = useStyles();
   const statusColor =
@@ -111,7 +107,7 @@ export const Poll = ({
       {({ errors }) => (
         <Form>
           <Box p={1}>
-            <Paper className={!home && classes.card} elevation={home ? 2 : 8}>
+            <Paper className={!home && classes.card}>
               <Box p={10}>
                 <Box
                   display="flex"
@@ -209,69 +205,71 @@ export const Poll = ({
                     </Box>
                   </Fade>
                 </Show>
-                <Tooltip
-                  title={
-                    voted
-                      ? 'You have already voted for this poll'
-                      : 'Please select an option'
-                  }
-                >
-                  <Box>
-                    <Field
-                      name="pollOption"
-                      component={FormikRadioGroup}
-                      disabled={isVoteLoading || voted}
-                      options={options}
-                      fieldError={false}
-                    />
-                  </Box>
-                </Tooltip>
-                <Box
-                  display="flex"
-                  flexDirection={['column', 'column', 'column', 'row']}
-                >
+                <Show IF={home}>
                   <Tooltip
                     title={
-                      voted ? 'You have already voted for this poll' : 'Vote'
+                      voted
+                        ? 'You have already voted for this poll'
+                        : 'Please select an option'
                     }
                   >
-                    <Box mr={4} my={3}>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        type="submit"
+                    <Box>
+                      <Field
+                        name="pollOption"
+                        component={FormikRadioGroup}
                         disabled={isVoteLoading || voted}
-                        loading={!voted}
-                        startIcon={<HowToVoteIcon />}
-                      >
-                        {voted ? 'Voted' : 'Vote'}
-                      </Button>
+                        options={options}
+                        fieldError={false}
+                      />
                     </Box>
                   </Tooltip>
-                  <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
-                    <Box my={3}>
-                      <Button
-                        variant="contained"
-                        onClick={() => setHidden(!hidden)}
-                        startIcon={
-                          hidden ? <VisibilityIcon /> : <VisibilityOffIcon />
-                        }
-                      >
-                        {hidden ? 'Show Results' : 'Hide Results'}
-                      </Button>
-                    </Box>
-                  </Tooltip>
-                </Box>
+                  <Box
+                    display="flex"
+                    flexDirection={['column', 'column', 'column', 'row']}
+                  >
+                    <Tooltip
+                      title={
+                        voted ? 'You have already voted for this poll' : 'Vote'
+                      }
+                    >
+                      <Box mr={4} my={3}>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          type="submit"
+                          disabled={isVoteLoading || voted}
+                          loading={!voted}
+                          startIcon={<HowToVoteIcon />}
+                        >
+                          {voted ? 'Voted' : 'Vote'}
+                        </Button>
+                      </Box>
+                    </Tooltip>
+                    <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
+                      <Box my={3}>
+                        <Button
+                          variant="contained"
+                          onClick={() => setHidden(!hidden)}
+                          startIcon={
+                            hidden ? <VisibilityIcon /> : <VisibilityOffIcon />
+                          }
+                        >
+                          {hidden ? 'Show Results' : 'Hide Results'}
+                        </Button>
+                      </Box>
+                    </Tooltip>
+                  </Box>
+                </Show>
 
                 <Show IF={!hidden}>
-                  {options?.map((val, index) => (
+                  {options?.map((val) => (
                     <Box my={3}>
                       {val.label}
                       <BorderLinearProgress
                         variant="indeterminate"
                         votes={val.vote}
                         value={votePercentage(val.votes, val.totalVotes)}
-                        color={theme.palette[colorArray[index]]}
+                        color={theme.palette.secondary}
                         animation={{
                           bar1Indeterminate: classes.bar1Indeterminate,
                           bar2Indeterminate: classes.bar2Indeterminate,

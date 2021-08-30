@@ -84,10 +84,10 @@ function Poll() {
     name: '',
     status: '',
   };
-  const votedOption = pollList.options.filter((option) => !!option.voted);
+  const votedOption = pollList?.options?.filter((option) => !!option.voted);
 
   const initialValues = {
-    pollOption: votedOption.length > 0 ? votedOption[0].value.toString() : '',
+    pollOption: votedOption?.length > 0 ? votedOption[0]?.value.toString() : '',
   };
   return (
     <>
@@ -111,7 +111,7 @@ function Poll() {
           onClearFilter={onClear}
           initialFilterValues={initialFilterValues}
           onHandleDelete={handleDelete}
-          voted={votedOption.length > 0}
+          voted={votedOption?.length > 0}
         />
       )}
     </>
