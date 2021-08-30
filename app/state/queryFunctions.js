@@ -1,3 +1,4 @@
+import moment from 'moment';
 import http from '../service/http';
 import { APIS, PAGE_SIZE } from '../utils/constants';
 import { insertParams } from '../utils/helper';
@@ -284,6 +285,13 @@ export const getPolls = ({ queryKey }) => {
 export const createPolls = ({ date, ...payload }) =>
   http.post(`${POLL}?date=${date}`, payload);
 
+export const updatePoll = ({ id, date, ...payload }) =>
+  http.put(`${POLL}?id=${id}&date=${date}`, payload);
+
+export const getPollById = ({ queryKey }) => {
+  const date = moment(new Date()).format('MM-DD-YYYY');
+  return http.get(`${POLL}/${queryKey[1]}/${date}`);
+};
 export const deletePoll = (payload) =>
   http.delete(POLL, { data: { ids: payload } });
 

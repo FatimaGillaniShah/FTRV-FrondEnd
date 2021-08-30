@@ -39,4 +39,5 @@ export const keys = {
   getJobById: (id) => ['job', id],
   getJob: (id) => ['job', id],
   polls: (payload) => ['polls', payload],
+  getPoll: (id) => ['poll', id],
 };

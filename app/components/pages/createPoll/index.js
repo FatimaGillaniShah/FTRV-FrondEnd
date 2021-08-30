@@ -38,7 +38,7 @@ const pollSchema = object().shape({
     .typeError('* This field cannot contain only blankspaces'),
   startDate: date()
     .min(
-      new Date().toLocaleString(),
+      new Date().toDateString(),
       ({ min }) => `Start Date must be equal or greater to ${min}`
     )
     .required('*Start Date Required'),
@@ -47,9 +47,16 @@ const pollSchema = object().shape({
     .min(ref('startDate'), 'End date should be greater than start date'),
 });
 
-export const CreatePollPage = ({ onHandleSubmit, id, initialValues }) => {
+export const CreatePollPage = ({
+  onHandleSubmit,
+  id,
+  initialValues,
+  loading,
+}) => {
+  const { expired, pending, options } = initialValues;
+  let voted = [];
+  voted = options.filter((option) => option.votes > 0);
   const history = useHistory();
-
   const handleRemoveField = (values, remove, setFieldValue, index) => {
     if (values[`options-${index + 2}`]) {
       setFieldValue(`options-${index + 1}`, values[`options-${index + 2}`]);
@@ -189,6 +196,12 @@ export const CreatePollPage = ({ onHandleSubmit, id, initialValues }) => {
                           <Box ml={2} my={[2, 0]}>
                             <Button
                               variant="contained"
+                              disabled={
+                                loading ||
+                                expired ||
+                                pending ||
+                                voted.length > 0
+                              }
                               color="secondary"
                               type="submit"
                               startIcon={<SaveIcon />}
