@@ -8,7 +8,6 @@ import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
-import _ from 'lodash';
 import { Loading } from '../../components/loading';
 import CreatePollPage from '../../components/pages/createPoll';
 import { navigateTo, Toast } from '../../utils/helper';
@@ -32,13 +31,6 @@ function CreatePoll() {
     }
   );
   const poll = data?.data?.data[0];
-  poll?.options.map((option, index) => {
-    const pollOption = {
-      [`options-${index + 1}`]: option.name,
-    };
-    return _.assign(poll, pollOption);
-  });
-
   const onPollsSuccess = () => {
     queryClient.invalidateQueries(keys.polls({}));
     Toast({
@@ -74,20 +66,16 @@ function CreatePoll() {
       status,
       startDate: parseDate(startDate),
       endDate: parseDate(endDate),
-      options: options.map((option, index) =>
-        option.id
-          ? { id: option.id, name: pollsData[`options-${index + 1}`] }
-          : pollsData[`options-${index + 1}`]
+      options: options.map((option) =>
+        option.id ? { id: option.id, name: option.name } : option.name
       ),
     };
     mutate(updatedPollDataValues);
   };
   const initialValues = {
-    options: ['', ''],
+    options: [{ name: '' }, { name: '' }],
     name: '',
     question: '',
-    'options-1': '',
-    'options-2': '',
     startDate: new Date(),
     endDate: new Date(),
     status: 'active',
