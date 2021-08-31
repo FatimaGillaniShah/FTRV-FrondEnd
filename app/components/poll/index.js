@@ -11,6 +11,7 @@ import {
   Menu,
   ListItemIcon,
   FormHelperText,
+  Collapse,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
@@ -266,8 +267,7 @@ export const Poll = ({
                     </Tooltip>
                   </Box>
                 </Show>
-
-                <Show IF={!hidden}>
+                <Collapse in={!hidden} collapsedSize={40}>
                   {options?.map((val) => (
                     <Box my={3}>
                       {val.label}
@@ -283,7 +283,7 @@ export const Poll = ({
                       />
                     </Box>
                   ))}
-                </Show>
+                </Collapse>
               </Box>
             </Paper>
           </Box>
