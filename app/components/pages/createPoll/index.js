@@ -52,7 +52,7 @@ export const CreatePollPage = ({
   initialValues,
   loading,
 }) => {
-  const { expired, pending, options } = initialValues;
+  const { options } = initialValues;
   let voted = [];
   voted = options.filter((option) => option.votes > 0);
   const history = useHistory();
@@ -198,12 +198,7 @@ export const CreatePollPage = ({
                           <Box ml={2} my={[2, 0]}>
                             <Button
                               variant="contained"
-                              disabled={
-                                loading ||
-                                expired ||
-                                pending ||
-                                voted.length > 0
-                              }
+                              disabled={loading || voted.length > 0}
                               color="secondary"
                               type="submit"
                               startIcon={<SaveIcon />}

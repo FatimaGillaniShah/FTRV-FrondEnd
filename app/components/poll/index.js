@@ -143,9 +143,7 @@ export const Poll = ({
                           horizontal: 'left',
                         }}
                       >
-                        <Show
-                          IF={!pending && !expired && !voteCount.length > 0}
-                        >
+                        <Show IF={!voteCount.length > 0}>
                           <MenuItem
                             onClick={() =>
                               navigateTo(history, `/polls/edit/${id}`)

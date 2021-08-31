@@ -2,7 +2,7 @@ import { Box } from '@material-ui/core';
 import React from 'react';
 import { Poll } from '../../poll';
 
-function PollHome({ poll, onHandleVoteSubmit, isVoteLoading }) {
+function PollHome({ poll, onHandleVoteSubmit, isVoteLoading, onHandleDelete }) {
   const votedOption = poll.options.filter((option) => !!option.voted);
 
   const initialValues = {
@@ -19,6 +19,7 @@ function PollHome({ poll, onHandleVoteSubmit, isVoteLoading }) {
         onHandleVoteSubmit={onHandleVoteSubmit}
         isVoteLoading={isVoteLoading}
         voted={votedOption.length > 0}
+        onHandleDelete={onHandleDelete}
         home
       />
     </Box>

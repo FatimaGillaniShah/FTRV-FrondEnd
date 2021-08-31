@@ -17,6 +17,7 @@ function Home({
   pollList,
   onHandleVoteSubmit,
   isVoteLoading,
+  onHandleDelete,
 }) {
   const classes = useStyles();
   return (
@@ -53,6 +54,7 @@ function Home({
                       poll={poll}
                       onHandleVoteSubmit={onHandleVoteSubmit}
                       isVoteLoading={isVoteLoading}
+                      onHandleDelete={onHandleDelete}
                     />
                   ))}
                 </Carousel>
