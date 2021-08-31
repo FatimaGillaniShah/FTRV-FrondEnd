@@ -1,7 +1,6 @@
 import React from 'react';
 import { Formik, Form, FieldArray } from 'formik';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import { string, object, date, ref } from 'yup';
 import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
@@ -12,7 +11,7 @@ import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { Divider } from '@material-ui/core';
 import { STATUS, POLL_OPTIONS_LIMIT } from '../../../utils/constants';
-import { DatePicker, Input, Select, WrapInCard } from '../../index';
+import { DatePicker, Input, Select, WrapInCard, Button } from '../../index';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { BodyTextLarge, H4 } from '../../typography';
 
@@ -158,6 +157,7 @@ export const CreatePollPage = ({
                                   }`}
                                   name={`options-${index + 1}`}
                                   variant="outlined"
+                                  isDisabled={!!id}
                                   Icon={index >= 2 && ClearIcon}
                                   onIconClick={() =>
                                     handleRemoveField(
@@ -177,7 +177,10 @@ export const CreatePollPage = ({
                           <Button
                             startIcon={<AddIcon fontSize="small" />}
                             variant="contained"
+                            loading={false}
                             disabled={
+                              loading ||
+                              id ||
                               values.options.length >= POLL_OPTIONS_LIMIT
                             }
                             color="secondary"

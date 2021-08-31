@@ -74,6 +74,7 @@ export const Poll = ({
   isVoteLoading,
   voted,
 }) => {
+  const voteCount = options.filter((option) => option.votes > 0);
   const validationSchema = object().shape({
     pollOption: string().required('*Please select an option!'),
   });
@@ -119,8 +120,13 @@ export const Poll = ({
                     <H5>{name}</H5>
                   </Box>
 
-                  <Show IF={role === ROLES.ADMIN}>
-                    <Box display="flex" justifyContent="flex-end">
+                  {role === ROLES.ADMIN && (
+                    <Box
+                      display="flex"
+                      flexDirection={['column', 'column', 'column', 'row']}
+                      width={[1, 1, 1, '80%']}
+                      justifyContent="flex-end"
+                    >
                       <Box>
                         <IconButton onClick={handleClick}>
                           <MoreVertIcon color="secondary" />
@@ -137,7 +143,9 @@ export const Poll = ({
                           horizontal: 'left',
                         }}
                       >
-                        <Show IF={!pending && !expired && !voted.length > 0}>
+                        <Show
+                          IF={!pending && !expired && !voteCount.length > 0}
+                        >
                           <MenuItem
                             onClick={() =>
                               navigateTo(history, `/polls/edit/${id}`)
@@ -162,7 +170,7 @@ export const Poll = ({
                         </MenuItem>
                       </Menu>
                     </Box>
-                  </Show>
+                  )}
                 </Box>
                 <Box display="flex" flexDirection="row" mb={6}>
                   <Show IF={home && voted}>

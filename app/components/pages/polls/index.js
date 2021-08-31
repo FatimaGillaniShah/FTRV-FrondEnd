@@ -3,6 +3,8 @@ import { Box } from '@material-ui/core';
 import { useHistory } from 'react-router';
 import AddIcon from '@material-ui/icons/Add';
 import BallotIcon from '@material-ui/icons/Ballot';
+import Pagination from '@material-ui/lab/Pagination';
+import { makeStyles } from '@material-ui/core/styles';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import WrapInCard from '../../layout/wrapInCard';
 import { Poll } from '../../poll';
@@ -11,6 +13,17 @@ import Filters from './filter';
 import Show from '../../show';
 import { Search } from '../../search/search';
 import { Button } from '../..';
+
+const useStyles = makeStyles((theme) => ({
+  paginator: {
+    justifyContent: 'center',
+    marginTop: theme.spacing(5),
+  },
+  iconImage: {
+    width: '10%',
+    height: '10%',
+  },
+}));
 
 export function PollsPage({
   data,
@@ -23,9 +36,15 @@ export function PollsPage({
   initialFilterValues,
   initialValues,
   onHandleDelete,
+  onHandleChange,
+  currentPage,
+  count,
   voted,
 }) {
   const history = useHistory();
+  const classes = useStyles();
+  const defaultPage = 1;
+  const noOfPages = Math.ceil(count / 9);
   return (
     <>
       <WrapInBreadcrumbs>
@@ -105,6 +124,19 @@ export function PollsPage({
                 )}
               </Box>
             </Show>
+            <Box component="span">
+              <Pagination
+                count={noOfPages}
+                page={currentPage}
+                onChange={onHandleChange}
+                defaultPage={defaultPage}
+                color="primary"
+                size="large"
+                showFirstButton
+                showLastButton
+                classes={{ ul: classes.paginator }}
+              />
+            </Box>
           </WrapInCard>
         </Box>
       </WrapInBreadcrumbs>

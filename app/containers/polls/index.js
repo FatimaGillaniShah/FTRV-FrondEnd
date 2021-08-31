@@ -19,6 +19,7 @@ import { parseDate } from '../../utils/functions';
 function Poll() {
   const [filterToggle, setFilterToggle] = useState(false);
   const [fieldFunc, setFieldFunc] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = useState(0);
   const [filters, setFilters] = useState();
   const [query, setQuery] = useState({ searchString: '' });
@@ -28,6 +29,7 @@ function Poll() {
       date,
       query,
       filters,
+      currentPage,
     }),
     getPolls,
     {
@@ -47,6 +49,9 @@ function Poll() {
       options: pollsOptions,
     };
   });
+  const handleChange = (event, pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   useEffect(() => {
     if (filterToggle) {
       fieldFunc?.setFormikField('searchString', '');
@@ -77,6 +82,9 @@ function Poll() {
     Modal.fire().then(({ isConfirmed }) => {
       if (isConfirmed) {
         mutation.mutate([id]);
+        if (pollList.length === 1) {
+          setCurrentPage(1);
+        }
       }
     });
   };
@@ -101,6 +109,7 @@ function Poll() {
         <PollsPage
           data={pollList}
           page={page}
+          count={pollResponse?.data?.data?.count}
           initialValues={initialValues}
           query={query}
           filters={filters}
@@ -109,6 +118,8 @@ function Poll() {
           onHandleSwitchChange={handleSwitchChange}
           onHandleSearch={handleSearch}
           onClearFilter={onClear}
+          currentPage={currentPage}
+          onHandleChange={handleChange}
           initialFilterValues={initialFilterValues}
           onHandleDelete={handleDelete}
           voted={votedOption?.length > 0}

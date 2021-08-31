@@ -56,7 +56,7 @@ function CreatePoll() {
   }) => {
     Toast({
       icon: 'error',
-      title: message || 'Some error occurred',
+      title: `Option ${message}` || 'Some error occurred',
     });
   };
   const { mutate, isLoading } = useMutation(id ? updatePoll : createPolls, {
@@ -80,7 +80,6 @@ function CreatePoll() {
           : pollsData[`options-${index + 1}`]
       ),
     };
-
     mutate(updatedPollDataValues);
   };
   const initialValues = {

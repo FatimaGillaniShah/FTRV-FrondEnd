@@ -269,16 +269,16 @@ export const updateJob = ({ id, ...payload }) =>
   http.put(`${JOB}/${id}`, payload);
 
 export const getPolls = ({ queryKey }) => {
-  let url = `${POLL}?date=${queryKey[1].date}&pageSize=1000&`;
-  const { query, filters } = queryKey[1];
-  if (query?.searchString) {
-    url = `${POLL}?date=${queryKey[1].date}&pageSize=1000&${insertParams(
+  const { date, currentPage, query, filters } = queryKey[1];
+  let url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}`;
+  if (query.searchString) {
+    url = `${POLL}?date=${date}${insertParams(
       query
-    )}`;
+    )}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}`;
   } else if (filters) {
-    url = `${POLL}?date=${queryKey[1].date}&pageSize=1000&${insertParams(
+    url = `${POLL}?date=${date}${insertParams(
       filters
-    )}`;
+    )}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}`;
   }
   return http.get(url);
 };

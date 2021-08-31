@@ -83,6 +83,7 @@ function InputField({
                 <InputAdornment position="end">
                   {IconClickable ? (
                     <IconButton
+                      disabled={isDisabled}
                       id={iconID}
                       onClick={onIconClick}
                       tabIndex={tabIndex}
