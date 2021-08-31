@@ -157,7 +157,6 @@ export const CreatePollPage = ({
                                   }`}
                                   name={`options-${index + 1}`}
                                   variant="outlined"
-                                  isDisabled={!!id}
                                   Icon={index >= 2 && ClearIcon}
                                   onIconClick={() =>
                                     handleRemoveField(

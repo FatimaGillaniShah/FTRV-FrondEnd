@@ -25,7 +25,18 @@ function HomeContainer() {
     data: pollResponse,
     isLoading: isPollLoading,
     refetch: refetchPolls,
-  } = useQuery(keys.polls({ filters: { status: 'active' }, date }), getPolls);
+  } = useQuery(
+    keys.polls({
+      date,
+      query: { searchString: '' },
+      filters: { status: 'active' },
+      currentPage: 1,
+    }),
+    getPolls,
+    {
+      keepPreviousData: true,
+    }
+  );
   const pollList = pollResponse?.data?.data?.rows
     .map((value) => {
       const totalVotes = 0;
