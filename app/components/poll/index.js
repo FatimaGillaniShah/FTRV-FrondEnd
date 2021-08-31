@@ -24,6 +24,7 @@ import { Form, Formik, Field } from 'formik';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Tooltip from '@material-ui/core/Tooltip';
+import _ from 'lodash';
 import { navigateTo } from '../../utils/helper';
 import FormikRadioGroup from '../muiRadioButtons';
 import { Button, MuiBadge } from '../index';
@@ -75,6 +76,7 @@ export const Poll = ({
   isVoteLoading,
   voted,
 }) => {
+  const sortedOptions = _.sortBy(options, (option) => option.value);
   const voteCount = options.filter((option) => option.votes > 0);
   const validationSchema = object().shape({
     pollOption: string().required('*Please select an option!'),
@@ -225,7 +227,7 @@ export const Poll = ({
                         name="pollOption"
                         component={FormikRadioGroup}
                         disabled={isVoteLoading || voted}
-                        options={options}
+                        options={sortedOptions}
                         fieldError={false}
                       />
                     </Box>
@@ -268,7 +270,7 @@ export const Poll = ({
                   </Box>
                 </Show>
                 <Collapse in={!hidden} collapsedSize={40}>
-                  {options?.map((val) => (
+                  {sortedOptions?.map((val) => (
                     <Box my={3}>
                       {val.label}
                       <BorderLinearProgress
