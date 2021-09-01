@@ -106,7 +106,7 @@ export function CreateEventPage({
                           px={3}
                           justifyContent="flex-end"
                         >
-                          <Show IF={role === ROLES.ADMIN}>
+                          <Show IF={id && role === ROLES.ADMIN}>
                             <Box mr={3}>
                               <IconButton onClick={onHandleDeleteEvent}>
                                 <DeleteIcon color="error" />
