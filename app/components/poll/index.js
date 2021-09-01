@@ -101,7 +101,7 @@ export const Poll = ({
   const statusColor =
     status === 'active' ? colors.oliveGreen : colors.lightGrey;
   const votePercentage = (votes, totalVotes) =>
-    votes > 0 ? (votes / totalVotes) * 100 : 0;
+    votes > 0 ? Math.floor((votes / totalVotes) * 100) : 0;
   return (
     <Formik
       initialValues={initialValues}

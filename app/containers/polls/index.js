@@ -92,7 +92,7 @@ function Poll() {
     name: '',
     status: '',
   };
-  const initialValues = { pollOption: '' };
+
   return (
     <>
       <Helmet>
@@ -104,7 +104,6 @@ function Poll() {
       ) : (
         <PollsPage
           data={pollList}
-          initialValues={initialValues}
           page={page}
           count={pollResponse?.data?.data?.count}
           query={query}

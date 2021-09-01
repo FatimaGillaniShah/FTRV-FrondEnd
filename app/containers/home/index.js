@@ -38,16 +38,19 @@ function HomeContainer() {
       keepPreviousData: true,
     }
   );
+
   const pollList = pollResponse?.data?.data?.rows
     .map((value) => {
-      const totalVotes = 0;
-      const pollsOptions = value?.options.map(({ id, name, votes, voted }) => ({
+      const totalVotes = value?.options.reduce(
+        (option1, option2) => option1.votes + option2.votes
+      );
+      const pollsOptions = value?.options.map(({ id, name, votes }) => ({
         label: name,
         value: id,
         votes,
-        totalVotes: totalVotes + votes,
-        voted,
+        totalVotes,
       }));
+
       return {
         ...value,
         options: pollsOptions,
