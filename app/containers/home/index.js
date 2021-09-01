@@ -142,7 +142,7 @@ function HomeContainer() {
       }
     });
   };
-
+  const initialValues = { pollOption: '' };
   return (
     <>
       <Helmet>
@@ -161,6 +161,7 @@ function HomeContainer() {
           onHandleVoteSubmit={handleVoteSubmit}
           isVoteLoading={isVoteLoading}
           onHandleDelete={handleDelete}
+          initialValues={initialValues}
         />
       )}
     </>

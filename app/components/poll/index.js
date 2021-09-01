@@ -199,7 +199,6 @@ export const Poll = ({
                     </Box>
                   </Show>
                 </Box>
-
                 <Box>
                   <BodyTextLarge bold> {description}</BodyTextLarge>
                 </Box>
@@ -236,24 +235,18 @@ export const Poll = ({
                     display="flex"
                     flexDirection={['column', 'column', 'column', 'row']}
                   >
-                    <Tooltip
-                      title={
-                        voted ? 'You have already voted for this poll' : 'Vote'
-                      }
-                    >
-                      <Box mr={4} my={3}>
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          type="submit"
-                          disabled={isVoteLoading || voted}
-                          loading={!voted}
-                          startIcon={<HowToVoteIcon />}
-                        >
-                          {voted ? 'Voted' : 'Vote'}
-                        </Button>
-                      </Box>
-                    </Tooltip>
+                    <Box mr={4} my={3}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        type="submit"
+                        disabled={isVoteLoading || voted}
+                        loading={!voted}
+                        startIcon={<HowToVoteIcon />}
+                      >
+                        {voted ? 'Voted' : 'Vote'}
+                      </Button>
+                    </Box>
                     <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
                       <Box my={3}>
                         <Button

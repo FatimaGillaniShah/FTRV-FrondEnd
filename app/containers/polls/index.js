@@ -92,11 +92,7 @@ function Poll() {
     name: '',
     status: '',
   };
-  const votedOption = pollList?.options?.filter((option) => !!option.voted);
-
-  const initialValues = {
-    pollOption: votedOption?.length > 0 ? votedOption[0]?.value.toString() : '',
-  };
+  const initialValues = { pollOption: '' };
   return (
     <>
       <Helmet>
@@ -108,9 +104,9 @@ function Poll() {
       ) : (
         <PollsPage
           data={pollList}
+          initialValues={initialValues}
           page={page}
           count={pollResponse?.data?.data?.count}
-          initialValues={initialValues}
           query={query}
           filters={filters}
           filterToggle={filterToggle}
@@ -122,7 +118,6 @@ function Poll() {
           onHandleChange={handleChange}
           initialFilterValues={initialFilterValues}
           onHandleDelete={handleDelete}
-          voted={votedOption?.length > 0}
         />
       )}
     </>

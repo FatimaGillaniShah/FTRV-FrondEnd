@@ -70,7 +70,7 @@ function AddJob() {
     };
     mutate(updatedJobDataValues);
   };
-  const expiryDate = nextWeekDate();
+  const expiryDate = nextWeekDate(7);
   const initialValues = {
     title: '',
     departmentId: '',
