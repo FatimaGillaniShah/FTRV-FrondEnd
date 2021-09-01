@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, FieldArray } from 'formik';
 import Box from '@material-ui/core/Box';
-import { string, object, date, ref } from 'yup';
+import { string, object, date, ref, array } from 'yup';
 import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
 import PersonIcon from '@material-ui/icons/Person';
@@ -27,14 +27,14 @@ const pollSchema = object().shape({
     .max(255, '* Too long')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
-  'options-1': string()
-    .required('*Option 1 is required')
-    .noWhitespace()
-    .typeError('* This field cannot contain only blankspaces'),
-  'options-2': string()
-    .required('*Option 2 is required')
-    .noWhitespace()
-    .typeError('* This field cannot contain only blankspaces'),
+  options: array().of(
+    object().shape({
+      name: string()
+        .required('*Option is required')
+        .noWhitespace()
+        .typeError('* This field cannot contain only blankspaces'),
+    })
+  ),
   startDate: date()
     .min(
       new Date().toDateString(),
@@ -52,7 +52,7 @@ export const CreatePollPage = ({
   initialValues,
   loading,
 }) => {
-  const { expired, pending, options } = initialValues;
+  const { options } = initialValues;
   let voted = [];
   voted = options.filter((option) => option.votes > 0);
   const history = useHistory();
@@ -155,10 +155,9 @@ export const CreatePollPage = ({
                                   OutlinedInputPlaceholder={`Option ${
                                     index + 1
                                   }`}
-                                  name={`options-${index + 1}`}
+                                  name={`options.${index}.name`}
                                   variant="outlined"
-                                  isDisabled={!!id}
-                                  Icon={index >= 2 && ClearIcon}
+                                  Icon={id ? '' : index >= 2 && ClearIcon}
                                   onIconClick={() =>
                                     handleRemoveField(
                                       values,
@@ -185,7 +184,7 @@ export const CreatePollPage = ({
                             }
                             color="secondary"
                             type="button"
-                            onClick={() => push('')}
+                            onClick={() => push({ name: '' })}
                           >
                             Add Options
                           </Button>
@@ -199,12 +198,7 @@ export const CreatePollPage = ({
                           <Box ml={2} my={[2, 0]}>
                             <Button
                               variant="contained"
-                              disabled={
-                                loading ||
-                                expired ||
-                                pending ||
-                                voted.length > 0
-                              }
+                              disabled={loading || voted.length > 0}
                               color="secondary"
                               type="submit"
                               startIcon={<SaveIcon />}

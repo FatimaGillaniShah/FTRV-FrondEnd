@@ -11,6 +11,7 @@ import {
   Menu,
   ListItemIcon,
   FormHelperText,
+  Collapse,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
@@ -23,6 +24,7 @@ import { Form, Formik, Field } from 'formik';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Tooltip from '@material-ui/core/Tooltip';
+import _ from 'lodash';
 import { navigateTo } from '../../utils/helper';
 import FormikRadioGroup from '../muiRadioButtons';
 import { Button, MuiBadge } from '../index';
@@ -74,6 +76,7 @@ export const Poll = ({
   isVoteLoading,
   voted,
 }) => {
+  const sortedOptions = _.sortBy(options, (option) => option.value);
   const voteCount = options.filter((option) => option.votes > 0);
   const validationSchema = object().shape({
     pollOption: string().required('*Please select an option!'),
@@ -143,9 +146,7 @@ export const Poll = ({
                           horizontal: 'left',
                         }}
                       >
-                        <Show
-                          IF={!pending && !expired && !voteCount.length > 0}
-                        >
+                        <Show IF={!voteCount.length > 0}>
                           <MenuItem
                             onClick={() =>
                               navigateTo(history, `/polls/edit/${id}`)
@@ -226,7 +227,7 @@ export const Poll = ({
                         name="pollOption"
                         component={FormikRadioGroup}
                         disabled={isVoteLoading || voted}
-                        options={options}
+                        options={sortedOptions}
                         fieldError={false}
                       />
                     </Box>
@@ -268,9 +269,8 @@ export const Poll = ({
                     </Tooltip>
                   </Box>
                 </Show>
-
-                <Show IF={!hidden}>
-                  {options?.map((val) => (
+                <Collapse in={!hidden} collapsedSize={40}>
+                  {sortedOptions?.map((val) => (
                     <Box my={3}>
                       {val.label}
                       <BorderLinearProgress
@@ -285,7 +285,7 @@ export const Poll = ({
                       />
                     </Box>
                   ))}
-                </Show>
+                </Collapse>
               </Box>
             </Paper>
           </Box>

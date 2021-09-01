@@ -3,8 +3,10 @@ import { Helmet } from 'react-helmet';
 import { useMutation, useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/loading';
+import { Modal, Toast, navigateTo } from '../../utils/helper';
 import Home from '../../components/pages/home';
 import { useAuthContext } from '../../context/authContext';
+import { useDeletePoll } from '../../hooks/poll';
 import {
   fetchEvents,
   getBannerImage,
@@ -14,7 +16,6 @@ import {
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { parseDate } from '../../utils/functions';
-import { Toast, navigateTo } from '../../utils/helper';
 
 function HomeContainer() {
   const { user } = useAuthContext();
@@ -25,7 +26,18 @@ function HomeContainer() {
     data: pollResponse,
     isLoading: isPollLoading,
     refetch: refetchPolls,
-  } = useQuery(keys.polls({ filters: { status: 'active' }, date }), getPolls);
+  } = useQuery(
+    keys.polls({
+      date,
+      query: { searchString: '' },
+      filters: { status: 'active' },
+      currentPage: 1,
+    }),
+    getPolls,
+    {
+      keepPreviousData: true,
+    }
+  );
   const pollList = pollResponse?.data?.data?.rows
     .map((value) => {
       const totalVotes = 0;
@@ -121,6 +133,15 @@ function HomeContainer() {
     };
     mutateVote(body);
   };
+  const mutation = useDeletePoll();
+
+  const handleDelete = (id) => {
+    Modal.fire().then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        mutation.mutate([id]);
+      }
+    });
+  };
 
   return (
     <>
@@ -139,6 +160,7 @@ function HomeContainer() {
           pollList={pollList}
           onHandleVoteSubmit={handleVoteSubmit}
           isVoteLoading={isVoteLoading}
+          onHandleDelete={handleDelete}
         />
       )}
     </>

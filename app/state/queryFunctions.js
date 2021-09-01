@@ -272,13 +272,13 @@ export const getPolls = ({ queryKey }) => {
   const { date, currentPage, query, filters } = queryKey[1];
   let url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}`;
   if (query.searchString) {
-    url = `${POLL}?date=${date}${insertParams(
+    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}&${insertParams(
       query
-    )}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}`;
+    )}`;
   } else if (filters) {
-    url = `${POLL}?date=${date}${insertParams(
+    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}&${insertParams(
       filters
-    )}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}`;
+    )}`;
   }
   return http.get(url);
 };

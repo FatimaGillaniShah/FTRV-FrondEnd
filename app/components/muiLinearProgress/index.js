@@ -10,7 +10,7 @@ const BorderLinearProgress = ({ value, color, variant, animation }) => {
     value === 0 ? theme.palette.text.dark : theme.palette.text.light;
   const useStyles = makeStyles({
     root: {
-      height: 15,
+      height: 19,
       borderRadius: 5,
     },
     colorPrimary: {
@@ -24,7 +24,7 @@ const BorderLinearProgress = ({ value, color, variant, animation }) => {
     },
     progressLabel: {
       position: 'relative',
-      top: '11px',
+      top: '13px',
       zIndex: 1,
       textAlign: 'end',
       display: 'flex',
