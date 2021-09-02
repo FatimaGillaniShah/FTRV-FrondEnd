@@ -30,7 +30,7 @@ import FormikRadioGroup from '../muiRadioButtons';
 import { Button, MuiBadge } from '../index';
 import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
-import { BodyTextLarge, H5 } from '../typography';
+import { BodyTextLarge, H5, BodyTextSmall } from '../typography';
 import BorderLinearProgress from '../muiLinearProgress';
 import Show from '../show';
 import { colors } from '../../theme/colors';
@@ -75,6 +75,8 @@ export const Poll = ({
   onHandleVoteSubmit,
   isVoteLoading,
   voted,
+  endDate,
+  votesSum,
 }) => {
   const sortedOptions = _.sortBy(options, (option) => option.value);
   const voteCount = options.filter((option) => option.votes > 0);
@@ -113,6 +115,13 @@ export const Poll = ({
           <Box p={1}>
             <Paper className={!home && classes.card}>
               <Box p={10}>
+                <Show IF={!pending && !expired}>
+                  <Box mb={2} display="flex" justifyContent="flex-end">
+                    <BodyTextSmall color="grey" bold>
+                      Valid till: {endDate}
+                    </BodyTextSmall>
+                  </Box>
+                </Show>
                 <Box
                   display="flex"
                   flexDirection={['row']}
@@ -204,6 +213,16 @@ export const Poll = ({
                 <Box>
                   <BodyTextLarge bold> {description}</BodyTextLarge>
                 </Box>
+                {role === ROLES.ADMIN && (
+                  <Show IF={votesSum > 0}>
+                    <Box display="flex" justifyContent="flex-end" mt={2}>
+                      <BodyTextSmall color="grey" bold>
+                        {`${votesSum} `}
+                        Vote(s)
+                      </BodyTextSmall>
+                    </Box>
+                  </Show>
+                )}
                 <Show IF={errors?.pollOption}>
                   <Fade in={errors?.pollOption}>
                     <Box mt={3}>

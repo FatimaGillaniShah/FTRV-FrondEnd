@@ -49,6 +49,7 @@ function Poll() {
     }));
     return {
       ...value,
+      votesSum: totalVotes,
       options: pollsOptions,
     };
   });
