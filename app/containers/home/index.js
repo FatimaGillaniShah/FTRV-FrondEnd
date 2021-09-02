@@ -42,7 +42,8 @@ function HomeContainer() {
   const pollList = pollResponse?.data?.data?.rows
     .map((value) => {
       const totalVotes = value?.options.reduce(
-        (option1, option2) => option1.votes + option2.votes
+        (accumulator, currentValue) => accumulator + currentValue.votes,
+        0
       );
       const pollsOptions = value?.options.map(({ id, name, votes }) => ({
         label: name,
