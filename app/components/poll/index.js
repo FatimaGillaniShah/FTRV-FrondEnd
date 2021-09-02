@@ -183,9 +183,11 @@ export const Poll = ({
                     </Box>
                   </Show>
                   <Show IF={!home}>
-                    <Box>
-                      <MuiBadge badgeContent={status} color={statusColor} />
-                    </Box>
+                    <Show IF={!pending && !expired}>
+                      <Box>
+                        <MuiBadge badgeContent={status} color={statusColor} />
+                      </Box>
+                    </Show>
                     <Box ml={[0, 0, 0, 1]}>
                       <Show IF={expired}>
                         <MuiBadge badgeContent="expired" color="error" />
