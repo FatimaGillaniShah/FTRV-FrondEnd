@@ -54,6 +54,7 @@ function HomeContainer() {
 
       return {
         ...value,
+        votesSum: totalVotes,
         options: pollsOptions,
       };
     })

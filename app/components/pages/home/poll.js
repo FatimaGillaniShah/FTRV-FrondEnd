@@ -1,5 +1,6 @@
 import { Box } from '@material-ui/core';
 import React from 'react';
+import { parseDate } from '../../../utils/functions';
 import { Poll } from '../../poll';
 
 function PollHome({
@@ -21,6 +22,8 @@ function PollHome({
         voted={poll.voted}
         onHandleDelete={onHandleDelete}
         home
+        endDate={parseDate(poll.endDate)}
+        votesSum={poll.votesSum}
         initialValues={initialValues}
       />
     </Box>

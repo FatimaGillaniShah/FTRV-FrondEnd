@@ -13,6 +13,7 @@ import Filters from './filter';
 import Show from '../../show';
 import { Search } from '../../search/search';
 import { Button } from '../..';
+import { parseDate } from '../../../utils/functions';
 
 const useStyles = makeStyles((theme) => ({
   paginator: {
@@ -104,6 +105,8 @@ export function PollsPage({
                     expired,
                     pending,
                     voted,
+                    endDate,
+                    votesSum,
                   }) => (
                     <Box mt={8} mb={8} mr={3} width={[1, 1, 1 / 2, '32%']}>
                       <Poll
@@ -117,6 +120,8 @@ export function PollsPage({
                         initialValues={initialValues}
                         onHandleDelete={onHandleDelete}
                         voted={voted}
+                        endDate={parseDate(endDate)}
+                        votesSum={votesSum}
                       />
                     </Box>
                   )
