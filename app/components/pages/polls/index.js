@@ -39,7 +39,6 @@ export function PollsPage({
   onHandleChange,
   currentPage,
   count,
-  voted,
 }) {
   const history = useHistory();
   const classes = useStyles();
@@ -91,7 +90,6 @@ export function PollsPage({
               <Box
                 display="flex"
                 flexWrap="wrap"
-                justifyContent="space-between"
                 flexDirection={['column', 'column', 'row', 'row']}
                 width={1}
                 p={4}
@@ -105,8 +103,9 @@ export function PollsPage({
                     status,
                     expired,
                     pending,
+                    voted,
                   }) => (
-                    <Box mt={8} mb={8} width={[1, 1, 1 / 2, '30%']}>
+                    <Box mt={8} mb={8} mr={3} width={[1, 1, 1 / 2, '32%']}>
                       <Poll
                         id={id}
                         name={name}
@@ -123,20 +122,20 @@ export function PollsPage({
                   )
                 )}
               </Box>
+              <Box component="span">
+                <Pagination
+                  count={noOfPages}
+                  page={currentPage}
+                  onChange={onHandleChange}
+                  defaultPage={defaultPage}
+                  color="primary"
+                  size="large"
+                  showFirstButton
+                  showLastButton
+                  classes={{ ul: classes.paginator }}
+                />
+              </Box>
             </Show>
-            <Box component="span">
-              <Pagination
-                count={noOfPages}
-                page={currentPage}
-                onChange={onHandleChange}
-                defaultPage={defaultPage}
-                color="primary"
-                size="large"
-                showFirstButton
-                showLastButton
-                classes={{ ul: classes.paginator }}
-              />
-            </Box>
           </WrapInCard>
         </Box>
       </WrapInBreadcrumbs>

@@ -18,6 +18,7 @@ function Home({
   onHandleVoteSubmit,
   isVoteLoading,
   onHandleDelete,
+  initialValues,
 }) {
   const classes = useStyles();
   return (
@@ -55,6 +56,7 @@ function Home({
                       onHandleVoteSubmit={onHandleVoteSubmit}
                       isVoteLoading={isVoteLoading}
                       onHandleDelete={onHandleDelete}
+                      initialValues={initialValues}
                     />
                   ))}
                 </Carousel>

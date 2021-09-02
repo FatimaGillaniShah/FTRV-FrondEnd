@@ -101,6 +101,6 @@ export function formatDate(date) {
   });
 }
 
-export function nextWeekDate() {
-  return moment().add(7, 'day');
+export function nextWeekDate(days) {
+  return moment().add(days, 'day');
 }

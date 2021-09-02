@@ -10,7 +10,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQueryClient, useQuery } from 'react-query';
 import { Loading } from '../../components/loading';
 import CreatePollPage from '../../components/pages/createPoll';
-import { navigateTo, Toast } from '../../utils/helper';
+import { navigateTo, Toast, nextWeekDate } from '../../utils/helper';
 import { parseDate } from '../../utils/functions';
 import { keys } from '../../state/queryKeys';
 import {
@@ -77,7 +77,7 @@ function CreatePoll() {
     name: '',
     question: '',
     startDate: new Date(),
-    endDate: new Date(),
+    endDate: nextWeekDate(5),
     status: 'active',
   };
 
