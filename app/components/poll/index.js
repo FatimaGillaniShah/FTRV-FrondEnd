@@ -44,7 +44,7 @@ const useStyles = makeStyles(() => ({
     },
     borderRadius: '0px',
   },
-  homeCard: {},
+  homeCard: { borderRadius: '0px' },
   cardHeader: {
     paddingTop: '6.5px',
     paddingBottom: '6.5px',
