@@ -44,9 +44,7 @@ const useStyles = makeStyles(() => ({
     },
     borderRadius: '0px',
   },
-  homeCard: {
-    borderRadius: '0px',
-  },
+  homeCard: {},
   cardHeader: {
     paddingTop: '6.5px',
     paddingBottom: '6.5px',
@@ -127,7 +125,7 @@ export const Poll = ({
     >
       {({ errors }) => (
         <Form>
-          <Card className={home ? classes.card : classes.homeCard}>
+          <Card className={!home ? classes.card : classes.homeCard}>
             <CardHeader
               className={classes.cardHeader}
               title={<H5 color="light">{name}</H5>}
