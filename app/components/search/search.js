@@ -26,6 +26,7 @@ export function Search({
   onHandleToggleChange,
   alignment,
   name,
+  showFilter,
 }) {
   const classes = useStyles();
   return (
@@ -56,21 +57,23 @@ export function Search({
           )}
         </Formik>
       </Grid>
-      <Grid item xs={12} sm={4} md={3} lg={3}>
-        <Box px={[0, 5]}>
-          <FormControlLabel
-            label="Filter"
-            control={
-              <Switch
-                checked={checked}
-                onChange={onHandleSwitchChange}
-                name="filter"
-                color="primary"
-              />
-            }
-          />
-        </Box>
-      </Grid>
+      <Show IF={showFilter}>
+        <Grid item xs={12} sm={4} md={3} lg={3}>
+          <Box px={[0, 5]}>
+            <FormControlLabel
+              label="Filter"
+              control={
+                <Switch
+                  checked={checked}
+                  onChange={onHandleSwitchChange}
+                  name="filter"
+                  color="primary"
+                />
+              }
+            />
+          </Box>
+        </Grid>
+      </Show>
       <Show IF={showToggle}>
         <Grid item xs={12} sm={4} md={3} lg={4}>
           <ToggleGroup
