@@ -19,7 +19,7 @@ import { navigateTo } from '../../../utils/helper';
 
 const pollSchema = object().shape({
   name: string()
-    .notRequired()
+    .required('*Required')
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
   question: string()
@@ -93,7 +93,7 @@ export const CreatePollPage = ({
                     </Box>
                     <Box width={[1, 1 / 2]} mt={10} px={3}>
                       <Input
-                        OutlinedInputPlaceholder="Question"
+                        OutlinedInputPlaceholder="*Question"
                         name="question"
                         variant="outlined"
                         Icon={HelpOutlineIcon}
@@ -110,7 +110,7 @@ export const CreatePollPage = ({
 
                     <Box width={[1, 1 / 2]} mt={10} px={3}>
                       <DatePicker
-                        label="End Date*"
+                        label="*End Date"
                         name="endDate"
                         disablePast
                       />

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Paper from '@material-ui/core/Paper';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -12,6 +11,8 @@ import {
   ListItemIcon,
   FormHelperText,
   Collapse,
+  Card,
+  CardHeader,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
@@ -41,6 +42,19 @@ const useStyles = makeStyles(() => ({
       boxShadow:
         '0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)',
     },
+    borderRadius: '0px',
+  },
+  homeCard: { borderRadius: '0px' },
+  cardHeader: {
+    paddingTop: '6.5px',
+    paddingBottom: '6.5px',
+    backgroundColor: colors.secondary,
+  },
+  menu: {
+    color: colors.light,
+  },
+  textStyle: {
+    textTransform: 'capitalize',
   },
   bar1Indeterminate: {
     width: 'auto',
@@ -75,7 +89,6 @@ export const Poll = ({
   onHandleVoteSubmit,
   isVoteLoading,
   voted,
-  endDate,
   votesSum,
 }) => {
   const sortedOptions = _.sortBy(options, (option) => option.value);
@@ -112,36 +125,17 @@ export const Poll = ({
     >
       {({ errors }) => (
         <Form>
-          <Box p={1}>
-            <Paper className={!home && classes.card}>
-              <Box p={10}>
-                <Show IF={!pending && !expired}>
-                  <Box mb={2} display="flex" justifyContent="flex-end">
-                    <BodyTextSmall color="grey" bold>
-                      Valid till: {endDate}
-                    </BodyTextSmall>
-                  </Box>
-                </Show>
-                <Box
-                  display="flex"
-                  flexDirection={['row']}
-                  width={1}
-                  justifyContent="space-between"
-                >
-                  <Box mt={2} width={1}>
-                    <H5>{name}</H5>
-                  </Box>
-
+          <Card className={!home ? classes.card : classes.homeCard}>
+            <CardHeader
+              className={classes.cardHeader}
+              title={<H5 color="light">{name}</H5>}
+              action={
+                <>
                   {role === ROLES.ADMIN && (
-                    <Box
-                      display="flex"
-                      flexDirection={['column', 'column', 'column', 'row']}
-                      width={[1, 1, 1, '80%']}
-                      justifyContent="flex-end"
-                    >
+                    <>
                       <Box>
                         <IconButton onClick={handleClick}>
-                          <MoreVertIcon color="secondary" />
+                          <MoreVertIcon className={classes.menu} />
                         </IconButton>
                       </Box>
                       <Menu
@@ -179,130 +173,130 @@ export const Poll = ({
                           Delete
                         </MenuItem>
                       </Menu>
-                    </Box>
+                    </>
                   )}
-                </Box>
-                <Box display="flex" flexDirection="row" mb={6}>
-                  <Show IF={home && voted}>
-                    <Box>
-                      <MuiBadge
-                        badgeContent="voted"
-                        color={colors.oliveGreen}
-                      />
-                    </Box>
-                  </Show>
-                  <Show IF={!home}>
-                    <Show IF={!pending && !expired}>
-                      <Box>
-                        <MuiBadge badgeContent={status} color={statusColor} />
-                      </Box>
-                    </Show>
-                    <Box ml={[0, 0, 0, 1]}>
-                      <Show IF={expired}>
-                        <MuiBadge badgeContent="expired" color="error" />
-                      </Show>
-                      <Show IF={pending}>
-                        <MuiBadge
-                          badgeContent="pending"
-                          color={colors.orange}
-                        />
-                      </Show>
-                    </Box>
-                  </Show>
-                </Box>
+                </>
+              }
+            ></CardHeader>
+            <Box display="flex" flexDirection="row" mt={5} ml={5}>
+              <Show IF={home && voted}>
                 <Box>
-                  <BodyTextLarge bold> {description}</BodyTextLarge>
+                  <MuiBadge badgeContent="Voted" color={colors.oliveGreen} />
                 </Box>
-                {role === ROLES.ADMIN && (
-                  <Show IF={votesSum > 0}>
-                    <Box display="flex" justifyContent="flex-end" mt={2}>
-                      <BodyTextSmall color="grey" bold>
-                        {`${votesSum} `}
-                        Vote(s)
-                      </BodyTextSmall>
-                    </Box>
-                  </Show>
-                )}
-                <Show IF={errors?.pollOption}>
-                  <Fade in={errors?.pollOption}>
-                    <Box mt={3}>
-                      <Alert severity="error">
-                        <FormHelperText error>
-                          {errors?.pollOption}
-                        </FormHelperText>
-                      </Alert>
-                    </Box>
-                  </Fade>
-                </Show>
-                <Show IF={home}>
-                  <Tooltip
-                    title={
-                      voted
-                        ? 'You have already voted for this poll'
-                        : 'Please select an option'
-                    }
-                  >
-                    <Box>
-                      <Field
-                        name="pollOption"
-                        component={FormikRadioGroup}
-                        disabled={isVoteLoading || voted}
-                        options={sortedOptions}
-                        fieldError={false}
-                      />
-                    </Box>
-                  </Tooltip>
-                  <Box
-                    display="flex"
-                    flexDirection={['column', 'column', 'column', 'row']}
-                  >
-                    <Box mr={4} my={3}>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        type="submit"
-                        disabled={isVoteLoading || voted}
-                        loading={!voted}
-                        startIcon={<HowToVoteIcon />}
-                      >
-                        {voted ? 'Voted' : 'Vote'}
-                      </Button>
-                    </Box>
-                    <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
-                      <Box my={3}>
-                        <Button
-                          variant="contained"
-                          onClick={() => setHidden(!hidden)}
-                          startIcon={
-                            hidden ? <VisibilityIcon /> : <VisibilityOffIcon />
-                          }
-                        >
-                          {hidden ? 'Show Results' : 'Hide Results'}
-                        </Button>
-                      </Box>
-                    </Tooltip>
+              </Show>
+              <Show IF={!home}>
+                <Show IF={!pending && !expired}>
+                  <Box>
+                    <MuiBadge
+                      className={classes.textStyle}
+                      badgeContent={status}
+                      color={statusColor}
+                    />
                   </Box>
                 </Show>
-                <Collapse in={!hidden} collapsedSize={40}>
-                  {sortedOptions?.map((val) => (
-                    <Box my={3}>
-                      {val.label}
-                      <BorderLinearProgress
-                        variant="indeterminate"
-                        votes={val.vote}
-                        value={votePercentage(val.votes, val.totalVotes)}
-                        color={theme.palette.secondary}
-                        animation={{
-                          bar1Indeterminate: classes.bar1Indeterminate,
-                          bar2Indeterminate: classes.bar2Indeterminate,
-                        }}
-                      />
-                    </Box>
-                  ))}
-                </Collapse>
+                <Box ml={[0, 0, 0, 1]}>
+                  <Show IF={expired}>
+                    <MuiBadge badgeContent="expired" color="error" />
+                  </Show>
+                  <Show IF={pending}>
+                    <MuiBadge badgeContent="pending" color={colors.orange} />
+                  </Show>
+                </Box>
+              </Show>
+            </Box>
+            <Box p={6}>
+              <Box>
+                <BodyTextLarge bold> {description}</BodyTextLarge>
               </Box>
-            </Paper>
-          </Box>
+              {role === ROLES.ADMIN && (
+                <Show IF={votesSum > 0}>
+                  <Box display="flex" justifyContent="flex-end" mt={2}>
+                    <BodyTextSmall color="grey" bold>
+                      {`${votesSum} `}
+                      Vote(s)
+                    </BodyTextSmall>
+                  </Box>
+                </Show>
+              )}
+              <Show IF={errors?.pollOption}>
+                <Fade in={errors?.pollOption}>
+                  <Box mt={3}>
+                    <Alert severity="error">
+                      <FormHelperText error>
+                        {errors?.pollOption}
+                      </FormHelperText>
+                    </Alert>
+                  </Box>
+                </Fade>
+              </Show>
+              <Show IF={home}>
+                <Tooltip
+                  title={
+                    voted
+                      ? 'You have already voted for this poll'
+                      : 'Please select an option'
+                  }
+                >
+                  <Box>
+                    <Field
+                      name="pollOption"
+                      component={FormikRadioGroup}
+                      disabled={isVoteLoading || voted}
+                      options={sortedOptions}
+                      fieldError={false}
+                    />
+                  </Box>
+                </Tooltip>
+                <Box
+                  display="flex"
+                  flexDirection={['column', 'column', 'column', 'row']}
+                >
+                  <Box mr={4} my={3}>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      type="submit"
+                      disabled={isVoteLoading || voted}
+                      loading={!voted}
+                      startIcon={<HowToVoteIcon />}
+                    >
+                      {voted ? 'Voted' : 'Vote'}
+                    </Button>
+                  </Box>
+                  <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
+                    <Box my={3}>
+                      <Button
+                        variant="contained"
+                        onClick={() => setHidden(!hidden)}
+                        startIcon={
+                          hidden ? <VisibilityIcon /> : <VisibilityOffIcon />
+                        }
+                      >
+                        {hidden ? 'Show Results' : 'Hide Results'}
+                      </Button>
+                    </Box>
+                  </Tooltip>
+                </Box>
+              </Show>
+              <Collapse in={!hidden} collapsedSize={40}>
+                {sortedOptions?.map((val) => (
+                  <Box my={3}>
+                    {val.label}
+                    <BorderLinearProgress
+                      variant="indeterminate"
+                      votes={val.vote}
+                      value={votePercentage(val.votes, val.totalVotes)}
+                      color={theme.palette.secondary}
+                      animation={{
+                        bar1Indeterminate: classes.bar1Indeterminate,
+                        bar2Indeterminate: classes.bar2Indeterminate,
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Collapse>
+            </Box>
+          </Card>
         </Form>
       )}
     </Formik>
