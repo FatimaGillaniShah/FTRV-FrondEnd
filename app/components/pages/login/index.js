@@ -57,7 +57,8 @@ export function Login({
                 </Show>
                 <Show IF={googleError}>
                   <Box mt={6} textAlign="center">
-                    <Alert severity="error">{googleError}</Alert>
+                    {console.log(googleError)}
+                    {/* <Alert severity="error">{googleError}</Alert> */}
                   </Box>
                 </Show>
                 <Box mt={7}>
