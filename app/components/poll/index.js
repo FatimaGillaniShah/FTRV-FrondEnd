@@ -136,7 +136,10 @@ export const Poll = ({
                   {role === ROLES.ADMIN && (
                     <>
                       <Box>
-                        <IconButton onClick={handleClick}>
+                        <IconButton
+                          onClick={handleClick}
+                          className={classes.menuIconButton}
+                        >
                           <MoreVertIcon className={classes.menu} />
                         </IconButton>
                       </Box>
