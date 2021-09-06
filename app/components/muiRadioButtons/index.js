@@ -1,7 +1,12 @@
 import React from 'react';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import MUIRadio from '@material-ui/core/Radio';
-import { FormControlLabel, FormHelperText } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  FormHelperText,
+} from '@material-ui/core';
 import Show from '../show';
 
 const FormikRadioGroup = ({
@@ -11,6 +16,7 @@ const FormikRadioGroup = ({
   fieldError,
   options,
   disabled,
+  classes,
   ...props
 }) => {
   const fieldName = name || field.name;
@@ -19,11 +25,24 @@ const FormikRadioGroup = ({
     <>
       <RadioGroup row {...field} {...props} name={fieldName}>
         {options?.map((option) => (
-          <FormControlLabel
-            disabled={disabled}
-            control={<MUIRadio value={option.value.toString()} />}
-            label={option.label}
-          />
+          <Box
+            mr={3}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Button
+              classesName={classes.button}
+              variant="outlined"
+              color="primary"
+            >
+              <FormControlLabel
+                disabled={disabled}
+                control={<MUIRadio value={option.value.toString()} />}
+                label={option.label}
+              />
+            </Button>
+          </Box>
         ))}
       </RadioGroup>
       <Show IF={fieldError}>

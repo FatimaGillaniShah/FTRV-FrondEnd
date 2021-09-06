@@ -13,6 +13,8 @@ import {
   Collapse,
   Card,
   CardHeader,
+  Paper,
+  Avatar,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
@@ -26,7 +28,6 @@ import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Tooltip from '@material-ui/core/Tooltip';
 import _ from 'lodash';
-import { navigateTo } from '../../utils/helper';
 import FormikRadioGroup from '../muiRadioButtons';
 import { Button, MuiBadge } from '../index';
 import { ROLES } from '../../utils/constants';
@@ -36,7 +37,7 @@ import BorderLinearProgress from '../muiLinearProgress';
 import Show from '../show';
 import { colors } from '../../theme/colors';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     '&:hover': {
       boxShadow:
@@ -44,16 +45,12 @@ const useStyles = makeStyles(() => ({
     },
     borderRadius: '0px',
   },
-  homeCard: { borderRadius: '0px' },
-  cardHeader: {
-    padding: '12px 10px 12px 20px',
-    backgroundColor: colors.secondary,
+  imageStyle: {
+    width: '150px',
+    height: '150px',
   },
-  menu: {
-    color: colors.light,
-  },
-  menuIconButton: {
-    padding: '9px 12px 0px 12px',
+  button: {
+    border: '2px solid',
   },
   textStyle: {
     textTransform: 'capitalize',
@@ -127,63 +124,66 @@ export const Poll = ({
     >
       {({ errors }) => (
         <Form>
-          <Card className={!home ? classes.card : classes.homeCard}>
-            <CardHeader
-              className={classes.cardHeader}
-              title={<H5 color="light">{name}</H5>}
-              action={
+          <Paper
+            className={!home && classes.card}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <Box display="flex" justifyContent="center">
+              <Avatar src="" className={classes.imageStyle} />
+            </Box>
+            <Box display="flex" justifyContent="center" mt={5}>
+              <H5>{name}</H5>
+              {/* {role === ROLES.ADMIN && (
                 <>
-                  {role === ROLES.ADMIN && (
-                    <>
-                      <Box>
-                        <IconButton
-                          onClick={handleClick}
-                          className={classes.menuIconButton}
-                        >
-                          <MoreVertIcon className={classes.menu} />
-                        </IconButton>
-                      </Box>
-                      <Menu
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={anchorEl}
-                        onClose={handleClose}
-                        getContentAnchorEl={null}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'left',
-                        }}
+                  <Box>
+                    <IconButton
+                      onClick={handleClick}
+                      className={classes.menuIconButton}
+                    >
+                      <MoreVertIcon className={classes.menu} />
+                    </IconButton>
+                  </Box>
+                  <Menu
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={anchorEl}
+                    onClose={handleClose}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <Show IF={!voteCount.length > 0}>
+                      <MenuItem
+                        onClick={() => navigateTo(history, `/polls/edit/${id}`)}
                       >
-                        <Show IF={!voteCount.length > 0}>
-                          <MenuItem
-                            onClick={() =>
-                              navigateTo(history, `/polls/edit/${id}`)
-                            }
-                          >
-                            <ListItemIcon>
-                              <EditIcon color="secondary" />
-                            </ListItemIcon>
-                            Edit
-                          </MenuItem>
-                        </Show>
-                        <MenuItem
-                          onClick={() => {
-                            handleClose();
-                            onHandleDelete(id);
-                          }}
-                        >
-                          <ListItemIcon>
-                            <DeleteIcon color="error" />
-                          </ListItemIcon>
-                          Delete
-                        </MenuItem>
-                      </Menu>
-                    </>
-                  )}
+                        <ListItemIcon>
+                          <EditIcon color="secondary" />
+                        </ListItemIcon>
+                        Edit
+                      </MenuItem>
+                    </Show>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        onHandleDelete(id);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <DeleteIcon color="error" />
+                      </ListItemIcon>
+                      Delete
+                    </MenuItem>
+                  </Menu>
                 </>
-              }
-            ></CardHeader>
-            <Box display="flex" flexDirection="row" mt={5} ml={5}>
+              )} */}
+            </Box>
+            <Box display="flex" justifyContent="center" flexDirection="row">
               <Show IF={home && voted}>
                 <Box>
                   <MuiBadge badgeContent="Voted" color={colors.oliveGreen} />
@@ -210,7 +210,7 @@ export const Poll = ({
               </Show>
             </Box>
             <Box p={6}>
-              <Box>
+              <Box display="flex" justifyContent="center">
                 <BodyTextLarge bold> {description}</BodyTextLarge>
               </Box>
               {role === ROLES.ADMIN && (
@@ -242,13 +242,14 @@ export const Poll = ({
                       : 'Please select an option'
                   }
                 >
-                  <Box>
+                  <Box display="flex" justifyContent="center">
                     <Field
                       name="pollOption"
                       component={FormikRadioGroup}
                       disabled={isVoteLoading || voted}
                       options={sortedOptions}
                       fieldError={false}
+                      classes={classes.button}
                     />
                   </Box>
                 </Tooltip>
@@ -301,7 +302,7 @@ export const Poll = ({
                 ))}
               </Collapse>
             </Box>
-          </Card>
+          </Paper>
         </Form>
       )}
     </Formik>
