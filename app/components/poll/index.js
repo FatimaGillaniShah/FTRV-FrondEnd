@@ -46,17 +46,14 @@ const useStyles = makeStyles(() => ({
   },
   homeCard: { borderRadius: '0px' },
   cardHeader: {
-    paddingTop: '6.5px',
-    paddingBottom: '6.5px',
-    backgroundColor: colors.secondary,
-  },
-  userCardHeader: {
-    paddingTop: '12px',
-    paddingBottom: '12px',
+    padding: '12px 10px 12px 20px',
     backgroundColor: colors.secondary,
   },
   menu: {
     color: colors.light,
+  },
+  menuIconButton: {
+    padding: '9px 12px 0px 12px',
   },
   textStyle: {
     textTransform: 'capitalize',
@@ -132,11 +129,7 @@ export const Poll = ({
         <Form>
           <Card className={!home ? classes.card : classes.homeCard}>
             <CardHeader
-              className={
-                role === ROLES.ADMIN
-                  ? classes.cardHeader
-                  : classes.userCardHeader
-              }
+              className={classes.cardHeader}
               title={<H5 color="light">{name}</H5>}
               action={
                 <>
