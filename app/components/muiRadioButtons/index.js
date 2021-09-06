@@ -1,6 +1,7 @@
 import React from 'react';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import MUIRadio from '@material-ui/core/Radio';
+import { useTheme } from '@material-ui/styles';
 import {
   Box,
   Button,
@@ -17,32 +18,48 @@ const FormikRadioGroup = ({
   options,
   disabled,
   classes,
+  colorArray,
+  poll,
   ...props
 }) => {
   const fieldName = name || field.name;
+  const theme = useTheme();
 
   return (
     <>
-      <RadioGroup row {...field} {...props} name={fieldName}>
-        {options?.map((option) => (
-          <Box
-            mr={3}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Button
-              classesName={classes.button}
-              variant="outlined"
-              color="primary"
-            >
+      <RadioGroup
+        row
+        {...field}
+        {...props}
+        name={fieldName}
+        className={classes?.radioButtons}
+      >
+        {options?.map((option, index) => (
+          <>
+            {poll ? (
+              <Box mr={3} mt={5}>
+                <Button
+                  disabled={disabled}
+                  variant="outlined"
+                  style={{
+                    borderColor: theme.palette[colorArray[index]]?.main,
+                  }}
+                >
+                  <FormControlLabel
+                    disabled={disabled}
+                    control={<MUIRadio value={option.value.toString()} />}
+                    label={option.label}
+                  />
+                </Button>
+              </Box>
+            ) : (
               <FormControlLabel
                 disabled={disabled}
                 control={<MUIRadio value={option.value.toString()} />}
                 label={option.label}
               />
-            </Button>
-          </Box>
+            )}
+          </>
         ))}
       </RadioGroup>
       <Show IF={fieldError}>
@@ -56,6 +73,7 @@ const FormikRadioGroup = ({
 FormikRadioGroup.defaultProps = {
   fieldError: true,
   disabled: false,
+  poll: false,
 };
 
 export default FormikRadioGroup;

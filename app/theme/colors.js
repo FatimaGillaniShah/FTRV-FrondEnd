@@ -4,6 +4,7 @@ const grey = '#808080';
 const lightblue = '#1875C0';
 const skyBlue = '#def2f3';
 const black = '#000000';
+const smoky = '#F8F8F8';
 const info = '#1976d2';
 const lightGrey = '#acb4bf';
 export const colors = {
@@ -13,6 +14,7 @@ export const colors = {
   orange: '#FF9200',
   greenBlue: '#1875c0',
   red,
+  smoky,
   green,
   grey,
   lightGrey,
