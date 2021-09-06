@@ -50,6 +50,11 @@ const useStyles = makeStyles(() => ({
     paddingBottom: '6.5px',
     backgroundColor: colors.secondary,
   },
+  userCardHeader: {
+    paddingTop: '12px',
+    paddingBottom: '12px',
+    backgroundColor: colors.secondary,
+  },
   menu: {
     color: colors.light,
   },
@@ -127,7 +132,11 @@ export const Poll = ({
         <Form>
           <Card className={!home ? classes.card : classes.homeCard}>
             <CardHeader
-              className={classes.cardHeader}
+              className={
+                role === ROLES.ADMIN
+                  ? classes.cardHeader
+                  : classes.userCardHeader
+              }
               title={<H5 color="light">{name}</H5>}
               action={
                 <>
