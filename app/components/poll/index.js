@@ -55,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     width: '120px',
     height: '120px',
   },
+  showResultsButton: {
+    color: colors.dimGrey,
+  },
   textStyle: {
     textTransform: 'capitalize',
   },
@@ -314,7 +317,8 @@ export const Poll = ({
               <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
                 <Box my={3} mt={2} display="flex" justifyContent="center">
                   <Button
-                    variant="contained"
+                    variant="text"
+                    className={classes.showResultsButton}
                     onClick={() => setHidden(!hidden)}
                     startIcon={
                       hidden ? <VisibilityIcon /> : <VisibilityOffIcon />
