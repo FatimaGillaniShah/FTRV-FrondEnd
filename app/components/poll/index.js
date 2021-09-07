@@ -180,57 +180,55 @@ export const Poll = ({
                   </Show>
                 </Box>
               </Box>
-              <Show IF={home}>
-                <Box width="10%">
-                  {role === ROLES.ADMIN && (
-                    <>
-                      <Box mt={3}>
-                        <IconButton
-                          onClick={handleClick}
-                          className={classes.menuIconButton}
-                        >
-                          <MoreVertIcon color="secondary" />
-                        </IconButton>
-                      </Box>
-                      <Menu
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={anchorEl}
-                        onClose={handleClose}
-                        getContentAnchorEl={null}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'left',
-                        }}
+              <Box width={['20%', '10%', '10%', '10%']}>
+                {role === ROLES.ADMIN && (
+                  <>
+                    <Box mt={3}>
+                      <IconButton
+                        onClick={handleClick}
+                        className={classes.menuIconButton}
                       >
-                        <Show IF={!voteCount.length > 0}>
-                          <MenuItem
-                            onClick={() =>
-                              navigateTo(history, `/polls/edit/${id}`)
-                            }
-                          >
-                            <ListItemIcon>
-                              <EditIcon color="secondary" />
-                            </ListItemIcon>
-                            Edit
-                          </MenuItem>
-                        </Show>
+                        <MoreVertIcon color="secondary" />
+                      </IconButton>
+                    </Box>
+                    <Menu
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={anchorEl}
+                      onClose={handleClose}
+                      getContentAnchorEl={null}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                    >
+                      <Show IF={!voteCount.length > 0}>
                         <MenuItem
-                          onClick={() => {
-                            handleClose();
-                            onHandleDelete(id);
-                          }}
+                          onClick={() =>
+                            navigateTo(history, `/polls/edit/${id}`)
+                          }
                         >
                           <ListItemIcon>
-                            <DeleteIcon color="error" />
+                            <EditIcon color="secondary" />
                           </ListItemIcon>
-                          Delete
+                          Edit
                         </MenuItem>
-                      </Menu>
-                    </>
-                  )}
-                </Box>
-              </Show>
+                      </Show>
+                      <MenuItem
+                        onClick={() => {
+                          handleClose();
+                          onHandleDelete(id);
+                        }}
+                      >
+                        <ListItemIcon>
+                          <DeleteIcon color="error" />
+                        </ListItemIcon>
+                        Delete
+                      </MenuItem>
+                    </Menu>
+                  </>
+                )}
+              </Box>
             </Box>
             <Box display="flex" justifyContent="center">
               <Avatar src={voteImage} className={classes.imageStyle} />
@@ -238,12 +236,10 @@ export const Poll = ({
             <Box display="flex" justifyContent="center" mt={5}>
               <H5>{name}</H5>
             </Box>
-
             <Box p={6}>
               <Box display="flex" justifyContent="center">
                 <BodyTextLarge bold> {description}</BodyTextLarge>
               </Box>
-
               <Show IF={errors?.pollOption}>
                 <Fade in={errors?.pollOption}>
                   <Box mt={3}>
