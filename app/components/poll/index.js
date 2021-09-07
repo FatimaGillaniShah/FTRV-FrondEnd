@@ -11,8 +11,8 @@ import {
   ListItemIcon,
   FormHelperText,
   Collapse,
-  Card,
-  CardHeader,
+  Paper,
+  Avatar,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
@@ -26,7 +26,7 @@ import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import Tooltip from '@material-ui/core/Tooltip';
 import _ from 'lodash';
-import { navigateTo } from '../../utils/helper';
+import voteImage from '../../images/vote.png';
 import FormikRadioGroup from '../muiRadioButtons';
 import { Button, MuiBadge } from '../index';
 import { ROLES } from '../../utils/constants';
@@ -35,26 +35,41 @@ import { BodyTextLarge, H5, BodyTextSmall } from '../typography';
 import BorderLinearProgress from '../muiLinearProgress';
 import Show from '../show';
 import { colors } from '../../theme/colors';
+import { navigateTo } from '../../utils/helper';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   card: {
+    backgroundColor: colors.smoky,
     '&:hover': {
       boxShadow:
         '0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)',
     },
-    borderRadius: '0px',
   },
-  homeCard: { borderRadius: '0px' },
-  cardHeader: {
-    paddingTop: '6.5px',
-    paddingBottom: '6.5px',
-    backgroundColor: colors.secondary,
+  homeCard: {
+    backgroundColor: colors.smoky,
   },
-  menu: {
-    color: colors.light,
+  imageStyle: {
+    border: '6px solid',
+    borderColor: colors.light,
+    boxShadow: theme.shadows[10],
+    width: '120px',
+    height: '120px',
+  },
+  showResultsButton: {
+    color: colors.dimGrey,
+  },
+  radioLabel: {
+    padding: '2px 3px',
+  },
+  radioBorder: {
+    padding: '2px 18px',
   },
   textStyle: {
     textTransform: 'capitalize',
+  },
+  radioButtons: {
+    display: 'flex',
+    justifyContent: 'center',
   },
   bar1Indeterminate: {
     width: 'auto',
@@ -91,6 +106,7 @@ export const Poll = ({
   voted,
   votesSum,
 }) => {
+  const colorArray = ['success', 'error', 'warning', 'info'];
   const sortedOptions = _.sortBy(options, (option) => option.value);
   const voteCount = options.filter((option) => option.votes > 0);
   const validationSchema = object().shape({
@@ -125,17 +141,55 @@ export const Poll = ({
     >
       {({ errors }) => (
         <Form>
-          <Card className={!home ? classes.card : classes.homeCard}>
-            <CardHeader
-              className={classes.cardHeader}
-              title={<H5 color="light">{name}</H5>}
-              action={
-                <>
+          <Paper
+            p={2}
+            elevation={2}
+            className={home ? classes.homeCard : classes.card}
+          >
+            <Box display="flex" flexDirection="row" width={1}>
+              <Box width="90%">
+                <Box ml={5} mt={5}>
+                  <Show IF={!home}>
+                    <Show IF={!pending && !expired}>
+                      <Box>
+                        <MuiBadge
+                          className={classes.textStyle}
+                          badgeContent={status}
+                          color={statusColor}
+                        />
+                      </Box>
+                    </Show>
+                  </Show>
+                </Box>
+                <Box ml={[0, 0, 0, 1]}>
+                  <Show IF={expired}>
+                    <MuiBadge badgeContent="expired" color="error" />
+                  </Show>
+                  <Show IF={pending}>
+                    <MuiBadge badgeContent="pending" color={colors.orange} />
+                  </Show>
+                </Box>
+                <Box>
+                  <Show IF={home && voted}>
+                    <Box mt={6} ml={6}>
+                      <MuiBadge
+                        badgeContent="Voted"
+                        color={colors.oliveGreen}
+                      />
+                    </Box>
+                  </Show>
+                </Box>
+              </Box>
+              <Show IF={home}>
+                <Box width="10%">
                   {role === ROLES.ADMIN && (
                     <>
-                      <Box>
-                        <IconButton onClick={handleClick}>
-                          <MoreVertIcon className={classes.menu} />
+                      <Box mt={3}>
+                        <IconButton
+                          onClick={handleClick}
+                          className={classes.menuIconButton}
+                        >
+                          <MoreVertIcon color="secondary" />
                         </IconButton>
                       </Box>
                       <Menu
@@ -175,49 +229,21 @@ export const Poll = ({
                       </Menu>
                     </>
                   )}
-                </>
-              }
-            ></CardHeader>
-            <Box display="flex" flexDirection="row" mt={5} ml={5}>
-              <Show IF={home && voted}>
-                <Box>
-                  <MuiBadge badgeContent="Voted" color={colors.oliveGreen} />
-                </Box>
-              </Show>
-              <Show IF={!home}>
-                <Show IF={!pending && !expired}>
-                  <Box>
-                    <MuiBadge
-                      className={classes.textStyle}
-                      badgeContent={status}
-                      color={statusColor}
-                    />
-                  </Box>
-                </Show>
-                <Box ml={[0, 0, 0, 1]}>
-                  <Show IF={expired}>
-                    <MuiBadge badgeContent="expired" color="error" />
-                  </Show>
-                  <Show IF={pending}>
-                    <MuiBadge badgeContent="pending" color={colors.orange} />
-                  </Show>
                 </Box>
               </Show>
             </Box>
+            <Box display="flex" justifyContent="center">
+              <Avatar src={voteImage} className={classes.imageStyle} />
+            </Box>
+            <Box display="flex" justifyContent="center" mt={5}>
+              <H5>{name}</H5>
+            </Box>
+
             <Box p={6}>
-              <Box>
+              <Box display="flex" justifyContent="center">
                 <BodyTextLarge bold> {description}</BodyTextLarge>
               </Box>
-              {role === ROLES.ADMIN && (
-                <Show IF={votesSum > 0}>
-                  <Box display="flex" justifyContent="flex-end" mt={2}>
-                    <BodyTextSmall color="grey" bold>
-                      {`${votesSum} `}
-                      Vote(s)
-                    </BodyTextSmall>
-                  </Box>
-                </Show>
-              )}
+
               <Show IF={errors?.pollOption}>
                 <Fade in={errors?.pollOption}>
                   <Box mt={3}>
@@ -244,13 +270,13 @@ export const Poll = ({
                       disabled={isVoteLoading || voted}
                       options={sortedOptions}
                       fieldError={false}
+                      classes={classes}
+                      colorArray={colorArray}
+                      poll
                     />
                   </Box>
                 </Tooltip>
-                <Box
-                  display="flex"
-                  flexDirection={['column', 'column', 'column', 'row']}
-                >
+                <Box display="flex" justifyContent="center">
                   <Box mr={4} my={3}>
                     <Button
                       variant="contained"
@@ -263,40 +289,53 @@ export const Poll = ({
                       {voted ? 'Voted' : 'Vote'}
                     </Button>
                   </Box>
-                  <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
-                    <Box my={3}>
-                      <Button
-                        variant="contained"
-                        onClick={() => setHidden(!hidden)}
-                        startIcon={
-                          hidden ? <VisibilityIcon /> : <VisibilityOffIcon />
-                        }
-                      >
-                        {hidden ? 'Show Results' : 'Hide Results'}
-                      </Button>
-                    </Box>
-                  </Tooltip>
                 </Box>
+                {role === ROLES.ADMIN && (
+                  <Show IF={votesSum > 0}>
+                    <Box display="flex" justifyContent="center" mt={2}>
+                      <BodyTextSmall color="grey" bold>
+                        {`${votesSum} `}
+                        Vote(s)
+                      </BodyTextSmall>
+                    </Box>
+                  </Show>
+                )}
               </Show>
               <Collapse in={!hidden} collapsedSize={40}>
-                {sortedOptions?.map((val) => (
-                  <Box my={3}>
-                    {val.label}
-                    <BorderLinearProgress
-                      variant="indeterminate"
-                      votes={val.vote}
-                      value={votePercentage(val.votes, val.totalVotes)}
-                      color={theme.palette.secondary}
-                      animation={{
-                        bar1Indeterminate: classes.bar1Indeterminate,
-                        bar2Indeterminate: classes.bar2Indeterminate,
-                      }}
-                    />
+                {sortedOptions?.map((val, index) => (
+                  <Box display="flex" flexDirection="column">
+                    <Box>{val.label}</Box>
+                    <Box>
+                      <BorderLinearProgress
+                        variant="indeterminate"
+                        votes={val.vote}
+                        value={votePercentage(val.votes, val.totalVotes)}
+                        color={theme.palette[colorArray[index]]}
+                        animation={{
+                          bar1Indeterminate: classes.bar1Indeterminate,
+                          bar2Indeterminate: classes.bar2Indeterminate,
+                        }}
+                      />
+                    </Box>
                   </Box>
                 ))}
               </Collapse>
+              <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
+                <Box my={3} mt={2} display="flex" justifyContent="center">
+                  <Button
+                    variant="text"
+                    className={classes.showResultsButton}
+                    onClick={() => setHidden(!hidden)}
+                    startIcon={
+                      hidden ? <VisibilityIcon /> : <VisibilityOffIcon />
+                    }
+                  >
+                    {hidden ? 'Show Results' : 'Hide Results'}
+                  </Button>
+                </Box>
+              </Tooltip>
             </Box>
-          </Card>
+          </Paper>
         </Form>
       )}
     </Formik>
