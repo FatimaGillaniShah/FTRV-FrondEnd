@@ -49,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: colors.smoky,
   },
   imageStyle: {
+    border: '6px solid',
+    borderColor: colors.light,
     boxShadow: theme.shadows[10],
     width: '120px',
     height: '120px',
