@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,6 +8,8 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 import { navigateTo } from '../../../utils/helper';
+import Tooltip from '@material-ui/core/Tooltip';
+import { ProfitCenterDetailModal } from '../../profitCenterDetailsModal';
 
 const ActionButtons = ({ data, disabled }) => {
   const history = useHistory();
@@ -16,23 +18,45 @@ const ActionButtons = ({ data, disabled }) => {
       data: { role },
     },
   } = useAuthContext();
+  const [openProfitCenterModal, setOpenProfitCenterModal] = useState(false);
+  const handleProfitCenterModal = () => {
+    setOpenProfitCenterModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenProfitCenterModal(false);
+  };
+
 
   return (
     <>
       <Show IF={role === ROLES.ADMIN}>
         <>
-          <IconButton>
-            <VisibilityOutlinedIcon color="action" />
-          </IconButton>
-          <IconButton
-            disabled={disabled}
-            onClick={() => navigateTo(history, `/ring-group/edit/${data.id}`)}
-          >
-            <EditIcon color="secondary" />
-          </IconButton>
-          <IconButton disabled={disabled}>
-            <DeleteIcon color="error" />
-          </IconButton>
+          <Show IF={openProfitCenterModal}>
+            <ProfitCenterDetailModal
+              record={data}
+              modal={openProfitCenterModal}
+              onHandleClose={handleClose}
+            />
+          </Show>
+          <Tooltip title='View Details'>
+            <IconButton onClick={handleProfitCenterModal}>
+              <VisibilityOutlinedIcon color='action' />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Edit'>
+            <IconButton
+              disabled={disabled}
+              onClick={() => navigateTo(history, `/ring-group/edit/${data.id}`)}
+            >
+              <EditIcon color='secondary' />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Delete'>
+            <IconButton disabled={disabled}>
+              <DeleteIcon color='error' />
+            </IconButton>
+          </Tooltip>
         </>
       </Show>
     </>
