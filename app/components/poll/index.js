@@ -58,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
   showResultsButton: {
     color: colors.dimGrey,
   },
+  radioLabel: {
+    padding: '2px 3px',
+  },
+  radioBorder: {
+    padding: '2px 18px',
+  },
   textStyle: {
     textTransform: 'capitalize',
   },
