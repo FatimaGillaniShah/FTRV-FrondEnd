@@ -81,10 +81,10 @@ export const headCells = [
     flex: 1,
   },
   {
-    field: 'centerName',
+    field: 'code',
     type: 'string',
-    headerName: 'Center Name',
-    description: 'Center Name',
+    headerName: 'Code',
+    description: 'Code',
     sortable: false,
     flex: 1,
   },

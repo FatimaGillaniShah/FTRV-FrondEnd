@@ -34,7 +34,7 @@ export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
           <Box display="flex" py={3} px={7}>
             <Box width={1 / 3}>
               <BodyTextLarge color="grey" noWrap>
-                Profit Center:
+                Code:
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
