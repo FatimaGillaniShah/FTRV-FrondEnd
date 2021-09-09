@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 0, 6),
   },
   background: {
-    backgroundColor: '#E1F2FF',
+    backgroundColor: colors.seaBlue,
   },
   icon: {
     fontSize: '2rem',

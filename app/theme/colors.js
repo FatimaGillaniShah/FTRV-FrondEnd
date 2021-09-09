@@ -8,6 +8,7 @@ const dimGrey = '#696969';
 const smoky = '#F8F8F8';
 const info = '#1976d2';
 const lightGrey = '#acb4bf';
+const seaBlue = '#E1F2FF';
 export const colors = {
   primary: '#153D73',
   secondary: lightblue,
@@ -16,6 +17,7 @@ export const colors = {
   greenBlue: '#1875c0',
   red,
   smoky,
+  seaBlue,
   green,
   grey,
   lightGrey,
