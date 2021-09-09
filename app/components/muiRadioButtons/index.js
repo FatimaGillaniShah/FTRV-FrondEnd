@@ -15,6 +15,8 @@ const FormikRadioGroup = ({
   classes,
   colorArray,
   poll,
+  value,
+  voted,
   ...props
 }) => {
   const fieldName = name || field.name;
@@ -27,6 +29,7 @@ const FormikRadioGroup = ({
         {...field}
         {...props}
         name={fieldName}
+        value={voted && value ? value?.toString() : field.value}
         className={classes?.radioButtons}
       >
         {options?.map((option, index) => (
@@ -45,7 +48,7 @@ const FormikRadioGroup = ({
                   control={
                     <MUIRadio
                       className={classes?.radioLabel}
-                      value={option.value.toString()}
+                      value={option?.value.toString()}
                     />
                   }
                   label={option.label}

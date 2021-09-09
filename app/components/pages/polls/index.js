@@ -70,7 +70,7 @@ export function PollsPage({
             </Box>
           </WrapInCard>
           <WrapInCard>
-            <Box mt={7} pl={4.5}>
+            <Box mt={7} pl={3.5}>
               <Button
                 startIcon={<AddIcon fontSize="small" />}
                 variant="contained"
@@ -81,7 +81,6 @@ export function PollsPage({
                 New Poll
               </Button>
             </Box>
-
             <Show
               IF={data?.length > 0}
               Icon={BallotIcon}
@@ -106,7 +105,7 @@ export function PollsPage({
                     voted,
                     votesSum,
                   }) => (
-                    <Box mt={8} mb={8} mr={5} width={[1, 1, 1 / 2, '31%']}>
+                    <Box mt={8} mb={8} mr={6} width={[1, 1, 1 / 2, '31%']}>
                       <Poll
                         id={id}
                         name={name}

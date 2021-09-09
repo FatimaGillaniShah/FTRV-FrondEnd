@@ -117,6 +117,14 @@ export const Poll = ({
       data: { role },
     },
   } = useAuthContext();
+  let value = '';
+  options?.map((option) => {
+    if (option.voted === true) {
+      value = option.value;
+      return value;
+    }
+    return null;
+  });
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
     event.preventDefault();
@@ -127,7 +135,7 @@ export const Poll = ({
   };
   const history = useHistory();
   const theme = useTheme();
-  const [hidden, setHidden] = useState(false);
+  const [hidden, setHidden] = useState(home);
   const classes = useStyles();
   const statusColor =
     status === 'active' ? colors.oliveGreen : colors.lightGrey;
@@ -161,7 +169,7 @@ export const Poll = ({
                     </Show>
                   </Show>
                 </Box>
-                <Box ml={[0, 0, 0, 1]}>
+                <Box ml={[2, 2, 2, 5]}>
                   <Show IF={expired}>
                     <MuiBadge badgeContent="expired" color="error" />
                   </Show>
@@ -230,10 +238,12 @@ export const Poll = ({
                 )}
               </Box>
             </Box>
-            <Box display="flex" justifyContent="center">
-              <Avatar src={voteImage} className={classes.imageStyle} />
-            </Box>
-            <Box display="flex" justifyContent="center" mt={5}>
+            <Show IF={home}>
+              <Box display="flex" justifyContent="center">
+                <Avatar src={voteImage} className={classes.imageStyle} />
+              </Box>
+            </Show>
+            <Box display="flex" justifyContent="center" mt={3}>
               <H5>{name}</H5>
             </Box>
             <Box p={6}>
@@ -267,8 +277,10 @@ export const Poll = ({
                       options={sortedOptions}
                       fieldError={false}
                       classes={classes}
+                      voted={voted}
                       colorArray={colorArray}
                       poll
+                      value={value}
                     />
                   </Box>
                 </Tooltip>
@@ -316,7 +328,7 @@ export const Poll = ({
                   </Box>
                 ))}
               </Collapse>
-              <Tooltip title={hidden ? 'Show Results' : 'Hide Results'}>
+              <Tooltip title={hidden ? 'Show Results' : 'Hide Results '}>
                 <Box my={3} mt={2} display="flex" justifyContent="center">
                   <Button
                     variant="text"

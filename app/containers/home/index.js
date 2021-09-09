@@ -45,13 +45,13 @@ function HomeContainer() {
         (accumulator, currentValue) => accumulator + currentValue.votes,
         0
       );
-      const pollsOptions = value?.options.map(({ id, name, votes }) => ({
+      const pollsOptions = value?.options.map(({ id, name, votes, voted }) => ({
         label: name,
         value: id,
         votes,
         totalVotes,
+        voted,
       }));
-
       return {
         ...value,
         votesSum: totalVotes,
