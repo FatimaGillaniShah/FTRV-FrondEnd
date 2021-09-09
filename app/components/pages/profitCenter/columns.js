@@ -11,7 +11,7 @@ import Show from '../../show';
 import { navigateTo } from '../../../utils/helper';
 import { ProfitCenterDetailModal } from '../../profitCenterDetailsModal';
 
-const ActionButtons = ({ data, disabled }) => {
+const ActionButtons = ({ data }) => {
   const history = useHistory();
   const {
     user: {
@@ -45,7 +45,6 @@ const ActionButtons = ({ data, disabled }) => {
           </Tooltip>
           <Tooltip title="Edit">
             <IconButton
-              disabled={disabled}
               onClick={() =>
                 navigateTo(history, `/profit-center/edit/${data.id}`)
               }
@@ -54,7 +53,7 @@ const ActionButtons = ({ data, disabled }) => {
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete">
-            <IconButton disabled={disabled}>
+            <IconButton>
               <DeleteIcon color="error" />
             </IconButton>
           </Tooltip>
