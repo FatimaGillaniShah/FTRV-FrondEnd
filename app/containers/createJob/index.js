@@ -8,7 +8,6 @@ import { createJob, getJobById, updateJob } from '../../state/queryFunctions';
 import { navigateTo, Toast, nextWeekDate } from '../../utils/helper';
 import { keys } from '../../state/queryKeys';
 import { parseDate } from '../../utils/functions';
-import ProfitCenter from '../../components/pages/profitCenter';
 
 function AddJob() {
   const { id } = useParams();
@@ -87,7 +86,7 @@ function AddJob() {
       {isJobLoading ? (
         <Loading />
       ) : (
-        <ProfitCenter
+        <CreateJobPage
           id={id}
           initialValues={id ? job : initialValues}
           onHandleSubmit={handleSubmit}

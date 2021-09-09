@@ -13,39 +13,17 @@ import { headCells } from './columns';
 import Show from '../../show';
 
 function ProfitCenter({
-  // <data,
+  data,
   selected,
   onHandleSearch,
   setSelected,
   onHandleSwitchChange,
   onHandleDelete,
+  setPage,
   page,
   query,
   loading,
-  setPage,
 }) {
-  const data = [
-    {
-      id: 44,
-      locationName: 'Fun Town RV Cleburne Super Store',
-      location: '2200 U.S. 67 East Business Cleburne, Texas 76031',
-      profitCenterNumber: 1,
-      ProfitCenterName: 'CLE',
-      faxNumber: '76643',
-      phoneNumber: '817 - 645 - 8100',
-      generalManagerName: 'Raul Ramierz',
-    },
-    {
-      id: 41,
-      locationName: 'Fun Town RV Waco',
-      location: '777 Enterprise Blvd Hewitt, Texas 76643',
-      profitCenterNumber: 4,
-      ProfitCenterName: 'WAC',
-      faxNumber: '76643',
-      phoneNumber: '254-400-2900',
-      generalManagerName: 'Hector Martinez',
-    },
-  ];
   const {
     user: {
       data: { role },
@@ -91,7 +69,7 @@ function ProfitCenter({
             setSelected={setSelected}
             selected={selected}
             count={data?.length || 0}
-            sortColumn="locationName"
+            sortColumn="address"
             disableSelectionOnClick
             page={page}
             setPage={setPage}

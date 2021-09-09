@@ -4,11 +4,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 import { navigateTo } from '../../../utils/helper';
-import Tooltip from '@material-ui/core/Tooltip';
 import { ProfitCenterDetailModal } from '../../profitCenterDetailsModal';
 
 const ActionButtons = ({ data, disabled }) => {
@@ -27,7 +27,6 @@ const ActionButtons = ({ data, disabled }) => {
     setOpenProfitCenterModal(false);
   };
 
-
   return (
     <>
       <Show IF={role === ROLES.ADMIN}>
@@ -39,22 +38,22 @@ const ActionButtons = ({ data, disabled }) => {
               onHandleClose={handleClose}
             />
           </Show>
-          <Tooltip title='View Details'>
+          <Tooltip title="Details">
             <IconButton onClick={handleProfitCenterModal}>
-              <VisibilityOutlinedIcon color='action' />
+              <VisibilityOutlinedIcon color="action" />
             </IconButton>
           </Tooltip>
-          <Tooltip title='Edit'>
+          <Tooltip title="Edit">
             <IconButton
               disabled={disabled}
               onClick={() => navigateTo(history, `/ring-group/edit/${data.id}`)}
             >
-              <EditIcon color='secondary' />
+              <EditIcon color="secondary" />
             </IconButton>
           </Tooltip>
-          <Tooltip title='Delete'>
+          <Tooltip title="Delete">
             <IconButton disabled={disabled}>
-              <DeleteIcon color='error' />
+              <DeleteIcon color="error" />
             </IconButton>
           </Tooltip>
         </>
@@ -65,15 +64,7 @@ const ActionButtons = ({ data, disabled }) => {
 
 export const headCells = [
   {
-    field: 'locationName',
-    type: 'string',
-    headerName: 'Location Name',
-    description: 'Location Name',
-    sortable: true,
-    width: 200,
-  },
-  {
-    field: 'location',
+    field: 'address',
     type: 'string',
     headerName: 'Address',
     description: 'Address',
@@ -81,42 +72,42 @@ export const headCells = [
     flex: 1,
   },
   {
-    field: 'profitCenterNumber',
+    field: 'centerNumber',
     type: 'number',
-    headerName: 'Profit Center Number',
-    description: 'Profit Center Number',
+    headerName: 'Center Number',
+    description: 'Center Number',
     sortable: true,
     flex: 1,
   },
   {
-    field: 'ProfitCenterName',
+    field: 'centerName',
     type: 'string',
-    headerName: 'Profit Center Name',
-    description: 'Profit Center Name',
+    headerName: 'Center Name',
+    description: 'Center Name',
     sortable: false,
     flex: 1,
   },
   {
     field: 'faxNumber',
     type: 'number',
-    headerName: 'Dealership Fax Number',
-    description: 'Dealership Fax Number',
+    headerName: 'Fax Number',
+    description: 'Fax Number',
     sortable: false,
     flex: 1,
   },
   {
-    field: 'phoneNumber',
+    field: 'cellPhone',
     type: 'number',
-    headerName: 'Phone Number',
-    description: 'Phone Number',
+    headerName: 'Cell Phone',
+    description: 'Cell Phone',
     sortable: false,
     flex: 1,
   },
   {
-    field: 'generalManagerName',
+    field: 'managerName',
     type: 'string',
-    headerName: 'General Manager Name',
-    description: 'General Manager Name',
+    headerName: 'Manager Name',
+    description: 'Manager Name',
     sortable: false,
     flex: 1,
   },
@@ -126,9 +117,7 @@ export const headCells = [
     headerName: ' ',
     description: 'Actions',
     sortable: false,
-    renderCell: ({ row }) => (
-      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
-    ),
+    renderCell: ({ row }) => <ActionButtons data={row} />,
     width: 150,
   },
 ];

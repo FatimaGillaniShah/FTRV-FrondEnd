@@ -17,7 +17,7 @@ export function TableButtons({ onHandleDelete, numSelected, loading }) {
             variant="contained"
             loading={false}
             startIcon={<AddIcon />}
-            onClick={() => navigateTo(history, '/ring-group/add')}
+            onClick={() => navigateTo(history, '/profit-center/add')}
           >
             New
           </Button>

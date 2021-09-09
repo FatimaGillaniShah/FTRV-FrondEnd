@@ -87,4 +87,7 @@ export function Search({
   );
 }
 
+Search.defaultProps = {
+  showFilter: true,
+};
 export default memo(Search);
