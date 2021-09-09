@@ -18,13 +18,13 @@ export const useStyles = makeStyles((theme) => ({
   },
   dividerClass: {
     background: colors.lightGrey,
-    margin: theme.spacing(0, 7)
+    margin: theme.spacing(0, 7),
   },
   dialogContent: {
-    padding: theme.spacing(0, 0, 6)
+    padding: theme.spacing(0, 0, 6),
   },
   background: {
-    backgroundColor: '#E1F2FF'
+    backgroundColor: '#E1F2FF',
   },
   icon: {
     fontSize: '2rem',

@@ -46,7 +46,9 @@ const ActionButtons = ({ data, disabled }) => {
           <Tooltip title="Edit">
             <IconButton
               disabled={disabled}
-              onClick={() => navigateTo(history, `/ring-group/edit/${data.id}`)}
+              onClick={() =>
+                navigateTo(history, `/profit-center/edit/${data.id}`)
+              }
             >
               <EditIcon color="secondary" />
             </IconButton>

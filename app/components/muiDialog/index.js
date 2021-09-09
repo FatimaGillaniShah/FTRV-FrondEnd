@@ -21,7 +21,7 @@ export default function MuiDialog({
   classes,
   successButtonText,
   disabled,
-  actionsDisplay
+  actionsDisplay,
 }) {
   return (
     <Dialog
@@ -34,21 +34,23 @@ export default function MuiDialog({
       <DialogTitle id="form-dialog-title" className={classes?.dialog}>
         {title}
       </DialogTitle>
-      <DialogContent className={classes?.dialogContent}>{children}</DialogContent>
+      <DialogContent className={classes?.dialogContent}>
+        {children}
+      </DialogContent>
 
       <Show IF={actionsDisplay}>
-        <Box display='flex' px={1}>
+        <Box display="flex" px={1}>
           <DialogActions className={classes?.dialogActions}>
             <Button
               onClick={onSubmit}
-              type='submit'
-              color='primary'
-              variant='contained'
+              type="submit"
+              color="primary"
+              variant="contained"
               disabled={disabled}
             >
               {successButtonText}
             </Button>
-            <Button onClick={onClose} color='primary'>
+            <Button onClick={onClose} color="primary">
               Cancel
             </Button>
           </DialogActions>
@@ -68,11 +70,11 @@ MuiDialog.propTypes = {
   children: PropTypes.element,
   successButtonText: PropTypes.string,
   disabled: PropTypes.bool,
-  actionsDisplay: PropTypes.bool
+  actionsDisplay: PropTypes.bool,
 };
 MuiDialog.defaultProps = {
   fullWidth: true,
   maxWidth: 'sm',
   successButtonText: 'Create',
-  actionsDisplay: true
+  actionsDisplay: true,
 };

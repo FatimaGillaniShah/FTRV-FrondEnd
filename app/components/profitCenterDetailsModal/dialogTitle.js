@@ -6,15 +6,12 @@ import PropTypes from 'prop-types';
 import { useStyles } from './style';
 import { H5 } from '../typography';
 
-export const DialogTitle = ({
-  title,
-  onHandleClose,
-}) => {
+export const DialogTitle = ({ title, onHandleClose }) => {
   const classes = useStyles();
   return (
     <>
       <MuiDialogTitle className={classes.root}>
-        <H5 color='light'>{title}</H5>
+        <H5 color="light">{title}</H5>
         <IconButton className={classes.closeButton} onClick={onHandleClose}>
           <CloseIcon className={classes.icon} />
         </IconButton>
