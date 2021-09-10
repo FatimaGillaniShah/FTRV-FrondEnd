@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
+import Show from '../show';
 
 export default function MuiDialog({
   onClose,
@@ -20,6 +21,7 @@ export default function MuiDialog({
   classes,
   successButtonText,
   disabled,
+  actionsDisplay,
 }) {
   return (
     <Dialog
@@ -32,24 +34,28 @@ export default function MuiDialog({
       <DialogTitle id="form-dialog-title" className={classes?.dialog}>
         {title}
       </DialogTitle>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent className={classes?.dialogContent}>
+        {children}
+      </DialogContent>
 
-      <Box display="flex" px={1}>
-        <DialogActions className={classes?.dialogActions}>
-          <Button
-            onClick={onSubmit}
-            type="submit"
-            color="primary"
-            variant="contained"
-            disabled={disabled}
-          >
-            {successButtonText}
-          </Button>
-          <Button onClick={onClose} color="primary">
-            Cancel
-          </Button>
-        </DialogActions>
-      </Box>
+      <Show IF={actionsDisplay}>
+        <Box display="flex" px={1}>
+          <DialogActions className={classes?.dialogActions}>
+            <Button
+              onClick={onSubmit}
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={disabled}
+            >
+              {successButtonText}
+            </Button>
+            <Button onClick={onClose} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Box>
+      </Show>
     </Dialog>
   );
 }
@@ -64,9 +70,11 @@ MuiDialog.propTypes = {
   children: PropTypes.element,
   successButtonText: PropTypes.string,
   disabled: PropTypes.bool,
+  actionsDisplay: PropTypes.bool,
 };
 MuiDialog.defaultProps = {
   fullWidth: true,
   maxWidth: 'sm',
   successButtonText: 'Create',
+  actionsDisplay: true,
 };

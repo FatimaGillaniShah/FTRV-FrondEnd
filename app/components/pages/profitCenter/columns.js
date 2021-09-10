@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 import { navigateTo } from '../../../utils/helper';
+import { ProfitCenterDetailModal } from '../../profitCenterDetailsModal';
 
 const ActionButtons = ({ data }) => {
   const history = useHistory();
@@ -17,13 +18,28 @@ const ActionButtons = ({ data }) => {
       data: { role },
     },
   } = useAuthContext();
+  const [openProfitCenterModal, setOpenProfitCenterModal] = useState(false);
+  const handleProfitCenterModal = () => {
+    setOpenProfitCenterModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenProfitCenterModal(false);
+  };
 
   return (
     <>
       <Show IF={role === ROLES.ADMIN}>
         <>
-          <Tooltip title="Detail">
-            <IconButton>
+          <Show IF={openProfitCenterModal}>
+            <ProfitCenterDetailModal
+              record={data}
+              modal={openProfitCenterModal}
+              onHandleClose={handleClose}
+            />
+          </Show>
+          <Tooltip title="Details">
+            <IconButton onClick={handleProfitCenterModal}>
               <VisibilityOutlinedIcon color="action" />
             </IconButton>
           </Tooltip>
@@ -65,10 +81,10 @@ export const headCells = [
     flex: 1,
   },
   {
-    field: 'centerName',
+    field: 'code',
     type: 'string',
-    headerName: 'Center Name',
-    description: 'Center Name',
+    headerName: 'Code',
+    description: 'Code',
     sortable: false,
     flex: 1,
   },
