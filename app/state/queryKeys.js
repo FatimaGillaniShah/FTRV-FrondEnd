@@ -40,4 +40,5 @@ export const keys = {
   getJob: (id) => ['job', id],
   polls: (payload) => ['polls', payload],
   getPoll: (id) => ['poll', id],
+  profitCenters: (payload) => ['profit-centers', payload],
 };

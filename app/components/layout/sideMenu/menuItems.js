@@ -6,6 +6,7 @@ import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import { ROLES } from 'utils/constants';
 import DescriptionIcon from '@material-ui/icons/Description';
 import WorkOutlinedIcon from '@material-ui/icons/WorkOutlined';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 
 export const menuItems = [
   {
@@ -18,6 +19,11 @@ export const menuItems = [
         link: '/ceo-message',
       },
     ],
+  },
+  {
+    name: 'profitCenter',
+    icon: BusinessCenterIcon,
+    link: '/profit-center',
   },
   {
     name: 'blog',

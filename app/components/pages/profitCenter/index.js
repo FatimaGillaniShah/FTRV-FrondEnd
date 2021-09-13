@@ -17,7 +17,6 @@ function ProfitCenter({
   selected,
   onHandleSearch,
   setSelected,
-  onHandleSwitchChange,
   onHandleDelete,
   setPage,
   page,
@@ -37,9 +36,7 @@ function ProfitCenter({
           <Box display="flex">
             <Search
               name="Profit Center"
-              showToggle={false}
               onHandleSearch={onHandleSearch}
-              onHandleSwitchChange={onHandleSwitchChange}
               initialValues={query}
               showFilter={false}
             />

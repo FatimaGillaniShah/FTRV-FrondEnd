@@ -2,25 +2,32 @@ import React, { memo } from 'react';
 import { Box } from '@material-ui/core';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Divider from '@material-ui/core/Divider';
+import PropTypes from 'prop-types';
 import MuiDialog from '../muiDialog';
 import { BodyTextLarge } from '../typography';
 import { DialogTitle } from './dialogTitle';
 import { useStyles } from './style';
 
-export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
+export const ProfitCenterDetailModal = ({
+  profitCenter: {
+    name,
+    address,
+    code,
+    centerNumber,
+    contactNo,
+    faxNumber,
+    managerName,
+  },
+  modal,
+  onHandleClose,
+}) => {
   const classes = useStyles();
-
   return (
     <>
       <MuiDialog
         open={modal}
         onClose={() => onHandleClose()}
-        title={
-          <DialogTitle
-            title={record?.locationName}
-            onHandleClose={onHandleClose}
-          />
-        }
+        title={<DialogTitle title={name} onHandleClose={onHandleClose} />}
         classes={classes}
         maxWidth="sm"
         actionsDisplay={false}
@@ -28,7 +35,7 @@ export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
         <Box>
           <Box className={classes.background} py={3} px={6}>
             <BodyTextLarge color="dark">
-              <LocationOnIcon color="secondary" /> {record?.location}
+              <LocationOnIcon color="secondary" /> {address}
             </BodyTextLarge>
           </Box>
           <Box display="flex" py={3} px={7}>
@@ -38,7 +45,7 @@ export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {record?.ProfitCenterName}
+              {code}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
@@ -50,7 +57,7 @@ export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {record?.profitCenterNumber}
+              {centerNumber}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
@@ -62,7 +69,7 @@ export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {record?.phoneNumber}
+              {contactNo}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
@@ -74,7 +81,7 @@ export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {record?.faxNumber}
+              {faxNumber}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
@@ -86,7 +93,7 @@ export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {record?.generalManagerName}
+              {managerName}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
@@ -96,6 +103,18 @@ export const ProfitCenterDetailModal = ({ record, modal, onHandleClose }) => {
   );
 };
 
-ProfitCenterDetailModal.propTypes = {};
+ProfitCenterDetailModal.propTypes = {
+  profitCenter: PropTypes.shape({
+    name: PropTypes.string,
+    address: PropTypes.string,
+    code: PropTypes.string,
+    centerNumber: PropTypes.number,
+    contactNo: PropTypes.string,
+    faxNumber: PropTypes.string,
+    managerName: PropTypes.string,
+  }),
+  modal: PropTypes.bool.isRequired,
+  onHandleClose: PropTypes.func.isRequired,
+};
 
 export default memo(ProfitCenterDetailModal);

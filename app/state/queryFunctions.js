@@ -32,6 +32,7 @@ const {
   APPLICANT,
   POLL,
   VOTE_POLL,
+  PROFIT_CENTER,
 } = APIS;
 
 // USER CRUD
@@ -297,3 +298,15 @@ export const deletePoll = (payload) =>
 
 export const votePoll = ({ date, ...payload }) =>
   http.post(`${VOTE_POLL}?date=${date}`, payload);
+
+export const getProfitCenters = ({ queryKey }) => {
+  let url = `${PROFIT_CENTER}?`;
+  const { query } = queryKey[1];
+  if (query?.searchString) {
+    url = `${PROFIT_CENTER}?${insertParams(query)}`;
+  }
+  return http.get(url);
+};
+
+export const deleteProfitCenter = (payload) =>
+  http.delete(PROFIT_CENTER, { data: { ids: payload } });
