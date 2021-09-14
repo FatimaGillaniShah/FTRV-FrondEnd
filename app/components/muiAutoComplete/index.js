@@ -25,7 +25,7 @@ export default function MuiAutoComplete({
   const [field, meta, helpers] = useField(props);
 
   useEffect(() => {
-    if (defaultValue) {
+    if (defaultValue && props.name === 'managerId') {
       helpers.setValue(defaultValue.id);
     }
   }, [defaultValue]);
