@@ -46,6 +46,7 @@ export const fetchUsers = ({ queryKey }) => {
     pageSize,
     query,
     filters,
+    detail,
   } = queryKey[1];
   if (query?.searchString) {
     url = `${USERS}?${insertParams(
@@ -56,7 +57,7 @@ export const fetchUsers = ({ queryKey }) => {
       filters
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
   } else {
-    url = `${USERS}?sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    url = `${USERS}?sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}&detail=${detail}`;
   }
   return http.get(url);
 };
@@ -301,6 +302,13 @@ export const votePoll = ({ date, ...payload }) =>
 
 export const createProfitCenter = (payload) =>
   http.post(PROFIT_CENTER, payload);
+
+export const getProfitCenterById = ({ queryKey }) =>
+  http.get(`${PROFIT_CENTER}/${queryKey[1]}`);
+
+export const updateProfitCenter = ({ id, ...payload }) =>
+  http.put(`${PROFIT_CENTER}/${id}`, payload);
+
 export const getProfitCenters = ({ queryKey }) => {
   let url = `${PROFIT_CENTER}?`;
   const { query } = queryKey[1];

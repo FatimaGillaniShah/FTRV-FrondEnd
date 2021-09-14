@@ -3,9 +3,9 @@ import { object, string, number } from 'yup';
 export const profitCenterSchema = object().shape({
   name: string().required('*Name Required'),
   address: string().required('*Address Required'),
-  centerNumber: number().required('*Number Required'),
+  centerNo: number().required('*Number Required'),
   code: string().required('*Code Required'),
-  faxNumber: string()
+  faxNo: string()
     .min(10, 'Minimum 10 digits are allowed!')
     .max(12, 'Maximum 12 digits are allowed!')
     .nullable()

@@ -100,8 +100,8 @@ export const headCells = [
   {
     field: 'contactNo',
     type: 'number',
-    headerName: 'Cell Phone',
-    description: 'Cell Phone',
+    headerName: 'Phone No.',
+    description: 'Phone Number',
     sortable: false,
     width: 110,
   },

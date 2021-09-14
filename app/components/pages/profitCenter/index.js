@@ -66,7 +66,7 @@ function ProfitCenter({
             setSelected={setSelected}
             selected={selected}
             count={data?.length || 0}
-            sortColumn="address"
+            sortColumn="centerNo"
             disableSelectionOnClick
             page={page}
             setPage={setPage}

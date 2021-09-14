@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { FormHelperText, TextField } from '@material-ui/core';
 import { useField } from 'formik';
+import { isFunction } from '../../utils/helper';
 
 export default function MuiAutoComplete({
   options,
@@ -13,6 +14,7 @@ export default function MuiAutoComplete({
   limitTags,
   multiple,
   fullWidth,
+  onHandleReset,
   defaultValue,
   onHandleChange,
   loading,
@@ -20,7 +22,7 @@ export default function MuiAutoComplete({
   id,
   ...props
 }) {
-  const [field, meta] = useField(props);
+  const [field, meta, helpers] = useField(props);
   delete field.onChange;
   return (
     <>
@@ -33,7 +35,14 @@ export default function MuiAutoComplete({
         multiple={multiple}
         getOptionLabel={getOptionLabel}
         onChange={onHandleChange}
-        onInputChange={onHandleSearch}
+        onInputChange={(event, newInputValue, reason) => {
+          if (reason === 'reset' || reason === 'clear') {
+            helpers.setValue(null);
+            if (isFunction(onHandleReset)) onHandleReset();
+          } else {
+            onHandleSearch();
+          }
+        }}
         {...props}
         renderInput={(params) => (
           <TextField

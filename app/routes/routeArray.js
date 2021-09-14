@@ -478,6 +478,16 @@ export const routeArray = [
         routeType: routeTypes.private,
         roles: [ROLES.ADMIN],
       },
+      {
+        path: '/edit/:id',
+        component: AddProfitCenter,
+        simplifiedPath: 'edit',
+        noOfEnteriesToSkipAfterThisEntry: 1,
+        exact: true,
+        breadCrumbKey: 'Edit Profit Center',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
     ],
   },
 ];

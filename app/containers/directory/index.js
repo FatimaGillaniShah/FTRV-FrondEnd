@@ -62,6 +62,7 @@ function DirectoryContainer() {
       sortColumn,
       pageNumber,
       pageSize,
+      detail: true,
     }),
     fetchUsers,
     {

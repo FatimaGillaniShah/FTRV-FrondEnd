@@ -71,8 +71,8 @@ const ActionButtons = ({ profitCenter }) => {
 
 export const headCells = [
   {
-    field: 'centerNumber',
-    headerName: 'Center Number',
+    field: 'centerNo',
+    headerName: 'Center No.',
     description: 'Center Number',
     sortable: true,
     width: 150,
@@ -110,19 +110,19 @@ export const headCells = [
     flex: 1,
   },
   {
-    field: 'faxNumber',
-    type: 'number',
-    headerName: 'Fax Number',
+    field: 'faxNo',
+    type: 'string',
+    headerName: 'Fax No.',
     description: 'Fax Number',
-    sortable: true,
+    sortable: false,
     flex: 1,
   },
   {
     field: 'contactNo',
     type: 'string',
-    headerName: 'Cell Phone',
-    description: 'Cell Phone',
-    sortable: true,
+    headerName: 'Phone No.',
+    description: 'Phone Number',
+    sortable: false,
     width: 150,
   },
   {

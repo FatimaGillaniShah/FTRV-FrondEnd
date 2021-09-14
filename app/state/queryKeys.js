@@ -42,4 +42,5 @@ export const keys = {
   getPoll: (id) => ['poll', id],
   profitCenter: 'profitCenter',
   profitCenters: (payload) => ['profit-centers', payload],
+  getProfitCenter: (id) => ['profitCenter', id],
 };

@@ -10,7 +10,6 @@ import PrintIcon from '@material-ui/icons/Print';
 import DialpadOutlinedIcon from '@material-ui/icons/DialpadOutlined';
 import PropTypes from 'prop-types';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
-import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import WrapInCard from '../../layout/wrapInCard';
@@ -55,8 +54,8 @@ function CreateProfitCenter({
                       </Box>
                       <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
-                          name="centerNumber"
-                          OutlinedInputPlaceholder="*Profit Center Number"
+                          name="centerNo"
+                          OutlinedInputPlaceholder="*Center Number"
                           appendIcon
                           Icon={DialpadOutlinedIcon}
                           IconClickable
@@ -66,7 +65,7 @@ function CreateProfitCenter({
                       <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
                           name="name"
-                          OutlinedInputPlaceholder="*Profit Center Name"
+                          OutlinedInputPlaceholder="*Center Name"
                           appendIcon
                           Icon={AccountBalanceOutlinedIcon}
                           IconClickable
@@ -76,7 +75,7 @@ function CreateProfitCenter({
                       <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
                           name="code"
-                          OutlinedInputPlaceholder="*Profit Center Code"
+                          OutlinedInputPlaceholder="*Center Code"
                           appendIcon
                           Icon={NoteOutlinedIcon}
                           IconClickable
@@ -96,17 +95,17 @@ function CreateProfitCenter({
                       <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
                           name="contactNo"
-                          OutlinedInputPlaceholder="*Cell Phone"
+                          OutlinedInputPlaceholder="*Phone Number"
                           inputComponent={TextMaskForContactNo}
                           appendIcon
-                          Icon={PhoneOutlinedIcon}
+                          Icon={NoteOutlinedIcon}
                           IconClickable
                           variant="outlined"
                         />
                       </Box>
                       <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
-                          name="faxNumber"
+                          name="faxNo"
                           OutlinedInputPlaceholder="Dealership Fax Number"
                           appendIcon
                           inputComponent={TextMaskForContactNo}
@@ -120,16 +119,22 @@ function CreateProfitCenter({
                           id="managerId"
                           name="managerId"
                           multiple={false}
+                          defaultValue={initialValues?.manager}
                           loading={usersLoading}
                           options={options || []}
-                          getOptionLabel={(user) => user.fullName || ''}
+                          onHandleReset={() => {
+                            setFieldValue('manager', null);
+                          }}
+                          getOptionLabel={(user) =>
+                            `${user.firstName}  ${user.lastName} ` || ' '
+                          }
                           onHandleChange={(e, value) => {
                             if (value) setFieldValue('managerId', value);
                           }}
-                          onHandleSearch={(e) =>
-                            onHandleSearch(e, setFieldValue)
-                          }
-                          label="General Manager Name"
+                          onHandleSearch={(e) => {
+                            if (e) onHandleSearch(e, setFieldValue);
+                          }}
+                          label="Manager Name"
                           placeholder="Type Manager Name"
                         />
                       </Box>
@@ -173,26 +178,14 @@ function CreateProfitCenter({
 
 CreateProfitCenter.propTypes = {
   initialValues: PropTypes.shape({
-    locationName: PropTypes.string,
-    locationId: PropTypes.string,
-    profitCenterNumber: PropTypes.number,
-    profitCenterName: PropTypes.string,
-    faxNumber: PropTypes.string,
-    phoneNumber: PropTypes.number,
-    generalManagerName: PropTypes.string,
+    name: PropTypes.string,
+    managerId: PropTypes.number,
+    code: PropTypes.number,
+    address: PropTypes.string,
+    faxNo: PropTypes.string,
+    contactNo: PropTypes.number,
+    centerNo: PropTypes.number,
   }),
   id: PropTypes.number,
 };
-CreateProfitCenter.defaultProps = {
-  initialValues: PropTypes.shape({
-    locationName: '',
-    locationId: '',
-    profitCenterNumber: null,
-    profitCenterName: '',
-    faxNumber: '',
-    phoneNumber: null,
-    generalManagerName: '',
-  }),
-};
-
 export default memo(CreateProfitCenter);

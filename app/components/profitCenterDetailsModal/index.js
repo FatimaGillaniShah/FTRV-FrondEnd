@@ -13,9 +13,9 @@ export const ProfitCenterDetailModal = ({
     name,
     address,
     code,
-    centerNumber,
+    centerNo,
     contactNo,
-    faxNumber,
+    faxNo,
     managerName,
   },
   modal,
@@ -57,7 +57,7 @@ export const ProfitCenterDetailModal = ({
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {centerNumber}
+              {centerNo}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
@@ -81,7 +81,7 @@ export const ProfitCenterDetailModal = ({
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {faxNumber}
+              {faxNo}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
@@ -108,9 +108,9 @@ ProfitCenterDetailModal.propTypes = {
     name: PropTypes.string,
     address: PropTypes.string,
     code: PropTypes.string,
-    centerNumber: PropTypes.number,
+    centerNo: PropTypes.number,
     contactNo: PropTypes.string,
-    faxNumber: PropTypes.string,
+    faxNo: PropTypes.string,
     managerName: PropTypes.string,
   }),
   modal: PropTypes.bool.isRequired,
