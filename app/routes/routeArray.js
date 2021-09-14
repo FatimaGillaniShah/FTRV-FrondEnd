@@ -36,6 +36,7 @@ import Jobs from '../containers/jobs/loadable';
 import AddApplicant from '../containers/createApplicant/loadable';
 import Applicant from '../containers/applicant/loadable';
 import AddJob from '../containers/createJob/loadable';
+import AddProfitCenter from '../containers/createProfitCenter/loadable';
 import ProfitCenter from '../containers/profitCenter';
 
 const routeTypes = { public: 'public', private: 'private' };
@@ -468,5 +469,15 @@ export const routeArray = [
     breadCrumbKey: 'Profit Center',
     routeType: routeTypes.private,
     roles: [ROLES.ADMIN, ROLES.USER],
+    nestedRoutes: [
+      {
+        path: '/add',
+        component: AddProfitCenter,
+        exact: true,
+        breadCrumbKey: 'Add New Profit Center',
+        routeType: routeTypes.private,
+        roles: [ROLES.ADMIN],
+      },
+    ],
   },
 ];

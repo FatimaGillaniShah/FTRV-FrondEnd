@@ -11,9 +11,12 @@ export default function MuiAutoComplete({
   variant,
   placeholder,
   limitTags,
+  multiple,
   fullWidth,
   defaultValue,
   onHandleChange,
+  loading,
+  onHandleSearch,
   id,
   ...props
 }) {
@@ -24,11 +27,13 @@ export default function MuiAutoComplete({
       <Autocomplete
         id={id}
         limitTags={limitTags}
+        loading={loading}
         options={options}
         defaultValue={defaultValue}
-        multiple
+        multiple={multiple}
         getOptionLabel={getOptionLabel}
         onChange={onHandleChange}
+        onInputChange={onHandleSearch}
         {...props}
         renderInput={(params) => (
           <TextField
@@ -55,12 +60,16 @@ MuiAutoComplete.propTypes = {
   onHandleChange: PropTypes.func,
   fullWidth: PropTypes.bool,
   label: PropTypes.string,
+  multiple: PropTypes.bool,
   variant: PropTypes.string,
   placeholder: PropTypes.string,
   limitTags: PropTypes.number,
   defaultValue: PropTypes.array,
+  loading: PropTypes.bool,
 };
 MuiAutoComplete.defaultProps = {
   fullWidth: true,
   variant: 'outlined',
+  multiple: true,
+  loading: false,
 };

@@ -1,24 +1,32 @@
 import React, { memo } from 'react';
 import { Box } from '@material-ui/core';
-import { Input, Button } from 'components';
+import { Input, Button, AutoComplete } from 'components';
 import ClearIcon from '@material-ui/icons/Clear';
-import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';
 import SaveIcon from '@material-ui/icons/Save';
+import PrintIcon from '@material-ui/icons/Print';
 import DialpadOutlinedIcon from '@material-ui/icons/DialpadOutlined';
 import PropTypes from 'prop-types';
 import AccountBalanceOutlinedIcon from '@material-ui/icons/AccountBalanceOutlined';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
-import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import { TextMaskForContactNo } from './textMaskForContactNo';
 import WrapInCard from '../../layout/wrapInCard';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { H4 } from '../../typography';
 import { profitCenterSchema } from './profitCenterSchema';
-import LocationWithModal from '../../locationWithModal';
 
-function CreateProfitCenter({ id, initialValues, loading }) {
+function CreateProfitCenter({
+  id,
+  initialValues,
+  loading,
+  onHandleSearch,
+  options,
+  onHandleSubmit,
+  usersLoading,
+}) {
   const history = useHistory();
 
   return (
@@ -28,8 +36,9 @@ function CreateProfitCenter({ id, initialValues, loading }) {
           <Formik
             initialValues={initialValues}
             validationSchema={profitCenterSchema}
+            onSubmit={onHandleSubmit}
           >
-            {() => (
+            {({ setFieldValue }) => (
               <Form>
                 <Box
                   flexWrap="wrap"
@@ -46,23 +55,7 @@ function CreateProfitCenter({ id, initialValues, loading }) {
                       </Box>
                       <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
-                          name="locationName"
-                          OutlinedInputPlaceholder="Location Name*"
-                          appendIcon
-                          Icon={LocationOnOutlinedIcon}
-                          IconClickable
-                          variant="outlined"
-                        />
-                      </Box>
-                      <Box width={[1, 1 / 2]} mt={12} px={3}>
-                        <LocationWithModal
-                          name="locationId"
-                          label="Location*"
-                        />
-                      </Box>
-                      <Box width={[1, 1 / 2]} mt={6} px={3}>
-                        <Input
-                          name="profitCenterNumber"
+                          name="centerNumber"
                           OutlinedInputPlaceholder="*Profit Center Number"
                           appendIcon
                           Icon={DialpadOutlinedIcon}
@@ -70,9 +63,9 @@ function CreateProfitCenter({ id, initialValues, loading }) {
                           variant="outlined"
                         />
                       </Box>
-                      <Box width={[1, 1 / 2]} mt={6} px={3}>
+                      <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
-                          name="profitCenterName"
+                          name="name"
                           OutlinedInputPlaceholder="*Profit Center Name"
                           appendIcon
                           Icon={AccountBalanceOutlinedIcon}
@@ -80,35 +73,64 @@ function CreateProfitCenter({ id, initialValues, loading }) {
                           variant="outlined"
                         />
                       </Box>
-
-                      <Box width={[1, 1 / 2]} mt={14} px={3}>
+                      <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
-                          name="faxNumber"
-                          OutlinedInputPlaceholder="*Dealership Fax Number"
+                          name="code"
+                          OutlinedInputPlaceholder="*Profit Center Code"
                           appendIcon
-                          Icon={ContactPhoneIcon}
+                          Icon={NoteOutlinedIcon}
                           IconClickable
                           variant="outlined"
                         />
                       </Box>
-                      <Box width={[1, 1 / 2]} mt={14} px={3}>
+                      <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
-                          name="phoneNumber"
-                          OutlinedInputPlaceholder="*Phone Number"
+                          name="address"
+                          OutlinedInputPlaceholder="*Address"
+                          appendIcon
+                          Icon={LocationOnOutlinedIcon}
+                          IconClickable
+                          variant="outlined"
+                        />
+                      </Box>
+                      <Box width={[1, 1 / 2]} mt={12} px={3}>
+                        <Input
+                          name="contactNo"
+                          OutlinedInputPlaceholder="*Cell Phone"
+                          inputComponent={TextMaskForContactNo}
                           appendIcon
                           Icon={PhoneOutlinedIcon}
                           IconClickable
                           variant="outlined"
                         />
                       </Box>
-                      <Box width={[1, 1 / 2]} mt={14} px={3}>
+                      <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
-                          name="generalManagerName"
-                          OutlinedInputPlaceholder="*General Manager Name"
+                          name="faxNumber"
+                          OutlinedInputPlaceholder="Dealership Fax Number"
                           appendIcon
-                          Icon={PermIdentityOutlinedIcon}
+                          inputComponent={TextMaskForContactNo}
+                          Icon={PrintIcon}
                           IconClickable
                           variant="outlined"
+                        />
+                      </Box>
+                      <Box width={[1, 1 / 2]} mt={14} px={3}>
+                        <AutoComplete
+                          id="managerId"
+                          name="managerId"
+                          multiple={false}
+                          loading={usersLoading}
+                          options={options || []}
+                          getOptionLabel={(user) => user.fullName || ''}
+                          onHandleChange={(e, value) => {
+                            if (value) setFieldValue('managerId', value);
+                          }}
+                          onHandleSearch={(e) =>
+                            onHandleSearch(e, setFieldValue)
+                          }
+                          label="General Manager Name"
+                          placeholder="Type Manager Name"
                         />
                       </Box>
                       <Box

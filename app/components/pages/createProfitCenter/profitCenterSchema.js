@@ -1,11 +1,20 @@
 import { object, string, number } from 'yup';
 
 export const profitCenterSchema = object().shape({
-  locationName: string().required('*Name Required'),
-  locationId: number().required('*Address Required'),
-  profitCenterNumber: number().required('*Number Required'),
-  profitCenterName: string().required('*Name Required'),
-  faxNumber: number().notRequired(),
-  phoneNumber: number().required('*Phone Number Required'),
-  generalManagerName: string().required('*Name Required'),
+  name: string().required('*Name Required'),
+  address: string().required('*Address Required'),
+  centerNumber: number().required('*Number Required'),
+  code: string().required('*Code Required'),
+  faxNumber: string()
+    .min(10, 'Minimum 10 digits are allowed!')
+    .max(12, 'Maximum 12 digits are allowed!')
+    .nullable()
+    .transform((value) => (value ? value.replace(/[^\d]/g, '') : null)),
+  contactNo: string()
+    .min(10, 'Minimum 10 digits are allowed!')
+    .max(12, 'Maximum 12 digits are allowed!')
+    .nullable()
+    .required('*ContactNo Required')
+    .transform((value) => (value ? value.replace(/[^\d]/g, '') : null)),
+  managerId: string().notRequired().nullable(),
 });

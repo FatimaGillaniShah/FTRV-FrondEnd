@@ -47,7 +47,7 @@ export const fetchUsers = ({ queryKey }) => {
     query,
     filters,
   } = queryKey[1];
-  if (query.searchString) {
+  if (query?.searchString) {
     url = `${USERS}?${insertParams(
       query
     )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
@@ -299,6 +299,8 @@ export const deletePoll = (payload) =>
 export const votePoll = ({ date, ...payload }) =>
   http.post(`${VOTE_POLL}?date=${date}`, payload);
 
+export const createProfitCenter = (payload) =>
+  http.post(PROFIT_CENTER, payload);
 export const getProfitCenters = ({ queryKey }) => {
   let url = `${PROFIT_CENTER}?`;
   const { query } = queryKey[1];
