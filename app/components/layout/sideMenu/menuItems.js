@@ -21,7 +21,7 @@ export const menuItems = [
     ],
   },
   {
-    name: 'profitCenter',
+    name: 'Profit Center',
     icon: BusinessCenterIcon,
     link: '/profit-center',
   },

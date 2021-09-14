@@ -75,11 +75,6 @@ function CreateProfitCenter() {
       profitCenter.managerId !== null
     ) {
       profitCenter.managerId = profitCenter.managerId.id;
-    } else if (
-      profitCenter.managerId === null &&
-      profitCenter.manager !== null
-    ) {
-      profitCenter.managerId = profitCenter.manager.id;
     }
 
     delete profitCenter.manager;

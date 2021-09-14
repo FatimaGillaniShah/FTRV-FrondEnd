@@ -50,7 +50,7 @@ function CreateProfitCenter({
                   <Box width={[1, 1, 1, '63%']}>
                     <Box width={1} pt={7} flexWrap="wrap" display="flex" px={2}>
                       <Box width={1} textAlign="center">
-                        <H4>{id ? 'Update' : 'Create'} New Profit Center</H4>
+                        <H4>{id ? 'Update' : 'Create New'} Profit Center</H4>
                       </Box>
                       <Box width={[1, 1 / 2]} mt={12} px={3}>
                         <Input
@@ -122,9 +122,6 @@ function CreateProfitCenter({
                           defaultValue={initialValues?.manager}
                           loading={usersLoading}
                           options={options || []}
-                          onHandleReset={() => {
-                            setFieldValue('manager', null);
-                          }}
                           getOptionLabel={(user) =>
                             `${user.firstName}  ${user.lastName} ` || ' '
                           }
