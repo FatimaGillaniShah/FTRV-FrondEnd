@@ -81,7 +81,7 @@ export const ProfitCenterDetailModal = ({
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {faxNo}
+              {faxNo || '-'}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
@@ -93,7 +93,7 @@ export const ProfitCenterDetailModal = ({
               </BodyTextLarge>
             </Box>
             <BodyTextLarge fontWeight="fontWeightMedium" color="dark">
-              {managerName}
+              {managerName || '-'}
             </BodyTextLarge>
           </Box>
           <Divider classes={{ root: classes.dividerClass }} />
