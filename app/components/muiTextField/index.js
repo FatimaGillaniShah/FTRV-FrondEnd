@@ -14,12 +14,12 @@ function MuiTextField(props) {
   const { classes } = props;
   return (
     <TextField
+      {...props}
       InputLabelProps={{
         classes: {
           root: classes.inputLabel,
         },
       }}
-      {...props}
     />
   );
 }
