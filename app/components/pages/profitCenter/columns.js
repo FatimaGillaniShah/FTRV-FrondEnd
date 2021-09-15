@@ -39,19 +39,19 @@ const ActionButtons = ({ profitCenter }) => {
 
   return (
     <>
+      <Show IF={openProfitCenterModal}>
+        <ProfitCenterDetailModal
+          profitCenter={profitCenter}
+          modal={openProfitCenterModal}
+          onHandleClose={handleClose}
+        />
+      </Show>
+      <Tooltip title="Details">
+        <IconButton onClick={handleProfitCenterModal}>
+          <VisibilityOutlinedIcon color="action" />
+        </IconButton>
+      </Tooltip>
       <Show IF={role === ROLES.ADMIN}>
-        <Show IF={openProfitCenterModal}>
-          <ProfitCenterDetailModal
-            profitCenter={profitCenter}
-            modal={openProfitCenterModal}
-            onHandleClose={handleClose}
-          />
-        </Show>
-        <Tooltip title="Details">
-          <IconButton onClick={handleProfitCenterModal}>
-            <VisibilityOutlinedIcon color="action" />
-          </IconButton>
-        </Tooltip>
         <Tooltip title="Edit">
           <IconButton
             onClick={() => navigateTo(history, `/profit-center/edit/${id}`)}

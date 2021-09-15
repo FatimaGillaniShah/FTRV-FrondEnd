@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { FormHelperText, TextField } from '@material-ui/core';
+import { FormHelperText } from '@material-ui/core';
 import { useField } from 'formik';
 import { isFunction } from '../../utils/helper';
+import TextField from '../muiTextField';
 
 export default function MuiAutoComplete({
   options,
@@ -30,12 +31,12 @@ export default function MuiAutoComplete({
     }
   }, [defaultValue]);
 
-  const handleInputChange = (e, event, newInputValue, reason) => {
+  const handleInputChange = (event, newInputValue, reason) => {
     if (reason === 'clear') {
       helpers.setValue(null);
       if (isFunction(onHandleReset)) onHandleReset();
     } else {
-      onHandleSearch(e);
+      onHandleSearch(event);
     }
   };
 

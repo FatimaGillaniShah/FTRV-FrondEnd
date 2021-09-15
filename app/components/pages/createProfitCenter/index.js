@@ -4,6 +4,7 @@ import { Input, Button, AutoComplete } from 'components';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
+import CallOutlinedIcon from '@material-ui/icons/CallOutlined';
 import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';
 import SaveIcon from '@material-ui/icons/Save';
 import PrintIcon from '@material-ui/icons/Print';
@@ -98,7 +99,7 @@ function CreateProfitCenter({
                           OutlinedInputPlaceholder="*Phone Number"
                           inputComponent={TextMaskForContactNo}
                           appendIcon
-                          Icon={NoteOutlinedIcon}
+                          Icon={CallOutlinedIcon}
                           IconClickable
                           variant="outlined"
                         />
