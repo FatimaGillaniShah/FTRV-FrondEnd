@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { TextField } from '@material-ui/core';
-import { colors } from '../../theme/colors';
+import { makeStyles } from '@material-ui/styles';
 
-const styles = () => ({
-  inputLabel: {
-    color: colors.dimGrey,
+const useStyles = makeStyles((theme) => ({
+  label: {
+    color: theme.palette.text.info,
   },
-});
+  inputColor: {
+    color: theme.palette.text.dark,
+  },
+}));
 
 function MuiTextField(props) {
-  const { classes } = props;
+  const classes = useStyles();
   return (
     <TextField
       {...props}
       InputLabelProps={{
         classes: {
-          root: classes.inputLabel,
+          root: classes.label,
+          input: classes.inputColor,
         },
       }}
     />
@@ -28,4 +31,4 @@ MuiTextField.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MuiTextField);
+export default memo(MuiTextField);
