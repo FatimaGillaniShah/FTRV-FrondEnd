@@ -30,12 +30,12 @@ export default function MuiAutoComplete({
     }
   }, [defaultValue]);
 
-  const handleInputChange = (e, event, newInputValue, reason) => {
+  const handleInputChange = (event, newInputValue, reason) => {
     if (reason === 'clear') {
       helpers.setValue(null);
       if (isFunction(onHandleReset)) onHandleReset();
     } else {
-      onHandleSearch(e);
+      onHandleSearch(event);
     }
   };
 
