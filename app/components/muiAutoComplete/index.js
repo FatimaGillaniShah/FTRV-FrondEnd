@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { FormHelperText, TextField } from '@material-ui/core';
+import { FormHelperText } from '@material-ui/core';
 import { useField } from 'formik';
 import { isFunction } from '../../utils/helper';
+import TextField from '../muiTextField';
 
 export default function MuiAutoComplete({
   options,

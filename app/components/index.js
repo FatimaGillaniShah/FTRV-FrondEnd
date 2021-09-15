@@ -18,6 +18,7 @@ export { default as MuiFileInput } from './muiFileInput';
 export { default as MuiBadge } from './muiBadge';
 export { default as Button } from './muiButton';
 export { default as Carousel } from './muiCarousel';
+export { default as TextField } from './muiTextField';
 
 export {
   H1,
