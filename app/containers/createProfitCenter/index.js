@@ -64,9 +64,9 @@ function CreateProfitCenter() {
     }
   );
 
-  const handleSearch = debounce((e) => {
-    if (typeof e.target.value !== 'number') {
-      setFilter({ name: e.target.value });
+  const handleSearch = debounce(({ target }) => {
+    if (typeof target.value !== 'number') {
+      setFilter({ name: target.value });
     }
   }, 500);
 
