@@ -65,7 +65,9 @@ function CreateProfitCenter() {
   );
 
   const handleSearch = debounce((e) => {
-    setFilter({ name: e.target.value });
+    if (typeof e.target.value !== 'number') {
+      setFilter({ name: e.target.value });
+    }
   }, 500);
 
   const handleSubmit = (values) => {
@@ -105,6 +107,7 @@ function CreateProfitCenter() {
           loading={isLoading}
           usersLoading={isUsersLoading}
           onHandleSearch={handleSearch}
+          setFilter={setFilter}
         />
       )}
     </>
