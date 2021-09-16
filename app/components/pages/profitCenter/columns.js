@@ -107,7 +107,7 @@ export const headCells = [
     headerName: 'Address',
     description: 'Address',
     sortable: true,
-    flex: 1,
+    width: 250,
   },
   {
     field: 'faxNo',

@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import Blog from '../pages/blog';
 import { H5 } from '../typography';
 import { useAuthContext } from '../../context/authContext';
-import { ROLES, PAGE_SIZE } from '../../utils/constants';
+import { ROLES, TABLE_PAGE_SIZE } from '../../utils/constants';
 import { navigateTo } from '../../utils/helper';
 import Show from '../show';
 import { Button } from '../index';
@@ -39,7 +39,7 @@ export function BlogListing({
     },
   } = useAuthContext();
   const defaultPage = 1;
-  const noOfPages = Math.ceil(count / PAGE_SIZE);
+  const noOfPages = Math.ceil(count / TABLE_PAGE_SIZE);
   return (
     <>
       <Box m={4}>

@@ -1,6 +1,6 @@
 import moment from 'moment';
 import http from '../service/http';
-import { APIS, PAGE_SIZE } from '../utils/constants';
+import { APIS, LIST_PAGE_SIZE, TABLE_PAGE_SIZE } from '../utils/constants';
 import { insertParams } from '../utils/helper';
 
 const {
@@ -142,7 +142,7 @@ export const updateEvent = ({ id, ...payload }) =>
 
 // BLOG CRUD
 export const getBlogs = ({ queryKey }) => {
-  const url = `${BLOG}?sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${queryKey[1]}`;
+  const url = `${BLOG}?sortColumn=id&sortOrder=desc&pageSize=${TABLE_PAGE_SIZE}&pageNumber=${queryKey[1]}`;
   return http.get(url);
 };
 export const createBlog = (payload) => http.post(BLOG, payload);
@@ -272,13 +272,13 @@ export const updateJob = ({ id, ...payload }) =>
 
 export const getPolls = ({ queryKey }) => {
   const { date, currentPage, query, filters } = queryKey[1];
-  let url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}`;
+  let url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}`;
   if (query.searchString) {
-    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}&${insertParams(
+    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}&${insertParams(
       query
     )}`;
   } else if (filters) {
-    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${PAGE_SIZE}&pageNumber=${currentPage}&${insertParams(
+    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}&${insertParams(
       filters
     )}`;
   }
@@ -310,10 +310,10 @@ export const updateProfitCenter = ({ id, ...payload }) =>
   http.put(`${PROFIT_CENTER}/${id}`, payload);
 
 export const getProfitCenters = ({ queryKey }) => {
-  let url = `${PROFIT_CENTER}?`;
+  let url = `${PROFIT_CENTER}?pageSize=1000&`;
   const { query } = queryKey[1];
   if (query?.searchString) {
-    url = `${PROFIT_CENTER}?${insertParams(query)}`;
+    url = `${PROFIT_CENTER}?pageSize=1000&${insertParams(query)}`;
   }
   return http.get(url);
 };

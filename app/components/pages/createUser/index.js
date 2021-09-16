@@ -452,11 +452,11 @@ function CreateUser({
                     </Show>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
-                    <Tooltip title="Input your Designation">
+                    <Tooltip title="Input your Title">
                       <Input
                         name="title"
                         variant="outlined"
-                        OutlinedInputPlaceholder="*Designation"
+                        OutlinedInputPlaceholder="*Title"
                         Icon={WorkIcon}
                         appendIcon
                         IconClickable={

@@ -46,7 +46,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <Input name="title" placeholderText="Designation" />
+                <Input name="title" placeholderText="Title" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
                 <LocationWithModal

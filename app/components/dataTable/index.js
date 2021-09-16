@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { DataGrid, GridOverlay } from '@material-ui/data-grid';
 import Alert from '@material-ui/lab/Alert';
-import { ROLES, PAGE_SIZE } from '../../utils/constants';
+import { ROLES, TABLE_PAGE_SIZE } from '../../utils/constants';
 import { useStyles } from './styles';
 import { useAuthContext } from '../../context/authContext';
 
@@ -145,7 +145,7 @@ DataTable.propTypes = {
   checkboxSelection: PropTypes.bool,
 };
 DataTable.defaultProps = {
-  tableRowsPerPage: PAGE_SIZE,
+  tableRowsPerPage: TABLE_PAGE_SIZE,
   selected: [],
   matchUserIdWithIDS: false,
   isServerSide: false,

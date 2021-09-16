@@ -19,7 +19,7 @@ import DataTable from '../../components/dataTable';
 import TableButtons from './tableButtons';
 import { Loading } from '../../components/loading';
 import { useAuthContext } from '../../context/authContext';
-import { ROLES, PAGE_SIZE } from '../../utils/constants';
+import { ROLES, TABLE_PAGE_SIZE } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
 import { Modal, navigateTo } from '../../utils/helper';
@@ -30,7 +30,7 @@ function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
   const [pageNumber, setPageNumber] = useState(1);
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(PAGE_SIZE);
+  const [pageSize, setPageSize] = useState(TABLE_PAGE_SIZE);
   const [filters, setFilters] = useState();
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState([]);
