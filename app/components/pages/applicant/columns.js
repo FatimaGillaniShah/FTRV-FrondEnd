@@ -55,8 +55,8 @@ export const headCells = [
   {
     field: 'designation',
     type: 'string',
-    headerName: 'Designation',
-    description: 'Designation',
+    headerName: 'Title',
+    description: 'Title',
     sortable: true,
     flex: 1,
   },
