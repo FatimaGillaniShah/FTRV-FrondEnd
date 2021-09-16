@@ -5,10 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Show from '../show';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-  },
   wrapper: {
     margin: theme.spacing(1),
     position: 'relative',
@@ -27,7 +23,7 @@ function MuiButton({ disabled, loading, children, ...props }) {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
+    <Box>
       <Box className={classes.wrapper}>
         <Button disabled={disabled} {...props}>
           {children}

@@ -90,7 +90,7 @@ export function MuiFile({
 
   return (
     <>
-      <Box>
+      <Box width={1}>
         <input
           id={name}
           type="file"
