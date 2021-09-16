@@ -123,9 +123,7 @@ function CreateProfitCenter({
                           defaultValue={initialValues?.manager}
                           loading={usersLoading}
                           options={options || []}
-                          getOptionLabel={(user) =>
-                            `${user.firstName}  ${user.lastName} ` || ' '
-                          }
+                          getOptionLabel={(user) => `${user.fullName} ` || ' '}
                           onHandleChange={(e, value) => {
                             if (value) setFieldValue('managerId', value);
                           }}

@@ -30,7 +30,7 @@ const FormikRadioGroup = ({
         {...props}
         name={fieldName}
         value={voted && value ? value?.toString() : field.value}
-        className={classes?.radioButtons}
+        className={classes}
       >
         {options?.map((option, index) => (
           <>

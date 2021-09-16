@@ -67,9 +67,12 @@ const useStyles = makeStyles((theme) => ({
   textStyle: {
     textTransform: 'capitalize',
   },
-  radioButtons: {
+  shortLabel: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  longLabel: {
+    flexDirection: 'column',
   },
   bar1Indeterminate: {
     width: 'auto',
@@ -141,6 +144,10 @@ export const Poll = ({
     status === 'active' ? colors.oliveGreen : colors.lightGrey;
   const votePercentage = (votes, totalVotes) =>
     votes > 0 ? Math.floor((votes / totalVotes) * 100) : 0;
+
+  const option = _.maxBy(options, ({ label }) => label.length);
+  const isLabelLong = option.label.length > 15;
+  const optionClass = isLabelLong ? classes.longLabel : classes.shortLabel;
   return (
     <Formik
       initialValues={initialValues}
@@ -276,7 +283,7 @@ export const Poll = ({
                       disabled={isVoteLoading || voted}
                       options={sortedOptions}
                       fieldError={false}
-                      classes={classes}
+                      classes={optionClass}
                       voted={voted}
                       colorArray={colorArray}
                       poll

@@ -107,7 +107,6 @@ function CreateProfitCenter() {
           loading={isLoading}
           usersLoading={isUsersLoading}
           onHandleSearch={handleSearch}
-          setFilter={setFilter}
         />
       )}
     </>
