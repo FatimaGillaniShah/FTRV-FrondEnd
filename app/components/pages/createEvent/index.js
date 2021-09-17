@@ -13,6 +13,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router';
+import moment from 'moment';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
 import { Input, TextArea, AutoComplete, Button } from '../../index';
@@ -29,7 +30,7 @@ const eventSchema = object().shape({
     .typeError('* This field cannot contain only blankspaces'),
   startDate: date()
     .min(
-      new Date().toLocaleString(),
+      moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       ({ min }) => `Start Date must be equal or greater to ${min}`
     )
     .required('*Start Date Required'),

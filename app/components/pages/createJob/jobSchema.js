@@ -9,7 +9,7 @@ export const jobSchema = object().shape({
   expiryDate: date()
     .typeError('Invalid Date Format')
     .min(
-      parseDate(new Date().toLocaleString()),
+      parseDate(new Date()),
       ({ min }) => `*Due Date must be equal or greater to ${min}`
     )
     .max(
