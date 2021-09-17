@@ -29,18 +29,26 @@ const eventSchema = object().shape({
     .noWhitespace()
     .typeError('* This field cannot contain only blankspaces'),
   startDate: date()
+    .typeError('Invalid Date Format')
     .min(
       moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       ({ min }) => `Start Date must be equal or greater to ${min}`
     )
     .required('*Start Date Required'),
   endDate: date()
+    .typeError('Invalid Date Format')
     .when('startDate', (eventStartDate, schema) => {
-      const startDate = new Date(eventStartDate);
-      const dateMin = new Date(
-        startDate.setTime(new Date(startDate).getTime() + 1000 * 60)
-      );
-      return schema.min(dateMin, 'End date should be greater than start date');
+      const startDate = moment(eventStartDate, true);
+      if (startDate.isValid()) {
+        const dateMin = new Date(
+          new Date(startDate).setTime(new Date(startDate).getTime() + 1000 * 60)
+        );
+        return schema.min(
+          dateMin,
+          'End date should be greater than start date'
+        );
+      }
+      return schema;
     })
     .required('*End Date Required'),
   description: string()
@@ -149,6 +157,7 @@ export function CreateEventPage({
                               }}
                               error={errors.startDate && touched.startDate}
                               minDateMessage=""
+                              invalidDateMessage=""
                               KeyboardButtonProps={{ tabIndex: -1 }}
                             />
                           </MuiPickersUtilsProvider>
@@ -177,6 +186,7 @@ export function CreateEventPage({
                               onBlur={handleBlur}
                               InputProps={{ className: classes.dateColor }}
                               minDateMessage=""
+                              invalidDateMessage=""
                               error={errors.endDate && touched.endDate}
                               onChange={(value) => {
                                 setFieldValue('endDate', value);
