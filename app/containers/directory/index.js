@@ -218,7 +218,7 @@ function DirectoryContainer() {
               {!isLoading && !mutation.isLoading && (
                 <DataTable
                   rows={tableData?.rows}
-                  columns={headCells}
+                  columns={headCells({ role })}
                   setSelected={setSelected}
                   selected={selected}
                   onChangeSort={onChangeSort}
