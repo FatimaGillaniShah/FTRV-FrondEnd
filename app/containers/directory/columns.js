@@ -13,7 +13,7 @@ const ActionButtons = ({ data }) => {
   const history = useHistory();
   const {
     user: {
-      data: { role, id: currentUserID },
+      data: { id: currentUserID },
     },
   } = useAuthContext();
 
@@ -29,24 +29,20 @@ const ActionButtons = ({ data }) => {
   const disabled = data.id === currentUserID;
   return (
     <>
-      {role === ROLES.ADMIN && (
-        <>
-          <IconButton
-            disabled={disabled}
-            onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
-          >
-            <EditIcon color="secondary" />
-          </IconButton>
-          <IconButton onClick={() => handleDeleteUser()} disabled={disabled}>
-            <DeleteIcon color="error" />
-          </IconButton>
-        </>
-      )}
+      <IconButton
+        disabled={disabled}
+        onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
+      >
+        <EditIcon color="secondary" />
+      </IconButton>
+      <IconButton onClick={() => handleDeleteUser()} disabled={disabled}>
+        <DeleteIcon color="error" />
+      </IconButton>
     </>
   );
 };
 
-export const headCells = [
+export const headCells = ({ role }) => [
   {
     field: 'fullName',
     type: 'string',
@@ -110,6 +106,7 @@ export const headCells = [
     type: 'number',
     headerName: ' ',
     description: 'Actions',
+    hide: role === ROLES.USER,
     sortable: false,
     renderCell: ({ row }) => <ActionButtons data={row} />,
     width: 200,
