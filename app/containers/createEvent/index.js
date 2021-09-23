@@ -23,20 +23,24 @@ function CreateEvent() {
   const { id } = useParams();
   const queryClient = useQueryClient();
   const today = new Date();
-  const { data, isEventLoading } = useQuery(keys.getEvent(id), getEventById, {
-    enabled: !!id,
-    refetchOnWindowFocus: false,
-    onError: ({
-      response: {
-        data: { message },
+  const { data, isLoading: isEventLoading } = useQuery(
+    keys.getEvent(id),
+    getEventById,
+    {
+      enabled: !!id,
+      refetchOnWindowFocus: false,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
       },
-    }) => {
-      Toast({
-        icon: 'error',
-        title: message || 'Some error occurred',
-      });
-    },
-  });
+    }
+  );
   const { mutate, isLoading } = useMutation(id ? updateEvent : createEvent, {
     onSuccess: () => {
       Toast({
