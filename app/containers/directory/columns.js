@@ -35,7 +35,7 @@ const ActionButtons = ({ data }) => {
       >
         <EditIcon color="secondary" />
       </IconButton>
-      <IconButton onClick={() => handleDeleteUser()} disabled={disabled}>
+      <IconButton onClick={handleDeleteUser} disabled={disabled}>
         <DeleteIcon color="error" />
       </IconButton>
     </>
