@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from 'react-router-dom';
 import { Avatar, IconButton } from '@material-ui/core';
+import ReactHtmlParser from 'html-react-parser';
 import { H5, BodyTextLarge } from '../../typography';
 import { useStyles } from './styles';
 import { useAuthContext } from '../../../context/authContext';
@@ -51,10 +52,11 @@ export default function CeoMessage({ ceoMessageData }) {
           </Box>
         </Show>
       </Box>
-      <Box p={2} m={2}>
-        <BodyTextLarge className={classes.lineBreak}>
-          {' '}
-          {ceoMessageData.content}
+      <Box px={2} m={2}>
+        <BodyTextLarge fontWeight="fontWeightLight" color="grey">
+          <Box className={classes.root}>
+            {ReactHtmlParser(ceoMessageData.content)}
+          </Box>
         </BodyTextLarge>
       </Box>
     </>

@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     height: '180px',
     borderRadius: '6px',
   },
-  title: {
+  cursorPointer: {
     cursor: 'pointer',
   },
 }));
@@ -51,8 +51,12 @@ function Blog({
       mt={6}
       mb={8}
     >
-      <Box width={[1, '55%', '30%', '22%']} mt={3}>
-        {' '}
+      <Box
+        width={[1, '55%', '30%', '22%']}
+        mt={3}
+        onClick={() => navigateTo(history, `/blogs/detail/${id}`)}
+        className={classes.cursorPointer}
+      >
         <Avatar
           variant="square"
           src={thumbnail}
@@ -63,7 +67,7 @@ function Blog({
         <Box display="flex" flexDirection="row" mt={0.5}>
           <Box width={[1, 1 / 2]} mt={2}>
             <H5
-              className={classes.title}
+              className={classes.cursorPointer}
               onClick={() => navigateTo(history, `/blogs/detail/${id}`)}
             >
               {title}
@@ -83,7 +87,11 @@ function Blog({
           </Show>
         </Box>
         <Box>
-          <BodyTextLarge color="grey">
+          <BodyTextLarge
+            color="grey"
+            onClick={() => navigateTo(history, `/blogs/detail/${id}`)}
+            className={classes.cursorPointer}
+          >
             {truncate(ReactHtmlParser(shortText), 200)}
           </BodyTextLarge>
         </Box>

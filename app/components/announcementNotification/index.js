@@ -73,6 +73,7 @@ export function AnnouncementNotification({ item }) {
           </Box>
           <Box width="0.02" mb={2}>
             <CancelIcon
+              className={classes.closeAnnouncement}
               onClick={() => setIsNotificationClosed(!isNotificationClosed)}
             />
           </Box>

@@ -3,6 +3,10 @@ import Image from '../../../images/backgroundImage.png';
 import { colors } from '../../../theme/colors';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    '& img': { width: '100%' },
+    '& iframe': { padding: '0 5%' },
+  },
   backgroundImage: {
     height: '29rem',
     width: '30rem',

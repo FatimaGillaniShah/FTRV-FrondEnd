@@ -19,6 +19,7 @@ export { default as MuiBadge } from './muiBadge';
 export { default as Button } from './muiButton';
 export { default as Carousel } from './muiCarousel';
 export { default as TextField } from './muiTextField';
+export { default as CKEditor } from './ckeditor';
 
 export {
   H1,

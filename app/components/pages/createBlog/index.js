@@ -1,25 +1,22 @@
 import React, { memo, useState } from 'react';
-import { Avatar, Box, FormHelperText } from '@material-ui/core';
-import { Input, Button } from 'components';
+import { Avatar, Box } from '@material-ui/core';
+import { Input, Button, CKEditor } from 'components';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
 import { MuiFile } from 'components/muiFile';
 import { Form, Formik } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { FILE_ACCEPT_TYPES, CKEDITOR_CUSTOM_CONFIG } from 'utils/constants';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { FILE_ACCEPT_TYPES } from 'utils/constants';
 import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import SaveIcon from '@material-ui/icons/Save';
 import PropTypes from 'prop-types';
 import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
-import ClassicEditor from '../../ckeditor5/build/ckeditor';
 import WrapInCard from '../../layout/wrapInCard';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { H4 } from '../../typography';
 import { blogSchema } from './blogSchema';
 import { useStyles } from './style';
 import { navigateTo } from '../../../utils/helper';
-import Show from '../../show';
 
 function CreateBlog({ onHandleSubmit, id, initialValues, loading }) {
   const imgURL = initialValues?.file;
@@ -36,7 +33,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues, loading }) {
             validationSchema={blogSchema}
             onSubmit={onHandleSubmit}
           >
-            {({ setFieldValue, errors, touched, values }) => (
+            {({ setFieldValue }) => (
               <Form>
                 <Box
                   flexWrap="wrap"
@@ -110,35 +107,7 @@ function CreateBlog({ onHandleSubmit, id, initialValues, loading }) {
                           variant="outlined"
                         />
                         <Box mt={10}>
-                          <CKEditor
-                            editor={ClassicEditor}
-                            data={values.content}
-                            config={CKEDITOR_CUSTOM_CONFIG}
-                            onReady={(editor) => {
-                              editor.editing.view.change((writer) => {
-                                writer.setStyle(
-                                  'min-height',
-                                  '30vh',
-                                  editor.editing.view.document.getRoot()
-                                );
-                              });
-                              editor.editing.view.change((writer) => {
-                                writer.setStyle(
-                                  'color',
-                                  'black',
-                                  editor.editing.view.document.getRoot()
-                                );
-                              });
-                            }}
-                            onChange={(event, editor) => {
-                              setFieldValue('content', editor.getData());
-                            }}
-                          />
-                          <Show IF={errors.content && touched.content}>
-                            <FormHelperText error>
-                              {errors.content}
-                            </FormHelperText>
-                          </Show>
+                          <CKEditor name="content" />
                         </Box>
                       </Box>
 

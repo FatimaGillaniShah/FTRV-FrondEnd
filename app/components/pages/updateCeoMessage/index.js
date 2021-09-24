@@ -1,5 +1,5 @@
 import { Avatar, Box } from '@material-ui/core';
-import { TextArea, Button } from 'components';
+import { Button, CKEditor } from 'components';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -8,6 +8,7 @@ import { Form, Formik } from 'formik';
 import React, { memo, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FILE_ACCEPT_TYPES } from 'utils/constants';
+import SaveIcon from '@material-ui/icons/Save';
 import WrapInCard from '../../layout/wrapInCard';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs/index';
 import { H4 } from '../../typography';
@@ -97,14 +98,7 @@ function AddCeoMessage({ onHandleSubmit, value, loading }) {
                     </Box>
 
                     <Box width={1} mt={10} px={3} mb={8}>
-                      <TextArea
-                        name="content"
-                        variant="outlined"
-                        OutlinedInputPlaceholder="ceo message"
-                        multiline
-                        rows={20}
-                        rowsMax={17}
-                      />
+                      <CKEditor name="content" height="42vh" />
                     </Box>
 
                     <Box
@@ -120,6 +114,7 @@ function AddCeoMessage({ onHandleSubmit, value, loading }) {
                           color="secondary"
                           type="submit"
                           disabled={loading}
+                          startIcon={<SaveIcon />}
                         >
                           Update
                         </Button>
