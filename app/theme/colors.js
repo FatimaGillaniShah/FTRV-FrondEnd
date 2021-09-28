@@ -10,6 +10,7 @@ const info = '#1976d2';
 const lightGrey = '#acb4bf';
 const seaBlue = '#E1F2FF';
 const brillianceWhite = '#fdfdfd';
+const whiteSmoke = '#f5f5f5';
 export const colors = {
   primary: '#153D73',
   secondary: lightblue,
@@ -25,6 +26,7 @@ export const colors = {
   dimGrey,
   skyBlue,
   info,
+  whiteSmoke,
   brillianceWhite,
   darkGrey: '#A9A9A9',
   black,

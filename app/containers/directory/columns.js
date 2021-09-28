@@ -125,7 +125,7 @@ export const headCells = ({ role, match }) => {
   columns.map((value) => {
     const column = value;
     if (column.field === columnHeads[column.field] && match) {
-      if (longColumns.includes(column.field)) column.width = 250;
+      if (longColumns.includes(column.field)) column.width = 240;
       else column.width = 160;
     } else column.flex = 1;
     return column;

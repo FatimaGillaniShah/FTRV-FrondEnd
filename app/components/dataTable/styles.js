@@ -64,6 +64,35 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiCheckbox-colorPrimary.Mui-disabled': {
       color: 'rgba(0, 0, 0, 0.26)',
     },
+
+    '& .MuiDataGrid-root .MuiDataGrid-row,.MuiDataGrid-root .MuiDataGrid-columnHeaderWrapper': {
+      position: 'relative',
+      overflow: 'visible',
+    },
+    '& .enableScroll .MuiDataGrid-row > div[data-field="actions"]': {
+      position: 'sticky',
+      right: 0,
+      background: colors.bgColor.secondary,
+      transition: 'all .2s ease-out',
+      boxShadow: '1px 2px 3px rgba(0,0,0,.5)',
+    },
+    '& .enableScroll .MuiDataGrid-row:hover > div[data-field="actions"]': {
+      background: colors.whiteSmoke,
+    },
+    '& .MuiDataGrid-root .MuiDataGrid-columnHeaderWrapper.scroll > div[data-field="actions"]': {
+      position: 'sticky',
+      background: colors.light,
+      right: 0,
+      transition: 'all .2s ease-out',
+      boxShadow: '1px 2px 3px rgba(0,0,0,.5)',
+      textAlign: 'center',
+    },
+    '& .MuiDataGrid-root .MuiDataGrid-columnHeaderWrapper > div[data-field="actions"]': {
+      textAlign: 'center',
+    },
+    '& .MuiDataGrid-columnHeaderTitleContainer': {
+      padding: 0,
+    },
   },
 
   gridOverlay: {
