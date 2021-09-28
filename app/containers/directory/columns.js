@@ -122,12 +122,16 @@ export const headCells = ({ role, match }) => {
     'location.name',
     'email',
   ];
+
+  const shortColumns = ['actions'];
   columns.map((value) => {
     const column = value;
     if (column.field === columnHeads[column.field] && match) {
       if (longColumns.includes(column.field)) column.width = 240;
+      else if (shortColumns.includes(column.field)) column.width = 130;
       else column.width = 160;
     } else column.flex = 1;
+    console.log('column', column);
     return column;
   });
   return columns;
