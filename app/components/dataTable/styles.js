@@ -74,7 +74,9 @@ const useStyles = makeStyles((theme) => ({
       right: 0,
       background: colors.bgColor.secondary,
       transition: 'all .2s ease-out',
-      boxShadow: '1px 2px 3px rgba(0,0,0,.5)',
+      // boxShadow: '1px 2px 3px rgba(0,0,0,.5)',
+      boxShadow:
+        '0 2.8px 2.2px rgb(0 0 0 / 3%), 0 6.7px 5.3px rgb(0 0 0 / 5%), 0 12.5px 10px rgb(0 0 0 / 8%), 0 22.3px 17.9px rgb(0 0 0 / 10%), 0 41.8px 33.4px rgb(0 0 0 / 9%), 0 10px 10px rgb(0 0 0 / 12%)',
     },
     '& .enableScroll .MuiDataGrid-row:hover > div[data-field="actions"]': {
       background: colors.whiteSmoke,
