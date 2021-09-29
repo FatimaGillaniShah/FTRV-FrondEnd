@@ -85,8 +85,45 @@ export function DataTable({
       });
     }
   };
+  const addScorllClass = (val, selector) => {
+    for (let i = 0; i < val; i += 1) {
+      const loopdata = document.getElementsByClassName(selector)[i];
+      const getActoin = loopdata.getAttribute('data-field');
+      if (getActoin === 'actions') {
+        loopdata.classList.add('enableScrollAction');
+      }
+    }
+  };
 
-  useEffect(() => {
+  const responisveScroll = (xScroll) => {
+    const columnsCount = document.getElementsByClassName('MuiDataGrid-cell')
+      .length;
+    const columnName = 'MuiDataGrid-cell';
+    addScorllClass(columnsCount, columnName);
+    const columnsCountHeader = document.getElementsByClassName(
+      'MuiDataGrid-columnHeader'
+    ).length;
+    const columnNameHeader = 'MuiDataGrid-columnHeader';
+    addScorllClass(columnsCountHeader, columnNameHeader);
+    const tableIndex = xScroll.currentTarget.index;
+    const scroll = document.getElementsByClassName('MuiDataGrid-window')[
+      tableIndex
+    ].scrollLeft;
+    const scrollAbleTable = document
+      .getElementsByClassName('MuiDataGrid-window')
+      [tableIndex].getElementsByClassName('enableScrollAction');
+    for (let i = 0; i < scrollAbleTable.length; i += 1) {
+      scrollAbleTable[i].style.right = `-${scroll}px`;
+    }
+    const scrollAbleTableHeader = document
+      .getElementsByClassName('scroll')
+      [tableIndex].getElementsByClassName('enableScrollAction');
+    for (let i = 0; i < scrollAbleTableHeader.length; i += 1) {
+      scrollAbleTableHeader[i].style.right = `-${scroll}px`;
+    }
+  };
+
+  const enableScrollOnAction = () => {
     setTimeout(() => {
       const tableLength = document.getElementsByClassName('MuiDataGrid-window')
         .length;
@@ -109,42 +146,9 @@ export function DataTable({
         }
       }
     }, 1);
-    function responisveScroll(xScroll) {
-      const columnsCount = document.getElementsByClassName('MuiDataGrid-cell')
-        .length;
-      const columnName = 'MuiDataGrid-cell';
-      addScorllClass(columnsCount, columnName);
-      const columnsCountHeader = document.getElementsByClassName(
-        'MuiDataGrid-columnHeader'
-      ).length;
-      const columnNameHeader = 'MuiDataGrid-columnHeader';
-      addScorllClass(columnsCountHeader, columnNameHeader);
-      const tableIndex = xScroll.currentTarget.index;
-      const scroll = document.getElementsByClassName('MuiDataGrid-window')[
-        tableIndex
-      ].scrollLeft;
-      const scrollAbleTable = document
-        .getElementsByClassName('MuiDataGrid-window')
-        [tableIndex].getElementsByClassName('enableScrollAction');
-      for (let i = 0; i < scrollAbleTable.length; i += 1) {
-        scrollAbleTable[i].style.right = `-${scroll}px`;
-      }
-      const scrollAbleTableHeader = document
-        .getElementsByClassName('scroll')
-        [tableIndex].getElementsByClassName('enableScrollAction');
-      for (let i = 0; i < scrollAbleTableHeader.length; i += 1) {
-        scrollAbleTableHeader[i].style.right = `-${scroll}px`;
-      }
-    }
-    function addScorllClass(val, selector) {
-      for (let i = 0; i < val; i += 1) {
-        const loopdata = document.getElementsByClassName(selector)[i];
-        const getActoin = loopdata.getAttribute('data-field');
-        if (getActoin === 'actions') {
-          loopdata.classList.add('enableScrollAction');
-        }
-      }
-    }
+  };
+  useEffect(() => {
+    enableScrollOnAction();
   }, []);
 
   return (

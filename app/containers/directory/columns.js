@@ -131,7 +131,6 @@ export const headCells = ({ role, match }) => {
       else if (shortColumns.includes(column.field)) column.width = 130;
       else column.width = 160;
     } else column.flex = 1;
-    console.log('column', column);
     return column;
   });
   return columns;
