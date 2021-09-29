@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataGrid, GridOverlay } from '@material-ui/data-grid';
 import Alert from '@material-ui/lab/Alert';
 import { ROLES, TABLE_PAGE_SIZE } from '../../utils/constants';
@@ -85,6 +85,72 @@ export function DataTable({
       });
     }
   };
+  const addScorllClass = (val, selector) => {
+    for (let i = 0; i < val; i += 1) {
+      const loopdata = document.getElementsByClassName(selector)[i];
+      const getActoin = loopdata.getAttribute('data-field');
+      if (getActoin === 'actions') {
+        loopdata.classList.add('enableScrollAction');
+      }
+    }
+  };
+
+  const responisveScroll = (xScroll) => {
+    const columnsCount = document.getElementsByClassName('MuiDataGrid-cell')
+      .length;
+    const columnName = 'MuiDataGrid-cell';
+    addScorllClass(columnsCount, columnName);
+    const columnsCountHeader = document.getElementsByClassName(
+      'MuiDataGrid-columnHeader'
+    ).length;
+    const columnNameHeader = 'MuiDataGrid-columnHeader';
+    addScorllClass(columnsCountHeader, columnNameHeader);
+    const tableIndex = xScroll.currentTarget.index;
+    const scroll = document.getElementsByClassName('MuiDataGrid-window')[
+      tableIndex
+    ].scrollLeft;
+    const scrollAbleTable = document
+      .getElementsByClassName('MuiDataGrid-window')
+      [tableIndex].getElementsByClassName('enableScrollAction');
+    for (let i = 0; i < scrollAbleTable.length; i += 1) {
+      scrollAbleTable[i].style.right = `-${scroll}px`;
+    }
+    const scrollAbleTableHeader = document
+      .getElementsByClassName('scroll')
+      [tableIndex].getElementsByClassName('enableScrollAction');
+    for (let i = 0; i < scrollAbleTableHeader.length; i += 1) {
+      scrollAbleTableHeader[i].style.right = `-${scroll}px`;
+    }
+  };
+
+  const enableScrollOnAction = () => {
+    setTimeout(() => {
+      const tableLength = document.getElementsByClassName('MuiDataGrid-window')
+        .length;
+      for (let i = 0; i < tableLength; i += 1) {
+        const tableObj = document.getElementsByClassName('MuiDataGrid-window')[
+          i
+        ];
+        const tableCotainer = document.getElementsByClassName(
+          'MuiDataGrid-window'
+        )[i].clientWidth;
+        const tableChild =
+          document.getElementsByClassName('MuiDataGrid-dataContainer')[i]
+            .clientWidth - 30;
+        const scorllObj = tableCotainer <= tableChild;
+
+        if (scorllObj) {
+          tableObj.parentElement.classList.add('enableScroll');
+          tableObj?.addEventListener('scroll', responisveScroll);
+          tableObj.index = i;
+        }
+      }
+    }, 1);
+  };
+  useEffect(() => {
+    enableScrollOnAction();
+  }, []);
+
   return (
     <Box className={classes.root}>
       <DataGrid
@@ -117,6 +183,7 @@ export function DataTable({
         rowsPerPageOptions={[5, 10, 20]}
         hideFooterSelectedRowCount
         pagination
+        onRowsScrollEnd
         getRowClassName={(params) => {
           if (matchUserIdWithIDS && params?.row?.id === currentUserID) {
             return `row-disabled`;

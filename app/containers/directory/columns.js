@@ -42,73 +42,96 @@ const ActionButtons = ({ data }) => {
   );
 };
 
-export const headCells = ({ role }) => [
-  {
-    field: 'fullName',
-    type: 'string',
-    headerName: 'Name',
-    description: 'Name',
-    sortable: true,
-    flex: 1,
-  },
-  {
-    field: 'department.name',
-    type: 'string',
-    headerName: 'Department',
-    description: 'Department',
-    sortable: true,
-    valueFormatter: (params) => get(params.row, 'department.name'),
-    width: 150,
-  },
-  {
-    field: 'title',
-    type: 'string',
-    headerName: 'Title',
-    description: 'Title',
-    sortable: true,
-    flex: 1,
-  },
-  {
-    field: 'location.name',
-    type: 'string',
-    headerName: 'Location',
-    description: 'Location',
-    sortable: true,
-    valueFormatter: (params) => get(params.row, 'location.name'),
-    width: 200,
-  },
-  {
-    field: 'email',
-    type: 'string',
-    headerName: 'Email ID',
-    description: 'Email ID',
-    sortable: true,
-    width: 240,
-  },
-  {
-    field: 'extension',
-    type: 'number',
-    headerName: 'Ext',
-    description: 'Ext',
-    sortable: false,
-    width: 150,
-  },
-  {
-    field: 'contactNo',
-    type: 'number',
-    headerName: 'Phone No.',
-    description: 'Phone Number',
-    sortable: false,
-    width: 110,
-  },
-  {
-    field: 'actions',
-    type: 'number',
-    headerName: ' ',
-    description: 'Actions',
-    hide: role === ROLES.USER,
-    sortable: false,
-    renderCell: ({ row }) => <ActionButtons data={row} />,
-    width: 200,
-  },
-];
+export const headCells = ({ role, match }) => {
+  const columnHeads = {
+    fullName: 'fullName',
+    [`department.name`]: 'department.name',
+    title: 'title',
+    [`location.name`]: 'location.name',
+    email: 'email',
+    extension: 'extension',
+    contactNo: 'contactNo',
+    actions: 'actions',
+  };
+  const columns = [
+    {
+      field: 'fullName',
+      type: 'string',
+      headerName: 'Name',
+      description: 'Name',
+      sortable: true,
+    },
+    {
+      field: 'department.name',
+      type: 'string',
+      headerName: 'Department',
+      description: 'Department',
+      sortable: true,
+      valueFormatter: (params) => get(params.row, 'department.name'),
+    },
+    {
+      field: 'title',
+      type: 'string',
+      headerName: 'Title',
+      description: 'Title',
+      sortable: true,
+    },
+    {
+      field: 'location.name',
+      type: 'string',
+      headerName: 'Location',
+      description: 'Location',
+      sortable: true,
+      valueFormatter: (params) => get(params.row, 'location.name'),
+    },
+    {
+      field: 'email',
+      type: 'string',
+      headerName: 'Email ID',
+      description: 'Email ID',
+      sortable: true,
+    },
+    {
+      field: 'extension',
+      type: 'number',
+      headerName: 'Ext',
+      description: 'Ext',
+      sortable: false,
+    },
+    {
+      field: 'contactNo',
+      type: 'number',
+      headerName: 'Phone No.',
+      description: 'Phone Number',
+      sortable: false,
+    },
+    {
+      field: 'actions',
+      type: 'number',
+      headerName: ' ',
+      description: 'Actions',
+      hide: role === ROLES.USER,
+      sortable: false,
+      renderCell: ({ row }) => <ActionButtons data={row} />,
+    },
+  ];
+  const longColumns = [
+    'fullName',
+    'department.name',
+    'title',
+    'location.name',
+    'email',
+  ];
+
+  const shortColumns = ['actions'];
+  columns.map((value) => {
+    const column = value;
+    if (column.field === columnHeads[column.field] && match) {
+      if (longColumns.includes(column.field)) column.width = 240;
+      else if (shortColumns.includes(column.field)) column.width = 130;
+      else column.width = 160;
+    } else column.flex = 1;
+    return column;
+  });
+  return columns;
+};

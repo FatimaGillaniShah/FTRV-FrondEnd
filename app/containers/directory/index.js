@@ -5,6 +5,8 @@ import Box from '@material-ui/core/Box';
 import { debounce } from 'lodash';
 import { useHistory } from 'react-router-dom';
 import { Alert } from 'components';
+import { useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/styles';
 import {
   fetchUsers,
   getDepartments,
@@ -69,6 +71,8 @@ function DirectoryContainer() {
       keepPreviousData: true,
     }
   );
+  const theme = useTheme();
+  const match = useMediaQuery(theme.breakpoints.down('lg'));
 
   const { data: locations, isLocationLoading } = useQuery(
     keys.locations,
@@ -218,7 +222,7 @@ function DirectoryContainer() {
               {!isLoading && !mutation.isLoading && (
                 <DataTable
                   rows={tableData?.rows}
-                  columns={headCells({ role })}
+                  columns={headCells({ role, match })}
                   setSelected={setSelected}
                   selected={selected}
                   onChangeSort={onChangeSort}
