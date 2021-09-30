@@ -115,12 +115,12 @@ export const headCells = ({ role, match }) => {
       renderCell: ({ row }) => <ActionButtons data={row} />,
     },
   ];
-  const longColumns = [
+  const longColumns = ['email'];
+  const mediumColumns = [
     'fullName',
     'department.name',
     'title',
     'location.name',
-    'email',
   ];
 
   const shortColumns = ['actions'];
@@ -128,6 +128,7 @@ export const headCells = ({ role, match }) => {
     const column = value;
     if (column.field === columnHeads[column.field] && match) {
       if (longColumns.includes(column.field)) column.width = 240;
+      else if (mediumColumns.includes(column.field)) column.width = 200;
       else if (shortColumns.includes(column.field)) column.width = 130;
       else column.width = 160;
     } else column.flex = 1;
