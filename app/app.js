@@ -33,3 +33,8 @@ const queryClient = new QueryClient({
     MOUNT_NODE
   );
 })();
+if (navigator?.serviceWorker) {
+  navigator?.serviceWorker?.getRegistrations().then((registrations) => {
+    registrations?.map((registration) => registration?.unregister());
+  });
+}
