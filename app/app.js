@@ -33,6 +33,3 @@ const queryClient = new QueryClient({
     MOUNT_NODE
   );
 })();
-if (process.env.NODE_ENV === 'production') {
-  require('offline-plugin/runtime').install(); // eslint-disable-line global-require
-}
