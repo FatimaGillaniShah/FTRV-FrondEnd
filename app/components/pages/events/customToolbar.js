@@ -3,18 +3,33 @@ import React, { memo } from 'react';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import AddIcon from '@material-ui/icons/Add';
+import moment from 'moment';
 import { H5 } from '../../typography';
 import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
+import { parseDate } from '../../../utils/functions';
 
-export const CustomToolbar = ({ home, data: { role } }) => ({
-  label,
-  onNavigate,
-}) => {
+export const CustomToolbar = ({
+  home,
+  setEventWindowDate,
+  setPagination,
+  data: { role },
+}) => ({ onNavigate, label }) => {
   const navigate = (action) => {
     onNavigate(action);
   };
-
+  const handlePrev = (calendarLabel) => {
+    setPagination(true);
+    const date = parseDate(moment(calendarLabel).subtract(1, 'M'));
+    setEventWindowDate(date);
+    navigate('PREV');
+  };
+  const handleNext = (calendarLabel) => {
+    setPagination(true);
+    const date = parseDate(moment(calendarLabel).add(1, 'M'));
+    setEventWindowDate(date);
+    navigate('NEXT');
+  };
   return (
     <>
       <Show IF={role === ROLES.ADMIN && !home}>
@@ -37,13 +52,13 @@ export const CustomToolbar = ({ home, data: { role } }) => ({
         justifyContent="center"
         bgcolor="secondary.main"
       >
-        <IconButton onClick={() => navigate('PREV')}>
+        <IconButton onClick={() => handlePrev(label)}>
           <Box color="text.light">
             <ArrowBackIosIcon />
           </Box>
         </IconButton>
         <H5 color="light">{label}</H5>
-        <IconButton onClick={() => navigate('NEXT')}>
+        <IconButton onClick={() => handleNext(label)}>
           <Box color="text.light">
             <ArrowForwardIosIcon />
           </Box>

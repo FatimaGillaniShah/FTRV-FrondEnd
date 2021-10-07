@@ -11,7 +11,13 @@ import { useAuthContext } from '../../../context/authContext';
 import { ROLES } from '../../../utils/constants';
 import { formatDate, navigateTo } from '../../../utils/helper';
 
-export function EventCalendar({ eventList, home }) {
+export function EventCalendar({
+  eventList,
+  home,
+  setEventWindowDate,
+  eventWindowDate,
+  setPagination,
+}) {
   const history = useHistory();
   const localizer = momentLocalizer(moment); // or globalizeLocalizer
   const theme = useTheme();
@@ -64,14 +70,19 @@ export function EventCalendar({ eventList, home }) {
       resizable
       views={{ month: true }}
       defaultView={Views.MONTH}
-      defaultDate={new Date()}
+      defaultDate={new Date(eventWindowDate)}
       popup
       onSelectEvent={handleSelectEvent}
       tooltipAccessor={(event) =>
         `${formatDate(event?.start)} - ${formatDate(event?.end)}`
       }
       components={{
-        toolbar: CustomToolbar({ home, data }),
+        toolbar: CustomToolbar({
+          home,
+          data,
+          setEventWindowDate,
+          setPagination,
+        }),
       }}
       eventPropGetter={handleEventPropGetter}
       messages={{

@@ -12,7 +12,7 @@ export const keys = {
   ceoMessage: 'ceo',
   announcements: 'announcements',
   adminAnnouncements: 'adminAnnouncements',
-  events: 'events',
+  events: (payload) => ['events', payload],
   getEvent: (payload) => ['event', payload],
   blog: 'blog',
   blogs: 'blogs',

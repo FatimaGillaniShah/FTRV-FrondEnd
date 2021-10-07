@@ -129,7 +129,8 @@ export const saveCeoMessage = (payload) => http.put(`${CEO_MESSAGE}`, payload);
 
 export const createEvent = (payload) => http.post(EVENTS, payload);
 
-export const fetchEvents = () => http.get(`${EVENTS}?pageSize=1000&`);
+export const fetchEvents = ({ queryKey }) =>
+  http.get(`${EVENTS}?pageSize=1000&date=${queryKey[1].eventWindowDate}`);
 
 export const deleteEvents = (payload) =>
   http.delete(EVENTS, { data: { ids: payload } });

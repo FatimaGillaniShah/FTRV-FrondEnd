@@ -7,16 +7,28 @@ import { EventCalendar } from './calendar';
 import { H5 } from '../../typography';
 import Show from '../../show';
 
-export function EventsPage({ eventList, isLoading }) {
+export function EventsPage({
+  eventList,
+  isLoading,
+  setEventWindowDate,
+  eventWindowDate,
+  pagination,
+  setPagination,
+}) {
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
         <Box pb={7} pt={3}>
           <H5> Events </H5>
         </Box>
-        <Show IF={!isLoading}>
+        <Show IF={!isLoading || pagination}>
           <Box height={['60vh', '70vh', '80vh']} width={1}>
-            <EventCalendar eventList={eventList} />
+            <EventCalendar
+              eventList={eventList}
+              setEventWindowDate={setEventWindowDate}
+              eventWindowDate={eventWindowDate}
+              setPagination={setPagination}
+            />
           </Box>
         </Show>
       </WrapInCard>

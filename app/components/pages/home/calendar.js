@@ -2,7 +2,7 @@ import { Box } from '@material-ui/core';
 import React from 'react';
 import { EventCalendar } from '../events/calendar';
 
-function EventCalendarHome({ eventList }) {
+function EventCalendarHome({ eventList, eventWindowDate, setEventWindowDate }) {
   return (
     <Box
       height={['55vh', '60vh', '60vh', '60vh']}
@@ -11,7 +11,12 @@ function EventCalendarHome({ eventList }) {
       mr={[0, 0, 0, 8]}
       ml={[0, 0, 0, 8]}
     >
-      <EventCalendar home eventList={eventList} />
+      <EventCalendar
+        home
+        eventList={eventList}
+        eventWindowDate={eventWindowDate}
+        setEventWindowDate={setEventWindowDate}
+      />
     </Box>
   );
 }

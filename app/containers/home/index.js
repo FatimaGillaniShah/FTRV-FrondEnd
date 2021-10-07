@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
@@ -20,8 +20,13 @@ import { parseDate } from '../../utils/functions';
 function HomeContainer() {
   const { user } = useAuthContext();
   const history = useHistory();
-  const { data, isEventsLoading } = useQuery(keys.events, fetchEvents);
   const date = parseDate(new Date());
+  const [eventWindowDate, setEventWindowDate] = useState(date);
+  const { data, isEventsLoading } = useQuery(
+    keys.events({ eventWindowDate }),
+    fetchEvents
+  );
+
   const {
     data: pollResponse,
     isLoading: isPollLoading,
@@ -167,6 +172,8 @@ function HomeContainer() {
           isVoteLoading={isVoteLoading}
           onHandleDelete={handleDelete}
           initialValues={initialValues}
+          eventWindowDate={eventWindowDate}
+          setEventWindowDate={setEventWindowDate}
         />
       )}
     </>

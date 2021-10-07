@@ -19,6 +19,8 @@ function Home({
   isVoteLoading,
   onHandleDelete,
   initialValues,
+  eventWindowDate,
+  setEventWindowDate,
 }) {
   const classes = useStyles();
   return (
@@ -36,7 +38,11 @@ function Home({
             display="flex"
             flexDirection={['column', 'column', 'column', 'row']}
           >
-            <EventCalendarHome eventList={eventList} />
+            <EventCalendarHome
+              eventList={eventList}
+              eventWindowDate={eventWindowDate}
+              setEventWindowDate={setEventWindowDate}
+            />
             <Box width={[1, 1, 1, 1 / 2]} pb={8}>
               <Show IF={pollList?.length === 0}>
                 <Box
