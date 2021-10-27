@@ -1,33 +1,28 @@
 import { makeStyles } from '@material-ui/core/styles';
-import img from '../../images/photoBg.png';
+import img from '../../../images/photoBg.png';
+import { colors } from '../../../theme/colors';
 
 export const useStyles = makeStyles((theme) => ({
-  backgroundgrid: {
+  avatarGrid: {
     backgroundRepeat: 'no-repeat',
     backgroundImage: `url(${img})`,
     backgroundSize: 'cover',
     backgroundPosition: '100% 100%',
     padding: '5px',
   },
-  textBox: {
+  cardText: {
     overflowWrap: 'break-word',
   },
-  birthdayText: {
-    display: 'block',
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-    },
-  },
-  imgStyle: {
+  avatar: {
     border: '5px solid ',
-    borderColor: 'white',
+    borderColor: colors.light,
     borderRadius: '50%',
     width: '76px',
     height: '76px',
-    marginTop: '15px',
-    marginRight: '5px',
+    marginTop: theme.spacing(4),
+    marginRight: theme.spacing(2),
   },
-  inline: {
-    display: 'inline',
+  personName: {
+    display: 'inline-block',
   },
 }));
