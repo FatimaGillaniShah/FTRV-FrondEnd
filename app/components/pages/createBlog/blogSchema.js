@@ -22,6 +22,8 @@ export const blogSchema = object().shape({
         (value) => value && SUPPORTED_FORMATS.includes(value.type)
       ),
   }),
-  title: string().required('*Title Required'),
+  title: string()
+    .required('*Title Required')
+    .max(255, 'Title should be less than 255 alphabets.'),
   content: string().required('*Content Required'),
 });

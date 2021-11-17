@@ -40,8 +40,11 @@ function CreateBlog() {
         icon: 'success',
         title: `Blog ${id ? 'Updated' : 'Created'}  Successfully`,
       });
-      navigateTo(history, '/blogs');
+      if (id) {
+        queryClient.invalidateQueries(keys.getBlog(id));
+      }
       queryClient.invalidateQueries(keys.blog);
+      navigateTo(history, '/blogs');
     },
     onError: ({
       response: {
