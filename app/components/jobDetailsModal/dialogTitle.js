@@ -30,56 +30,18 @@ export const DialogTitle = ({
         <IconButton className={classes.closeButton} onClick={onHandleClose}>
           <CloseIcon className={classes.icon} />
         </IconButton>
-        <Box
-          width={1}
-          display="flex"
-          flexDirection={['column', 'column', 'column', 'row']}
-          mb={3}
-          mt={6}
-        >
-          <Box mb={2} width={[1, 1, 1 / 3, '30%']}>
-            {applied || expired || !expired ? (
-              <Box display="flex" flexDirection="column" width={1}>
-                <Box mb={4} width="65%">
-                  <H4 color="secondary">{title}</H4>
-                </Box>
-
-                <Box display="flex" flexDirection="row">
-                  <Box ml={1}>
-                    <Show IF={!expired}>
-                      <MuiBadge
-                        color={colors.oliveGreen}
-                        badgeContent="active"
-                      />
-                    </Show>
-                  </Box>
-                  <Box>
-                    <Show IF={expired}>
-                      <MuiBadge badgeContent="expired" color="error" />
-                    </Show>
-                  </Box>
-                  <Box ml={1}>
-                    <Show IF={applied} className={classes.multipleBadge}>
-                      <MuiBadge badgeContent="applied" color={colors.info} />
-                    </Show>
-                  </Box>
-                </Box>
-              </Box>
-            ) : (
-              <>
-                <H4 color="secondary">{title}</H4>
-              </>
-            )}
+        <Box width={1} display="flex" flexDirection="column" mb={3} mt={6}>
+          <Box mb={1}>
+            <H4 color="secondary">{title}</H4>
           </Box>
           <Box
             display="flex"
             flexDirection={['column', 'column', 'column', 'row']}
-            justifyContent="flex-end"
             mb={3}
             mt={[5, 5, 5, 1.5]}
-            width={[1, 1, 1 / 3, '70%']}
+            width={1}
           >
-            <Box px={[0, 0, 0, 3]} display="flex" flexDirection="row">
+            <Box display="flex" flexDirection="row">
               <LocationOnOutlinedIcon color="secondary" />
               <BodyTextLarge color="grey" fontWeight="fontWeightMedium" noWrap>
                 Location:
@@ -122,6 +84,27 @@ export const DialogTitle = ({
                 </ToolTip>
               </Box>
             </Box>
+          </Box>
+          <Box mb={2} width={1}>
+            <Show IF={applied || expired || !expired}>
+              <Box display="flex" flexDirection="row">
+                <Box ml={1}>
+                  <Show IF={!expired}>
+                    <MuiBadge color={colors.oliveGreen} badgeContent="active" />
+                  </Show>
+                </Box>
+                <Box>
+                  <Show IF={expired}>
+                    <MuiBadge badgeContent="expired" color="error" />
+                  </Show>
+                </Box>
+                <Box ml={1}>
+                  <Show IF={applied} className={classes.multipleBadge}>
+                    <MuiBadge badgeContent="applied" color={colors.info} />
+                  </Show>
+                </Box>
+              </Box>
+            </Show>
           </Box>
         </Box>
         <Divider classes={{ root: classes.dividerColor }} />
