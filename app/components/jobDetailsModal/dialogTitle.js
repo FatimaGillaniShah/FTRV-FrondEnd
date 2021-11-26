@@ -85,8 +85,9 @@ export const DialogTitle = ({
               </Box>
             </Box>
           </Box>
-          <Box mb={2} width={1}>
-            <Show IF={applied || expired || !expired}>
+
+          <Show IF={applied || expired || !expired}>
+            <Box mb={2} width={1}>
               <Box display="flex" flexDirection="row">
                 <Box ml={1}>
                   <Show IF={!expired}>
@@ -104,8 +105,8 @@ export const DialogTitle = ({
                   </Show>
                 </Box>
               </Box>
-            </Show>
-          </Box>
+            </Box>
+          </Show>
         </Box>
         <Divider classes={{ root: classes.dividerColor }} />
       </MuiDialogTitle>
