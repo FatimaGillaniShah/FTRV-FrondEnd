@@ -3,20 +3,14 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
-import { useAuthContext } from '../../context/authContext';
-import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteAnnouncement } from '../../hooks/announcement';
 import { ToolTip } from '../../components';
+import Show from '../../components/show';
 
-const ActionButtons = ({ data, disabled }) => {
+const ActionButtons = ({ data, isWriteAllowed }) => {
   const history = useHistory();
   const mutation = useDeleteAnnouncement();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
 
   const handleDeleteAnnouncements = () => {
     Modal.fire().then((result) => {
@@ -27,28 +21,20 @@ const ActionButtons = ({ data, disabled }) => {
   };
 
   return (
-    <>
-      {role === ROLES.ADMIN && (
-        <>
-          <IconButton
-            disabled={disabled}
-            onClick={() => navigateTo(history, `/announcement/edit/${data.id}`)}
-          >
-            <EditIcon color="secondary" />
-          </IconButton>
-          <IconButton
-            onClick={() => handleDeleteAnnouncements()}
-            disabled={disabled}
-          >
-            <DeleteIcon color="error" />
-          </IconButton>
-        </>
-      )}
-    </>
+    <Show IF={isWriteAllowed}>
+      <IconButton
+        onClick={() => navigateTo(history, `/announcement/edit/${data.id}`)}
+      >
+        <EditIcon color="secondary" />
+      </IconButton>
+      <IconButton onClick={() => handleDeleteAnnouncements()}>
+        <DeleteIcon color="error" />
+      </IconButton>
+    </Show>
   );
 };
 
-export const headCells = [
+export const getHeadCells = ({ isWriteAllowed }) => [
   {
     field: 'title',
     type: 'string',
@@ -104,9 +90,10 @@ export const headCells = [
     type: 'number',
     headerName: ' ',
     description: 'Actions',
+    hide: !isWriteAllowed,
     sortable: false,
     renderCell: ({ row }) => (
-      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+      <ActionButtons data={row} isWriteAllowed={isWriteAllowed} />
     ),
     width: 200,
   },

@@ -1,5 +1,5 @@
 import React from 'react';
-import NotExist from '../pages/notExist';
+import NotExist from '../noData';
 
 const Show = ({ IF: condition, description, Icon, children }) => {
   if (condition) {

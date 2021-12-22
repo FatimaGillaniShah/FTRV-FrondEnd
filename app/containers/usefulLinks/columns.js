@@ -4,21 +4,13 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory, useParams } from 'react-router-dom';
 import { get } from 'lodash';
-import { useAuthContext } from '../../context/authContext';
-import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteLink } from '../../hooks/usefulLink';
-import Show from '../../components/show';
 
-const ActionButtons = ({ data, disabled }) => {
+const ActionButtons = ({ data }) => {
   const { categoryId } = useParams();
   const history = useHistory();
   const mutation = useDeleteLink();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
 
   const handleDeleteLinks = () => {
     Modal.fire().then((result) => {
@@ -30,29 +22,23 @@ const ActionButtons = ({ data, disabled }) => {
 
   return (
     <>
-      <Show IF={role === ROLES.ADMIN}>
-        <>
-          <IconButton
-            onClick={() =>
-              navigateTo(
-                history,
-                `/link-categories/useful-links/${categoryId}/edit/${data.id}`
-              )
-            }
-            disabled={disabled}
-          >
-            <EditIcon color="secondary" />
-          </IconButton>
-          <IconButton onClick={() => handleDeleteLinks()} disabled={disabled}>
-            <DeleteIcon color="error" />
-          </IconButton>
-        </>
-      </Show>
+      <IconButton
+        onClick={() =>
+          navigateTo(
+            history,
+            `/link-categories/useful-links/${categoryId}/edit/${data.id}`
+          )
+        }
+      >
+        <EditIcon color="secondary" />
+      </IconButton>
+      <IconButton onClick={() => handleDeleteLinks()}>
+        <DeleteIcon color="error" />
+      </IconButton>
     </>
   );
 };
-
-export const headCells = [
+export const getHeadCells = ({ isWriteAllowed }) => [
   {
     field: 'name',
     type: 'string',
@@ -89,10 +75,9 @@ export const headCells = [
     type: 'number',
     headerName: ' ',
     description: 'Actions',
+    hide: !isWriteAllowed,
     sortable: false,
-    renderCell: ({ row }) => (
-      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
-    ),
+    renderCell: ({ row }) => <ActionButtons data={row} />,
     flex: 1,
   },
 ];

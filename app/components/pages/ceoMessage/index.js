@@ -6,19 +6,12 @@ import { Avatar, IconButton } from '@material-ui/core';
 import ReactHtmlParser from 'html-react-parser';
 import { H5, BodyTextLarge } from '../../typography';
 import { useStyles } from './styles';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import { navigateTo } from '../../../utils/helper';
 import Show from '../../show';
 
-export default function CeoMessage({ ceoMessageData }) {
+export default function CeoMessage({ ceoMessageData, isWriteAllowed }) {
   const classes = useStyles();
   const history = useHistory();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
 
   return (
     <>
@@ -42,7 +35,7 @@ export default function CeoMessage({ ceoMessageData }) {
         <Box width={1 / 2}>
           <H5>CEO Message</H5>
         </Box>
-        <Show IF={role === ROLES.ADMIN}>
+        <Show IF={isWriteAllowed}>
           <Box width={1 / 2} display="flex" justifyContent="flex-end">
             <IconButton
               onClick={() => navigateTo(history, '/ceo-message/edit')}

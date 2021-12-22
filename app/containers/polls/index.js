@@ -14,6 +14,8 @@ import { Modal } from '../../utils/helper';
 import { useDeletePoll } from '../../hooks/poll';
 import { PollsPage } from '../../components/pages/polls/index';
 import { getPolls } from '../../state/queryFunctions';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
 
 function Poll() {
@@ -23,6 +25,9 @@ function Poll() {
   const [page, setPage] = useState(0);
   const [filters, setFilters] = useState();
   const [query, setQuery] = useState({ searchString: '' });
+  const isWriteAllowed = usePermission(
+    `${features.POLLS}-${PERMISSIONS.WRITE}`
+  );
   const date = parseDate(new Date());
   const { data: pollResponse, isLoading: isPollLoading } = useQuery(
     keys.polls({
@@ -121,6 +126,7 @@ function Poll() {
           onHandleChange={handleChange}
           initialFilterValues={initialFilterValues}
           onHandleDelete={handleDelete}
+          isWriteAllowed={isWriteAllowed}
         />
       )}
     </>

@@ -16,8 +16,6 @@ import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import { BodyTextSmall, BodyTextLarge } from '../typography';
 import { colors } from '../../theme/colors';
-import { useAuthContext } from '../../context/authContext';
-import { ROLES } from '../../utils/constants';
 import { navigateTo } from '../../utils/helper';
 import Show from '../show';
 
@@ -37,7 +35,13 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
 }));
-export function Category({ id, name, linksCount, handleDeleteCategory }) {
+export function Category({
+  id,
+  name,
+  linksCount,
+  handleDeleteCategory,
+  isWriteAllowed,
+}) {
   const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -51,11 +55,6 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
     setAnchorEl(null);
     handleDeleteCategory(categoryId, usefulLinksCount);
   };
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
 
   const StyledMenu = withStyles({
     paper: {
@@ -79,7 +78,7 @@ export function Category({ id, name, linksCount, handleDeleteCategory }) {
   return (
     <Box width={1}>
       <Paper elevation={3} className={classes.paper}>
-        <Show IF={role === ROLES.ADMIN}>
+        <Show IF={isWriteAllowed}>
           <Box>
             <Box mt={2} display="flex" justifyContent="flex-end">
               <MoreVertOutlinedIcon

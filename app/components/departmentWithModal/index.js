@@ -14,18 +14,30 @@ import { getDepartments } from '../../state/queryFunctions';
 import { useStyles } from './style';
 import { validationSchema } from './schema';
 import Show from '../show';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function DepartmentWithModal({
   variant,
+  options,
   modal,
   selectedValue,
   initialValues,
   ...props
 }) {
+  const isReadAllowed = usePermission(
+    `${features.LOCATION}-${PERMISSIONS.READ}`
+  );
+  const isWriteAllowed = usePermission(
+    `${features.DEPARTMENT}-${PERMISSIONS.WRITE}`
+  );
   const { mutate } = useCreateDepartment();
   const { data: deparments, isLoading } = useQuery(
     keys.department,
-    getDepartments
+    getDepartments,
+    {
+      enabled: isReadAllowed,
+    }
   );
 
   const [open, setOpen] = useState(false);
@@ -37,7 +49,7 @@ function DepartmentWithModal({
     resetForm();
     setOpen(!open);
   };
-  const options = deparments?.data.data.rows.map((val) => ({
+  const departmentOptions = deparments?.data.data.rows.map((val) => ({
     value: val.id,
     label: val.name,
   }));
@@ -80,16 +92,15 @@ function DepartmentWithModal({
           variant={variant}
           selectedValue={selectedValue}
           label="Department"
-          options={options}
+          {...(options && { emptyItem: !(options.length > 0) })}
+          options={departmentOptions || options || []}
           loading={isLoading}
           {...props}
         />
-        <Show IF={modal}>
-          <Box className={classes.modelLink}>
-            <Button startIcon={<AddIcon />} onClick={handleDialogue}>
-              Create new department
-            </Button>
-          </Box>
+        <Show IF={modal && isWriteAllowed}>
+          <Button size="small" startIcon={<AddIcon />} onClick={handleDialogue}>
+            Create new department
+          </Button>
         </Show>
       </Box>
     </>

@@ -5,25 +5,22 @@ import { useQuery } from 'react-query';
 import { Alert } from '@material-ui/lab';
 import { getLocations } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { headCells } from './columns';
+import { getHeadCells } from './columns';
 import { Modal } from '../../utils/helper';
 import { useDeleteLocation } from '../../hooks/location';
 import DataTable from '../../components/dataTable';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import WrapInCard from '../../components/layout/wrapInCard';
 import { TableButtons } from './tableButtons';
-import { useAuthContext } from '../../context/authContext';
 import { Loading } from '../../components/loading';
-import { ROLES } from '../../utils/constants';
 import Show from '../../components/show';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function Locations() {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
-
+  const isWriteAllowed = usePermission(
+    `${features.LOCATION}-${PERMISSIONS.WRITE}`
+  );
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const mutation = useDeleteLocation({ callbackFn: () => setSelected([]) });
@@ -50,7 +47,7 @@ function Locations() {
       ) : (
         <WrapInBreadcrumbs>
           <WrapInCard mb={8}>
-            <Show IF={role === ROLES.ADMIN}>
+            <Show IF={isWriteAllowed}>
               <Box mt={4}>
                 <TableButtons
                   handleDelete={handleDelete}
@@ -68,11 +65,12 @@ function Locations() {
             </Show>
             <DataTable
               rows={locations}
-              columns={headCells}
+              columns={getHeadCells({ isWriteAllowed })}
               selected={selected}
               setSelected={setSelected}
               count={locations?.length || 0}
               sortColumn="name"
+              isWriteAllowed={isWriteAllowed}
               page={page}
               setPage={setPage}
             />

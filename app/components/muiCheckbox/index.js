@@ -1,25 +1,29 @@
-import { withStyles } from '@material-ui/core/styles';
-import Checkbox from '@material-ui/core/Checkbox';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Checkbox } from '@material-ui/core';
 
-const MuiCheckbox = withStyles((theme) => ({
-  root: {
-    color: theme.palette.checkbox.main,
-    '&$checked': {
-      '& .MuiIconButton-label': {
-        position: 'relative',
-        zIndex: 0,
-        color: theme.palette.checkbox.main,
-      },
-      '& .MuiIconButton-label:after': {
-        content: '""',
-        height: 15,
-        width: 15,
-        position: 'absolute',
-        backgroundColor: theme.palette.checkbox.secondary,
-        zIndex: -1,
-      },
-    },
-  },
-  checked: {},
-}))(Checkbox);
+const MuiCheckbox = ({
+  disabled,
+  onHandleChange,
+  checked,
+  size,
+  indeterminate,
+}) => (
+  <Checkbox
+    disabled={disabled}
+    size={size}
+    onChange={onHandleChange}
+    checked={checked}
+    indeterminate={indeterminate}
+  />
+);
+MuiCheckbox.propTypes = {
+  onHandleChange: PropTypes.func,
+  disabled: PropTypes.bool,
+  size: PropTypes.string,
+};
+MuiCheckbox.defaultProps = {
+  size: 'small',
+};
+
 export default MuiCheckbox;

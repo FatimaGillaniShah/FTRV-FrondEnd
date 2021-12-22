@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Box, useMediaQuery } from '@material-ui/core';
-import { Tabs, Tab } from 'components';
+import { Tabs } from 'components';
+import Tab from '@material-ui/core/Tab';
 import { useTheme } from '@material-ui/styles';
 import { useStyles } from './style';
-import TabPanel from './tabPanel';
+import TabPanel from '../../tabPanel/index';
 import DocumentList from './documentList';
 
 function tabProps(id) {
@@ -16,6 +17,7 @@ export default function DocumentTabs({
   departments,
   onHandleDelete,
   onHandleSortOrder,
+  isWriteAllowed,
 }) {
   const classes = useStyles();
   const [selected, setSelected] = useState(0);
@@ -45,12 +47,13 @@ export default function DocumentTabs({
         ))}
       </Tabs>
       {departments?.map((department, index) => (
-        <TabPanel value={selected} index={index}>
+        <TabPanel value={selected} index={index} width={[1, 1, 1 / 2, 1 / 2]}>
           <DocumentList
             departments={departments}
             departmentName={department.name}
             onHandleDelete={onHandleDelete}
             onHandleSortOrder={onHandleSortOrder}
+            isWriteAllowed={isWriteAllowed}
           />
         </TabPanel>
       ))}

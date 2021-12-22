@@ -14,7 +14,7 @@ export function useDeleteJob({ callbackFn } = {}) {
     }) => {
       if (isFunction(callbackFn)) callbackFn();
       Swal.fire('Deleted!', `${count} job(s) deleted.`, 'success');
-      queryClient.invalidateQueries(keys.jobs);
+      queryClient.invalidateQueries(keys.getJobs({}));
     },
     onError: ({
       response: {

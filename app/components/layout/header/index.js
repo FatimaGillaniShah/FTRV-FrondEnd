@@ -12,6 +12,7 @@ import { useAuthContext } from '../../../context/authContext';
 import Logo from '../../../images/logo.png';
 import { navigateTo } from '../../../utils/helper';
 import Show from '../../show';
+import Websocket from '../../webSocket/webSocket';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -43,6 +44,7 @@ export default function Header() {
   const history = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user, setUser } = useAuthContext();
+  const { data } = user;
   const queryClient = useQueryClient();
   const userAvatar = user.data.avatar;
   const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -65,23 +67,31 @@ export default function Header() {
     cookiePolicy: 'single_host_origin',
   });
   const onGoogleLogout = () => {
-    const auth2 = window.gapi.auth2.getAuthInstance();
+    const auth2 = window.gapi?.auth2?.getAuthInstance();
     if (auth2 != null) {
       auth2.signOut().then(auth2.disconnect());
     }
   };
   const handleLogout = () => {
-    onGoogleLogout();
-    setUser({
+    const unAuthenticatedUser = {
       announcement: [],
       data: {},
       isAuthenticated: false,
       token: null,
-    });
-    queryClient.invalidateQueries();
+    };
+    setUser(unAuthenticatedUser);
+    onGoogleLogout();
+
+    queryClient.removeQueries();
   };
+  if (user.data.role) {
+    handleLogout();
+  }
   return (
     <>
+      <Show IF={!data.isAdmin}>
+        <Websocket />
+      </Show>
       <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
           <Link to="/home">

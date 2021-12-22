@@ -5,44 +5,69 @@
  */
 
 import { WrapInCard } from 'components';
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import {
-  getUserById,
-  updateUser,
-  getLocations,
-  getDepartments,
-} from 'state/queryFunctions';
+import { getUserById, updateUser } from 'state/queryFunctions';
 import { keys } from 'state/queryKeys';
 import Loading from '../../components/layout/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import EditUserInfo from '../../components/pages/createUser';
 import { useAuthContext } from '../../context/authContext';
-import { ROLES } from '../../utils/constants';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
 import { navigateTo, Toast } from '../../utils/helper';
-
-import { useCreateDepartment } from '../../hooks/departmentMutation';
-import { useCreateLocation } from '../../hooks/locationMutation';
 
 function EditUser() {
   const queryClient = useQueryClient();
   const history = useHistory();
-  const { user, setUser } = useAuthContext();
-  const locationMutation = useCreateLocation();
-  const departmentMutation = useCreateDepartment();
-  const id = user && user.data && user.data.id;
-  const userRole = user && user.data && user.data.role;
-  const { data, isLoading } = useQuery(keys.getUser(id), () => getUserById(id));
-  const { data: locations, isLocationLoading } = useQuery(
-    keys.location,
-    getLocations
+  const isReadAllowed = usePermission(
+    `${features.DIRECTORY}-${PERMISSIONS.READ}`
   );
-  const { data: deparments, isDepartmentLoading } = useQuery(
-    keys.department,
-    getDepartments
+  const {
+    user: {
+      data: { id, isAdmin },
+    },
+    user,
+    setUser,
+  } = useAuthContext();
+  const [feature, setFeature] = useState({
+    LOCATION: false,
+    DEPARTMENT: false,
+    GROUP: false,
+  });
+
+  const permit = usePermission;
+  Object.keys(feature).map((resource) => {
+    const can = permit(`${resource}-${PERMISSIONS.READ}`);
+    if (can && !feature[resource]) {
+      setFeature((prevState) => ({
+        ...prevState,
+        [resource]: true,
+      }));
+    }
+    return feature;
+  });
+  const isWriteAllowed = usePermission(
+    `${features.DIRECTORY}-${PERMISSIONS.WRITE}`
+  );
+  const { data, isLoading } = useQuery(
+    keys.getUser(id),
+    () => getUserById(id),
+    {
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
+      },
+    }
   );
   const mutation = useMutation(updateUser, {
     onSuccess: ({
@@ -67,7 +92,11 @@ function EditUser() {
       });
       queryClient.invalidateQueries(keys.getUsers({}));
       queryClient.invalidateQueries(keys.getUser(id));
-      navigateTo(history, '/directory');
+      if (isReadAllowed) {
+        navigateTo(history, '/directory');
+      } else {
+        navigateTo(history, '/home');
+      }
     },
     onError: ({
       response: {
@@ -80,21 +109,7 @@ function EditUser() {
       });
     },
   });
-  const handleCreateLocation = (payload) => {
-    locationMutation.mutate(payload);
-  };
-  const handleCreateDepartment = (payload) => {
-    departmentMutation.mutate(payload);
-  };
 
-  const locationOptions = locations?.data.data.rows.map((val) => ({
-    value: val.id,
-    label: val.name,
-  }));
-  const departmentOptions = deparments?.data.data.rows.map((val) => ({
-    value: val.id,
-    label: val.name,
-  }));
   const initialData = data?.data?.data || null;
   const handleSubmit = (updatedData) => {
     const payload = { id, updatedData };
@@ -114,13 +129,9 @@ function EditUser() {
     }
     initialData.locationId = initialData?.location?.id;
     initialData.departmentId = initialData?.department?.id;
-
-    if (!initialData.role) {
-      initialData.role = userRole;
-    }
-  } else if (userRole === ROLES.USER) {
+  } else if (!isAdmin || !isWriteAllowed) {
     formDefaultData = { password: '' }; // User can only edit his password and avatar in profile
-  } else if (userRole === ROLES.ADMIN) {
+  } else if (isAdmin || isWriteAllowed) {
     formDefaultData = {
       firstName: '',
       lastName: '',
@@ -135,22 +146,19 @@ function EditUser() {
       joiningDate: null,
       dob: null,
       avatar: '',
-      role: userRole,
     };
 
     formDefaultData.isProfilePicAttached = false;
   }
-  const defaultDialogData = {
-    location: '',
-    department: '',
-  };
+  let defaultDepartment = [];
+  let defaultLocation = [];
 
-  const onLoading = () => {
-    if (isLoading || isLocationLoading || isDepartmentLoading) {
-      return true;
-    }
-    return false;
-  };
+  if (initialData !== null) {
+    const { location, department } = initialData;
+    defaultDepartment = [{ value: department?.id, label: department?.name }];
+    defaultLocation = [{ value: location?.id, label: location?.name }];
+  }
+
   return (
     <>
       <Helmet>
@@ -159,21 +167,20 @@ function EditUser() {
       </Helmet>
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {onLoading() ? (
+          {isLoading ? (
             <Loading />
           ) : (
             <EditUserInfo
               mutation={mutation}
               initialData={initialData || formDefaultData}
               onHandleSubmit={handleSubmit}
-              onCreateLocation={handleCreateLocation}
-              onCreateDepartment={handleCreateDepartment}
               formType="edit"
-              initialDialogData={defaultDialogData}
-              editRole={userRole}
+              defaultDepartment={defaultDepartment}
+              defaultLocation={defaultLocation}
+              feature={feature}
+              edit={isAdmin}
               isThisMyProfile
-              locationOptions={locationOptions}
-              departmentOptions={departmentOptions}
+              isReadAllowed={isReadAllowed}
             />
           )}
         </WrapInCard>

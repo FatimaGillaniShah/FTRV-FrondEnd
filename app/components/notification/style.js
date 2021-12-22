@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { colors } from '../../theme/colors';
 
 const useStyles = makeStyles((theme) => ({
   mainBox: {
@@ -11,9 +12,24 @@ const useStyles = makeStyles((theme) => ({
         '0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 4px 5px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)',
     },
   },
+  permissionBox: {
+    backgroundColor: colors.ashGrey,
+    borderRadius: '3px',
+    minHeight: '80px',
+    marginLeft: theme.spacing(13),
+    '&:hover': {
+      transition: 'all .3s',
+      boxShadow:
+        '0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 4px 5px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)',
+    },
+  },
   icon: {
     fontSize: '3em',
     color: theme.palette.bgColor.secondary,
+  },
+  permissionIcon: {
+    fontSize: '3em',
+    color: colors.peralBlue,
   },
   iconBox: {
     height: '3.5rem',

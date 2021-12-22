@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
       lineHeight: '62px !important',
       maxHeight: '62px !important',
       minHeight: '62px !important',
-
+      // header CheckBox
       '& .MuiCheckbox-root': {
         color: theme.palette.checkbox.secondary,
       },
@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiDataGrid-sortIcon': {
       color: theme.palette.iconColor.default,
     },
-    '& .MuiCheckbox-colorPrimary.Mui-disabled': {
+
+    '& .MuiIconButton-colorSecondary.Mui-disabled': {
       color: 'rgba(0, 0, 0, 0.26)',
     },
 
@@ -92,6 +93,23 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .MuiDataGrid-columnHeaderTitleContainer': {
       padding: 0,
+    },
+  },
+
+  dataGrid: {
+    '& .MuiDataGrid-columnHeaderTitle, & .MuiDataGrid-cell': {
+      textOverflow: 'unset',
+      whiteSpace: 'normal',
+      lineHeight: '1.2!important',
+      height: 'auto',
+      display: 'flex',
+      alignItems: 'center',
+      '& > div': {
+        maxHeight: 'inherit',
+        width: '100%',
+        whiteSpace: 'initial',
+        lineHeight: '1',
+      },
     },
   },
 

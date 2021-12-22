@@ -10,11 +10,16 @@ import WrapInCard from '../../components/layout/wrapInCard';
 import { keys } from '../../state/queryKeys';
 import { getQuote, saveQuote } from '../../state/queryFunctions';
 import { Loading } from '../../components/loading';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function QuoteContainer() {
   const history = useHistory();
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(keys.quote, getQuote);
+  const isWriteAllowed = usePermission(
+    `${features.QUOTE}-${PERMISSIONS.WRITE}`
+  );
   const mutation = useMutation(saveQuote, {
     onSuccess: () => {
       Toast({
@@ -53,6 +58,7 @@ function QuoteContainer() {
                 handleSubmit={handleSubmit}
                 value={data?.data?.data}
                 loading={mutation.isLoading}
+                isWriteAllowed={isWriteAllowed}
               />
             )}
           </WrapInCard>

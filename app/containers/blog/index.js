@@ -9,6 +9,8 @@ import { keys } from '../../state/queryKeys';
 import { Modal } from '../../utils/helper';
 import { Loading } from '../../components/loading';
 import { useDeleteBlog } from '../../hooks/blog';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function Blog() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +21,7 @@ function Blog() {
   const handleChange = (event, pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const isWriteAllowed = usePermission(`${features.BLOG}-${PERMISSIONS.WRITE}`);
   const mutation = useDeleteBlog();
   const handleDeleteBlog = (id) => {
     Modal.fire().then(({ isConfirmed }) => {
@@ -46,6 +49,7 @@ function Blog() {
             <BlogListing
               currentPage={currentPage}
               blogs={blog.rows}
+              isWriteAllowed={isWriteAllowed}
               handleChange={handleChange}
               count={blog.count}
               onHandleDeleteBlog={handleDeleteBlog}

@@ -9,6 +9,8 @@ import { useDeleteRingGroup } from '../../hooks/ringGroup';
 import { getRingGroups } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import RingGroup from '../../components/pages/ringGroup';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function RingGroupContainer() {
   const history = useHistory();
@@ -19,6 +21,10 @@ function RingGroupContainer() {
   const [query, setQuery] = useState({ searchString: '' });
   const [filters, setFilters] = useState();
   const [alignment, setAlignment] = useState('ring-group');
+
+  const isWriteAllowed = usePermission(
+    `${features.RING_GROUP}-${PERMISSIONS.WRITE}`
+  );
 
   const { data, isLoading: isListLoading } = useQuery(
     keys.ringGroups({ query, filters }),
@@ -122,6 +128,7 @@ function RingGroupContainer() {
           onHandleToggleChange={handleToggleChange}
           toggleValues={toggleValues}
           alignment={alignment}
+          isWriteAllowed={isWriteAllowed}
         />
       )}
     </>

@@ -12,3 +12,14 @@ export const createFormData = (object) =>
     if (object[key]) formData.append(key, object[key]);
     return formData;
   }, new FormData());
+
+export const getChangedValues = (values, initialValues) =>
+  Object.entries(values).reduce((acc, [key, value]) => {
+    const hasChanged = initialValues[key] !== value;
+
+    if (hasChanged) {
+      acc[key] = value;
+    }
+
+    return acc;
+  }, {});

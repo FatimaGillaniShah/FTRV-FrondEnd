@@ -8,6 +8,7 @@ import { navigateTo } from '../../../utils/helper';
 
 export function TableButtons({ onHandleDelete, numSelected, loading }) {
   const history = useHistory();
+
   return (
     <Box display="flex" justifyContent="space-between" my={5}>
       <Box display="flex" flexWrap="wrap">

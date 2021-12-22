@@ -2,15 +2,13 @@ import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
 import PropTypes from 'prop-types';
-import { useAuthContext } from '../../../context/authContext';
 import WrapInCard from '../../layout/wrapInCard';
-import { ROLES } from '../../../utils/constants';
 import { TableButtons } from './tableButtons';
 import DataTable from '../../dataTable';
 import { Search } from '../../search/search';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import Filters from './filters';
-import { headCells } from './columns';
+import { getHeadCells } from './columns';
 import Show from '../../show';
 
 function Jobs({
@@ -28,13 +26,8 @@ function Jobs({
   onClearFilter,
   initialFilterValues,
   onHandleFilterSearch,
+  isWriteAllowed,
 }) {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
-
   return (
     <WrapInBreadcrumbs>
       <Box width={1}>
@@ -60,7 +53,7 @@ function Jobs({
           </Box>
         </WrapInCard>
         <WrapInCard>
-          <Show IF={role === ROLES.ADMIN}>
+          <Show IF={isWriteAllowed}>
             <Box mt={4}>
               <TableButtons
                 loading={loading}
@@ -78,12 +71,13 @@ function Jobs({
           </Show>
           <DataTable
             rows={data}
-            columns={headCells}
+            columns={getHeadCells({ isWriteAllowed })}
             setSelected={setSelected}
             selected={selected}
             count={data?.length || 0}
             sortColumn="title"
             disableSelectionOnClick
+            isWriteAllowed={isWriteAllowed}
             page={page}
             setPage={setPage}
           />

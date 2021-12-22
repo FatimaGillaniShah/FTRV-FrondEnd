@@ -131,15 +131,15 @@ SelectInput.defaultProps = {
 // Usage
 
 /* <Select
-name="department"
-  labelId="label-id"
-  selectId="select-id"
-  fullWidth={true}
-  label="Department"
-  helperText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam pariatur accusantium fugit voluptatem dignissimos delectus accusamus facilis ullam nisi culpa."
-  options={top100Films}
-  onHandleChange={handleChange}
-  selectedValue={value}
-  selectName="department"
-  ...otherProps
-/> */
+ name="department"
+   labelId="label-id"
+   selectId="select-id"
+   fullWidth={true}
+   label="Department"
+   helperText="Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam pariatur accusantium fugit voluptatem dignissimos delectus accusamus facilis ullam nisi culpa."
+   options={top100Films}
+   onHandleChange={handleChange}
+   selectedValue={value}
+   selectName="department"
+   ...otherProps
+ /> */

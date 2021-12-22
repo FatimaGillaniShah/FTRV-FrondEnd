@@ -1,9 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { colors } from '../../../theme/colors';
 
 export const useStyles = makeStyles((theme) => ({
   tab: {
+    border: `1px solid ${colors.darkGrey}`,
     backgroundColor: 'whitesmoke',
     minWidth: '40vw',
+    fontSize: theme.typography.pxToRem(15),
     minHeight: '70px',
     marginRight: theme.spacing(4),
     [theme.breakpoints.down('sm')]: {

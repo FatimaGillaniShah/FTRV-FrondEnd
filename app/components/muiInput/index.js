@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   inputColor: {
     color: theme.palette.text.dark,
   },
+  inputIconCursor: {
+    cursor: 'default',
+  },
 }));
 
 function InputField({
@@ -41,7 +44,7 @@ function InputField({
   fullWidth,
   variant,
   formControlProps,
-  IconClickable,
+  isIconClickable,
   OutlinedInputPlaceholder,
   helperText,
   showInputLabel,
@@ -81,19 +84,18 @@ function InputField({
               Icon &&
               appendIcon && (
                 <InputAdornment position="end">
-                  {IconClickable ? (
-                    <IconButton
-                      disabled={isDisabled}
-                      id={iconID}
-                      onClick={onIconClick}
-                      tabIndex={tabIndex}
-                      {...props}
-                    >
-                      <Icon />
-                    </IconButton>
-                  ) : (
+                  <IconButton
+                    disabled={isDisabled}
+                    id={iconID}
+                    onClick={onIconClick}
+                    tabIndex={tabIndex}
+                    {...props}
+                    disableFocusRipple={!isIconClickable}
+                    disableRipple={!isIconClickable}
+                    className={!isIconClickable && classes.inputIconCursor}
+                  >
                     <Icon />
-                  )}
+                  </IconButton>
                 </InputAdornment>
               )
             }
@@ -101,7 +103,7 @@ function InputField({
               Icon &&
               prependIcon && (
                 <InputAdornment position="start">
-                  {IconClickable ? (
+                  {isIconClickable ? (
                     <IconButton
                       id={iconID}
                       onClick={onIconClick}
@@ -134,18 +136,18 @@ function InputField({
               Icon &&
               appendIcon && (
                 <InputAdornment position="end">
-                  {IconClickable ? (
-                    <IconButton
-                      id={iconID}
-                      onClick={onIconClick}
-                      tabIndex={tabIndex}
-                      {...props}
-                    >
-                      <Icon />
-                    </IconButton>
-                  ) : (
+                  <IconButton
+                    disabled={isDisabled}
+                    id={iconID}
+                    onClick={onIconClick}
+                    tabIndex={tabIndex}
+                    {...props}
+                    disableFocusRipple={!isIconClickable}
+                    disableRipple={!isIconClickable}
+                    className={!isIconClickable && classes.inputIconCursor}
+                  >
                     <Icon />
-                  )}
+                  </IconButton>
                 </InputAdornment>
               )
             }
@@ -153,7 +155,7 @@ function InputField({
               Icon &&
               prependIcon && (
                 <InputAdornment position="start">
-                  {IconClickable ? (
+                  {isIconClickable ? (
                     <IconButton
                       id={iconID}
                       onClick={onIconClick}
@@ -188,20 +190,20 @@ InputField.propTypes = {
   Icon: PropTypes.object,
   inputType: PropTypes.string,
   inputID: PropTypes.string,
-  onIconClick: PropTypes.func,
+  onIconClick: PropTypes.bool,
   iconID: PropTypes.string,
   appendIcon: PropTypes.bool,
   prependIcon: PropTypes.bool,
   variant: PropTypes.string,
   formControlProps: PropTypes.object,
   OutlinedInputPlaceholder: PropTypes.string,
-  IconClickable: PropTypes.bool,
+  isIconClickable: PropTypes.bool,
   showInputLabel: PropTypes.bool,
   tabIndex: PropTypes.number,
 };
 InputField.defaultProps = {
   fullWidth: true,
-  IconClickable: true,
+  isIconClickable: false,
   showInputLabel: true,
   tabIndex: -1,
 };

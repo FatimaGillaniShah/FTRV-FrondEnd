@@ -7,8 +7,6 @@ import { Box, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { CustomToolbar } from './customToolbar';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import { formatDate, navigateTo } from '../../../utils/helper';
 
 export function EventCalendar({
@@ -17,20 +15,19 @@ export function EventCalendar({
   setEventWindowDate,
   eventWindowDate,
   setPagination,
+  isWriteAllowed,
 }) {
   const history = useHistory();
   const localizer = momentLocalizer(moment); // or globalizeLocalizer
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
-  const {
-    user: { data },
-  } = useAuthContext();
 
   const handleSelectEvent = (event) => {
-    if (data.role === ROLES.ADMIN)
+    if (isWriteAllowed) {
       navigateTo(history, `/events/edit/${event.id}`);
-    else if (data.role === ROLES.USER)
+    } else {
       navigateTo(history, `/events/view/${event.id}`);
+    }
   };
   const dayFormat = () => {
     if (home || matches) {
@@ -79,9 +76,9 @@ export function EventCalendar({
       components={{
         toolbar: CustomToolbar({
           home,
-          data,
           setEventWindowDate,
           setPagination,
+          isWriteAllowed,
         }),
       }}
       eventPropGetter={handleEventPropGetter}

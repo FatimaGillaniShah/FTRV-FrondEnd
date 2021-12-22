@@ -1,113 +1,79 @@
-import { Avatar, Box, Hidden, Tooltip } from '@material-ui/core';
+import { Avatar, Box, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Add } from '@material-ui/icons';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
-import BusinessIcon from '@material-ui/icons/Business';
 import ClearIcon from '@material-ui/icons/Clear';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
-import AddIcon from '@material-ui/icons/Add';
-import { Input, DatePicker, Button } from 'components';
+import { Input, DatePicker, Button, AutoComplete } from 'components';
 import { MuiFile } from 'components/muiFile';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { FILE_ACCEPT_TYPES, ROLES } from 'utils/constants';
 import { useHistory } from 'react-router-dom';
-import { string, object } from 'yup';
+import { debounce } from 'lodash';
 import { navigateTo } from '../../../utils/helper';
 import { H4 } from '../../typography';
 import { TextMaskForContactNo } from './textMaskForContactNo';
 import { userProfileValidation } from './userProfileValidation';
 import { yupUserFormValidaton } from './yupUserFormValidation';
-import Select from '../../muiSelect';
-
-import MuiDialog from '../../muiDialog';
 import { parseDate } from '../../../utils/functions';
 import Show from '../../show';
+import { useListGroup } from '../../../hooks/group';
+import LocationWithModal from '../../locationWithModal';
+import DepartmentWithModal from '../../departmentWithModal';
+import { FILE_ACCEPT_TYPES } from '../../../utils/constants';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   imageStyle: {
     width: '150px',
     height: '150px',
-  },
-  label: {
-    color: theme.palette.text.info,
-  },
-  dateColor: {
-    color: theme.palette.text.dark,
-  },
-  linkBox: {
-    cursor: 'pointer',
-    paddingTop: '3px',
-  },
-  modalOverflow: {
-    overflowY: 'hidden',
   },
 }));
 
 function CreateUser({
   initialData,
-  initialDialogData,
   mutation,
   onHandleSubmit,
-  onCreateLocation,
-  onCreateDepartment,
   formType = 'add',
-  editRole = 'user',
+  edit,
+  isReadAllowed,
+  defaultDepartment,
+  defaultLocation,
+  feature,
   isThisMyProfile = false,
-  locationOptions,
-  departmentOptions,
+  isWriteAllowed,
 }) {
-  const locationSchema = object().shape({
-    location: string()
-      .required('*Location Required')
-      .noWhitespace()
-      .typeError('* This field cannot contain only blankspaces'),
-  });
+  const [filters, setFilter] = useState({ name: '' });
+  const initialValues = {
+    ...initialData,
+    groupIds: initialData?.groups || [],
+  };
+  delete initialValues.groups;
+  const handleSearch = debounce(({ target }) => {
+    setFilter({ name: target.value });
+  }, 500);
 
-  const departmentSchema = object().shape({
-    department: string()
-      .required('*Department Required')
-      .noWhitespace()
-      .typeError('* This field cannot contain only blankspaces'),
-  });
   const classes = useStyles();
-
+  const { data: groups, isLoading: isGroupLoading } = useListGroup({
+    enabled: feature.GROUP,
+    filters,
+  });
   const [showPassword, setshowPassword] = useState(false);
-  const [openLocDialog, setOpenLocDialog] = useState(false);
-  const [openDepDialog, setOpenDepDialog] = useState(false);
+
   const [imgFile, setImgFile] = useState(
-    (initialData && initialData.avatar) || null
+    (initialValues && initialValues.avatar) || null
   );
+
   const history = useHistory();
   const formikRef = useRef();
-  const handleDialogState = (dialogType) => {
-    if (dialogType === 'loc') {
-      setOpenLocDialog(!openLocDialog);
-    } else if (dialogType === 'dep') {
-      setOpenDepDialog(!openDepDialog);
-    }
-  };
-  const handleDialogSubmit = (values, resetForm) => {
-    if (values.location) {
-      handleDialogState('loc');
-      onCreateLocation({ name: values.location });
-      resetForm();
-    } else {
-      handleDialogState('dep');
-      onCreateDepartment({ name: values.department });
-      resetForm();
-    }
-  };
   const editProfileHeading = 'Edit Profile';
   const formHeadings = { add: 'Create New User', edit: 'Update User Data' };
-  const isUserEditingHisProfile = isThisMyProfile && editRole === ROLES.USER;
+  const isUserEditingHisProfile = (isThisMyProfile && !edit) || isWriteAllowed;
   const yupValidation = isUserEditingHisProfile
     ? userProfileValidation
     : yupUserFormValidaton;
@@ -142,90 +108,33 @@ function CreateUser({
     if (data.password) {
       dataFile.append('password', data.password);
     }
-    if (data.joiningDate) {
-      dataFile.append('joiningDate', parseDate(data.joiningDate));
-    }
-    if (data.dob) {
-      dataFile.append('dob', parseDate(data.dob));
-    }
-    if (data.role) {
-      dataFile.append('role', data.role);
-    }
+    dataFile.append(
+      'joiningDate',
+      data.joiningDate ? parseDate(data.joiningDate) : ''
+    );
+    dataFile.append('dob', data?.dob ? parseDate(data.dob) : '');
     if (data.locationId) dataFile.append('locationId', data.locationId);
     if (data.departmentId) dataFile.append('departmentId', data.departmentId);
+    data?.groupIds?.map(({ id }) => dataFile.append('groupIds[]', id));
+
     await onHandleSubmit(dataFile);
+  };
+  const can = (isDirectoryReadAllowed) => {
+    if (isDirectoryReadAllowed) {
+      navigateTo(history, '/directory');
+    } else {
+      navigateTo(history, '/home');
+    }
   };
   return (
     <>
       <Formik
-        initialValues={initialDialogData}
-        onSubmit={(values, { resetForm }) =>
-          handleDialogSubmit(values, resetForm)
-        }
-        validationSchema={openLocDialog ? locationSchema : departmentSchema}
-      >
-        {({ submitForm }) => (
-          <Form>
-            <MuiDialog
-              open={openLocDialog}
-              onClose={() => handleDialogState('loc')}
-              title="Create New Location"
-              onSubmit={submitForm}
-            >
-              <Box
-                width={[1, 1, 1 / 2]}
-                py={5}
-                className={classes.modalOverflow}
-              >
-                <Input
-                  name="location"
-                  variant="outlined"
-                  OutlinedInputPlaceholder="*Location"
-                  Icon={LocationOnIcon}
-                  appendIcon
-                  IconClickable={
-                    !(mutation.isLoading || isUserEditingHisProfile)
-                  }
-                  isDisabled={mutation.isLoading || isUserEditingHisProfile}
-                />
-              </Box>
-            </MuiDialog>
-            <MuiDialog
-              open={openDepDialog}
-              onClose={() => handleDialogState('dep')}
-              title="Create New Department"
-              onSubmit={submitForm}
-            >
-              <Box
-                width={[1, 1, 1 / 2]}
-                py={5}
-                className={classes.modalOverflow}
-              >
-                <Input
-                  name="department"
-                  variant="outlined"
-                  OutlinedInputPlaceholder="*Department"
-                  Icon={BusinessIcon}
-                  appendIcon
-                  IconClickable={
-                    !(mutation.isLoading || isUserEditingHisProfile)
-                  }
-                  InputLabelProps={{ shrink: true }}
-                  isDisabled={mutation.isLoading || isUserEditingHisProfile}
-                />
-              </Box>
-            </MuiDialog>
-          </Form>
-        )}
-      </Formik>
-
-      <Formik
-        initialValues={initialData}
+        initialValues={initialValues}
         innerRef={formikRef}
         onSubmit={handleSubmitUser}
         validationSchema={yupValidation}
       >
-        {({ setFieldValue, values, handleChange }) => (
+        {({ setFieldValue }) => (
           <Form>
             <Box
               flexWrap="wrap"
@@ -289,9 +198,6 @@ function CreateUser({
                       OutlinedInputPlaceholder="*First Name"
                       Icon={PersonOutlineIcon}
                       appendIcon
-                      IconClickable={
-                        !(mutation.isLoading || isUserEditingHisProfile)
-                      }
                       isDisabled={mutation.isLoading || isUserEditingHisProfile}
                     />
                   </Box>
@@ -301,9 +207,6 @@ function CreateUser({
                       variant="outlined"
                       Icon={PersonOutlineIcon}
                       appendIcon
-                      IconClickable={
-                        !(mutation.isLoading || isUserEditingHisProfile)
-                      }
                       OutlinedInputPlaceholder="*Last Name"
                       isDisabled={mutation.isLoading || isUserEditingHisProfile}
                     />
@@ -320,9 +223,6 @@ function CreateUser({
                       }
                       Icon={AlternateEmailIcon}
                       appendIcon
-                      IconClickable={
-                        !(mutation.isLoading || isUserEditingHisProfile)
-                      }
                     />
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
@@ -346,7 +246,7 @@ function CreateUser({
                         }}
                         Icon={showPassword ? VisibilityOffIcon : VisibilityIcon}
                         appendIcon
-                        IconClickable
+                        isIconClickable
                       />
                     </Tooltip>
                   </Box>
@@ -391,9 +291,6 @@ function CreateUser({
                         inputComponent={TextMaskForContactNo}
                         Icon={PhoneIcon}
                         appendIcon
-                        IconClickable={
-                          !(mutation.isLoading || isUserEditingHisProfile)
-                        }
                         isDisabled={
                           mutation.isLoading || isUserEditingHisProfile
                         }
@@ -401,6 +298,20 @@ function CreateUser({
                     </Tooltip>
                   </Box>
                   <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
+                    <LocationWithModal
+                      name="locationId"
+                      label="Location*"
+                      options={defaultLocation}
+                    />
+                  </Box>
+                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
+                    <DepartmentWithModal
+                      name="departmentId"
+                      label="Department*"
+                      options={defaultDepartment}
+                    />
+                  </Box>
+                  <Box width={[1, 1, 1 / 2]} mt={8} px={3}>
                     <Tooltip title="Input your phone extenstion">
                       <Input
                         name="extension"
@@ -408,50 +319,14 @@ function CreateUser({
                         OutlinedInputPlaceholder="Phone Extension"
                         Icon={ContactPhoneIcon}
                         appendIcon
-                        IconClickable={
-                          !(mutation.isLoading || isUserEditingHisProfile)
-                        }
                         isDisabled={
                           mutation.isLoading || isUserEditingHisProfile
                         }
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
-                    <Select
-                      name="locationId"
-                      label="Location"
-                      selectedValue={values.locationId}
-                      options={locationOptions}
-                      disabled={mutation.isLoading || isUserEditingHisProfile}
-                    />
-                    <Show IF={editRole === ROLES.ADMIN}>
-                      <Box
-                        className={classes.linkBox}
-                        onClick={() => handleDialogState('loc')}
-                      >
-                        <AddIcon fontSize="small" /> Create new location
-                      </Box>
-                    </Show>
-                  </Box>
-                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
-                    <Select
-                      name="departmentId"
-                      label="Department"
-                      selectedValue={values.departmentId}
-                      options={departmentOptions}
-                      disabled={mutation.isLoading || isUserEditingHisProfile}
-                    />
-                    <Show IF={editRole === ROLES.ADMIN}>
-                      <Box
-                        className={classes.linkBox}
-                        onClick={() => handleDialogState('dep')}
-                      >
-                        <AddIcon fontSize="small" /> Create new department
-                      </Box>
-                    </Show>
-                  </Box>
-                  <Box width={[1, 1, 1 / 2]} mt={10} px={3}>
+
+                  <Box width={[1, 1, 1 / 2]} mt={8} px={3}>
                     <Tooltip title="Input your Title">
                       <Input
                         name="title"
@@ -459,9 +334,6 @@ function CreateUser({
                         OutlinedInputPlaceholder="*Title"
                         Icon={WorkIcon}
                         appendIcon
-                        IconClickable={
-                          !(mutation.isLoading || isUserEditingHisProfile)
-                        }
                         isDisabled={
                           mutation.isLoading || isUserEditingHisProfile
                         }
@@ -489,27 +361,34 @@ function CreateUser({
                         name="dob"
                         label="Birth Date"
                         margin="normal"
-                        disabled={mutation.isLoading || editRole === ROLES.USER}
+                        disabled={mutation.isLoading || isUserEditingHisProfile}
                       />
                     </Tooltip>
                   </Box>
-                  <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
-                    <Select
-                      disabled={mutation.isLoading || isThisMyProfile}
-                      name="role"
-                      selectId="role"
-                      labelId="role"
-                      selectName="role"
-                      formControlProps={{ variant: 'outlined' }}
-                      label="Select User Type"
-                      selectedValue={values.role}
-                      options={Object.keys(ROLES).map((val) => ROLES[val])}
-                      onHandleChange={handleChange('role')}
-                    />
-                  </Box>
-                  <Hidden smDown>
-                    <Box width={[1, 1, 1 / 2]} mt={10} px={3}></Box>
-                  </Hidden>
+                  <Show IF={!initialValues?.isAdmin}>
+                    <Box width={[1, 1, 1 / 2]} mt={6} px={3}>
+                      <AutoComplete
+                        name="groupIds"
+                        options={groups?.data?.data || []}
+                        setFieldValue={setFieldValue}
+                        defaultOptions={initialValues?.groupIds}
+                        label="Groups"
+                        placeholder="Select Groups"
+                        loading={isGroupLoading}
+                        checkBox
+                        handleSearch={handleSearch}
+                        onHandleSearch={(e) => {
+                          if (e) handleSearch(e, setFieldValue);
+                        }}
+                        disabled={
+                          !feature.GROUP ||
+                          mutation.isLoading ||
+                          isUserEditingHisProfile
+                        }
+                      />
+                    </Box>
+                  </Show>
+
                   <Box
                     display="flex"
                     flexWrap="wrap"
@@ -535,7 +414,7 @@ function CreateUser({
                     <Box mx={1}>
                       <Button
                         onClick={() => {
-                          navigateTo(history, '/directory');
+                          can(isReadAllowed);
                         }}
                         startIcon={<ClearIcon fontSize="small" />}
                       >

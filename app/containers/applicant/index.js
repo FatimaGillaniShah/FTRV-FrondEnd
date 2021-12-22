@@ -7,10 +7,15 @@ import { Loading } from '../../components/loading';
 import { getApplicants } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import Applicant from '../../components/pages/applicant';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function ApplicantContainer() {
   const [page, setPage] = useState(0);
   const { id } = useParams();
+  const isWriteAllowed = usePermission(
+    `${features.APPLICANT}-${PERMISSIONS.WRITE}`
+  );
   const { data, isLoading: isListLoading } = useQuery(
     keys.applicant(id),
     getApplicants,
@@ -54,6 +59,7 @@ function ApplicantContainer() {
           sortColumn="name"
           page={page}
           setPage={setPage}
+          isWriteAllowed={isWriteAllowed}
         />
       )}
     </>

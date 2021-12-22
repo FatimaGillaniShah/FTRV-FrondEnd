@@ -39,6 +39,7 @@ export function PollsPage({
   onHandleChange,
   currentPage,
   count,
+  isWriteAllowed,
 }) {
   const history = useHistory();
   const classes = useStyles();
@@ -70,17 +71,19 @@ export function PollsPage({
             </Box>
           </WrapInCard>
           <WrapInCard>
-            <Box mt={7} pl={3.5}>
-              <Button
-                startIcon={<AddIcon fontSize="small" />}
-                variant="contained"
-                color="secondary"
-                type="button"
-                onClick={() => navigateTo(history, '/polls/add')}
-              >
-                New Poll
-              </Button>
-            </Box>
+            <Show IF={isWriteAllowed}>
+              <Box mt={7} pl={3.5}>
+                <Button
+                  startIcon={<AddIcon fontSize="small" />}
+                  variant="contained"
+                  color="secondary"
+                  type="button"
+                  onClick={() => navigateTo(history, '/polls/add')}
+                >
+                  New Poll
+                </Button>
+              </Box>
+            </Show>
             <Show
               IF={data?.length > 0}
               Icon={BallotIcon}
@@ -118,6 +121,7 @@ export function PollsPage({
                         onHandleDelete={onHandleDelete}
                         voted={voted}
                         votesSum={votesSum}
+                        isWriteAllowed={isWriteAllowed}
                       />
                     </Box>
                   )

@@ -12,6 +12,7 @@ export function EventsPage({
   isLoading,
   setEventWindowDate,
   eventWindowDate,
+  isWriteAllowed,
   pagination,
   setPagination,
 }) {
@@ -25,6 +26,7 @@ export function EventsPage({
           <Box height={['60vh', '70vh', '80vh']} width={1}>
             <EventCalendar
               eventList={eventList}
+              isWriteAllowed={isWriteAllowed}
               setEventWindowDate={setEventWindowDate}
               eventWindowDate={eventWindowDate}
               setPagination={setPagination}

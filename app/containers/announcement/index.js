@@ -4,36 +4,32 @@ import Box from '@material-ui/core/Box';
 import { useQuery } from 'react-query';
 import { Alert } from '@material-ui/lab';
 import moment from 'moment';
-import { headCells } from './columns';
+import { getHeadCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
 import DataTable from '../../components/dataTable';
 import TableButtons from './tableButtons';
-import { useAuthContext } from '../../context/authContext';
 import { Loading } from '../../components/loading';
-import { ROLES } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { retrieveAnnouncements } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Modal, capitalize } from '../../utils/helper';
 import { useDeleteAnnouncement } from '../../hooks/announcement';
 import Show from '../../components/show';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function AnnouncementContainer() {
   const [selected, setSelected] = useState([]);
   const [formatData, setFormatData] = useState([]);
   const [page, setPage] = useState(0);
-
+  const isWriteAllowed = usePermission(
+    `${features.ANNOUNCEMENT}-${PERMISSIONS.WRITE}`
+  );
   const { data, isLoading } = useQuery(
     keys.adminAnnouncements,
     retrieveAnnouncements
   );
   const mutation = useDeleteAnnouncement({ callbackFn: () => setSelected([]) });
-
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
 
   const handleDelete = () => {
     if (!selected.length) {
@@ -49,7 +45,7 @@ function AnnouncementContainer() {
   useEffect(() => {
     let updatedFormatData = [];
     if (data) {
-      updatedFormatData = data.data.data.rows.map((item) => {
+      updatedFormatData = data?.data?.data?.rows?.map((item) => {
         const announcement = { ...item };
 
         announcement.startTime = moment(announcement.startTime).format(
@@ -78,7 +74,7 @@ function AnnouncementContainer() {
         <WrapInBreadcrumbs>
           <Box width={1}>
             <WrapInCard>
-              <Show IF={role === ROLES.ADMIN}>
+              <Show IF={isWriteAllowed}>
                 <Box mt={4}>
                   <TableButtons
                     loading={mutation.isLoading}
@@ -97,11 +93,12 @@ function AnnouncementContainer() {
               </Show>
               <DataTable
                 rows={formatData}
-                columns={headCells}
+                columns={getHeadCells({ isWriteAllowed })}
                 setSelected={setSelected}
                 selected={selected}
                 count={formatData?.length || 0}
                 sortColumn="title"
+                isWriteAllowed={isWriteAllowed}
                 page={page}
                 setPage={setPage}
               />

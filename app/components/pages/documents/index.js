@@ -4,22 +4,20 @@ import AddIcon from '@material-ui/icons/Add';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import { H5 } from '../../typography';
 import DocumentTabs from './documentTabs';
-import { ROLES } from '../../../utils/constants';
-import { useAuthContext } from '../../../context/authContext';
 import Show from '../../show';
 
-export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
+export function Documents({
+  data,
+  onHandleDelete,
+  onHandleSortOrder,
+  isWriteAllowed,
+}) {
   return (
     <>
       <Box pb={8} pt={3}>
         <H5> Documents </H5>
       </Box>
-      {role === ROLES.ADMIN && (
+      <Show IF={isWriteAllowed}>
         <Box mb={12}>
           <Link href="/documents/add" underline="none">
             <Button
@@ -31,7 +29,7 @@ export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
             </Button>
           </Link>
         </Box>
-      )}
+      </Show>
       <Show
         IF={data?.length > 0}
         Icon={FileCopyOutlinedIcon}
@@ -42,6 +40,7 @@ export function Documents({ data, onHandleDelete, onHandleSortOrder }) {
             departments={data}
             onHandleDelete={onHandleDelete}
             onHandleSortOrder={onHandleSortOrder}
+            isWriteAllowed={isWriteAllowed}
           />
         </Box>
       </Show>

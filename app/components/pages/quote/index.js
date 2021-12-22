@@ -3,9 +3,10 @@ import { TextArea, Button } from 'components';
 import { Form, Formik } from 'formik';
 import React, { memo } from 'react';
 import { string, object } from 'yup';
-import { H5 } from '../../typography';
+import Show from '../../show';
+import { H5, BodyTextLarge } from '../../typography';
 
-function Quote({ value, handleSubmit, loading }) {
+function Quote({ value, handleSubmit, loading, isWriteAllowed }) {
   const initialValues = {
     quote: value,
   };
@@ -26,23 +27,32 @@ function Quote({ value, handleSubmit, loading }) {
       >
         <Form>
           <Box mt={4} width={[1, 1 / 1.3, 1 / 2]}>
-            <TextArea name="quote" variant="outlined" />
+            <Show IF={isWriteAllowed}>
+              <TextArea name="quote" variant="outlined" />
+            </Show>
+            <Show IF={!isWriteAllowed}>
+              <BodyTextLarge fontWeight="fontWeightLight" color="grey">
+                {initialValues.quote}
+              </BodyTextLarge>
+            </Show>
           </Box>
-          <Box
-            mt={4}
-            width={[1, 1 / 1.3, 1 / 2]}
-            display="flex"
-            justifyContent="flex-end"
-          >
-            <Button
-              color="secondary"
-              variant="contained"
-              disabled={loading}
-              type="submit"
+          <Show IF={isWriteAllowed}>
+            <Box
+              mt={4}
+              width={[1, 1 / 1.3, 1 / 2]}
+              display="flex"
+              justifyContent="flex-end"
             >
-              Publish
-            </Button>
-          </Box>
+              <Button
+                color="secondary"
+                variant="contained"
+                disabled={loading}
+                type="submit"
+              >
+                Publish
+              </Button>
+            </Box>
+          </Show>
         </Form>
       </Formik>
     </>

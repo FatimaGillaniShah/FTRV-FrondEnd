@@ -15,6 +15,8 @@ import ProfitCenterPage from '../../components/pages/profitCenter';
 import { useDeleteProfitCenter } from '../../hooks/profitCenter';
 import { Modal } from '../../utils/helper';
 import Show from '../../components/show';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function ProfitCenter() {
   const [page, setPage] = useState(0);
@@ -31,6 +33,9 @@ function ProfitCenter() {
     {
       keepPreviousData: true,
     }
+  );
+  const isWriteAllowed = usePermission(
+    `${features.PROFIT_CENTER}-${PERMISSIONS.WRITE}`
   );
   const { mutate, isLoading } = useDeleteProfitCenter({
     callbackFn: () => setSelected([]),
@@ -71,6 +76,7 @@ function ProfitCenter() {
           data={profitCenterList}
           count={profitCenterResponse?.data?.data?.count}
           query={query}
+          isWriteAllowed={isWriteAllowed}
           onHandleSearch={handleSearch}
           page={page}
           setPage={setPage}

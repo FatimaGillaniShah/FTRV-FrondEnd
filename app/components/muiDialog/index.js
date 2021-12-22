@@ -8,7 +8,9 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
+import clsx from 'clsx';
 import Show from '../show';
+import { useStyles } from './style';
 
 export default function MuiDialog({
   onClose,
@@ -19,10 +21,11 @@ export default function MuiDialog({
   children,
   onSubmit,
   classes,
-  successButtonText,
+  successButton,
   disabled,
   actionsDisplay,
 }) {
+  const modalClasses = useStyles();
   return (
     <Dialog
       open={open}
@@ -31,7 +34,10 @@ export default function MuiDialog({
       fullWidth={fullWidth}
       maxWidth={maxWidth}
     >
-      <DialogTitle id="form-dialog-title" className={classes?.dialog}>
+      <DialogTitle
+        id="form-dialog-title"
+        className={clsx(classes?.dialog, modalClasses.title)}
+      >
         {title}
       </DialogTitle>
       <DialogContent className={classes?.dialogContent}>
@@ -41,16 +47,35 @@ export default function MuiDialog({
       <Show IF={actionsDisplay}>
         <Box display="flex" px={1}>
           <DialogActions className={classes?.dialogActions}>
-            <Button
-              onClick={onSubmit}
-              type="submit"
-              color="primary"
-              variant="contained"
-              disabled={disabled}
-            >
-              {successButtonText}
-            </Button>
-            <Button onClick={onClose} color="primary">
+            {Array.isArray(successButton) ? (
+              successButton.map((text) => (
+                <Button
+                  name={text}
+                  onClick={(props) => onSubmit(props, text)}
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  disabled={disabled}
+                >
+                  {text}
+                </Button>
+              ))
+            ) : (
+              <Box pl={3}>
+                <Button
+                  name={successButton}
+                  onClick={onSubmit}
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  disabled={disabled}
+                >
+                  {successButton}
+                </Button>
+              </Box>
+            )}
+
+            <Button onClick={onClose} color="secondary">
               Cancel
             </Button>
           </DialogActions>
@@ -68,13 +93,13 @@ MuiDialog.propTypes = {
   open: PropTypes.bool,
   title: PropTypes.string,
   children: PropTypes.element,
-  successButtonText: PropTypes.string,
+  successButton: PropTypes.string,
   disabled: PropTypes.bool,
   actionsDisplay: PropTypes.bool,
 };
 MuiDialog.defaultProps = {
   fullWidth: true,
   maxWidth: 'sm',
-  successButtonText: 'Create',
+  successButton: 'Create',
   actionsDisplay: true,
 };

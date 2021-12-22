@@ -9,6 +9,8 @@ import { keys } from '../../state/queryKeys';
 import { Modal } from '../../utils/helper';
 import { useDeleteJob } from '../../hooks/job';
 import Jobs from '../../components/pages/jobs';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function JobsContainer() {
   const [selected, setSelected] = useState([]);
@@ -17,6 +19,9 @@ function JobsContainer() {
   const [fieldFunc, setFieldFunc] = useState();
   const [query, setQuery] = useState({ searchString: '' });
   const [page, setPage] = useState(0);
+  const isWriteAllowed = usePermission(
+    `${features.CAREER}-${PERMISSIONS.WRITE}`
+  );
   const { data, isLoading: isListLoading } = useQuery(
     keys.getJobs({
       query,
@@ -104,6 +109,7 @@ function JobsContainer() {
           filterToggle={filterToggle}
           onHandleSwitchChange={handleSwitchChange}
           loading={isLoading}
+          isWriteAllowed={isWriteAllowed}
         />
       )}
     </>

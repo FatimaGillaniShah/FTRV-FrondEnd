@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { DataGrid, GridOverlay } from '@material-ui/data-grid';
 import Alert from '@material-ui/lab/Alert';
-import { ROLES, TABLE_PAGE_SIZE } from '../../utils/constants';
+import { TABLE_PAGE_SIZE } from '../../utils/constants';
 import { useStyles } from './styles';
 import { useAuthContext } from '../../context/authContext';
 
@@ -34,19 +34,20 @@ export function DataTable({
   disableSelectionOnClick,
   page,
   setPage,
+  isWriteAllowed,
   checkboxSelection,
   ...props
 }) {
   const {
     user: {
-      data: { role, id: currentUserID },
+      data: { id: currentUserID },
     },
   } = useAuthContext();
-
   const classes = useStyles();
-  const [sortingModel, setSortingModel] = useState([
-    { field: sortColumn || '', sort: sortOrder || 'asc' },
-  ]);
+  const initialSortValue =
+    (sortColumn && [{ field: sortColumn || '', sort: sortOrder || 'asc' }]) ||
+    [];
+  const [sortingModel, setSortingModel] = useState(initialSortValue);
 
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
 
@@ -154,7 +155,8 @@ export function DataTable({
   return (
     <Box className={classes.root}>
       <DataGrid
-        rowHeight={rows.length ? 75 : 35}
+        rowHeight={rows?.length ? 75 : 35}
+        autoHeight
         components={{
           NoRowsOverlay: CustomNoRowsOverlay,
         }}
@@ -162,13 +164,15 @@ export function DataTable({
         selectionModel={[...selected]}
         columns={columns}
         rows={rows}
-        autoHeight
         disableSelectionOnClick={disableSelectionOnClick}
         {...props}
-        checkboxSelection={role === ROLES.ADMIN && checkboxSelection}
+        checkboxSelection={isWriteAllowed && checkboxSelection}
         disableColumnMenu
         isRowSelectable={(params) =>
-          !(matchUserIdWithIDS && params?.row?.id === currentUserID)
+          !(
+            (matchUserIdWithIDS && params?.row?.id === currentUserID) ||
+            params?.row?.isAdmin
+          )
         }
         sortModel={sortingModel}
         sortingMode={isServerSide ? 'server' : 'client'}
@@ -185,7 +189,10 @@ export function DataTable({
         pagination
         onRowsScrollEnd
         getRowClassName={(params) => {
-          if (matchUserIdWithIDS && params?.row?.id === currentUserID) {
+          if (
+            (matchUserIdWithIDS && params?.row?.id === currentUserID) ||
+            params?.row?.isAdmin
+          ) {
             return `row-disabled`;
           }
           return '';

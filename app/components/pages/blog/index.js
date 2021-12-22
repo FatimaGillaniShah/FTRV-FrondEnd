@@ -8,8 +8,6 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactHtmlParser from 'html-react-parser';
 import { H5, BodyTextLarge } from '../../typography';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import BlogCreatorInfo from './blogCreatorInfo';
 import { navigateTo } from '../../../utils/helper';
 import Show from '../../show';
@@ -32,13 +30,8 @@ function Blog({
   user,
   createdAt,
   onHandleDeleteBlog,
+  isWriteAllowed,
 }) {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
-
   const classes = useStyles();
   const history = useHistory();
   const truncate = (source, size) =>
@@ -73,7 +66,7 @@ function Blog({
               {title}
             </H5>
           </Box>
-          <Show IF={role === ROLES.ADMIN}>
+          <Show IF={isWriteAllowed}>
             <Box width={[1, 1 / 2]} display="flex" justifyContent="flex-end">
               <IconButton
                 onClick={() => navigateTo(history, `/blogs/edit/${id}`)}

@@ -4,7 +4,6 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
   },
   bannerGridSection: {
     backgroundColor: theme.palette.bgColor.secondary,
@@ -27,6 +26,12 @@ export const useStyles = makeStyles((theme) => ({
   statsSection: {
     backgroundColor: theme.palette.bgColor.secondary,
     flex: '0.7',
+    marginBlock: '0.2rem',
+  },
+  statsEmptySection: {
+    backgroundColor: theme.palette.bgColor.secondary,
+    flex: '0.7',
+    padding: theme.spacing(54.5),
     marginBlock: '0.2rem',
   },
   carousel: {

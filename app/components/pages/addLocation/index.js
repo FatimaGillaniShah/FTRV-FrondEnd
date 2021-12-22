@@ -48,7 +48,6 @@ export function AddLocationPage({
                       name="name"
                       appendIcon
                       Icon={LocationOnOutlinedIcon}
-                      IconClickable
                     />
                   </Box>
                 </Box>

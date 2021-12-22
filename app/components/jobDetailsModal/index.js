@@ -3,8 +3,8 @@ import { Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'html-react-parser';
 import { useHistory } from 'react-router-dom';
+import { Form, Formik } from 'formik';
 import MuiDialog from '../muiDialog';
-import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
 import { useStyles } from './style';
 import { BodyTextSmall } from '../typography';
@@ -19,7 +19,8 @@ export const JobDetailModal = ({
   jobDetail,
   modal,
   onHandleClose,
-  isLoading,
+  isJobLoading,
+  permissions: { isApplyAllowed, isApplicantAllowed },
 }) => {
   const {
     department,
@@ -33,55 +34,71 @@ export const JobDetailModal = ({
   const history = useHistory();
   const {
     user: {
-      data: { role },
+      data: { isAdmin },
     },
   } = useAuthContext();
+  const { viewApplicant, apply } = {
+    apply: 'Apply',
+    viewApplicant: 'View Applicants',
+  };
 
-  const handleSubmit = () => {
-    if (role === ROLES.ADMIN) {
+  const handleSubmit = (e, name) => {
+    if (isApplicantAllowed && name === viewApplicant) {
       navigateTo(history, `/jobs/applicants/${id}`);
-    } else {
+    } else if (isApplyAllowed && name === apply) {
       navigateTo(history, `/jobs/apply/${id}`);
     }
   };
-  const disabled =
-    (role === ROLES.USER && expired) ||
-    (role === ROLES.USER && applied) ||
-    isLoading;
+  const disabled = applied || isJobLoading || expired;
+  const buttonText = [];
+  if (isApplyAllowed) {
+    buttonText.push(apply);
+  }
+  if (isApplicantAllowed) {
+    buttonText.push(viewApplicant);
+  }
+
   return (
     <>
-      <MuiDialog
-        open={modal}
-        onClose={() => onHandleClose()}
-        title={
-          <Show IF={!isLoading}>
-            <DialogTitle
-              title={title}
-              expired={expired}
-              department={department.name}
-              location={location.name}
-              expiryDate={expiryDate}
-              onHandleClose={onHandleClose}
-              applied={applied}
-            />
-          </Show>
-        }
-        onSubmit={handleSubmit}
-        maxWidth="md"
-        classes={classes}
-        successButtonText={role === ROLES.ADMIN ? 'View Applicants' : 'Apply'}
-        disabled={disabled}
-      >
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <Box px={5} mt={5}>
-            <BodyTextSmall color="grey">
-              {ReactHtmlParser(description)}
-            </BodyTextSmall>
-          </Box>
+      <Formik onSubmit={handleSubmit}>
+        {() => (
+          <Form>
+            <MuiDialog
+              open={modal}
+              onClose={() => onHandleClose()}
+              title={
+                <Show IF={!isJobLoading}>
+                  <DialogTitle
+                    title={title}
+                    expired={expired}
+                    department={department.name}
+                    location={location.name}
+                    expiryDate={expiryDate}
+                    onHandleClose={onHandleClose}
+                    applied={applied}
+                  />
+                </Show>
+              }
+              onSubmit={handleSubmit}
+              maxWidth="md"
+              classes={classes}
+              successButton={buttonText}
+              disabled={!isAdmin && disabled}
+            >
+              <Show IF={isJobLoading}>
+                <Loading />
+              </Show>
+              <Show IF={!isJobLoading}>
+                <Box px={5} mt={5}>
+                  <BodyTextSmall color="grey">
+                    {ReactHtmlParser(description)}
+                  </BodyTextSmall>
+                </Box>
+              </Show>
+            </MuiDialog>
+          </Form>
         )}
-      </MuiDialog>
+      </Formik>
     </>
   );
 };

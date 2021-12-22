@@ -33,6 +33,7 @@ const MuiDatePicker = ({ label, inputVariant, format, ...props }) => {
         onChange={(val) => {
           setFieldValue(field.name, val);
         }}
+        helperText={null}
       />
       <Box ml={4}>
         {meta.touched && meta.error ? (

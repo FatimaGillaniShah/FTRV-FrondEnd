@@ -28,6 +28,16 @@ function CreatePoll() {
     getPollById,
     {
       enabled: !!id,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
+      },
     }
   );
   const poll = data?.data?.data[0];

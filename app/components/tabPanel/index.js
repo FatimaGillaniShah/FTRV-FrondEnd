@@ -2,15 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 
-function TabPanel({ children, value, index, ...other }) {
+function TabPanel({ children, value, index, ...props }) {
   return (
     value === index && (
-      <Box
-        id={`vertical-tabpanel-${index}`}
-        width={[1, 1, 1 / 2, 1 / 2]}
-        {...other}
-      >
-        <Box px={[0, 0, 0, 3]}>{children}</Box>
+      <Box id={`vertical-tabpanel-${index}`} {...props}>
+        <Box>{children}</Box>
       </Box>
     )
   );

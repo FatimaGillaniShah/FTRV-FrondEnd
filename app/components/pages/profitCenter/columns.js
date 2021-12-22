@@ -5,21 +5,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { ProfitCenterDetailModal } from '../../profitCenterDetailsModal';
 import { useDeleteProfitCenter } from '../../../hooks/profitCenter';
 
-const ActionButtons = ({ profitCenter }) => {
+const ActionButtons = ({ profitCenter, isWriteAllowed }) => {
   const { id } = profitCenter;
   const history = useHistory();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
+
   const { mutate } = useDeleteProfitCenter();
   const [openProfitCenterModal, setOpenProfitCenterModal] = useState(false);
   const handleProfitCenterModal = () => {
@@ -51,7 +45,7 @@ const ActionButtons = ({ profitCenter }) => {
           <VisibilityOutlinedIcon color="action" />
         </IconButton>
       </Tooltip>
-      <Show IF={role === ROLES.ADMIN}>
+      <Show IF={isWriteAllowed}>
         <Tooltip title="Edit">
           <IconButton
             onClick={() => navigateTo(history, `/profit-center/edit/${id}`)}
@@ -68,8 +62,7 @@ const ActionButtons = ({ profitCenter }) => {
     </>
   );
 };
-
-export const headCells = [
+export const getHeadCells = ({ isWriteAllowed }) => [
   {
     field: 'centerNo',
     headerName: 'Center No.',
@@ -131,7 +124,9 @@ export const headCells = [
     headerName: ' ',
     description: 'Actions',
     sortable: false,
-    renderCell: ({ row }) => <ActionButtons profitCenter={row} />,
+    renderCell: ({ row }) => (
+      <ActionButtons profitCenter={row} isWriteAllowed={isWriteAllowed} />
+    ),
     width: 150,
   },
 ];

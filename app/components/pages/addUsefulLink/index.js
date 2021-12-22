@@ -62,7 +62,6 @@ export function AddUsefulLinkPage({
                         name="name"
                         appendIcon
                         Icon={PersonOutlinedIcon}
-                        IconClickable
                       />
                     </Box>
                     <Box width={[1, 1 / 3]} mt={5}>
@@ -72,7 +71,6 @@ export function AddUsefulLinkPage({
                         variant="outlined"
                         appendIcon
                         Icon={LinkOutlinedIcon}
-                        IconClickable
                       />
                     </Box>
                     <Box width={[1, 1 / 3]} mt={5}>

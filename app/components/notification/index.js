@@ -7,8 +7,10 @@ import useStyles from './style';
 import { H6, BodyText } from '../typography';
 import { useAuthContext } from '../../context/authContext';
 import { colors } from '../../theme/colors';
+import Show from '../show';
 
 export function AnnouncementNotification({ item }) {
+  const { permission, title, description } = item;
   let notificationBackgroundColor;
   if (item.priority === 'high') {
     notificationBackgroundColor = colors.red;
@@ -43,40 +45,49 @@ export function AnnouncementNotification({ item }) {
           mt={1}
           justifyContent="center"
           display="flex"
-          className={classes.mainBox}
+          className={!permission ? classes.mainBox : classes.permissionBox}
         >
-          <Box width="0.22" alignSelf="center">
+          <Box
+            width="0.22"
+            mt={permission ? 1.5 : 0}
+            {...(!permission && { alignSelf: 'center' })}
+          >
             <Box
               width="0.67"
               display="flex"
               justifyContent="center"
-              alignItems="center"
+              alignItems={!permission ? 'center' : ''}
               bgcolor={notificationBackgroundColor}
               className={classes.iconBox}
             >
-              <NotificationsActiveIcon className={classes.icon} />
+              <NotificationsActiveIcon
+                className={!permission ? classes.icon : classes.permissionIcon}
+              />
             </Box>
           </Box>
           <Box
+            alignItems={!permission ? 'center' : ''}
             width="0.67"
             display="flex"
             flexDirection="column"
             justifyContent="center"
-            alignItems="center"
           >
-            <Box mb={2}>
-              <H6 color="dark">{item.title}</H6>
+            <Box mb={permission ? 2 : 0}>
+              <H6 color="dark">{title}</H6>
             </Box>
             <Box className={classes.textBox}>
-              <BodyText color="dark">{item.description}</BodyText>
+              <BodyText color="dark">{description}</BodyText>
             </Box>
           </Box>
-          <Box width="0.02" mb={2}>
-            <CancelIcon
-              className={classes.closeAnnouncement}
-              onClick={() => setIsNotificationClosed(!isNotificationClosed)}
-            />
-          </Box>
+
+          <Show IF={!permission}>
+            <Box width="2%" mb={2}>
+              <CancelIcon
+                className={classes.closeAnnouncement}
+                onClick={() => setIsNotificationClosed(!isNotificationClosed)}
+              />
+            </Box>
+          </Show>
         </Box>
       </Collapse>
     </>

@@ -13,6 +13,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
     resetForm();
     onClear();
   };
+
   return (
     <>
       <Formik

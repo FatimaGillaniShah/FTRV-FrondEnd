@@ -7,8 +7,6 @@ import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { useDeleteJob } from '../../../hooks/job';
@@ -16,13 +14,8 @@ import JobDetailModal from '../../../containers/jobDetailModal';
 import { colors } from '../../../theme/colors';
 import { MuiBadge } from '../../index';
 
-const ActionButtons = ({ jobs }) => {
+const ActionButtons = ({ jobs, isWriteAllowed }) => {
   const history = useHistory();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
   const [openJobModal, setOpenJobModal] = useState(false);
   const { mutate, isLoading } = useDeleteJob();
 
@@ -55,7 +48,7 @@ const ActionButtons = ({ jobs }) => {
           <VisibilityOutlinedIcon color="action" />
         </IconButton>
       </Tooltip>
-      <Show IF={role === ROLES.ADMIN}>
+      <Show IF={isWriteAllowed}>
         <Tooltip title="Edit">
           <IconButton
             disabled={isLoading}
@@ -86,7 +79,7 @@ const StatusIcons = ({ jobs }) => (
     )}
   </>
 );
-export const headCells = [
+export const getHeadCells = ({ isWriteAllowed }) => [
   {
     field: 'title',
     type: 'string',
@@ -135,7 +128,7 @@ export const headCells = [
     description: 'Actions',
     sortable: false,
     renderCell: ({ row }) => (
-      <ActionButtons jobs={row} disabled={row.role === ROLES.ADMIN} />
+      <ActionButtons jobs={row} isWriteAllowed={isWriteAllowed} />
     ),
     width: 150,
   },

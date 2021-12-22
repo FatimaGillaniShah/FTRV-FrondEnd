@@ -26,18 +26,19 @@ function LoginContainer() {
   const history = useHistory();
   const [googleError, setGoogleError] = useState('');
   let loginError = '';
-
+  const loginUserData = data?.data?.data;
+  const googleUserData = googleData?.data?.data;
   if (isSuccess || googleIsSuccess) {
     const updatedUser = {
       ...user,
-      data: isSuccess ? data.data.data : googleData.data.data,
+      data: isSuccess ? loginUserData : googleUserData,
       isAuthenticated: true,
-      token: isSuccess ? data.data.data.token : googleData.data.data.token,
+      token: isSuccess ? loginUserData.token : googleUserData.token,
     };
     setUser(updatedUser);
   }
   if (isError) {
-    loginError = error.response.data.message;
+    loginError = error.response?.data?.message;
   } else if (isGoogleError) {
     loginError = 'Invalid Token';
   }
@@ -53,6 +54,7 @@ function LoginContainer() {
   const handleGoogleLoginFailed = (e) => {
     setGoogleError(e.error);
   };
+
   const handleSubmit = (values) => {
     mutation.mutate(values);
   };

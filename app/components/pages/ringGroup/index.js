@@ -2,13 +2,11 @@ import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
 import PropTypes from 'prop-types';
-import { useAuthContext } from '../../../context/authContext';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import WrapInCard from '../../layout/wrapInCard';
-import { ROLES } from '../../../utils/constants';
 import { TableButtons } from './tableButtons';
 import DataTable from '../../dataTable';
-import { headCells } from './columns';
+import { getHeadCells } from './columns';
 import { Search } from '../../search/search';
 import Filters from './filters';
 import Show from '../../show';
@@ -31,13 +29,8 @@ function RingGroup({
   alignment,
   onHandleToggleChange,
   loading,
+  isWriteAllowed,
 }) {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
-
   return (
     <WrapInBreadcrumbs>
       <Box width={1}>
@@ -66,7 +59,7 @@ function RingGroup({
           </Box>
         </WrapInCard>
         <WrapInCard>
-          <Show IF={role === ROLES.ADMIN}>
+          <Show IF={isWriteAllowed}>
             <Box mt={4}>
               <TableButtons
                 numSelected={selected.length}
@@ -84,10 +77,11 @@ function RingGroup({
           </Show>
           <DataTable
             rows={data}
-            columns={headCells}
+            columns={getHeadCells({ isWriteAllowed })}
             setSelected={setSelected}
             selected={selected}
             count={data?.length || 0}
+            isWriteAllowed={isWriteAllowed}
             sortColumn="name"
             page={page}
             setPage={setPage}

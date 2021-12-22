@@ -5,26 +5,24 @@ import { useQuery } from 'react-query';
 import { Alert } from '@material-ui/lab';
 import { getDepartments } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { headCells } from './columns';
+import { getHeadCells } from './columns';
 import DataTable from '../../components/dataTable';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import WrapInCard from '../../components/layout/wrapInCard';
 import TableButtons from './tableButtons';
-import { useAuthContext } from '../../context/authContext';
 import { Loading } from '../../components/loading';
-import { ROLES } from '../../utils/constants';
 import { Modal } from '../../utils/helper';
 import { useDeleteDepartment } from '../../hooks/department';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
+import Show from '../../components/show';
 
 function Departments() {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
-
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
+  const isWriteAllowed = usePermission(
+    `${features.DEPARTMENT}-${PERMISSIONS.WRITE}`
+  );
   const mutation = useDeleteDepartment({ callbackFn: () => setSelected([]) });
   const { data, isLoading } = useQuery(keys.departments, getDepartments);
   const departments = data?.data?.data?.rows;
@@ -50,7 +48,7 @@ function Departments() {
       ) : (
         <WrapInBreadcrumbs>
           <WrapInCard mb={8}>
-            {role === ROLES.ADMIN && (
+            <Show IF={isWriteAllowed}>
               <Box mt={4}>
                 <TableButtons
                   handleDelete={handleDelete}
@@ -65,14 +63,15 @@ function Departments() {
                   </Box>
                 )}
               </Box>
-            )}
+            </Show>
             <DataTable
               rows={departments}
-              columns={headCells}
+              columns={getHeadCells({ isWriteAllowed })}
               selected={selected}
               setSelected={setSelected}
               count={departments?.length || 0}
               sortColumn="name"
+              isWriteAllowed={isWriteAllowed}
               page={page}
               setPage={setPage}
             />

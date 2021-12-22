@@ -8,6 +8,8 @@ function PollHome({
   isVoteLoading,
   onHandleDelete,
   initialValues,
+  isWriteAllowed,
+  isVoteWriteAllowed,
 }) {
   return (
     <Box p={2} mr={[0, 0, 0, 8]} ml={[0, 0, 0, 0]} width={[1, 1, 1, 1]}>
@@ -21,8 +23,10 @@ function PollHome({
         voted={poll.voted}
         onHandleDelete={onHandleDelete}
         home
+        isVoteWriteAllowed={isVoteWriteAllowed}
         votesSum={poll.votesSum}
         initialValues={initialValues}
+        isWriteAllowed={isWriteAllowed}
       />
     </Box>
   );

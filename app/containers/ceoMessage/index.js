@@ -7,9 +7,14 @@ import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { getCeoMessage } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Loading } from '../../components/loading';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function CeoMessage() {
   const { data, isLoading } = useQuery(keys.ceoMessage, getCeoMessage);
+  const isWriteAllowed = usePermission(
+    `${features.MESSAGE_FROM_CEO}-${PERMISSIONS.WRITE}`
+  );
 
   return (
     <>
@@ -23,7 +28,10 @@ function CeoMessage() {
           {isLoading ? (
             <Loading />
           ) : (
-            <CeoMessageInfo ceoMessageData={data?.data?.data} />
+            <CeoMessageInfo
+              ceoMessageData={data?.data?.data}
+              isWriteAllowed={isWriteAllowed}
+            />
           )}
         </WrapInCard>
       </WrapInBreadcrumbs>

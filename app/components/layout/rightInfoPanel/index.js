@@ -2,8 +2,9 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import AnnouncementNotification from '../../announcementNotification';
+import AnnouncementNotification from '../../notification';
 import BirthdayCarousel from '../../birthdayCard';
+import { usePermission } from '../../../hooks/permission';
 import { keys } from '../../../state/queryKeys';
 import { useAuthContext } from '../../../context/authContext';
 import {
@@ -16,6 +17,7 @@ import BoxWithBg from '../../boxWithBg';
 import { H6 } from '../../typography';
 import WorkAnniversaryCard from '../../workAnniversary';
 import Show from '../../show';
+import { PERMISSIONS } from '../../../utils/constants';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -33,18 +35,47 @@ const useStyles = makeStyles(() => ({
 }));
 function Index() {
   const classes = useStyles();
+  const [feature, setFeature] = useState({
+    ANNOUNCEMENT: false,
+    WORK_ANNIVERSARY: false,
+    QUOTE: false,
+    BIRTHDAY: false,
+  });
+  const permit = usePermission;
+  Object.keys(feature).map((resource) => {
+    const can = permit(`${resource}-${PERMISSIONS.READ}`);
+    if (can && !feature[resource]) {
+      setFeature((prevState) => ({
+        ...prevState,
+        [resource]: true,
+      }));
+    }
+    return feature;
+  });
+
   const { data } = useQuery(keys.birthday, getBirthdays, {
     refetchOnWindowFocus: true,
+    enabled: feature.BIRTHDAY,
   });
+
   const { data: workAnniversaryData } = useQuery(
     keys.workAnniversary,
-    getWorkAnniversaries
+    getWorkAnniversaries,
+    {
+      enabled: feature.WORK_ANNIVERSARY,
+    }
   );
-  const { data: quoteData } = useQuery(keys.quote, getQuote);
+
+  const { data: quoteData } = useQuery(keys.quote, getQuote, {
+    enabled: feature.QUOTE,
+  });
   const { data: announcementData } = useQuery(
     keys.announcements,
     retrieveActiveAnnouncements,
-    { refetchOnWindowFocus: true }
+    {
+      refetchOnWindowFocus: true,
+      enabled: feature.ANNOUNCEMENT,
+    }
   );
 
   const birthdays = data?.data?.data || [];
@@ -62,18 +93,19 @@ function Index() {
           (localAnnouncement) => row.id === localAnnouncement.id
         )
     );
-
     setFilterArray(activeAnnouncements);
   }, [announcementData, user]);
 
   return (
     <>
       <Grid xs={12} className={classes.root}>
-        {filterArray?.map((item) => (
-          <Grid xs={12}>
-            <AnnouncementNotification item={item} />
-          </Grid>
-        ))}
+        <>
+          {filterArray?.map((item) => (
+            <Grid xs={12}>
+              <AnnouncementNotification item={item} />
+            </Grid>
+          ))}
+        </>
 
         <Show IF={birthdays.length > 0}>
           <Grid xs={12}>

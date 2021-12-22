@@ -52,7 +52,6 @@ function CreateJob({ id, initialValues, onHandleSubmit, loading }) {
                           OutlinedInputPlaceholder="Title*"
                           appendIcon
                           Icon={TitleOutlinedIcon}
-                          IconClickable
                           variant="outlined"
                         />
                       </Box>

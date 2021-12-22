@@ -7,8 +7,7 @@ import SpeakerNotesOutlinedIcon from '@material-ui/icons/SpeakerNotesOutlined';
 import { useHistory } from 'react-router-dom';
 import Blog from '../pages/blog';
 import { H5 } from '../typography';
-import { useAuthContext } from '../../context/authContext';
-import { ROLES, TABLE_PAGE_SIZE } from '../../utils/constants';
+import { TABLE_PAGE_SIZE } from '../../utils/constants';
 import { navigateTo } from '../../utils/helper';
 import Show from '../show';
 import { Button } from '../index';
@@ -30,23 +29,20 @@ export function BlogListing({
   handleChange,
   count,
   onHandleDeleteBlog,
+  isWriteAllowed,
 }) {
   const classes = useStyles();
   const history = useHistory();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
   const defaultPage = 1;
   const noOfPages = Math.ceil(count / TABLE_PAGE_SIZE);
+
   return (
     <>
       <Box m={4}>
         <Box>
           <H5>Blogs</H5>
         </Box>
-        <Show IF={role === ROLES.ADMIN}>
+        <Show IF={isWriteAllowed}>
           <Box mt={10}>
             <Button
               variant="contained"
@@ -77,6 +73,7 @@ export function BlogListing({
                         user={user}
                         createdAt={createdAt}
                         onHandleDeleteBlog={onHandleDeleteBlog}
+                        isWriteAllowed={isWriteAllowed}
                       />
                       {blogs[blogs.length - 1].id !== id && <Divider />}
                     </Box>

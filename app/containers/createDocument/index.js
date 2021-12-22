@@ -23,6 +23,16 @@ function AddDocument() {
     getDocumentById,
     {
       enabled: !!id,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message,
+        });
+      },
     }
   );
   let document = data?.data?.data;

@@ -31,8 +31,11 @@ const {
   JOB,
   APPLICANT,
   POLL,
-  VOTE_POLL,
+  RESOURCE,
+  VOTE,
   PROFIT_CENTER,
+  GROUP,
+  USERS_BULK_UPDATE,
 } = APIS;
 
 // USER CRUD
@@ -51,13 +54,13 @@ export const fetchUsers = ({ queryKey }) => {
   if (query?.searchString) {
     url = `${USERS}?${insertParams(
       query
-    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}&detail=${detail}`;
+    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&isPagination=1&pageSize=${pageSize}&detail=${detail}`;
   } else if (filters) {
     url = `${USERS}?${insertParams(
       filters
-    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}&detail=${detail}`;
+    )}&sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&isPagination=1&pageSize=${pageSize}&detail=${detail}`;
   } else {
-    url = `${USERS}?sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&pageSize=${pageSize}&detail=${detail}`;
+    url = `${USERS}?sortColumn=${sortColumn}&sortOrder=${sortOrder}&pageNumber=${pageNumber}&isPagination=1&pageSize=${pageSize}&detail=${detail}`;
   }
   return http.get(url);
 };
@@ -73,6 +76,8 @@ export const updateUser = (payload) => {
   const { id, updatedData } = payload;
   return http.put(`${USERS}/${id}`, updatedData);
 };
+export const bulkUserUpdate = (payload) =>
+  http.put(`${USERS_BULK_UPDATE}`, payload);
 
 export const getUserById = (id) => http.get(`${USERS}/${id}`);
 
@@ -92,7 +97,7 @@ export const googleLogin = (payload) => http.post(GOOGLE_LOGIN, payload);
 
 // USEFUL LINKS CRUD
 
-export const fetchLinks = () => http.get(`${LINKS}?pageSize=1000&`);
+export const fetchLinks = () => http.get(`${LINKS}?isPagination=0&`);
 
 export const createLink = (payload) => http.post(LINKS, payload);
 
@@ -109,7 +114,7 @@ export const retrieveActiveAnnouncements = () =>
   http.get(`${GET_ANNOUNCEMENTS}`);
 
 export const retrieveAnnouncements = () =>
-  http.get(`${ANNOUNCEMENT}?pageSize=1000&`);
+  http.get(`${ANNOUNCEMENT}?isPagination=0&`);
 
 export const retrieveAnnouncementById = (id) =>
   http.get(`${ANNOUNCEMENT}/${id}`);
@@ -130,7 +135,7 @@ export const saveCeoMessage = (payload) => http.put(`${CEO_MESSAGE}`, payload);
 export const createEvent = (payload) => http.post(EVENTS, payload);
 
 export const fetchEvents = ({ queryKey }) =>
-  http.get(`${EVENTS}?pageSize=1000&date=${queryKey[1].eventWindowDate}`);
+  http.get(`${EVENTS}?isPagination=0&date=${queryKey[1].eventWindowDate}`);
 
 export const deleteEvents = (payload) =>
   http.delete(EVENTS, { data: { ids: payload } });
@@ -143,7 +148,7 @@ export const updateEvent = ({ id, ...payload }) =>
 
 // BLOG CRUD
 export const getBlogs = ({ queryKey }) => {
-  const url = `${BLOG}?sortColumn=id&sortOrder=desc&pageSize=${TABLE_PAGE_SIZE}&pageNumber=${queryKey[1]}`;
+  const url = `${BLOG}?sortColumn=id&sortOrder=desc&pageSize=${TABLE_PAGE_SIZE}&pageNumber=${queryKey[1]}&isPagination=1`;
   return http.get(url);
 };
 export const createBlog = (payload) => http.post(BLOG, payload);
@@ -162,7 +167,7 @@ export const deleteBlog = (payload) =>
 export const getLinkCategory = () => http.get(`${CATEGORY}`);
 
 export const getUsefulLinksByCategoryId = ({ queryKey }) =>
-  http.get(`${LINKS}?pageSize=1000&categoryId=${queryKey[1]}`);
+  http.get(`${LINKS}?isPagination=0&categoryId=${queryKey[1]}`);
 // LINK CATEGORY CRUD
 export const createLinkCategory = (payload) => http.post(CATEGORY, payload);
 
@@ -175,7 +180,7 @@ export const updateLinkCategory = ({ id, ...payload }) =>
 export const deleteLinkCategory = (id) => http.delete(`${CATEGORY}/${id}`);
 export const getCategories = () => http.get(CATEGORY);
 
-export const getLocations = () => http.get(`${LOCATIONS}?pageSize=1000&`);
+export const getLocations = () => http.get(`${LOCATIONS}?isPagination=0&`);
 
 export const deleteLocation = (payload) =>
   http.delete(LOCATIONS, { data: { ids: payload } });
@@ -187,7 +192,7 @@ export const getLocationById = ({ queryKey }) =>
 
 export const updateLocation = ({ id, ...payload }) =>
   http.put(`${LOCATIONS}/${id}`, payload);
-export const getDepartments = () => http.get(`${DEPARTMENTS}?pageSize=1000&`);
+export const getDepartments = () => http.get(`${DEPARTMENTS}?isPagination=0&`);
 
 export const getBannerImage = () => http.get(BANNER_IMAGE);
 
@@ -232,12 +237,12 @@ export const updateRingGroup = ({ id, ...payload }) =>
 export const getRingGroupById = ({ queryKey }) =>
   http.get(`${RING_GROUP}/${queryKey[1]}`);
 export const getRingGroups = ({ queryKey }) => {
-  let url = `${RING_GROUP}?pageSize=1000&`;
+  let url = `${RING_GROUP}?isPagination=0&`;
   const { query, filters } = queryKey[1];
   if (query.searchString) {
-    url = `${RING_GROUP}?pageSize=1000&${insertParams(query)}`;
+    url = `${RING_GROUP}?isPagination=0&${insertParams(query)}`;
   } else if (filters) {
-    url = `${RING_GROUP}?pageSize=1000&${insertParams(filters)}`;
+    url = `${RING_GROUP}?isPagination=0&${insertParams(filters)}`;
   }
   return http.get(url);
 };
@@ -246,12 +251,12 @@ export const deleteRingGroup = (payload) =>
   http.delete(RING_GROUP, { data: { ids: payload } });
 
 export const getJobs = ({ queryKey }) => {
-  let url = `${JOB}?pageSize=1000&`;
+  let url = `${JOB}?isPagination=0&`;
   const { query, filters } = queryKey[1];
   if (query.searchString) {
-    url = `${JOB}?pageSize=1000&${insertParams(query)}`;
+    url = `${JOB}?isPagination=0&${insertParams(query)}`;
   } else if (filters) {
-    url = `${JOB}?pageSize=1000&${insertParams(filters)}`;
+    url = `${JOB}?isPagination=0&${insertParams(filters)}`;
   }
   return http.get(url);
 };
@@ -273,13 +278,13 @@ export const updateJob = ({ id, ...payload }) =>
 
 export const getPolls = ({ queryKey }) => {
   const { date, currentPage, query, filters } = queryKey[1];
-  let url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}`;
+  let url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}&isPagination=1`;
   if (query.searchString) {
-    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}&${insertParams(
+    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}&isPagination=1&${insertParams(
       query
     )}`;
   } else if (filters) {
-    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}&${insertParams(
+    url = `${POLL}?date=${date}&sortColumn=id&sortOrder=desc&pageSize=${LIST_PAGE_SIZE}&pageNumber=${currentPage}&isPagination=1&${insertParams(
       filters
     )}`;
   }
@@ -298,8 +303,8 @@ export const getPollById = ({ queryKey }) => {
 export const deletePoll = (payload) =>
   http.delete(POLL, { data: { ids: payload } });
 
-export const votePoll = ({ date, ...payload }) =>
-  http.post(`${VOTE_POLL}?date=${date}`, payload);
+export const vote = ({ date, ...payload }) =>
+  http.post(`${VOTE}?date=${date}`, payload);
 
 export const createProfitCenter = (payload) =>
   http.post(PROFIT_CENTER, payload);
@@ -311,13 +316,48 @@ export const updateProfitCenter = ({ id, ...payload }) =>
   http.put(`${PROFIT_CENTER}/${id}`, payload);
 
 export const getProfitCenters = ({ queryKey }) => {
-  let url = `${PROFIT_CENTER}?pageSize=1000&`;
+  let url = `${PROFIT_CENTER}?isPagination=0&`;
   const { query } = queryKey[1];
   if (query?.searchString) {
-    url = `${PROFIT_CENTER}?pageSize=1000&${insertParams(query)}`;
+    url = `${PROFIT_CENTER}?isPagination=0&${insertParams(query)}`;
   }
   return http.get(url);
 };
 
 export const deleteProfitCenter = (payload) =>
   http.delete(PROFIT_CENTER, { data: { ids: payload } });
+
+export const getResources = ({ queryKey }) => {
+  let url;
+  const filters = queryKey[1];
+  if (filters) {
+    url = `${RESOURCE}?${insertParams(filters)}`;
+  } else {
+    url = RESOURCE;
+  }
+  return http.get(url);
+};
+
+export const createGroup = (payload) => http.post(GROUP, payload);
+
+export const getGroupById = ({ queryKey }) =>
+  http.get(`${GROUP}/${queryKey[1]}`);
+
+export const updateGroup = ({ id, ...payload }) =>
+  http.put(`${GROUP}/${id}`, payload);
+
+export const getUsersByGroupId = ({ queryKey }) =>
+  http.get(`${GROUP}/${queryKey[1]}/users`);
+export const getGroups = ({ queryKey }) => {
+  let url;
+  const filters = queryKey[1];
+  if (filters) {
+    url = `${GROUP}?${insertParams(filters)}`;
+  } else {
+    url = `${GROUP}?isPagination=0&`;
+  }
+  return http.get(url);
+};
+
+export const deleteGroup = (payload) =>
+  http.delete(GROUP, { data: { ids: payload } });

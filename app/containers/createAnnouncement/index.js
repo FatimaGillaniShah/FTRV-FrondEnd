@@ -29,7 +29,6 @@ function CreateAnnouncement() {
       });
 
       navigateTo(history, '/announcement');
-
       queryClient.invalidateQueries(keys.adminAnnouncements);
     },
     onError: ({

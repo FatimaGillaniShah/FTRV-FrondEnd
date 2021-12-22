@@ -2,7 +2,7 @@ import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { H5 } from '../../typography';
+import { H5 } from '../typography';
 
 const useStyles = makeStyles(() => ({
   iconImage: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export function NotExist({ Icon, description }) {
+export function NoData({ Icon, description }) {
   const classes = useStyles();
 
   return (
@@ -31,8 +31,8 @@ export function NotExist({ Icon, description }) {
     </>
   );
 }
-NotExist.propTypes = {
+NoData.propTypes = {
   description: PropTypes.string,
   Icon: PropTypes.object,
 };
-export default NotExist;
+export default NoData;

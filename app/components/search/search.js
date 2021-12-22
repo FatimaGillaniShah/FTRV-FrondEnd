@@ -45,7 +45,6 @@ export function Search({
                 Icon={SearchIcon}
                 OutlinedInputPlaceholder="Type here to search"
                 margin="dense"
-                IconClickable={false}
                 onChange={(e) => {
                   onHandleSearch(e, setFieldValue);
                   handleChange(e);

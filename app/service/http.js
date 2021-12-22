@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOCAL_STORAGE_ENTRIES } from '../utils/constants';
+import { LOCAL_STORAGE_ENTRIES, STATUS_CODES } from '../utils/constants';
 /* eslint-disable no-param-reassign */
 
 class Http {
@@ -15,17 +15,31 @@ class Http {
 
     service.interceptors.request.use(
       (config) => {
-        const { token, googleToken } = JSON.parse(
-          localStorage.getItem(LOCAL_STORAGE_ENTRIES.user)
-        );
-        config.headers.common.Authorization = `Bearer ${token}`;
-        if (googleToken) {
-          config.headers.GTOKEN = `${googleToken}`;
+        const user = localStorage.getItem(LOCAL_STORAGE_ENTRIES.user);
+        if (user) {
+          const { token, googleToken } = JSON.parse(user);
+          config.headers.common.Authorization = `Bearer ${token}`;
+          if (googleToken) {
+            config.headers.GTOKEN = `${googleToken}`;
+          }
         }
 
         return config;
       },
       (error) => Promise.reject(error)
+    );
+    service.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error?.response) {
+          const { status } = error.response;
+
+          if (status === STATUS_CODES.FORBIDDEN) {
+            window.location.href = '/access-denied';
+          }
+        }
+        return Promise.reject(error);
+      }
     );
     this.service = service;
   }

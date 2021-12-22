@@ -1,8 +1,9 @@
-import { object, mixed, string, date, ref } from 'yup';
+import moment from 'moment';
+import { object, mixed, string, date, ref, array } from 'yup';
 import { MAX_UPLOADABLE_IMAGE_SIZE_IN_MBS } from '../../../utils/constants';
+import { parseDate } from '../../../utils/functions';
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
-
 export const yupUserFormValidaton = object().shape({
   file: mixed().when('isProfilePicAttached', {
     is: true,
@@ -73,7 +74,26 @@ export const yupUserFormValidaton = object().shape({
     .matches(/^[0-9]*$/, '* Only number are allowed')
     .max(10, 'Too Long!')
     .nullable(),
-  joiningDate: date().notRequired().default(null).nullable(),
-  dob: date().notRequired().default(null).nullable(),
-  role: string().max(30, 'Too Long!'),
+  joiningDate: date()
+    .typeError('Invalid Date Format')
+    .max(
+      moment().endOf('day'),
+      ({ max }) => `Joining must be equal or less to ${parseDate(max)}`
+    )
+    .notRequired()
+    .default(null)
+    .nullable(),
+  dob: date()
+    .typeError('Invalid Date Format')
+    .max(
+      moment().endOf('day'),
+      ({ max }) => `Date of birth must be equal or less to ${parseDate(max)}`
+    )
+    .notRequired()
+    .default(null)
+    .nullable(),
+  groupIds: array().when('isAdmin', {
+    is: (isAdmin) => !isAdmin,
+    then: array().required('*Groups Required').min(1),
+  }),
 });

@@ -48,7 +48,6 @@ export function AddDepartmentPage({
                       name="name"
                       appendIcon
                       Icon={BusinessIcon}
-                      IconClickable
                     />
                   </Box>
                 </Box>

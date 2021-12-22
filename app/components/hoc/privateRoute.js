@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { useAuthContext } from '../../context/authContext';
+import { usePermission } from '../../hooks/permission';
+import NotFound from '../../containers/notFound/loadable';
+import { nonFeatures } from '../../utils/constants';
 
-const PrivateRoute = ({ component: Component, roles, ...rest }) => {
+const PrivateRoute = ({ component: Component, resource, path, ...rest }) => {
   const { user } = useAuthContext();
+  const { data } = user;
+  const can = usePermission(resource);
+
+  const nonfeatures = Object.values(nonFeatures);
   return (
     <Route
       {...rest}
@@ -13,12 +20,14 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
         if (!user || !user.isAuthenticated) {
           return <Redirect to="/" />;
         }
-        // check if route is restricted by role
-        if (roles && roles.indexOf(user.data.role) === -1) {
-          // role not authorised so redirect to home page and logout
-          return <Redirect to="/" />;
+        // Check if route has permission
+        if (data.isAdmin) {
+          return <Component {...props} />;
         }
-        return <Component {...props} />;
+        if (can || nonfeatures.includes(resource)) {
+          return <Component {...props} />;
+        }
+        return <NotFound />;
       }}
     />
   );
@@ -26,7 +35,6 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
 
 PrivateRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
-  roles: PropTypes.array,
 };
 
 export default PrivateRoute;

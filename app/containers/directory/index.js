@@ -7,26 +7,22 @@ import { useHistory } from 'react-router-dom';
 import { Alert } from 'components';
 import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
-import {
-  fetchUsers,
-  getDepartments,
-  getLocations,
-} from '../../state/queryFunctions';
+import { fetchUsers } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { headCells } from './columns';
+import { getHeadCells } from './columns';
 import WrapInCard from '../../components/layout/wrapInCard';
 import Search from '../../components/search/search';
 import Filters from '../../components/pages/directory/filters';
 import DataTable from '../../components/dataTable';
 import TableButtons from './tableButtons';
 import { Loading } from '../../components/loading';
-import { useAuthContext } from '../../context/authContext';
-import { ROLES, TABLE_PAGE_SIZE } from '../../utils/constants';
+import { TABLE_PAGE_SIZE, features, PERMISSIONS } from '../../utils/constants';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useStyles } from './styles';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 import Show from '../../components/show';
+import { usePermission } from '../../hooks/permission';
 
 function DirectoryContainer() {
   const [query, setQuery] = useState({ searchString: '' });
@@ -44,12 +40,10 @@ function DirectoryContainer() {
   const classes = useStyles();
   const [fieldFunc, setFieldFunc] = useState();
   const mutation = useDeleteUser({ callbackFn: () => setSelected([]) });
+  const isWriteAllowed = usePermission(
+    `${features.DIRECTORY}-${PERMISSIONS.WRITE}`
+  );
 
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
   useEffect(() => {
     if (checked) {
       fieldFunc?.setFormikField('searchString', '');
@@ -74,14 +68,6 @@ function DirectoryContainer() {
   const theme = useTheme();
   const match = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const { data: locations, isLocationLoading } = useQuery(
-    keys.locations,
-    getLocations
-  );
-  const { data: deparments, isDepartmentLoading } = useQuery(
-    keys.departments,
-    getDepartments
-  );
   const tableData = data?.data?.data;
 
   const handleSwitchChange = ({ target }) => {
@@ -135,14 +121,6 @@ function DirectoryContainer() {
   const handleServerPageSize = ({ rowPerPage }) => {
     setPageSize(rowPerPage);
   };
-  const locationOptions = locations?.data.data.rows.map((val) => ({
-    value: val.id,
-    label: val.name,
-  }));
-  const departmentOptions = deparments?.data.data.rows.map((val) => ({
-    value: val.id,
-    label: val.name,
-  }));
   const toggleValues = [
     {
       value: 'directory',
@@ -163,15 +141,13 @@ function DirectoryContainer() {
       navigateTo(history, `/${alignmentValue}`);
     }
   };
+
   return (
     <>
       <Helmet>
         <title>Directory Listing</title>
       </Helmet>
-      {isLoading ||
-      isLocationLoading ||
-      isDepartmentLoading ||
-      mutation.isLoading ? (
+      {isLoading || mutation.isLoading ? (
         <Loading />
       ) : (
         <WrapInBreadcrumbs>
@@ -195,19 +171,18 @@ function DirectoryContainer() {
                   <Filters
                     onHandleFilterSearch={handleFilterSearch}
                     onClear={onClear}
-                    locationOptions={locationOptions}
-                    departmentOptions={departmentOptions}
                   />
                 </Show>
               </Box>
             </WrapInCard>
             <WrapInCard>
-              <Show IF={role === ROLES.ADMIN}>
+              <Show IF={isWriteAllowed}>
                 <Box mt={4}>
                   <TableButtons
                     onDelete={handleDelete}
                     numSelected={selected.length}
                     loading={mutation.isLoading}
+                    selected={selected}
                   />
                 </Box>
               </Show>
@@ -222,7 +197,7 @@ function DirectoryContainer() {
               {!isLoading && !mutation.isLoading && (
                 <DataTable
                   rows={tableData?.rows}
-                  columns={headCells({ role, match })}
+                  columns={getHeadCells({ isWriteAllowed, match })}
                   setSelected={setSelected}
                   selected={selected}
                   onChangeSort={onChangeSort}
@@ -234,6 +209,7 @@ function DirectoryContainer() {
                   handleServerPageSize={handleServerPageSize}
                   matchUserIdWithIDS
                   page={page}
+                  isWriteAllowed={isWriteAllowed}
                   setPage={setPage}
                 />
               )}

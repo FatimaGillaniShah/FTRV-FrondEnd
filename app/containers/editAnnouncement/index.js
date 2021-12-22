@@ -19,8 +19,21 @@ function EditAnnouncement() {
   const queryClient = useQueryClient();
   const history = useHistory();
 
-  const { data, isLoading } = useQuery(keys.getAnnouncementById(id), () =>
-    retrieveAnnouncementById(id)
+  const { data, isLoading } = useQuery(
+    keys.getAnnouncementById(id),
+    () => retrieveAnnouncementById(id),
+    {
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Error while Updating',
+        });
+      },
+    }
   );
   const mutation = useMutation(updateAnnouncement, {
     onSuccess: () => {
@@ -31,7 +44,6 @@ function EditAnnouncement() {
         icon: 'success',
         title: `Announcement Updated Successfully`,
       });
-
       navigateTo(history, '/announcement');
     },
     onError: ({
@@ -41,7 +53,7 @@ function EditAnnouncement() {
     }) => {
       Toast({
         icon: 'error',
-        title: message || 'Error while Updating',
+        title: message || 'Some error occurred',
       });
     },
   });

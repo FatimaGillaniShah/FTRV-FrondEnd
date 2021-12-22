@@ -1,6 +1,5 @@
-import { Box, Button, IconButton, MenuItem } from '@material-ui/core';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import ChevronRight from '@material-ui/icons/ChevronRight';
+import { Button, IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { BodyTextSmall } from 'components';
 import {
   bindHover,
@@ -9,9 +8,12 @@ import {
 } from 'material-ui-popup-state/hooks';
 import Menu from 'material-ui-popup-state/HoverMenu';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useAuthContext } from '../../../context/authContext';
+import { usePermission } from '../../../hooks/permission';
+import { PERMISSIONS, nonFeatures } from '../../../utils/constants';
 import { navigateTo } from '../../../utils/helper';
-import Show from '../../show';
+import { SubMenuItems } from './subMenuItems';
 
 const ParentPopupState = React.createContext(null);
 
@@ -54,13 +56,23 @@ const useStyles = makeStyles((theme) => ({
   iconStyle: { color: theme.palette.iconColor.default },
   linkStyle: { textDecoration: 'none', color: theme.palette.text.main },
 }));
+
 const SideMenu = ({ item }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { user } = useAuthContext();
+  const { data } = user;
+  const { READ, WRITE } = PERMISSIONS;
   const popupState = usePopupState({
     popupId: 'sideMenu',
     variant: 'popover',
   });
+  const permit = usePermission;
+  const nonFeatureSubChild = [];
+  const nonfeatures = Object.values(nonFeatures);
+  const SETTINGS = 'settings';
+  const isItemSetting = item.name === SETTINGS;
+  const permission = isItemSetting ? WRITE : READ;
   return (
     <>
       <Button
@@ -89,41 +101,38 @@ const SideMenu = ({ item }) => {
             getContentAnchorEl={null}
             classes={{ paper: classes.menuPaper }}
           >
-            {item.children.map((childItem) => (
-              <Box>
-                <Show IF={!childItem.children}>
-                  <Link to={childItem.link} className={classes.linkStyle}>
-                    <MenuItem
-                      onClick={popupState.close}
-                      classes={{ root: classes.menuItem }}
-                    >
-                      <BodyTextSmall classes={{ root: classes.label }}>
-                        {childItem.name}
-                      </BodyTextSmall>
-                    </MenuItem>
-                  </Link>
-                </Show>
+            {item.children.map((childItem) => {
+              const can = permit(`${childItem.slug}-${permission}`);
 
-                {childItem.children && childItem.children.length > 0 && (
-                  <Submenu popupId={childItem.name} title={childItem.name}>
-                    {childItem.children.map((nestedChild) => (
-                      <Link to={nestedChild.link} className={classes.linkStyle}>
-                        <MenuItem
-                          onClick={popupState.close}
-                          classes={{
-                            root: classes.menuItem,
-                          }}
-                        >
-                          <BodyTextSmall className={classes.label}>
-                            {nestedChild.name}
-                          </BodyTextSmall>
-                        </MenuItem>
-                      </Link>
-                    ))}
-                  </Submenu>
-                )}
-              </Box>
-            ))}
+              if (
+                !!childItem.children &&
+                nonfeatures.includes(childItem.name.toUpperCase())
+              ) {
+                childItem.children.map(({ slug }) => {
+                  const subChildCan = permit(`${slug}-${permission}`);
+                  if (subChildCan) {
+                    return nonFeatureSubChild.push(subChildCan);
+                  }
+                  return nonFeatureSubChild;
+                });
+              }
+              if (
+                can ||
+                (nonfeatures.includes(childItem.name.toUpperCase()) &&
+                  nonFeatureSubChild.length > 0) ||
+                data.isAdmin
+              ) {
+                return (
+                  <SubMenuItems
+                    popupState={popupState}
+                    childItem={childItem}
+                    classes={classes}
+                    isAdmin={data.isAdmin}
+                  />
+                );
+              }
+              return false;
+            })}
           </Menu>
         </ParentPopupState.Provider>
       )}
@@ -132,67 +141,3 @@ const SideMenu = ({ item }) => {
 };
 
 export default SideMenu;
-
-const submenuStyles = (theme) => ({
-  menu: {
-    marginTop: theme.spacing(-1),
-    color: theme.palette.text.main,
-    backgroundColor: `${theme.palette.secondary.main} `,
-    borderRadius: '0 ',
-  },
-  menuItemRoot: {
-    fontSize: '0.8rem !important',
-    '&$menuItemSelected, &$menuItemSelected:focus, &$menuItemSelected:hover': {
-      backgroundColor: theme.palette.primary.main,
-    },
-    minWidth: '7rem',
-    minHeight: '1rem !important',
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  menuItemSelected: {},
-  title: {
-    color: theme.palette.text.light,
-    textTransform: 'capitalize',
-  },
-  moreArrow: {
-    marginRight: theme.spacing(-1),
-    color: theme.palette.iconColor.default,
-  },
-});
-
-const Submenu = withStyles(submenuStyles)(
-  // Unfortunately, MUI <Menu> injects refs into its children, which causes a
-  // warning in some cases unless we use forwardRef here.
-  React.forwardRef(({ classes, title, popupId, children, ...props }, ref) => {
-    const parentPopupState = React.useContext(ParentPopupState);
-    const popupState = usePopupState({
-      popupId,
-      variant: 'popover',
-      parentPopupState,
-    });
-    return (
-      <ParentPopupState.Provider value={popupState}>
-        <MenuItem
-          {...bindHover(popupState)}
-          selected={popupState.isOpen}
-          ref={ref}
-          classes={{ root: classes.menuItemRoot }}
-        >
-          <span className={classes.title}>{title}</span>
-          <ChevronRight className={classes.moreArrow} />
-        </MenuItem>
-        <Menu
-          {...bindMenu(popupState)}
-          classes={{ paper: classes.menu }}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-          getContentAnchorEl={null}
-          {...props}
-        >
-          {children}
-        </Menu>
-      </ParentPopupState.Provider>
-    );
-  })
-);

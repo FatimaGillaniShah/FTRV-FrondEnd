@@ -24,11 +24,21 @@ function CreateProfitCenter() {
     getProfitCenterById,
     {
       enabled: !!id,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
+      },
     }
   );
   const profitCenterById = profitCenterData?.data?.data;
 
-  const { data, isUsersLoading } = useQuery(
+  const { data, isLoading: isUsersLoading } = useQuery(
     keys.getUsers({
       detail: false,
       sortColumn: 'email',
@@ -91,6 +101,7 @@ function CreateProfitCenter() {
     contactNo: '',
     centerNo: '',
   };
+
   return (
     <>
       <Helmet>

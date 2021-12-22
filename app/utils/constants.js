@@ -20,11 +20,50 @@ export const SUPPORTED_FORMATS = [
   'image/png',
   'image/gif',
 ];
+export const STATUS_CODES = {
+  FORBIDDEN: 403,
+};
 
 export const ROLES = {
   ADMIN: 'admin',
   USER: 'user',
 };
+
+export const PERMISSIONS = {
+  READ: 'read',
+  WRITE: 'write',
+};
+export const defaultResources = [
+  'BIRTHDAY',
+  'BANNER_IMAGE',
+  'ANNOUNCEMENT',
+  'LOCATION',
+  'DEPARTMENT',
+  'WORK_ANNIVERSARY',
+  'MESSAGE_FROM_CEO',
+  'QUOTE',
+  'GROUP',
+  'RESOURCES',
+  'EDUCATION',
+];
+export const dependentResources = [
+  {
+    subject: 'CAREER',
+    dependent: 'APPLICANT',
+    readOnly: false,
+  },
+  {
+    subject: 'LINKS',
+    dependent: 'USEFUL_LINKS',
+    readOnly: true,
+  },
+  {
+    subject: 'POLLS',
+    dependent: 'VOTE',
+    readOnly: true,
+  },
+];
+export const READ_ONLY_FEATURES = ['BIRTHDAY', 'WORK_ANNIVERSARY', 'EDUCATION'];
 export const STATUS = {
   ACTIVE: 'active',
   INACTIVE: 'inactive',
@@ -62,6 +101,7 @@ export const CKEDITOR_CUSTOM_CONFIG = {
     previewsInData: true,
   },
 };
+
 export const POLL_OPTIONS_LIMIT = 4;
 
 export const APIS = {
@@ -69,6 +109,7 @@ export const APIS = {
   GOOGLE_LOGIN: 'users/googleLogin',
   USERS_DELETE: '/users/deleteUsers',
   USERS: '/users',
+  USERS_BULK_UPDATE: '/users/userBulkUpdate',
   BIRTHDAYS: '/users/birthday',
   QUOTE: '/quote',
   FILE_UPLOAD: 'users/upload',
@@ -92,6 +133,40 @@ export const APIS = {
   JOB: '/jobs',
   APPLICANT: '/jobApplicant',
   POLL: '/polls',
-  VOTE_POLL: '/polls/vote',
+  VOTE: '/vote',
   PROFIT_CENTER: '/profitCenter',
+  RESOURCE: '/resources',
+  GROUP: '/groups',
+};
+export const features = {
+  DIRECTORY: 'DIRECTORY',
+  MESSAGE_FROM_CEO: 'MESSAGE_FROM_CEO',
+  PROFIT_CENTER: 'PROFIT_CENTER',
+  BLOG: 'BLOG',
+  CAREER: 'CAREER',
+  EDUCATION: 'EDUCATION',
+  FILE_STORAGE: 'FILE_STORAGE',
+  LINKS: 'LINKS',
+  USEFUL_LINKS: 'USEFUL_LINKS',
+  QUOTE: 'QUOTE',
+  EVENTS: 'EVENTS',
+  POLLS: 'POLLS',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  BIRTHDAY: 'BIRTHDAY',
+  WORK_ANNIVERSARY: 'WORK_ANNIVERSARY',
+  RING_GROUP: 'RING_GROUP',
+  APPLICANT: 'APPLICANT',
+  LOCATION: 'LOCATION',
+  GROUP: 'GROUP',
+  DEPARTMENT: 'DEPARTMENT',
+  VOTE: 'VOTE',
+};
+
+export const nonFeatures = {
+  HOME: 'HOME',
+  PROFILE: 'PROFILE',
+  CONFIGURATION: 'CONFIGURATION',
+  BANNER_IMAGE: 'BANNER_IMAGE',
+  ACCESS_DENIED: 'ACCESS_DENIED',
+  NOT_FOUND: 'NOT_FOUND',
 };

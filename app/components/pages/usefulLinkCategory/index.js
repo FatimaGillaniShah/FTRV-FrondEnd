@@ -6,18 +6,15 @@ import { useHistory } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
 import { Category } from '../../category';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import { navigateTo } from '../../../utils/helper';
 import Show from '../../show';
 
-function UsefulLinkCategory({ categories, handleDeleteCategory }) {
+function UsefulLinkCategory({
+  categories,
+  handleDeleteCategory,
+  isWriteAllowed,
+}) {
   const history = useHistory();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
 
   return (
     <Box
@@ -27,7 +24,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
       justify-content="space-between"
     >
       <Box>
-        <Show IF={role === ROLES.ADMIN}>
+        <Show IF={isWriteAllowed}>
           <Box ml={11} mt={7}>
             <Button
               variant="contained"
@@ -53,6 +50,7 @@ function UsefulLinkCategory({ categories, handleDeleteCategory }) {
                 name={name}
                 linksCount={linksCount}
                 handleDeleteCategory={handleDeleteCategory}
+                isWriteAllowed={isWriteAllowed}
               />
             </Box>
           ))}

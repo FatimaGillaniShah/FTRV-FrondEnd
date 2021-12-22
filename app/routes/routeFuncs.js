@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, useLocation } from 'react-router-dom';
 import PrivateRoute from '../components/hoc/privateRoute';
 import Home from '../containers/home/loadable';
-import { ROLES } from '../utils/constants';
 import { routeArray } from './routeArray';
 
 const routeTypes = { public: 'public', private: 'private' };
@@ -16,14 +15,13 @@ export const renderRoutes = (_routeArray, parentPath = '') =>
           exact={route.exact || true}
           path={path || '/'}
           component={route.component || Home}
-          roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
         />
       ) : (
         <PrivateRoute
           exact={route.exact || true}
           path={path || '/'}
+          resource={route.resource}
           component={route.component || Home}
-          roles={route.roles || [ROLES.ADMIN, ROLES.USER]}
         />
       ),
       route.nestedRoutes && renderRoutes(route.nestedRoutes, path),

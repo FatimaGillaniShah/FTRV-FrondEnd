@@ -29,8 +29,6 @@ import _ from 'lodash';
 import voteImage from '../../images/vote.png';
 import FormikRadioGroup from '../muiRadioButtons';
 import { Button, MuiBadge } from '../index';
-import { ROLES } from '../../utils/constants';
-import { useAuthContext } from '../../context/authContext';
 import { BodyTextLarge, H5, BodyTextSmall } from '../typography';
 import BorderLinearProgress from '../muiLinearProgress';
 import Show from '../show';
@@ -107,7 +105,9 @@ export const Poll = ({
   onHandleVoteSubmit,
   isVoteLoading,
   voted,
+  isVoteWriteAllowed,
   votesSum,
+  isWriteAllowed,
 }) => {
   const colorArray = ['success', 'error', 'warning', 'info'];
   const sortedOptions = _.sortBy(options, (option) => option.value);
@@ -115,11 +115,7 @@ export const Poll = ({
   const validationSchema = object().shape({
     pollOption: string().required('*Please select an option!'),
   });
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
+
   let value = '';
   options?.map((option) => {
     if (option.voted === true) {
@@ -196,53 +192,49 @@ export const Poll = ({
                 </Box>
               </Box>
               <Box width={['20%', '10%', '10%', '10%']}>
-                {role === ROLES.ADMIN && (
-                  <>
-                    <Box mt={3}>
-                      <IconButton
-                        onClick={handleClick}
-                        className={classes.menuIconButton}
-                      >
-                        <MoreVertIcon color="secondary" />
-                      </IconButton>
-                    </Box>
-                    <Menu
-                      anchorEl={anchorEl}
-                      keepMounted
-                      open={anchorEl}
-                      onClose={handleClose}
-                      getContentAnchorEl={null}
-                      anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                      }}
+                <Show IF={isWriteAllowed}>
+                  <Box mt={3}>
+                    <IconButton
+                      onClick={handleClick}
+                      className={classes.menuIconButton}
                     >
-                      <Show IF={!voteCount.length > 0}>
-                        <MenuItem
-                          onClick={() =>
-                            navigateTo(history, `/polls/edit/${id}`)
-                          }
-                        >
-                          <ListItemIcon>
-                            <EditIcon color="secondary" />
-                          </ListItemIcon>
-                          Edit
-                        </MenuItem>
-                      </Show>
+                      <MoreVertIcon color="secondary" />
+                    </IconButton>
+                  </Box>
+                  <Menu
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={anchorEl}
+                    onClose={handleClose}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <Show IF={!voteCount.length > 0}>
                       <MenuItem
-                        onClick={() => {
-                          handleClose();
-                          onHandleDelete(id);
-                        }}
+                        onClick={() => navigateTo(history, `/polls/edit/${id}`)}
                       >
                         <ListItemIcon>
-                          <DeleteIcon color="error" />
+                          <EditIcon color="secondary" />
                         </ListItemIcon>
-                        Delete
+                        Edit
                       </MenuItem>
-                    </Menu>
-                  </>
-                )}
+                    </Show>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        onHandleDelete(id);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <DeleteIcon color="error" />
+                      </ListItemIcon>
+                      Delete
+                    </MenuItem>
+                  </Menu>
+                </Show>
               </Box>
             </Box>
             <Show IF={home}>
@@ -291,30 +283,31 @@ export const Poll = ({
                     />
                   </Box>
                 </Tooltip>
-                <Box display="flex" justifyContent="center">
-                  <Box mr={4} my={3}>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      type="submit"
-                      disabled={isVoteLoading || voted}
-                      loading={!voted}
-                      startIcon={<HowToVoteIcon />}
-                    >
-                      {voted ? 'Voted' : 'Vote'}
-                    </Button>
-                  </Box>
-                </Box>
-                {role === ROLES.ADMIN && (
-                  <Show IF={votesSum > 0}>
-                    <Box display="flex" justifyContent="center" mt={2}>
-                      <BodyTextSmall color="grey" bold>
-                        {`${votesSum} `}
-                        Vote(s)
-                      </BodyTextSmall>
+                <Show IF={isVoteWriteAllowed}>
+                  <Box display="flex" justifyContent="center">
+                    <Box mr={4} my={3}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        type="submit"
+                        disabled={isVoteLoading || voted}
+                        loading={!voted}
+                        startIcon={<HowToVoteIcon />}
+                      >
+                        {voted ? 'Voted' : 'Vote'}
+                      </Button>
                     </Box>
-                  </Show>
-                )}
+                  </Box>
+                </Show>
+
+                <Show IF={votesSum > 0}>
+                  <Box display="flex" justifyContent="center" mt={2}>
+                    <BodyTextSmall color="grey" bold>
+                      {`${votesSum} `}
+                      Vote(s)
+                    </BodyTextSmall>
+                  </Box>
+                </Show>
               </Show>
               <Collapse in={!hidden} collapsedSize={40}>
                 {sortedOptions?.map((val, index) => (

@@ -12,6 +12,8 @@ import { Loading } from '../../components/loading';
 import DocumentPage from '../../components/pages/documents';
 import { useDeleteDocument } from '../../hooks/document';
 import { Modal } from '../../utils/helper';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function Document() {
   const queryClient = useQueryClient();
@@ -30,6 +32,9 @@ function Document() {
       queryClient.invalidateQueries(keys.documentDepartment);
     },
   });
+  const isWriteAllowed = usePermission(
+    `${features.FILE_STORAGE}-${PERMISSIONS.WRITE}`
+  );
   const handleSortOrder = (updatedData) => {
     const payload = { updatedData };
     sortOrderMutation.mutate(payload);
@@ -57,6 +62,7 @@ function Document() {
               data={department}
               onHandleSortOrder={handleSortOrder}
               onHandleDelete={handleDelete}
+              isWriteAllowed={isWriteAllowed}
             />
           </WrapInCard>
         </WrapInBreadcrumbs>

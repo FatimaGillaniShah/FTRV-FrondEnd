@@ -9,18 +9,13 @@ import { BodyTextLarge, BodyTextSmall } from '../../typography';
 import { ListItemIcon, MenuItem } from '../..';
 import { navigateTo } from '../../../utils/helper';
 import { useStyles } from './style';
-import { ROLES } from '../../../utils/constants';
-import { useAuthContext } from '../../../context/authContext';
+import Show from '../../show';
 
 export function Document({
   document: { id, name, description, url },
   onHandleDelete,
+  isWriteAllowed,
 }) {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
   const classes = useStyles();
@@ -44,7 +39,7 @@ export function Document({
       </Box>
 
       <Box display="flex" flexDirection="column">
-        {role === ROLES.ADMIN && (
+        <Show IF={isWriteAllowed}>
           <Box>
             <IconButton
               onClick={handleClick}
@@ -85,7 +80,7 @@ export function Document({
               </MenuItem>
             </Menu>
           </Box>
-        )}
+        </Show>
         <IconButton
           onClick={() => {
             handleDocumentDownload(url);

@@ -7,25 +7,44 @@ import { Modal, Toast, navigateTo } from '../../utils/helper';
 import Home from '../../components/pages/home';
 import { useAuthContext } from '../../context/authContext';
 import { useDeletePoll } from '../../hooks/poll';
+import { usePermission } from '../../hooks/permission';
 import {
-  fetchEvents,
   getBannerImage,
   getPolls,
   updateBannerImage,
-  votePoll,
+  vote,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { features, PERMISSIONS } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
 
 function HomeContainer() {
+  const { POLLS, BANNER_IMAGE, EVENTS, VOTE } = features;
   const { user } = useAuthContext();
   const history = useHistory();
-  const date = parseDate(new Date());
-  const [eventWindowDate, setEventWindowDate] = useState(date);
-  const { data, isEventsLoading } = useQuery(
-    keys.events({ eventWindowDate }),
-    fetchEvents
+  const isPollsWriteAllowed = usePermission(`${POLLS}-${PERMISSIONS.WRITE}`);
+  const isVoteReadAllowed = usePermission(`${VOTE}-${PERMISSIONS.READ}`);
+  const isVoteWriteAllowed = usePermission(`${VOTE}-${PERMISSIONS.WRITE}`);
+  const isBannerWriteAllowed = usePermission(
+    `${BANNER_IMAGE}-${PERMISSIONS.WRITE}`
   );
+  const date = parseDate(new Date());
+  const [feature, setFeature] = useState({
+    [POLLS]: false,
+    [BANNER_IMAGE]: false,
+    [EVENTS]: false,
+  });
+  const permit = usePermission;
+  Object.keys(feature).map((RESOURCE) => {
+    const can = permit(`${RESOURCE}-${PERMISSIONS.READ}`);
+    if (can && !feature[RESOURCE]) {
+      setFeature((prevState) => ({
+        ...prevState,
+        [RESOURCE]: true,
+      }));
+    }
+    return feature;
+  });
 
   const {
     data: pollResponse,
@@ -41,6 +60,7 @@ function HomeContainer() {
     getPolls,
     {
       keepPreviousData: true,
+      enabled: feature.POLLS,
     }
   );
 
@@ -68,7 +88,9 @@ function HomeContainer() {
     data: image,
     isLoading: isImageLoading,
     refetch: refetchBannerImage,
-  } = useQuery(keys.bannerImage, getBannerImage);
+  } = useQuery(keys.bannerImage, getBannerImage, {
+    enabled: feature.BANNER_IMAGE,
+  });
 
   const onVoteSuccess = () => {
     refetchPolls();
@@ -87,13 +109,10 @@ function HomeContainer() {
       title: message || 'Some error occurred',
     });
   };
-  const { isLoading: isVoteLoading, mutate: mutateVote } = useMutation(
-    votePoll,
-    {
-      onSuccess: onVoteSuccess,
-      onError: onVoteError,
-    }
-  );
+  const { isLoading: isVoteLoading, mutate: mutateVote } = useMutation(vote, {
+    onSuccess: onVoteSuccess,
+    onError: onVoteError,
+  });
 
   const onUpdateImageSuccess = () => {
     Toast({
@@ -159,21 +178,23 @@ function HomeContainer() {
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
-      {isEventsLoading || isPollLoading ? (
+      {isPollLoading ? (
         <Loading />
       ) : (
         <Home
           isImageLoading={isUpdateImageLoading || isImageLoading}
-          eventList={data?.data?.data?.rows}
           fileName={image?.data?.data?.fileName}
           onHandleImageChange={handleImageChange}
           pollList={pollList}
           onHandleVoteSubmit={handleVoteSubmit}
           isVoteLoading={isVoteLoading}
           onHandleDelete={handleDelete}
+          isVoteReadAllowed={isVoteReadAllowed}
+          isVoteWriteAllowed={isVoteWriteAllowed}
           initialValues={initialValues}
-          eventWindowDate={eventWindowDate}
-          setEventWindowDate={setEventWindowDate}
+          feature={feature}
+          isPollsWriteAllowed={isPollsWriteAllowed}
+          isBannerWriteAllowed={isBannerWriteAllowed}
         />
       )}
     </>

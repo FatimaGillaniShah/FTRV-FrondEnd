@@ -5,7 +5,6 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import AddIcon from '@material-ui/icons/Add';
 import moment from 'moment';
 import { H5 } from '../../typography';
-import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 import { parseDate } from '../../../utils/functions';
 
@@ -13,7 +12,7 @@ export const CustomToolbar = ({
   home,
   setEventWindowDate,
   setPagination,
-  data: { role },
+  isWriteAllowed,
 }) => ({ onNavigate, label }) => {
   const navigate = (action) => {
     onNavigate(action);
@@ -32,7 +31,7 @@ export const CustomToolbar = ({
   };
   return (
     <>
-      <Show IF={role === ROLES.ADMIN && !home}>
+      <Show IF={isWriteAllowed && !home}>
         <Box mb={5}>
           <Link href="/events/add" underline="none">
             <Button

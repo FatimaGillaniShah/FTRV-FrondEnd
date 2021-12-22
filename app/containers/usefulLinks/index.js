@@ -6,19 +6,23 @@ import { Loading } from '../../components/loading';
 import UsefulLinksPage from '../../components/pages/usefulLinks';
 import { getUsefulLinksByCategoryId } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
-import { headCells } from './columns';
+import { getHeadCells } from './columns';
 import { Modal, Toast } from '../../utils/helper';
 import { useDeleteLink } from '../../hooks/usefulLink';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function UsefulLinks() {
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const { categoryId } = useParams();
+  const isWriteAllowed = usePermission(
+    `${features.USEFUL_LINKS}-${PERMISSIONS.WRITE}`
+  );
   const { data, isLoading } = useQuery(
-    keys.getLink(categoryId),
+    keys.links(categoryId),
     getUsefulLinksByCategoryId,
     {
-      refetchOnWindowFocus: false,
       onError: ({
         response: {
           data: { message },
@@ -58,11 +62,12 @@ function UsefulLinks() {
           selected={selected}
           setSelected={setSelected}
           onDelete={handleDeleteLinks}
-          headCells={headCells}
+          getHeadCells={getHeadCells}
           isLoading={isLoading}
           page={page}
           setPage={setPage}
           loading={mutation.isLoading}
+          isWriteAllowed={isWriteAllowed}
         />
       )}
     </>

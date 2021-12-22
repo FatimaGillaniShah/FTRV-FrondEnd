@@ -9,8 +9,13 @@ import { keys } from '../../state/queryKeys';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { useDeleteCategory } from '../../hooks/usefulLinkCategory';
 import { Modal } from '../../utils/helper';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function UsefulLinksCategory() {
+  const isWriteAllowed = usePermission(
+    `${features.LINKS}-${PERMISSIONS.WRITE}`
+  );
   const { data, isLoading } = useQuery(keys.linkCategory, getLinkCategory);
   const categories = data?.data?.data;
   const mutation = useDeleteCategory();
@@ -41,6 +46,7 @@ function UsefulLinksCategory() {
           <UsefulLinksCategoryPage
             categories={categories}
             handleDeleteCategory={handleDeleteCategory}
+            isWriteAllowed={isWriteAllowed}
           />
         )}
       </WrapInBreadcrumbs>

@@ -6,38 +6,42 @@
 
 import { WrapInCard } from 'components';
 import CreateNewUser from 'components/pages/createUser';
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { createUser, getLocations, getDepartments } from 'state/queryFunctions';
+import { createUser } from 'state/queryFunctions';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { navigateTo, Toast } from '../../utils/helper';
-import { ROLES } from '../../utils/constants';
 import { useAuthContext } from '../../context/authContext';
-import { useCreateDepartment } from '../../hooks/departmentMutation';
-import { useCreateLocation } from '../../hooks/locationMutation';
-import { Loading } from '../../components/loading';
 import { keys } from '../../state/queryKeys';
+import { usePermission } from '../../hooks/permission';
+import { PERMISSIONS } from '../../utils/constants';
 
 function CreateUser() {
-  const locationMutation = useCreateLocation();
-  const departmentMutation = useCreateDepartment();
   const queryClient = useQueryClient();
   const history = useHistory();
+  const [feature, setFeature] = useState({
+    LOCATION: false,
+    DEPARTMENT: false,
+    GROUP: false,
+  });
+  const permit = usePermission;
+  Object.keys(feature).map((resource) => {
+    const can = permit(`${resource}-${PERMISSIONS.READ}`);
+    if (can && !feature[resource]) {
+      setFeature((prevState) => ({
+        ...prevState,
+        [resource]: true,
+      }));
+    }
+    return feature;
+  });
   const {
     user: {
-      data: { role },
+      data: { isAdmin },
     },
   } = useAuthContext();
-  const { data: locations, isLocationLoading } = useQuery(
-    keys.location,
-    getLocations
-  );
-  const { data: deparments, isDepartmentLoading } = useQuery(
-    keys.department,
-    getDepartments
-  );
   const mutation = useMutation(createUser, {
     onSuccess: () => {
       Toast({
@@ -59,24 +63,10 @@ function CreateUser() {
     },
   });
 
-  const locationOptions = locations?.data.data.rows.map((val) => ({
-    value: val.id,
-    label: val.name,
-  }));
-  const departmentOptions = deparments?.data.data.rows.map((val) => ({
-    value: val.id,
-    label: val.name,
-  }));
   const handleSubmit = (payload) => {
     mutation.mutate(payload);
   };
 
-  const handleCreateLocation = (payload) => {
-    locationMutation.mutate(payload);
-  };
-  const handleCreateDepartment = (payload) => {
-    departmentMutation.mutate(payload);
-  };
   const defaultData = {
     firstName: '',
     lastName: '',
@@ -91,22 +81,11 @@ function CreateUser() {
     joiningDate: null,
     dob: null,
     file: undefined,
-    role: ROLES.USER,
-  };
-  const defaultDialogData = {
-    location: '',
-    department: '',
+    groupIds: '',
   };
 
   defaultData.isProfilePicAttached = false;
   defaultData.passwordRequired = true;
-
-  const isLoading = () => {
-    if (isLocationLoading || isDepartmentLoading) {
-      return true;
-    }
-    return false;
-  };
 
   return (
     <>
@@ -117,22 +96,14 @@ function CreateUser() {
 
       <WrapInBreadcrumbs>
         <WrapInCard>
-          {isLoading() ? (
-            <Loading />
-          ) : (
-            <CreateNewUser
-              initialData={defaultData}
-              initialDialogData={defaultDialogData}
-              mutation={mutation}
-              onHandleSubmit={handleSubmit}
-              formType="add"
-              editRole={role}
-              locationOptions={locationOptions}
-              departmentOptions={departmentOptions}
-              onCreateLocation={handleCreateLocation}
-              onCreateDepartment={handleCreateDepartment}
-            />
-          )}
+          <CreateNewUser
+            initialData={defaultData}
+            mutation={mutation}
+            feature={feature}
+            onHandleSubmit={handleSubmit}
+            formType="add"
+            edit={isAdmin}
+          />
         </WrapInCard>
       </WrapInBreadcrumbs>
     </>

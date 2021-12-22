@@ -7,6 +7,7 @@ import Header from './header';
 import SideMenu from './sideMenu';
 import RightInfoPanel from './rightInfoPanel';
 import Show from '../show';
+import PermissionNotification from './permissionNotification';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -126,7 +127,6 @@ const useStyles = makeStyles((theme) => ({
 const Layout = ({ children }) => {
   const classes = useStyles();
   const location = useLocation();
-
   return (
     <Box className={classes.root}>
       <Show IF={location.pathname === '/'}>
@@ -164,6 +164,7 @@ const Layout = ({ children }) => {
                 <> {children}</>
               )}
             </Grid>
+            <PermissionNotification />
           </Grid>
         </Grid>
       </Show>

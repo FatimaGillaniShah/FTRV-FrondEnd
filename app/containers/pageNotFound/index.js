@@ -10,19 +10,18 @@ import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { Helmet } from 'react-helmet';
 import { WrapInCard } from 'components';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
-import NotExist from '../../components/pages/notExist';
+import NoData from '../../components/noData';
 
 export default function NotFound() {
   return (
     <>
-      {' '}
       <Helmet>
         <title>Not Found</title>
       </Helmet>
       <WrapInBreadcrumbs>
         <WrapInCard>
           <Box m={12}>
-            <NotExist Icon={ErrorOutlineIcon} description="Page Not Found" />
+            <NoData Icon={ErrorOutlineIcon} description="Page Not Found" />
           </Box>
         </WrapInCard>
       </WrapInBreadcrumbs>

@@ -14,20 +14,31 @@ import { useCreateLocation } from '../../hooks/locationMutation';
 import { keys } from '../../state/queryKeys';
 import { getLocations } from '../../state/queryFunctions';
 import Show from '../show';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 
 function LocationWithModal({
   modal,
   variant,
   selectedValue,
   initialValues,
+  options,
   ...props
 }) {
   const [open, setOpen] = useState(false);
-
+  const isReadAllowed = usePermission(
+    `${features.LOCATION}-${PERMISSIONS.READ}`
+  );
+  const isWriteAllowed = usePermission(
+    `${features.LOCATION}-${PERMISSIONS.WRITE}`
+  );
   const { mutate } = useCreateLocation();
-  const { data: deparments, isLoading } = useQuery(
+  const { data: locations, isLoading } = useQuery(
     keys.locations,
-    getLocations
+    getLocations,
+    {
+      enabled: isReadAllowed,
+    }
   );
   const handleSubmit = (values, { resetForm }) => {
     mutate(values);
@@ -37,7 +48,7 @@ function LocationWithModal({
   const handleDialogue = () => {
     setOpen(!open);
   };
-  const options = deparments?.data.data.rows.map((val) => ({
+  const locationOptions = locations?.data.data.rows.map((val) => ({
     value: val.id,
     label: val.name,
   }));
@@ -80,16 +91,15 @@ function LocationWithModal({
           selectedValue={selectedValue}
           label="Location"
           variant={variant}
-          options={options}
+          options={locationOptions || options || []}
           loading={isLoading}
+          {...(options && { emptyItem: !(options.length > 0) })}
           {...props}
         />
-        <Show IF={modal}>
-          <Box className={classes.modelLink}>
-            <Button startIcon={<AddIcon />} onClick={handleDialogue}>
-              Create new location
-            </Button>
-          </Box>
+        <Show IF={modal && isWriteAllowed}>
+          <Button size="small" startIcon={<AddIcon />} onClick={handleDialogue}>
+            Create new location
+          </Button>
         </Show>
       </Box>
     </>

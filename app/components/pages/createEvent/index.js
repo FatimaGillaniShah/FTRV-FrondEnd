@@ -19,8 +19,6 @@ import WrapInCard from '../../layout/wrapInCard';
 import { Input, TextArea, AutoComplete, Button } from '../../index';
 import { BodyTextLarge, H5 } from '../../typography';
 import { useStyles } from './style';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 
 const eventSchema = object().shape({
@@ -65,14 +63,10 @@ export function CreateEventPage({
   onHandleDeleteEvent,
   locationData,
   loading,
+  isWriteAllowed,
 }) {
   const classes = useStyles();
   const history = useHistory();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
 
   return (
     <WrapInBreadcrumbs>
@@ -115,7 +109,7 @@ export function CreateEventPage({
                           px={3}
                           justifyContent="flex-end"
                         >
-                          <Show IF={id && role === ROLES.ADMIN}>
+                          <Show IF={id && isWriteAllowed}>
                             <Box mr={3}>
                               <IconButton onClick={onHandleDeleteEvent}>
                                 <DeleteIcon color="error" />
@@ -131,7 +125,6 @@ export function CreateEventPage({
                             name="title"
                             appendIcon
                             Icon={TitleOutlinedIcon}
-                            IconClickable
                           />
                         </Box>
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
@@ -202,18 +195,10 @@ export function CreateEventPage({
                         </Box>
                         <Box width={[1, 1 / 2]} mt={10} px={3}>
                           <AutoComplete
-                            id="locationIds"
                             name="locationIds"
-                            limitTags={2}
                             options={locationData}
-                            defaultValue={values.locationIds}
-                            getOptionLabel={(location) => location.name || ''}
-                            getOptionSelected={(option, value) =>
-                              option.id === value.id
-                            }
-                            onHandleChange={(e, value) => {
-                              if (value) setFieldValue('locationIds', value);
-                            }}
+                            defaultOptions={initialValues.locationIds}
+                            setFieldValue={setFieldValue}
                             label="Location"
                             placeholder="Select Locations"
                           />

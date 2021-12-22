@@ -2,40 +2,28 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 
-const ActionButtons = ({ applicant }) => {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
-
+const ActionButtons = ({ applicant, isWriteAllowed }) => {
   const handleResumeDownload = (resumeUrl) => {
     window.open(resumeUrl, '_self');
   };
   return (
-    <>
-      <Show IF={role === ROLES.ADMIN}>
-        <>
-          <IconButton
-            onClick={() => {
-              handleResumeDownload(applicant.resume);
-            }}
-          >
-            <Tooltip title="Resume">
-              <DescriptionOutlinedIcon color="secondary" />
-            </Tooltip>
-          </IconButton>
-        </>
-      </Show>
-    </>
+    <Show IF={isWriteAllowed}>
+      <IconButton
+        onClick={() => {
+          handleResumeDownload(applicant.resume);
+        }}
+      >
+        <Tooltip title="Resume">
+          <DescriptionOutlinedIcon color="secondary" />
+        </Tooltip>
+      </IconButton>
+    </Show>
   );
 };
 
-export const headCells = [
+export const getHeadCells = ({ isWriteAllowed }) => [
   {
     field: 'name',
     type: 'string',
@@ -81,8 +69,11 @@ export const headCells = [
     type: 'number',
     headerName: 'Resume',
     description: 'Actions',
+    hide: !isWriteAllowed,
     sortable: false,
-    renderCell: ({ row }) => <ActionButtons applicant={row} />,
+    renderCell: ({ row }) => (
+      <ActionButtons applicant={row} isWriteAllowed={isWriteAllowed} />
+    ),
     width: 150,
   },
 ];

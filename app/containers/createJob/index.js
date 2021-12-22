@@ -18,6 +18,16 @@ function AddJob() {
     getJobById,
     {
       enabled: !!id,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
+      },
     }
   );
   let job = data?.data?.data[0];
@@ -27,7 +37,7 @@ function AddJob() {
     locationId: job?.location?.id,
   };
   const onJobSuccess = () => {
-    queryClient.invalidateQueries(keys.jobs);
+    queryClient.invalidateQueries(keys.getJob({}));
     Toast({
       icon: 'success',
       title: `Job  ${id ? 'Updated' : 'Created'}  successfully`,

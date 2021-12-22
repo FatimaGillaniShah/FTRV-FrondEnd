@@ -22,6 +22,16 @@ function AddUsefulLink() {
     () => getLinkById(id),
     {
       enabled: !!id,
+      onError: ({
+        response: {
+          data: { message },
+        },
+      }) => {
+        Toast({
+          icon: 'error',
+          title: message || 'Some error occurred',
+        });
+      },
     }
   );
   const { data: categories, isCategoryLoading } = useQuery(
@@ -39,7 +49,7 @@ function AddUsefulLink() {
       if (id) {
         queryClient.invalidateQueries(keys.getLink(id));
       }
-      queryClient.invalidateQueries(keys.getLink(categoryId));
+      queryClient.invalidateQueries(keys.links(categoryId));
     },
     onError: ({
       response: {

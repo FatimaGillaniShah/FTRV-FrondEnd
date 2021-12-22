@@ -22,13 +22,12 @@ function CreateProfitCenter({
   id,
   initialValues,
   loading,
-  onHandleSearch,
   options,
+  onHandleSearch,
   onHandleSubmit,
   usersLoading,
 }) {
   const history = useHistory();
-
   return (
     <>
       <WrapInBreadcrumbs>
@@ -59,7 +58,6 @@ function CreateProfitCenter({
                           OutlinedInputPlaceholder="*Center Number"
                           appendIcon
                           Icon={DialpadOutlinedIcon}
-                          IconClickable
                           variant="outlined"
                         />
                       </Box>
@@ -69,7 +67,6 @@ function CreateProfitCenter({
                           OutlinedInputPlaceholder="*Center Name"
                           appendIcon
                           Icon={AccountBalanceOutlinedIcon}
-                          IconClickable
                           variant="outlined"
                         />
                       </Box>
@@ -79,7 +76,6 @@ function CreateProfitCenter({
                           OutlinedInputPlaceholder="*Center Code"
                           appendIcon
                           Icon={NoteOutlinedIcon}
-                          IconClickable
                           variant="outlined"
                         />
                       </Box>
@@ -89,7 +85,6 @@ function CreateProfitCenter({
                           OutlinedInputPlaceholder="*Address"
                           appendIcon
                           Icon={LocationOnOutlinedIcon}
-                          IconClickable
                           variant="outlined"
                         />
                       </Box>
@@ -100,7 +95,6 @@ function CreateProfitCenter({
                           inputComponent={TextMaskForContactNo}
                           appendIcon
                           Icon={CallOutlinedIcon}
-                          IconClickable
                           variant="outlined"
                         />
                       </Box>
@@ -111,19 +105,18 @@ function CreateProfitCenter({
                           appendIcon
                           inputComponent={TextMaskForContactNo}
                           Icon={PrintIcon}
-                          IconClickable
                           variant="outlined"
                         />
                       </Box>
                       <Box width={[1, 1 / 2]} mt={14} px={3}>
                         <AutoComplete
-                          id="managerId"
                           name="managerId"
                           multiple={false}
-                          defaultValue={initialValues?.manager}
-                          loading={usersLoading}
+                          checkBox={false}
+                          defaultOptions={initialValues?.manager}
                           options={options || []}
-                          getOptionLabel={(user) => `${user.fullName} ` || ' '}
+                          optionLabel="fullName"
+                          usersLoading={usersLoading}
                           onHandleChange={(e, value) => {
                             if (value) setFieldValue('managerId', value);
                           }}

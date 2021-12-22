@@ -4,20 +4,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Document } from './document';
 import { H5 } from '../../typography';
 import { useStyles } from './style';
-import { ROLES } from '../../../utils/constants';
-import { useAuthContext } from '../../../context/authContext';
 
 export default function DocumentList({
   departmentName,
   onHandleDelete,
   departments,
   onHandleSortOrder,
+  isWriteAllowed,
 }) {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
   const [departmentDocuments, updateDepartmentDocuments] = useState();
   const classes = useStyles();
   useEffect(() => {
@@ -70,6 +64,7 @@ export default function DocumentList({
                     <Document
                       document={document}
                       onHandleDelete={onHandleDelete}
+                      isWriteAllowed={isWriteAllowed}
                     />
                   </Paper>
                 )}
@@ -141,7 +136,7 @@ export default function DocumentList({
         </Paper>
 
         <Box className={classes.documentList}>
-          {role === ROLES.ADMIN ? (
+          {isWriteAllowed ? (
             <DocumentListWithDraggable />
           ) : (
             <DocumentListWithoutDraggable />

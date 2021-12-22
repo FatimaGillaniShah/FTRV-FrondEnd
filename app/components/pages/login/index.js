@@ -67,7 +67,6 @@ export function Login({
                     placeholderText="Email"
                     Icon={EmailIcon}
                     appendIcon
-                    IconClickable={false}
                   />
                 </Box>
                 <Box my={5}>
@@ -77,7 +76,6 @@ export function Login({
                     placeholderText="Password"
                     Icon={LockIcon}
                     appendIcon
-                    IconClickable={false}
                   />
                 </Box>
                 <Box className={classes.centerAlign}>

@@ -6,9 +6,14 @@ import { EventsPage } from '../../components/pages/events';
 import Show from '../../components/show';
 import { fetchEvents } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 import { parseDate } from '../../utils/functions';
 
 function Events() {
+  const isWriteAllowed = usePermission(
+    `${features.EVENTS}-${PERMISSIONS.WRITE}`
+  );
   const today = parseDate(new Date());
   const [eventWindowDate, setEventWindowDate] = useState(today);
   const [pagination, setPagination] = useState(false);
@@ -33,6 +38,7 @@ function Events() {
           eventWindowDate={eventWindowDate}
           setPagination={setPagination}
           pagination={pagination}
+          isWriteAllowed={isWriteAllowed}
         />
       </Show>
     </>

@@ -2,14 +2,12 @@ import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import { Alert } from '@material-ui/lab';
 import PropTypes from 'prop-types';
-import { useAuthContext } from '../../../context/authContext';
 import WrapInCard from '../../layout/wrapInCard';
-import { ROLES } from '../../../utils/constants';
 import { TableButtons } from './tableButtons';
 import DataTable from '../../dataTable';
 import { Search } from '../../search/search';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
-import { headCells } from './columns';
+import { getHeadCells } from './columns';
 import Show from '../../show';
 
 function ProfitCenter({
@@ -22,13 +20,8 @@ function ProfitCenter({
   page,
   query,
   loading,
+  isWriteAllowed,
 }) {
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
-
   return (
     <WrapInBreadcrumbs>
       <Box width={1}>
@@ -43,7 +36,7 @@ function ProfitCenter({
           </Box>
         </WrapInCard>
         <WrapInCard>
-          <Show IF={role === ROLES.ADMIN}>
+          <Show IF={isWriteAllowed}>
             <Box mt={4}>
               <TableButtons
                 loading={loading}
@@ -60,11 +53,13 @@ function ProfitCenter({
               </Show>
             </Box>
           </Show>
+
           <DataTable
             rows={data}
-            columns={headCells}
+            columns={getHeadCells({ isWriteAllowed })}
             setSelected={setSelected}
             selected={selected}
+            isWriteAllowed={isWriteAllowed}
             count={data?.length || 0}
             sortColumn="centerNo"
             disableSelectionOnClick

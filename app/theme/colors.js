@@ -8,9 +8,12 @@ const dimGrey = '#696969';
 const smoky = '#F8F8F8';
 const info = '#1976d2';
 const lightGrey = '#acb4bf';
+const bottleGrey = '#E0E0E0';
 const seaBlue = '#E1F2FF';
+const ashGrey = '#e6e2e2';
 const brillianceWhite = '#fdfdfd';
 const whiteSmoke = '#f5f5f5';
+const pearlBlue = '#0b94c1';
 export const colors = {
   primary: '#153D73',
   secondary: lightblue,
@@ -20,8 +23,11 @@ export const colors = {
   red,
   smoky,
   seaBlue,
+  bottleGrey,
   green,
+  pearlBlue,
   grey,
+  ashGrey,
   lightGrey,
   dimGrey,
   skyBlue,

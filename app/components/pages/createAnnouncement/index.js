@@ -9,12 +9,10 @@ import { useHistory } from 'react-router-dom';
 import NotificationImportantIcon from '@material-ui/icons/NotificationImportant';
 import { string, object, date, ref } from 'yup';
 import { Button, DatePicker, Input } from '../../index';
-import { ROLES, STATUS } from '../../../utils/constants';
+import { STATUS } from '../../../utils/constants';
 import FormikRadioGroup from '../../muiRadioButtons';
 import { H4 } from '../../typography';
 import Select from '../../muiSelect';
-import { useAuthContext } from '../../../context/authContext';
-
 import { parseDate } from '../../../utils/functions';
 import { navigateTo } from '../../../utils/helper';
 
@@ -45,11 +43,7 @@ function CreateAnnouncement({
     { value: 'low', label: 'Low' },
   ];
   const statusOptions = Object.keys(STATUS).map((val) => STATUS[val]);
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
+
   const history = useHistory();
   const formHeadings = {
     add: 'Create New Announcement',
@@ -113,7 +107,6 @@ function CreateAnnouncement({
                       id="startTime"
                       name="startTime"
                       label="Start Date*"
-                      disabled={role === ROLES.USER}
                     />
                   </Box>
                   <Box width={[1, 1 / 2]} mt={10} px={3}>
@@ -122,7 +115,6 @@ function CreateAnnouncement({
                       name="endTime"
                       label="End Date*"
                       disablePast
-                      disabled={role === ROLES.USER}
                     />
                   </Box>
 

@@ -5,9 +5,11 @@ import JobDetailModal from '../../components/jobDetailsModal';
 import { getJobById } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Toast } from '../../utils/helper';
+import { features, PERMISSIONS } from '../../utils/constants';
+import { usePermission } from '../../hooks/permission';
 
 function JobDetailModalContainer({ id, modal, onHandleClose }) {
-  const { data, isLoading: isListLoading } = useQuery(
+  const { data, isLoading: isJobLoading } = useQuery(
     keys.getJobById(id),
     getJobById,
     {
@@ -26,17 +28,28 @@ function JobDetailModalContainer({ id, modal, onHandleClose }) {
   );
   const jobDetail = data?.data?.data && data?.data?.data[0];
   const expiryDate = moment(jobDetail?.expiryDate).format('MM-DD-YYYY');
+  const isApplicantAllowed = usePermission(
+    `${features.APPLICANT}-${PERMISSIONS.READ}`
+  );
+  const isApplyAllowed = usePermission(
+    `${features.APPLICANT}-${PERMISSIONS.WRITE}`
+  );
+  const permissions = {
+    isApplicantAllowed,
+    isApplyAllowed,
+  };
 
   return (
     <>
-      {!isListLoading && (
+      {!isJobLoading && (
         <JobDetailModal
           id={id}
           jobDetail={jobDetail}
           expiryDate={expiryDate}
           onHandleClose={onHandleClose}
           modal={modal}
-          isLoading={isListLoading}
+          isJobLoading={isJobLoading}
+          permissions={permissions}
         />
       )}
     </>

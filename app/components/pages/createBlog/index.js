@@ -103,7 +103,6 @@ function CreateBlog({ onHandleSubmit, id, initialValues, loading }) {
                           OutlinedInputPlaceholder="Title*"
                           appendIcon
                           Icon={TitleOutlinedIcon}
-                          IconClickable
                           variant="outlined"
                         />
                         <Box mt={10}>

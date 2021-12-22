@@ -12,9 +12,14 @@ import {
   getLocations,
 } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { usePermission } from '../../hooks/permission';
+import { features, PERMISSIONS } from '../../utils/constants';
 import { Modal, navigateTo, Toast, addHourToDate } from '../../utils/helper';
 
 function CreateEvent() {
+  const isWriteAllowed = usePermission(
+    `${features.EVENTS}-${PERMISSIONS.WRITE}`
+  );
   const { data: locationData, isLoading: isLocationLoading } = useQuery(
     keys.locations,
     getLocations
@@ -60,6 +65,7 @@ function CreateEvent() {
         title: message || 'Some error occurred',
       }),
   });
+
   const mutation = useDeleteEvent();
   const handleSubmit = (values) => {
     const dataValues = { ...values };
@@ -105,6 +111,7 @@ function CreateEvent() {
           onHandleDeleteEvent={handleDeleteEvent}
           locationData={locationData?.data?.data?.rows}
           loading={isLoading}
+          isWriteAllowed={isWriteAllowed}
         />
       )}
     </>

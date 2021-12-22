@@ -50,7 +50,6 @@ export function CreateLinkCategory({
                         name="name"
                         appendIcon
                         Icon={FolderOpenOutlinedIcon}
-                        IconClickable
                       />
                     </Box>
                   </Box>

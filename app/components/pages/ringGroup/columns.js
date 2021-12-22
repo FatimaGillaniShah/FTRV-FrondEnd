@@ -3,19 +3,12 @@ import { IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
-import { useAuthContext } from '../../../context/authContext';
-import { ROLES } from '../../../utils/constants';
 import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { useDeleteRingGroup } from '../../../hooks/ringGroup';
 
-const ActionButtons = ({ data, disabled }) => {
+const ActionButtons = ({ data, isWriteAllowed }) => {
   const history = useHistory();
-  const {
-    user: {
-      data: { role },
-    },
-  } = useAuthContext();
   const { mutate, isLoading } = useDeleteRingGroup();
 
   const handleDelete = () => {
@@ -26,25 +19,21 @@ const ActionButtons = ({ data, disabled }) => {
     });
   };
   return (
-    <>
-      <Show IF={role === ROLES.ADMIN}>
-        <>
-          <IconButton
-            disabled={isLoading || disabled}
-            onClick={() => navigateTo(history, `/ring-group/edit/${data.id}`)}
-          >
-            <EditIcon color="secondary" />
-          </IconButton>
-          <IconButton disabled={isLoading || disabled} onClick={handleDelete}>
-            <DeleteIcon color="error" />
-          </IconButton>
-        </>
-      </Show>
-    </>
+    <Show IF={isWriteAllowed}>
+      <IconButton
+        disabled={isLoading}
+        onClick={() => navigateTo(history, `/ring-group/edit/${data.id}`)}
+      >
+        <EditIcon color="secondary" />
+      </IconButton>
+      <IconButton disabled={isLoading} onClick={handleDelete}>
+        <DeleteIcon color="error" />
+      </IconButton>
+    </Show>
   );
 };
 
-export const headCells = [
+export const getHeadCells = ({ isWriteAllowed }) => [
   {
     field: 'name',
     type: 'string',
@@ -84,7 +73,7 @@ export const headCells = [
     description: 'Actions',
     sortable: false,
     renderCell: ({ row }) => (
-      <ActionButtons data={row} disabled={row.role === ROLES.ADMIN} />
+      <ActionButtons data={row} isWriteAllowed={isWriteAllowed} />
     ),
     width: 150,
   },

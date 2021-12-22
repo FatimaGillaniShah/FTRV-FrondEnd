@@ -1,22 +1,29 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import { get } from 'lodash';
+import { makeStyles } from '@material-ui/styles';
 import { useAuthContext } from '../../context/authContext';
-import { ROLES } from '../../utils/constants';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 
+const useStyles = makeStyles(() => ({
+  icon: {
+    cursor: 'not-allowed',
+  },
+}));
+
 const ActionButtons = ({ data }) => {
+  const classes = useStyles();
   const history = useHistory();
   const {
     user: {
       data: { id: currentUserID },
     },
   } = useAuthContext();
-
+  const { isAdmin } = data;
   const mutation = useDeleteUser();
 
   const handleDeleteUser = () => {
@@ -26,9 +33,10 @@ const ActionButtons = ({ data }) => {
       }
     });
   };
-  const disabled = data.id === currentUserID;
+
+  const disabled = data.id === currentUserID || isAdmin;
   return (
-    <>
+    <Box className={disabled && classes.icon}>
       <IconButton
         disabled={disabled}
         onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
@@ -38,11 +46,10 @@ const ActionButtons = ({ data }) => {
       <IconButton onClick={handleDeleteUser} disabled={disabled}>
         <DeleteIcon color="error" />
       </IconButton>
-    </>
+    </Box>
   );
 };
-
-export const headCells = ({ role, match }) => {
+export const getHeadCells = ({ match, isWriteAllowed }) => {
   const columnHeads = {
     fullName: 'fullName',
     [`department.name`]: 'department.name',
@@ -60,6 +67,7 @@ export const headCells = ({ role, match }) => {
       headerName: 'Name',
       description: 'Name',
       sortable: true,
+      flex: 1,
     },
     {
       field: 'department.name',
@@ -68,6 +76,7 @@ export const headCells = ({ role, match }) => {
       description: 'Department',
       sortable: true,
       valueFormatter: (params) => get(params.row, 'department.name'),
+      width: 150,
     },
     {
       field: 'title',
@@ -75,6 +84,7 @@ export const headCells = ({ role, match }) => {
       headerName: 'Title',
       description: 'Title',
       sortable: true,
+      flex: 1,
     },
     {
       field: 'location.name',
@@ -83,6 +93,7 @@ export const headCells = ({ role, match }) => {
       description: 'Location',
       sortable: true,
       valueFormatter: (params) => get(params.row, 'location.name'),
+      width: 200,
     },
     {
       field: 'email',
@@ -90,6 +101,7 @@ export const headCells = ({ role, match }) => {
       headerName: 'Email ID',
       description: 'Email ID',
       sortable: true,
+      width: 240,
     },
     {
       field: 'extension',
@@ -97,6 +109,7 @@ export const headCells = ({ role, match }) => {
       headerName: 'Ext',
       description: 'Ext',
       sortable: false,
+      width: 150,
     },
     {
       field: 'contactNo',
@@ -104,17 +117,20 @@ export const headCells = ({ role, match }) => {
       headerName: 'Phone No.',
       description: 'Phone Number',
       sortable: false,
+      width: 110,
     },
     {
       field: 'actions',
       type: 'number',
       headerName: ' ',
       description: 'Actions',
-      hide: role === ROLES.USER,
+      hide: !isWriteAllowed,
       sortable: false,
       renderCell: ({ row }) => <ActionButtons data={row} />,
+      width: 200,
     },
   ];
+
   const longColumns = ['email'];
   const mediumColumns = [
     'fullName',

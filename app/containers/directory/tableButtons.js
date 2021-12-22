@@ -4,11 +4,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { useHistory } from 'react-router-dom';
+import EditIcon from '@material-ui/icons/Edit';
 import { navigateTo } from '../../utils/helper';
 import { Button } from '../../components';
 
-export function TableButtons({ onDelete, numSelected, loading }) {
+export function TableButtons({ onDelete, numSelected, loading, selected }) {
   const history = useHistory();
+
   return (
     <Box display="flex" justifyContent="space-between" my={5}>
       <Box display="flex" flexWrap="wrap">
@@ -34,6 +36,20 @@ export function TableButtons({ onDelete, numSelected, loading }) {
             onClick={() => navigateTo(history, '/directory/upload')}
           >
             Import
+          </Button>
+        </Box>
+        <Box mr={2} mt={[2, 0, 0, 0]}>
+          <Button
+            color="secondary"
+            variant="contained"
+            disabled={numSelected <= 0 || loading}
+            startIcon={<EditIcon />}
+            onClick={() =>
+              navigateTo(history, `/directory/bulk-edit/${selected}`)
+            }
+            loading={false}
+          >
+            Bulk Edit
           </Button>
         </Box>
         <Box mr={2} mt={[2, 0, 0, 0]}>

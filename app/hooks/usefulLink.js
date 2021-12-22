@@ -16,7 +16,7 @@ export function useDeleteLink({ callbackFn } = {}) {
     }) => {
       if (isFunction(callbackFn)) callbackFn();
       Swal.fire('Deleted!', `${count} link(s) deleted.`, 'success');
-      queryClient.invalidateQueries(keys.getLink(categoryId));
+      queryClient.invalidateQueries(keys.links(categoryId));
     },
     onError: ({
       response: {

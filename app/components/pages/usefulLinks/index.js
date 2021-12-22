@@ -12,35 +12,39 @@ function UsefulLinksPage({
   setSelected,
   onDelete,
   data,
-  headCells,
+  getHeadCells,
   isLoading,
   page,
   setPage,
   loading,
+  isWriteAllowed,
 }) {
   return (
     <WrapInBreadcrumbs>
       <WrapInCard mb={8}>
-        <TableButtons
-          numSelected={selected?.length}
-          onDelete={onDelete}
-          loading={loading}
-        />
-        <Show IF={selected?.length > 0}>
-          <Box my={4}>
-            <Alert severity="info">
-              <strong>{selected?.length}</strong> Links(s) Selected
-            </Alert>
-          </Box>
+        <Show IF={isWriteAllowed}>
+          <TableButtons
+            numSelected={selected?.length}
+            onDelete={onDelete}
+            loading={loading}
+          />
+          <Show IF={selected?.length > 0}>
+            <Box my={4}>
+              <Alert severity="info">
+                <strong>{selected?.length}</strong> Links(s) Selected
+              </Alert>
+            </Box>
+          </Show>
         </Show>
         <Show IF={!isLoading}>
           <DataTable
-            rows={data}
-            columns={headCells}
+            rows={data || []}
+            columns={getHeadCells({ isWriteAllowed })}
             selected={selected}
             setSelected={setSelected}
             count={data?.length || 0}
             sortColumn="name"
+            isWriteAllowed={isWriteAllowed}
             page={page}
             setPage={setPage}
           />
