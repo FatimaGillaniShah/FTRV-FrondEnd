@@ -1,6 +1,7 @@
 export const keys = {
   getUsers: (payload) => ['users', payload],
   getUser: (id) => ['user', id],
+  getitles: 'user-titles',
   getUserOwn: (id) => ['user-own', id],
   user: 'user',
   quote: 'quote',

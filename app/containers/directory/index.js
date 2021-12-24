@@ -147,9 +147,10 @@ function DirectoryContainer() {
       <Helmet>
         <title>Directory Listing</title>
       </Helmet>
-      {isLoading || mutation.isLoading ? (
+      <Show IF={isLoading || mutation.isLoading}>
         <Loading />
-      ) : (
+      </Show>
+      <Show IF={!isLoading && !mutation.isLoading}>
         <WrapInBreadcrumbs>
           <Box width={1}>
             <WrapInCard mb={8}>
@@ -216,7 +217,7 @@ function DirectoryContainer() {
             </WrapInCard>
           </Box>
         </WrapInBreadcrumbs>
-      )}
+      </Show>
     </>
   );
 }

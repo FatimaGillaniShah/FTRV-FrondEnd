@@ -7,6 +7,7 @@ const {
   LOGIN,
   FILE_UPLOAD,
   USERS,
+  USER_TITLE,
   USERS_DELETE,
   LINKS,
   DELETE_LINK,
@@ -327,6 +328,10 @@ export const getProfitCenters = ({ queryKey }) => {
 export const deleteProfitCenter = (payload) =>
   http.delete(PROFIT_CENTER, { data: { ids: payload } });
 
+export const getUserTitles = () => {
+  const url = `${USER_TITLE}`;
+  return http.get(url);
+};
 export const getResources = ({ queryKey }) => {
   let url;
   const filters = queryKey[1];

@@ -109,6 +109,7 @@ export const APIS = {
   GOOGLE_LOGIN: 'users/googleLogin',
   USERS_DELETE: '/users/deleteUsers',
   USERS: '/users',
+  USER_TITLE: '/users/title',
   USERS_BULK_UPDATE: '/users/userBulkUpdate',
   BIRTHDAYS: '/users/birthday',
   QUOTE: '/quote',

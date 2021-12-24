@@ -7,6 +7,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { Input } from '../../index';
 import LocationWithModal from '../../locationWithModal';
 import DepartmentWithModal from '../../departmentWithModal';
+import TitleDropdown from '../../titleDropdown';
 
 function Filters({ onHandleFilterSearch, onClear }) {
   const clearFilteringSearch = (resetForm) => {
@@ -47,7 +48,7 @@ function Filters({ onHandleFilterSearch, onClear }) {
                 />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
-                <Input name="title" placeholderText="Title" />
+                <TitleDropdown name="title" />
               </Box>
               <Box width={[1, 1, 1 / 6]} my={[2, 4]}>
                 <LocationWithModal
