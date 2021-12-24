@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactHtmlParser from 'html-react-parser';
+import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
 import { H5, BodyTextLarge } from '../../typography';
 import BlogCreatorInfo from './blogCreatorInfo';
 import { navigateTo } from '../../../utils/helper';
@@ -21,7 +22,12 @@ const useStyles = makeStyles(() => ({
   cursorPointer: {
     cursor: 'pointer',
   },
+  roundImage: {
+    fontSize: '160px',
+    borderRadius: '100%',
+  },
 }));
+
 function Blog({
   id,
   title,
@@ -50,11 +56,16 @@ function Blog({
         onClick={() => navigateTo(history, `/blogs/detail/${id}`)}
         className={classes.cursorPointer}
       >
-        <Avatar
-          variant="square"
-          src={thumbnail}
-          className={classes.imageView}
-        />
+        <Show IF={thumbnail}>
+          <Avatar
+            variant="square"
+            src={thumbnail}
+            className={classes.imageView}
+          />
+        </Show>
+        <Show IF={!thumbnail}>
+          <ImageRoundedIcon className={classes.roundImage} color="disabled" />
+        </Show>
       </Box>
       <Box width={[1, '30', '60%', '75%']}>
         <Box display="flex" flexDirection="row" mt={0.5}>
@@ -95,6 +106,7 @@ function Blog({
     </Box>
   );
 }
+
 Blog.propTypes = {
   id: PropTypes.number,
   title: PropTypes.string,

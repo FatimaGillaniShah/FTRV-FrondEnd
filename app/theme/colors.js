@@ -10,6 +10,7 @@ const info = '#1976d2';
 const lightGrey = '#acb4bf';
 const bottleGrey = '#E0E0E0';
 const seaBlue = '#E1F2FF';
+const blackGrey = '#424242';
 const ashGrey = '#e6e2e2';
 const brillianceWhite = '#fdfdfd';
 const whiteSmoke = '#f5f5f5';
@@ -22,6 +23,7 @@ export const colors = {
   greenBlue: '#1875c0',
   red,
   smoky,
+  blackGrey,
   seaBlue,
   bottleGrey,
   green,

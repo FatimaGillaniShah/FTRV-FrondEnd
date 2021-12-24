@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
-import { Avatar, Box } from '@material-ui/core';
-import { Input, Button, CKEditor } from 'components';
+import { Box } from '@material-ui/core';
+import { Input, Button, CKEditor, Avatar } from 'components';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
 import { MuiFile } from 'components/muiFile';
@@ -11,12 +11,20 @@ import TitleOutlinedIcon from '@material-ui/icons/TitleOutlined';
 import SaveIcon from '@material-ui/icons/Save';
 import PropTypes from 'prop-types';
 import ImageRoundedIcon from '@material-ui/icons/ImageRounded';
+import { makeStyles } from '@material-ui/core/styles';
 import WrapInCard from '../../layout/wrapInCard';
 import WrapInBreadcrumbs from '../../layout/wrapInBreadcrumbs';
 import { H4 } from '../../typography';
 import { blogSchema } from './blogSchema';
-import { useStyles } from './style';
 import { navigateTo } from '../../../utils/helper';
+import Show from '../../show';
+
+const useStyles = makeStyles(() => ({
+  roundImage: {
+    fontSize: '160px',
+    borderRadius: '100%',
+  },
+}));
 
 function CreateBlog({ onHandleSubmit, id, initialValues, loading }) {
   const imgURL = initialValues?.file;
@@ -52,23 +60,19 @@ function CreateBlog({ onHandleSubmit, id, initialValues, loading }) {
                     alignItems="center"
                   >
                     <Box width={1} display="flex" justifyContent="center">
-                      <Box
-                        width={[1 / 2, 1]}
-                        display="flex"
-                        justifyContent="center"
-                      >
-                        {imgFile ? (
-                          <Avatar
-                            src={imgFile}
-                            className={classes.imageStyle}
-                          />
-                        ) : (
-                          <ImageRoundedIcon
-                            style={{ fontSize: '160px', borderRadius: '100%' }}
-                            color="disabled"
-                          />
-                        )}
-                      </Box>
+                      <Show IF={!imgFile}>
+                        <ImageRoundedIcon
+                          className={classes.roundImage}
+                          color="disabled"
+                        />
+                      </Show>
+                      <Show IF={imgFile}>
+                        <Avatar
+                          imgFile={imgFile}
+                          setFieldValue={setFieldValue}
+                          setImgFile={setImgFile}
+                        />
+                      </Show>
                     </Box>
                     <Box ml={1} pt={5} display="flex" justifyContent="center">
                       <MuiFile

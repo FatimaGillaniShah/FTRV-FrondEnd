@@ -75,7 +75,7 @@ function EditUser() {
         data: { avatar, firstName, lastName },
       },
     }) => {
-      if (avatar) {
+      if (avatar || avatar === '') {
         const parsedUserData = { ...user };
         if (parsedUserData.data) {
           parsedUserData.data.avatar = avatar;

@@ -20,6 +20,7 @@ export { default as Button } from './muiButton';
 export { default as Carousel } from './muiCarousel';
 export { default as TextField } from './muiTextField';
 export { default as CKEditor } from './ckeditor';
+export { default as Avatar } from './muiAvatar';
 
 export {
   H1,

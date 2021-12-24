@@ -36,8 +36,10 @@ function AddCeoMessage() {
   const handleSubmit = (values) => {
     const ceoData = values;
     const dataFile = new FormData();
-    if (ceoData?.file?.file) {
-      dataFile.append('file', ceoData?.file?.file);
+
+    if (ceoData?.file?.file || ceoData?.file === '') {
+      if (ceoData.file === '') dataFile.append('file', '');
+      else dataFile.append('file', ceoData?.file?.file);
     }
     if (ceoData.content) {
       dataFile.append('content', ceoData.content);

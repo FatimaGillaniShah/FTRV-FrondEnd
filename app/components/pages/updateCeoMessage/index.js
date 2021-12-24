@@ -1,6 +1,5 @@
-import { Avatar, Box } from '@material-ui/core';
-import { Button, CKEditor } from 'components';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
+import { Button, CKEditor, Avatar } from 'components';
 import { Add } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
 import { MuiFile } from 'components/muiFile';
@@ -15,15 +14,7 @@ import { H4 } from '../../typography';
 import { formValidaton } from './formValidation';
 import { navigateTo } from '../../../utils/helper';
 
-const useStyles = makeStyles(() => ({
-  imageStyle: {
-    width: '150px',
-    height: '150px',
-  },
-}));
-
 function AddCeoMessage({ onHandleSubmit, value, loading }) {
-  const classes = useStyles();
   const [imgFile, setImgFile] = useState((value && value.avatar) || null);
   const history = useHistory();
 
@@ -62,13 +53,11 @@ function AddCeoMessage({ onHandleSubmit, value, loading }) {
                   alignItems="center"
                 >
                   <Box width={1} display="flex" justifyContent="center">
-                    <Box
-                      width={[1 / 2, 1]}
-                      display="flex"
-                      justifyContent="center"
-                    >
-                      <Avatar src={imgFile} className={classes.imageStyle} />
-                    </Box>
+                    <Avatar
+                      setFieldValue={setFieldValue}
+                      setImgFile={setImgFile}
+                      imgFile={imgFile}
+                    />
                   </Box>
                   <Box
                     ml={1}

@@ -65,7 +65,10 @@ function CreateBlog() {
     if (id) formData.append('id', id);
     formData.append('title', values.title);
     formData.append('content', filteredContent);
-    formData.append('file', values?.file?.file);
+    if (values?.file?.file || values?.file === '') {
+      if (values.file === '') formData.append('file', '');
+      else formData.append('file', values.file.file);
+    }
     mutate(formData);
   };
   const initialValues = {

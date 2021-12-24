@@ -1,5 +1,4 @@
-import { Avatar, Box, Tooltip } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box, Tooltip } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -10,7 +9,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import WorkIcon from '@material-ui/icons/Work';
-import { Input, DatePicker, Button, AutoComplete } from 'components';
+import { Input, DatePicker, Button, Avatar, AutoComplete } from 'components';
 import { MuiFile } from 'components/muiFile';
 import { Form, Formik } from 'formik';
 import React, { memo, useEffect, useRef, useState } from 'react';
@@ -27,13 +26,6 @@ import { useListGroup } from '../../../hooks/group';
 import LocationWithModal from '../../locationWithModal';
 import DepartmentWithModal from '../../departmentWithModal';
 import { FILE_ACCEPT_TYPES } from '../../../utils/constants';
-
-const useStyles = makeStyles(() => ({
-  imageStyle: {
-    width: '150px',
-    height: '150px',
-  },
-}));
 
 function CreateUser({
   initialData,
@@ -58,7 +50,6 @@ function CreateUser({
     setFilter({ name: target.value });
   }, 500);
 
-  const classes = useStyles();
   const { data: groups, isLoading: isGroupLoading } = useListGroup({
     enabled: feature.GROUP,
     filters,
@@ -101,8 +92,9 @@ function CreateUser({
     dataFile.append('contactNo', data.contactNo ? data.contactNo : '');
     dataFile.append('extension', data.extension ? data.extension : '');
     if (data.title) dataFile.append('title', data.title);
-    if (data?.file?.file) {
-      dataFile.append('file', data.file.file);
+    if (data?.file?.file || data?.file === '') {
+      if (data.file === '') dataFile.append('file', '');
+      else dataFile.append('file', data.file.file);
     }
     if (formType === 'add') dataFile.append('email', data.email);
     if (data.password) {
@@ -153,13 +145,11 @@ function CreateUser({
                 alignItems="center"
               >
                 <Box width={1} display="flex" justifyContent="center">
-                  <Box
-                    width={[1 / 2, 1]}
-                    display="flex"
-                    justifyContent="center"
-                  >
-                    <Avatar src={imgFile} className={classes.imageStyle} />
-                  </Box>
+                  <Avatar
+                    imgFile={imgFile}
+                    setFieldValue={setFieldValue}
+                    setImgFile={setImgFile}
+                  />
                 </Box>
                 <Box
                   ml={1}
