@@ -1,15 +1,17 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { debounce } from 'lodash';
 import { Loading } from '../../components/loading';
 import { Modal } from '../../utils/helper';
 import { features, PERMISSIONS } from '../../utils/constants';
+import { keys } from '../../state/queryKeys';
+import { useSharedState } from '../../hooks/sharedState';
 import Groups from '../../components/pages/groups';
 import { useDeleteGroup, useListGroup } from '../../hooks/group';
 import { usePermission } from '../../hooks/permission';
 
 function GroupsContainer() {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const [page, setPage] = useState(0);
 
   const isWriteAllowed = usePermission(
@@ -30,6 +32,10 @@ function GroupsContainer() {
   const { mutate, isLoading } = useDeleteGroup({
     callbackFn: () => setSelected([]),
   });
+  useEffect(() => {
+    setSelected([]);
+    return () => setSelected([]);
+  }, []);
 
   const handleDelete = () => {
     if (selected.length) {

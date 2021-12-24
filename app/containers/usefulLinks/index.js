@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
@@ -6,6 +6,7 @@ import { Loading } from '../../components/loading';
 import UsefulLinksPage from '../../components/pages/usefulLinks';
 import { getUsefulLinksByCategoryId } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { useSharedState } from '../../hooks/sharedState';
 import { getHeadCells } from './columns';
 import { Modal, Toast } from '../../utils/helper';
 import { useDeleteLink } from '../../hooks/usefulLink';
@@ -13,7 +14,7 @@ import { usePermission } from '../../hooks/permission';
 import { features, PERMISSIONS } from '../../utils/constants';
 
 function UsefulLinks() {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const [page, setPage] = useState(0);
   const { categoryId } = useParams();
   const isWriteAllowed = usePermission(
@@ -38,6 +39,7 @@ function UsefulLinks() {
   const mutation = useDeleteLink({
     callbackFn: () => setSelected([]),
   });
+  useEffect(() => () => setSelected([]), []);
 
   const handleDeleteLinks = () => {
     if (!selected.length) {

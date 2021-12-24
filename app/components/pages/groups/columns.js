@@ -1,16 +1,26 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton, Tooltip } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles } from '@material-ui/styles';
+import clsx from 'clsx';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { useDeleteGroup } from '../../../hooks/group';
 import RenderCellExpand from '../../muiDatagridCellPopup';
+import { useSharedState } from '../../../hooks/sharedState';
+import { keys } from '../../../state/queryKeys';
 
+const useStyles = makeStyles(() => ({
+  deleteIcon: {
+    cursor: 'not-allowed',
+  },
+}));
 const ActionButtons = ({ data }) => {
   const history = useHistory();
+  const classes = useStyles();
   const { mutate, isLoading } = useDeleteGroup();
-
+  const [selectedRow] = useSharedState(keys.selectedRow);
   const handleDelete = () => {
     Modal.fire().then(({ isConfirmed }) => {
       if (isConfirmed) {
@@ -18,18 +28,28 @@ const ActionButtons = ({ data }) => {
       }
     });
   };
+
+  const isDisabled = selectedRow?.length > 0;
   return (
     <>
-      <>
+      <Tooltip title="Edit">
         <IconButton
           onClick={() => navigateTo(history, `/groups/edit/${data.id}`)}
         >
           <EditIcon color="secondary" />
         </IconButton>
-        <IconButton disabled={isLoading} onClick={handleDelete}>
-          <DeleteIcon color="error" />
-        </IconButton>
-      </>
+      </Tooltip>
+      <Tooltip title={isDisabled ? 'Disabled' : 'Delete'}>
+        <Box
+          className={clsx({
+            [classes.deleteIcon]: isDisabled,
+          })}
+        >
+          <IconButton disabled={isLoading || isDisabled} onClick={handleDelete}>
+            <DeleteIcon color="error" />
+          </IconButton>
+        </Box>
+      </Tooltip>
     </>
   );
 };

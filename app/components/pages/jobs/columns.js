@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import Badge from '@material-ui/core/Badge';
-import Box from '@material-ui/core/Box';
+import clsx from 'clsx';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
+import { makeStyles } from '@material-ui/core/styles';
+import { useSharedState } from '../../../hooks/sharedState';
+import { keys } from '../../../state/queryKeys';
 import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { useDeleteJob } from '../../../hooks/job';
@@ -14,9 +17,17 @@ import JobDetailModal from '../../../containers/jobDetailModal';
 import { colors } from '../../../theme/colors';
 import { MuiBadge } from '../../index';
 
+const useStyles = makeStyles(() => ({
+  deleteIcon: {
+    cursor: 'not-allowed',
+  },
+}));
+
 const ActionButtons = ({ jobs, isWriteAllowed }) => {
+  const classes = useStyles();
   const history = useHistory();
   const [openJobModal, setOpenJobModal] = useState(false);
+  const [selectedRow] = useSharedState(keys.selectedRow);
   const { mutate, isLoading } = useDeleteJob();
 
   const handleDelete = () => {
@@ -33,7 +44,7 @@ const ActionButtons = ({ jobs, isWriteAllowed }) => {
   const handleClose = () => {
     setOpenJobModal(false);
   };
-
+  const isDisabled = selectedRow?.length > 0;
   return (
     <>
       <Show IF={openJobModal}>
@@ -57,10 +68,19 @@ const ActionButtons = ({ jobs, isWriteAllowed }) => {
             <EditIcon color="secondary" />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton disabled={isLoading} onClick={handleDelete}>
-            <DeleteIcon color="error" />
-          </IconButton>
+        <Tooltip title={isDisabled ? 'Disabled' : 'Delete'}>
+          <Box
+            className={clsx({
+              [classes.deleteIcon]: isDisabled,
+            })}
+          >
+            <IconButton
+              disabled={isLoading || isDisabled}
+              onClick={handleDelete}
+            >
+              <DeleteIcon color="error" />
+            </IconButton>
+          </Box>
         </Tooltip>
       </Show>
     </>

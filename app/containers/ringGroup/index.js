@@ -9,12 +9,13 @@ import { useDeleteRingGroup } from '../../hooks/ringGroup';
 import { getRingGroups } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import RingGroup from '../../components/pages/ringGroup';
+import { useSharedState } from '../../hooks/sharedState';
 import { usePermission } from '../../hooks/permission';
 import { features, PERMISSIONS } from '../../utils/constants';
 
 function RingGroupContainer() {
   const history = useHistory();
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const [page, setPage] = useState(0);
   const [fieldFunc, setFieldFunc] = useState();
   const [filterToggle, setFilterToggle] = useState(false);
@@ -72,6 +73,7 @@ function RingGroupContainer() {
       fieldFunc?.setFormikField('searchString', '');
       setQuery({ searchString: '' });
     }
+    return () => setSelected([]);
   }, [filterToggle]);
 
   const handleSearch = debounce((e, setFieldValue) => {

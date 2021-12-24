@@ -1,20 +1,32 @@
 import React, { useState } from 'react';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
+import clsx from 'clsx';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
 import { ProfitCenterDetailModal } from '../../profitCenterDetailsModal';
 import { useDeleteProfitCenter } from '../../../hooks/profitCenter';
+import { useSharedState } from '../../../hooks/sharedState';
+import { keys } from '../../../state/queryKeys';
+
+const useStyles = makeStyles(() => ({
+  deleteIcon: {
+    cursor: 'not-allowed',
+  },
+}));
 
 const ActionButtons = ({ profitCenter, isWriteAllowed }) => {
+  const classes = useStyles();
   const { id } = profitCenter;
   const history = useHistory();
 
   const { mutate } = useDeleteProfitCenter();
+  const [selectedRow] = useSharedState(keys.selectedRow);
   const [openProfitCenterModal, setOpenProfitCenterModal] = useState(false);
   const handleProfitCenterModal = () => {
     setOpenProfitCenterModal(true);
@@ -30,7 +42,7 @@ const ActionButtons = ({ profitCenter, isWriteAllowed }) => {
       }
     });
   };
-
+  const isDisabled = selectedRow?.length > 0;
   return (
     <>
       <Show IF={openProfitCenterModal}>
@@ -53,10 +65,16 @@ const ActionButtons = ({ profitCenter, isWriteAllowed }) => {
             <EditIcon color="secondary" />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton onClick={handleDelete}>
-            <DeleteIcon color="error" />
-          </IconButton>
+        <Tooltip title={isDisabled ? 'Disabled' : 'Delete'}>
+          <Box
+            className={clsx({
+              [classes.deleteIcon]: isDisabled,
+            })}
+          >
+            <IconButton disabled={isDisabled} onClick={handleDelete}>
+              <DeleteIcon color="error" />
+            </IconButton>
+          </Box>
         </Tooltip>
       </Show>
     </>

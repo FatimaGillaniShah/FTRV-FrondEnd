@@ -1,14 +1,27 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import clsx from 'clsx';
 import { useHistory, useParams } from 'react-router-dom';
 import { get } from 'lodash';
+import { makeStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import { Modal, navigateTo } from '../../utils/helper';
+import { useSharedState } from '../../hooks/sharedState';
+import { keys } from '../../state/queryKeys';
 import { useDeleteLink } from '../../hooks/usefulLink';
 
+const useStyles = makeStyles(() => ({
+  deleteIcon: {
+    cursor: 'not-allowed',
+  },
+}));
+
 const ActionButtons = ({ data }) => {
+  const classes = useStyles();
   const { categoryId } = useParams();
+  const [selectedRow] = useSharedState(keys.selectedRow);
   const history = useHistory();
   const mutation = useDeleteLink();
 
@@ -19,22 +32,33 @@ const ActionButtons = ({ data }) => {
       }
     });
   };
+  const isDisabled = selectedRow?.length > 0;
 
   return (
     <>
-      <IconButton
-        onClick={() =>
-          navigateTo(
-            history,
-            `/link-categories/useful-links/${categoryId}/edit/${data.id}`
-          )
-        }
-      >
-        <EditIcon color="secondary" />
-      </IconButton>
-      <IconButton onClick={() => handleDeleteLinks()}>
-        <DeleteIcon color="error" />
-      </IconButton>
+      <Tooltip title="Edit">
+        <IconButton
+          onClick={() =>
+            navigateTo(
+              history,
+              `/link-categories/useful-links/${categoryId}/edit/${data.id}`
+            )
+          }
+        >
+          <EditIcon color="secondary" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={isDisabled ? 'Disabled' : 'Delete'}>
+        <Box
+          className={clsx({
+            [classes.deleteIcon]: isDisabled,
+          })}
+        >
+          <IconButton onClick={() => handleDeleteLinks()} disabled={isDisabled}>
+            <DeleteIcon color="error" />
+          </IconButton>
+        </Box>
+      </Tooltip>
     </>
   );
 };

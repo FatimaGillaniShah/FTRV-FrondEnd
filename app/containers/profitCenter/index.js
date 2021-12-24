@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { debounce } from 'lodash';
@@ -15,13 +15,14 @@ import ProfitCenterPage from '../../components/pages/profitCenter';
 import { useDeleteProfitCenter } from '../../hooks/profitCenter';
 import { Modal } from '../../utils/helper';
 import Show from '../../components/show';
+import { useSharedState } from '../../hooks/sharedState';
 import { usePermission } from '../../hooks/permission';
 import { features, PERMISSIONS } from '../../utils/constants';
 
 function ProfitCenter() {
   const [page, setPage] = useState(0);
   const [query, setQuery] = useState({ searchString: '' });
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const {
     data: profitCenterResponse,
     isLoading: isProfitCenterLoading,
@@ -46,6 +47,11 @@ function ProfitCenter() {
       managerName: profitCenter?.manager?.fullName,
     })
   );
+
+  useEffect(() => {
+    setSelected([]);
+    return () => setSelected([]);
+  }, []);
 
   const handleDelete = () => {
     if (selected.length) {

@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Box from '@material-ui/core/Box';
 import { useQuery } from 'react-query';
@@ -14,6 +14,7 @@ import WrapInCard from '../../components/layout/wrapInCard';
 import { TableButtons } from './tableButtons';
 import { Loading } from '../../components/loading';
 import Show from '../../components/show';
+import { useSharedState } from '../../hooks/sharedState';
 import { usePermission } from '../../hooks/permission';
 import { features, PERMISSIONS } from '../../utils/constants';
 
@@ -21,7 +22,7 @@ function Locations() {
   const isWriteAllowed = usePermission(
     `${features.LOCATION}-${PERMISSIONS.WRITE}`
   );
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const [page, setPage] = useState(0);
   const mutation = useDeleteLocation({ callbackFn: () => setSelected([]) });
   const { data, isLoading } = useQuery(keys.locations, getLocations);
@@ -36,6 +37,9 @@ function Locations() {
       }
     });
   };
+
+  useEffect(() => () => setSelected([]), []);
+
   return (
     <>
       <Helmet>

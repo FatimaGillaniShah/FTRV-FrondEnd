@@ -7,13 +7,14 @@ import { Loading } from '../../components/loading';
 import { getJobs } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { Modal } from '../../utils/helper';
+import { useSharedState } from '../../hooks/sharedState';
 import { useDeleteJob } from '../../hooks/job';
 import Jobs from '../../components/pages/jobs';
 import { usePermission } from '../../hooks/permission';
 import { features, PERMISSIONS } from '../../utils/constants';
 
 function JobsContainer() {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const [filters, setFilters] = useState();
   const [filterToggle, setFilterToggle] = useState(false);
   const [fieldFunc, setFieldFunc] = useState();
@@ -32,7 +33,6 @@ function JobsContainer() {
       keepPreviousData: true,
     }
   );
-
   const rows = data?.data?.data?.rows.map((value) => ({
     ...value,
     department: value.department.name,
@@ -45,6 +45,8 @@ function JobsContainer() {
       fieldFunc?.setFormikField('searchString', '');
       setQuery({ searchString: '' });
     }
+    setSelected([]);
+    return () => setSelected([]);
   }, [filterToggle]);
 
   const initialFilterValues = {
@@ -52,7 +54,6 @@ function JobsContainer() {
     departmentId: '',
     locationId: '',
   };
-
   const { mutate, isLoading } = useDeleteJob({
     callbackFn: () => setSelected([]),
   });

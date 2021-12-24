@@ -6,6 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import { TABLE_PAGE_SIZE } from '../../utils/constants';
 import { useStyles } from './styles';
 import { useAuthContext } from '../../context/authContext';
+import { isArrayEqual } from '../../utils/functions';
 
 function CustomNoRowsOverlay() {
   const classes = useStyles();
@@ -52,7 +53,7 @@ export function DataTable({
   const [rowsPerPage, setRowsPerPage] = useState(tableRowsPerPage);
 
   function currentlySelected({ selectionModel }) {
-    if (selected !== selectionModel) {
+    if (!isArrayEqual(selected, selectionModel)) {
       setSelected(selectionModel);
     }
   }

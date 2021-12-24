@@ -8,6 +8,9 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     flexWrap: 'wrap',
   },
+  deleteIcon: {
+    cursor: 'not-allowed',
+  },
 }));
 
 export { useStyles };

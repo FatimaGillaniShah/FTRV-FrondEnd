@@ -37,11 +37,11 @@ function AddJob() {
     locationId: job?.location?.id,
   };
   const onJobSuccess = () => {
-    queryClient.invalidateQueries(keys.getJob({}));
     Toast({
       icon: 'success',
       title: `Job  ${id ? 'Updated' : 'Created'}  successfully`,
     });
+    queryClient.removeQueries(keys.getJobs({}));
     if (id) queryClient.invalidateQueries(keys.getJob(id));
     navigateTo(history, '/jobs');
   };

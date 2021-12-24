@@ -12,6 +12,7 @@ import { Loading } from '../../components/loading';
 import WrapInBreadcrumbs from '../../components/layout/wrapInBreadcrumbs';
 import { retrieveAnnouncements } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
+import { useSharedState } from '../../hooks/sharedState';
 import { Modal, capitalize } from '../../utils/helper';
 import { useDeleteAnnouncement } from '../../hooks/announcement';
 import Show from '../../components/show';
@@ -19,7 +20,7 @@ import { usePermission } from '../../hooks/permission';
 import { features, PERMISSIONS } from '../../utils/constants';
 
 function AnnouncementContainer() {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const [formatData, setFormatData] = useState([]);
   const [page, setPage] = useState(0);
   const isWriteAllowed = usePermission(
@@ -61,6 +62,7 @@ function AnnouncementContainer() {
       });
     }
     setFormatData(updatedFormatData);
+    setSelected([]);
   }, [data]);
 
   return (

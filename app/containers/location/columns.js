@@ -1,14 +1,27 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
+import clsx from 'clsx';
 import EditIcon from '@material-ui/icons/Edit';
+import { makeStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import Tooltip from '@material-ui/core/Tooltip';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteLocation } from '../../hooks/location';
+import { keys } from '../../state/queryKeys';
+import { useSharedState } from '../../hooks/sharedState';
 import Show from '../../components/show';
+
+const useStyles = makeStyles(() => ({
+  deleteIcon: {
+    cursor: 'not-allowed',
+  },
+}));
 
 const ActionButtons = ({ data, isWriteAllowed }) => {
   const history = useHistory();
+  const classes = useStyles();
+  const [selectedRow] = useSharedState(keys.selectedRow);
   const mutation = useDeleteLocation();
   const handleDeleteLocation = () => {
     Modal.fire().then((result) => {
@@ -17,17 +30,30 @@ const ActionButtons = ({ data, isWriteAllowed }) => {
       }
     });
   };
-
+  const isDisabled = selectedRow?.length > 0;
   return (
     <Show IF={isWriteAllowed}>
-      <IconButton
-        onClick={() => navigateTo(history, `/locations/edit/${data.id}`)}
-      >
-        <EditIcon color="secondary" />
-      </IconButton>
-      <IconButton onClick={() => handleDeleteLocation()}>
-        <DeleteIcon color="error" />
-      </IconButton>
+      <Tooltip title="Edit">
+        <IconButton
+          onClick={() => navigateTo(history, `/locations/edit/${data.id}`)}
+        >
+          <EditIcon color="secondary" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={isDisabled ? 'Disabled' : 'Delete'}>
+        <Box
+          className={clsx({
+            [classes.deleteIcon]: isDisabled,
+          })}
+        >
+          <IconButton
+            onClick={() => handleDeleteLocation()}
+            disabled={isDisabled}
+          >
+            <DeleteIcon color="error" />
+          </IconButton>
+        </Box>
+      </Tooltip>
     </Show>
   );
 };

@@ -1,8 +1,9 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Box from '@material-ui/core/Box';
 import { useQuery } from 'react-query';
 import { Alert } from '@material-ui/lab';
+import { useSharedState } from '../../hooks/sharedState';
 import { getDepartments } from '../../state/queryFunctions';
 import { keys } from '../../state/queryKeys';
 import { getHeadCells } from './columns';
@@ -18,7 +19,7 @@ import { features, PERMISSIONS } from '../../utils/constants';
 import Show from '../../components/show';
 
 function Departments() {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const [page, setPage] = useState(0);
   const isWriteAllowed = usePermission(
     `${features.DEPARTMENT}-${PERMISSIONS.WRITE}`
@@ -36,6 +37,8 @@ function Departments() {
       }
     });
   };
+
+  useEffect(() => () => setSelected([]), []);
 
   return (
     <>

@@ -22,6 +22,7 @@ import { useStyles } from './styles';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
 import Show from '../../components/show';
+import { useSharedState } from '../../hooks/sharedState';
 import { usePermission } from '../../hooks/permission';
 
 function DirectoryContainer() {
@@ -31,7 +32,7 @@ function DirectoryContainer() {
   const [pageSize, setPageSize] = useState(TABLE_PAGE_SIZE);
   const [filters, setFilters] = useState();
   const [checked, setChecked] = useState(false);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useSharedState(keys.selectedRow, []);
   const [alignment, setAlignment] = useState('directory');
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortColumn, setSortColumn] = useState('email');
@@ -49,7 +50,10 @@ function DirectoryContainer() {
       fieldFunc?.setFormikField('searchString', '');
       setQuery({ searchString: '' });
     }
+    setSelected([]);
+    return () => setSelected([]);
   }, [checked, sortOrder, sortColumn]);
+
   const { data, isLoading } = useQuery(
     keys.getUsers({
       query,
@@ -69,7 +73,6 @@ function DirectoryContainer() {
   const match = useMediaQuery(theme.breakpoints.down('lg'));
 
   const tableData = data?.data?.data;
-
   const handleSwitchChange = ({ target }) => {
     onClear();
     setChecked(target.checked);

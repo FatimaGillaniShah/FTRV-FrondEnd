@@ -46,6 +46,7 @@ export const keys = {
   profitCenter: 'profitCenter',
   profitCenters: (payload) => ['profit-centers', payload],
   getProfitCenter: (id) => ['profitCenter', id],
+  selectedRow: 'selectedRow',
   resources: (payload) => ['resources', payload],
   group: 'group',
   getGroup: (id) => ['group', id],

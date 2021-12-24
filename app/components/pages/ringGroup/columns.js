@@ -1,14 +1,26 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
+import clsx from 'clsx';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/styles';
 import Show from '../../show';
 import { Modal, navigateTo } from '../../../utils/helper';
+import { useSharedState } from '../../../hooks/sharedState';
+import { keys } from '../../../state/queryKeys';
 import { useDeleteRingGroup } from '../../../hooks/ringGroup';
 
+const useStyles = makeStyles(() => ({
+  deleteIcon: {
+    cursor: 'not-allowed',
+  },
+}));
+
 const ActionButtons = ({ data, isWriteAllowed }) => {
+  const classes = useStyles();
   const history = useHistory();
+  const [selectedRow] = useSharedState(keys.selectedRow);
   const { mutate, isLoading } = useDeleteRingGroup();
 
   const handleDelete = () => {
@@ -18,6 +30,7 @@ const ActionButtons = ({ data, isWriteAllowed }) => {
       }
     });
   };
+  const isDisabled = selectedRow?.length > 0;
   return (
     <Show IF={isWriteAllowed}>
       <IconButton
@@ -26,9 +39,15 @@ const ActionButtons = ({ data, isWriteAllowed }) => {
       >
         <EditIcon color="secondary" />
       </IconButton>
-      <IconButton disabled={isLoading} onClick={handleDelete}>
-        <DeleteIcon color="error" />
-      </IconButton>
+      <Box
+        className={clsx({
+          [classes.deleteIcon]: isDisabled,
+        })}
+      >
+        <IconButton disabled={isLoading || isDisabled} onClick={handleDelete}>
+          <DeleteIcon color="error" />
+        </IconButton>
+      </Box>
     </Show>
   );
 };

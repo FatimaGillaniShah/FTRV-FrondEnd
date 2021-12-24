@@ -1,14 +1,27 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
+import { Box, IconButton } from '@material-ui/core';
+import clsx from 'clsx';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import { useSharedState } from '../../hooks/sharedState';
+import { keys } from '../../state/queryKeys';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteDepartment } from '../../hooks/department';
 import Show from '../../components/show';
 
+const useStyles = makeStyles(() => ({
+  deleteIcon: {
+    cursor: 'not-allowed',
+  },
+}));
+
 const ActionButtons = ({ data, isWriteAllowed }) => {
   const history = useHistory();
+  const classes = useStyles();
+  const [selectedRow] = useSharedState(keys.selectedRow);
   const mutation = useDeleteDepartment();
 
   const handleDeleteDepartments = () => {
@@ -18,17 +31,31 @@ const ActionButtons = ({ data, isWriteAllowed }) => {
       }
     });
   };
+  const isDisabled = selectedRow?.length > 0;
 
   return (
     <Show IF={isWriteAllowed}>
-      <IconButton
-        onClick={() => navigateTo(history, `/departments/edit/${data.id}`)}
-      >
-        <EditIcon color="secondary" />
-      </IconButton>
-      <IconButton onClick={() => handleDeleteDepartments()}>
-        <DeleteIcon color="error" />
-      </IconButton>
+      <Tooltip title="Edit">
+        <IconButton
+          onClick={() => navigateTo(history, `/departments/edit/${data.id}`)}
+        >
+          <EditIcon color="secondary" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={isDisabled ? 'Disabled' : 'Delete'}>
+        <Box
+          className={clsx({
+            [classes.deleteIcon]: isDisabled,
+          })}
+        >
+          <IconButton
+            disabled={isDisabled}
+            onClick={() => handleDeleteDepartments()}
+          >
+            <DeleteIcon color="error" />
+          </IconButton>
+        </Box>
+      </Tooltip>
     </Show>
   );
 };

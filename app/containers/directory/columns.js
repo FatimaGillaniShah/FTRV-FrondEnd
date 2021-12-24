@@ -4,16 +4,14 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom';
 import { get } from 'lodash';
-import { makeStyles } from '@material-ui/styles';
+import clsx from 'clsx';
+import Tooltip from '@material-ui/core/Tooltip';
 import { useAuthContext } from '../../context/authContext';
 import { Modal, navigateTo } from '../../utils/helper';
 import { useDeleteUser } from '../../hooks/user';
-
-const useStyles = makeStyles(() => ({
-  icon: {
-    cursor: 'not-allowed',
-  },
-}));
+import { useSharedState } from '../../hooks/sharedState';
+import { keys } from '../../state/queryKeys';
+import { useStyles } from './styles';
 
 const ActionButtons = ({ data }) => {
   const classes = useStyles();
@@ -23,6 +21,7 @@ const ActionButtons = ({ data }) => {
       data: { id: currentUserID },
     },
   } = useAuthContext();
+  const [selectedRow] = useSharedState(keys.selectedRow);
   const { isAdmin } = data;
   const mutation = useDeleteUser();
 
@@ -33,19 +32,37 @@ const ActionButtons = ({ data }) => {
       }
     });
   };
-
+  const isDisabled = selectedRow?.length > 0;
   const disabled = data.id === currentUserID || isAdmin;
   return (
-    <Box className={disabled && classes.icon}>
-      <IconButton
-        disabled={disabled}
-        onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
-      >
-        <EditIcon color="secondary" />
-      </IconButton>
-      <IconButton onClick={handleDeleteUser} disabled={disabled}>
-        <DeleteIcon color="error" />
-      </IconButton>
+    <Box
+      className={disabled && classes.icon}
+      display="flex"
+      flexDirection="row"
+    >
+      <Tooltip title="Edit">
+        <IconButton
+          disabled={disabled}
+          onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
+        >
+          <EditIcon color="secondary" />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title={isDisabled ? 'Disabled' : 'Delete'}>
+        <Box
+          className={clsx({
+            [classes.deleteIcon]: isDisabled,
+          })}
+        >
+          <IconButton
+            onClick={() => handleDeleteUser()}
+            disabled={disabled || isDisabled}
+          >
+            <DeleteIcon color="error" />
+          </IconButton>
+        </Box>
+      </Tooltip>
     </Box>
   );
 };
