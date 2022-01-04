@@ -32,32 +32,38 @@ const ActionButtons = ({ data }) => {
       }
     });
   };
-  const isDisabled = selectedRow?.length > 0;
-  const disabled = data.id === currentUserID || isAdmin;
+  const isRowsSelected = selectedRow?.length > 0;
+  const isCurrentUser = data.id === currentUserID || isAdmin;
   return (
     <Box
-      className={disabled && classes.icon}
+      className={isCurrentUser && classes.icon}
       display="flex"
       flexDirection="row"
     >
       <Tooltip title="Edit">
-        <IconButton
-          disabled={disabled}
-          onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
-        >
-          <EditIcon color="secondary" />
-        </IconButton>
-      </Tooltip>
-
-      <Tooltip title={isDisabled ? 'Disabled' : 'Delete'}>
         <Box
           className={clsx({
-            [classes.deleteIcon]: isDisabled,
+            [classes.icon]: isRowsSelected,
+          })}
+        >
+          <IconButton
+            onClick={() => navigateTo(history, `/directory/edit/${data.id}`)}
+            disabled={isCurrentUser}
+          >
+            <EditIcon color="secondary" />
+          </IconButton>
+        </Box>
+      </Tooltip>
+
+      <Tooltip title="Delete">
+        <Box
+          className={clsx({
+            [classes.icon]: isRowsSelected,
           })}
         >
           <IconButton
             onClick={() => handleDeleteUser()}
-            disabled={disabled || isDisabled}
+            disabled={isCurrentUser || isRowsSelected}
           >
             <DeleteIcon color="error" />
           </IconButton>

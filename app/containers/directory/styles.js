@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     flexWrap: 'wrap',
   },
-  deleteIcon: {
+  icon: {
     cursor: 'not-allowed',
   },
 }));
