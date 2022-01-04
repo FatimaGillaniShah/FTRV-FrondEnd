@@ -63,6 +63,7 @@ function AnnouncementContainer() {
     }
     setFormatData(updatedFormatData);
     setSelected([]);
+    return () => setSelected([]);
   }, [data]);
 
   return (

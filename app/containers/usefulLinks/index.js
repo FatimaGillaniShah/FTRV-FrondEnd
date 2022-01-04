@@ -39,7 +39,10 @@ function UsefulLinks() {
   const mutation = useDeleteLink({
     callbackFn: () => setSelected([]),
   });
-  useEffect(() => () => setSelected([]), []);
+  useEffect(() => {
+    setSelected([]);
+    return () => setSelected([]);
+  }, []);
 
   const handleDeleteLinks = () => {
     if (!selected.length) {
