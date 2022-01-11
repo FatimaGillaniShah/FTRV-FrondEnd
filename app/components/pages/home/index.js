@@ -1,13 +1,11 @@
 import { Box, Grid } from '@material-ui/core';
 import React from 'react';
-import BallotIcon from '@material-ui/icons/Ballot';
 import EventCalendarHome from './calendar';
 import PollHome from './poll';
 import BannerImageHome from './bannerImage';
 import { useStyles } from './style';
 import Show from '../../show';
 import { Carousel } from '../../index';
-import NotExist from '../../noData';
 
 function Home({
   isImageLoading,
@@ -24,6 +22,7 @@ function Home({
   isPollsWriteAllowed,
   isBannerWriteAllowed,
 }) {
+  const isPollExists = pollList?.length > 0;
   const classes = useStyles();
   const featureExists = feature.EVENTS || feature.POLLS;
   return (
@@ -48,21 +47,13 @@ function Home({
             flexDirection={['column', 'column', 'column', 'row']}
           >
             <Show IF={feature.EVENTS}>
-              <EventCalendarHome />
+              <Box width={isPollExists ? 1 / 2 : 1}>
+                <EventCalendarHome />
+              </Box>
             </Show>
-            <Show IF={feature.POLLS}>
+            <Show IF={feature.POLLS && isPollExists}>
               <Box width={[1, 1, 1, 1 / 2]} pb={8}>
-                <Show IF={pollList?.length === 0}>
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    height="450px"
-                  >
-                    <NotExist Icon={BallotIcon} description="No Active Polls" />
-                  </Box>
-                </Show>
-                <Show IF={pollList?.length && isVoteReadAllowed}>
+                <Show IF={isVoteReadAllowed}>
                   <Carousel navButtonsAlwaysInvisible={pollList?.length <= 1}>
                     {pollList?.map((poll) => (
                       <PollHome
