@@ -47,7 +47,7 @@ function Home({
             flexDirection={['column', 'column', 'column', 'row']}
           >
             <Show IF={feature.EVENTS}>
-              <Box width={isPollExists ? 1 / 2 : 1}>
+              <Box width={isPollExists ? [1, 1, 1, 1 / 2] : 1}>
                 <EventCalendarHome />
               </Box>
             </Show>
