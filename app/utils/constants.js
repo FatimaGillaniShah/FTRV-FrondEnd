@@ -141,6 +141,7 @@ export const APIS = {
 };
 export const features = {
   DIRECTORY: 'DIRECTORY',
+  BANNER_IMAGE: 'BANNER_IMAGE',
   MESSAGE_FROM_CEO: 'MESSAGE_FROM_CEO',
   PROFIT_CENTER: 'PROFIT_CENTER',
   BLOG: 'BLOG',

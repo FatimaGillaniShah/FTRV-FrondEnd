@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useMutation, useQuery } from 'react-query';
 import { useHistory } from 'react-router-dom';
@@ -29,21 +29,14 @@ function HomeContainer() {
     `${BANNER_IMAGE}-${PERMISSIONS.WRITE}`
   );
   const date = parseDate(new Date());
-  const [feature, setFeature] = useState({
+  const feature = {
     [POLLS]: false,
     [BANNER_IMAGE]: false,
     [EVENTS]: false,
-  });
+  };
   const permit = usePermission;
-  Object.keys(feature).map((RESOURCE) => {
-    const can = permit(`${RESOURCE}-${PERMISSIONS.READ}`);
-    if (can && !feature[RESOURCE]) {
-      setFeature((prevState) => ({
-        ...prevState,
-        [RESOURCE]: true,
-      }));
-    }
-    return feature;
+  Object.keys(feature).forEach((RESOURCE) => {
+    feature[RESOURCE] = permit(`${RESOURCE}-${PERMISSIONS.READ}`);
   });
 
   const {

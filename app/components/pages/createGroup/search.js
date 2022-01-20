@@ -5,6 +5,11 @@ import { Form, Formik } from 'formik';
 import { Input } from '../../index';
 
 export function Search({ initialValues, onHandleSearch }) {
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
   return (
     <Grid container>
       <Grid item xs={12} sm={4} lg={4}>
@@ -24,6 +29,7 @@ export function Search({ initialValues, onHandleSearch }) {
                   handleChange(e);
                 }}
                 showInputLabel={false}
+                onKeyPress={handleKeyPress}
               />
             </Form>
           )}
