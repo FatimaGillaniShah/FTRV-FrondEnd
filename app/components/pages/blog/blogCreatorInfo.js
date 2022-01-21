@@ -7,12 +7,15 @@ import { BodyTextLarge, BodyTextSmall } from '../../typography';
 function BlogCreatorInfo({ user, createdAt }) {
   const date = new Date(createdAt);
   const creationDate = moment(date).format('MMMM DD, YYYY');
+  const creatorName = user?.firstName
+    ? `${user.firstName}${' '}${user.lastName}`
+    : '';
 
   return (
     <>
       <Box>
         <BodyTextLarge fontWeight="fontWeightMedium" color="grey">
-          {`${user.firstName}${' '}${user.lastName}`}
+          {creatorName}
         </BodyTextLarge>
       </Box>
       <Box mt={1} mb={5}>
