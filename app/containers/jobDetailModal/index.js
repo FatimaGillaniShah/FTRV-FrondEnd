@@ -29,10 +29,10 @@ function JobDetailModalContainer({ id, modal, onHandleClose }) {
   const jobDetail = data?.data?.data && data?.data?.data[0];
   const expiryDate = moment(jobDetail?.expiryDate).format('MM-DD-YYYY');
   const isApplicantAllowed = usePermission(
-    `${features.APPLICANT}-${PERMISSIONS.READ}`
+    `${features.APPLICANT}-${PERMISSIONS.WRITE}`
   );
   const isApplyAllowed = usePermission(
-    `${features.APPLICANT}-${PERMISSIONS.WRITE}`
+    `${features.APPLICANT}-${PERMISSIONS.READ}`
   );
   const permissions = {
     isApplicantAllowed,
