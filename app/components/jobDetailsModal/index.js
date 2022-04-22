@@ -51,7 +51,7 @@ export const JobDetailModal = ({
   };
   const disabled = applied || isJobLoading || expired;
   const buttonText = [];
-  if (isApplyAllowed) {
+  if (isApplyAllowed && !isAdmin) {
     buttonText.push(apply);
   }
   if (isApplicantAllowed) {
